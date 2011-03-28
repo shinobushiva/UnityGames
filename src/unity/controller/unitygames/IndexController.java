@@ -30,18 +30,17 @@ public class IndexController extends Controller {
         
         requestScope("GameList",Game);
         for(GameData game : Game){
- 
             long l = game.getDate().getTime() + 1000 * 60 * 60 * 9;
             game.getDate().setTime(l);
             
         }
         
-List<Note> note =Datastore.query(n).asList();
-    requestScope("note",note);
-    for(Note notee: note){
-
-       System.out.println(notee.getContents()); 
-    }
+//List<Note> note =Datastore.query(n).asList();
+//    requestScope("note",note);
+//    for(Note notee: note){
+//
+//       System.out.println(notee.getContents()); 
+//    }
         
         
         return forward("index.jsp");

@@ -3,12 +3,7 @@ package unity.controller.unitygames.upload;
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.controller.upload.FileItem;
-import org.slim3.datastore.Datastore;
 
-import unity.meta.GameDataMeta;
-import unity.meta.ThumbNailDataMeta;
-import unity.model.GameData;
-import unity.model.ThumbNailData;
 import unity.service.UploadService;
 
 public class UploadController extends Controller {

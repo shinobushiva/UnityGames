@@ -30,7 +30,7 @@ public class UploadService {
 
     
     private GameDataMeta dd = GameDataMeta.get();
-    private ThumbNailDataMeta ddd = ThumbNailDataMeta.get();
+   
     
     private UploadedDataFragmentMeta f = UploadedDataFragmentMeta.get();
 
@@ -61,18 +61,20 @@ public class UploadService {
         d.setHpURL(HpURL);
         d.setDate(new Date());
         d.setPass(Pass);
-        List<Note> note = new ArrayList<Note>();
-        Iterator<Key> ke = Datastore.allocateIds(allocateId, Note.class,1).iterator();
-        while (ke.hasNext()){    
-            Note n = new Note();
-            n.setKey(ke.next());
-            n.setGameName(GameName);
-            n.setContents(Contents);
-            n.setOperations(Operations);
-            d.setNoteKey(n.getKey());
-            note.add(n);
-        }
-        Datastore.put(note);
+        d.setContents(Contents);
+        d.setOperations(Operations);
+//        List<Note> note = new ArrayList<Note>();
+//        Iterator<Key> ke = Datastore.allocateIds(allocateId, Note.class,1).iterator();
+//        while (ke.hasNext()){    
+//            Note n = new Note();
+//            n.setKey(ke.next());
+//            n.setGameName(GameName);
+//            n.setContents(Contents);
+//            n.setOperations(Operations);
+//            d.setNoteKey(n.getKey());
+//            note.add(n);
+//        }
+//        Datastore.put(note);
         
         List<ThumbNailData> list = new ArrayList<ThumbNailData>();
         Iterator<Key> keyss = Datastore.allocateIds(allocateId, ThumbNailData.class,1).iterator();

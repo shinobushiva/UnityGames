@@ -73,16 +73,8 @@
 <tr>
 <c:forEach var="g" items="${GameList}" varStatus="loop">
 
-<td align="center" colspan="2">
-<fmt:formatDate  value="${g.date}" pattern="MM/dd HH:mm" /><br>
-<c:choose>
-<c:when test="${empty g.thumbNailURL}">
-<img src="/unitygames/thumbNail?thumbNailKey=${f:h(g.thumbNailKey)}"width="100" height="100"/><br>
-</c:when>
-<c:when test="${not empty g.thumbNailURL}">
-<img src="${g.thumbNailURL}"width="100" height="100"><br>
-</c:when>
-</c:choose>
+<td>
+
 <c:choose>
 <c:when test="${empty g.hpURL}">
 <input type="button" onClick="location.href='/unitygames/Game?key=${f:h(g.key)}'" value="${g.gameName }"><br>
@@ -91,31 +83,52 @@
 <input type="button" onClick="location.href='${g.hpURL}'" value="${g.gameName }"><br>
 </c:when>
 </c:choose>
+<c:choose>
+<c:when test="${empty g.thumbNailURL}">
+<img src="/unitygames/thumbNail?thumbNailKey=${f:h(g.thumbNailKey)}"width="100" height="100"/><br>
+</c:when>
+<c:when test="${not empty g.thumbNailURL}">
+<img src="${g.thumbNailURL}"width="100" height="100"><br>
+</c:when>
+</c:choose>
+</td><td>
 <script type="text/javascript">
 
 $(function(){
 $( "#out-${g.key.id}" ).hide();
 	$("#change-${g.key.id}").click(function(){
-		$( "#out-${g.key.id}" ).fadeIn("fast");
+		$( "#out-${g.key.id}" ).show();
+		$( "#br-${g.key.id}" ).hide();
 	});
 
-    $('.inputWithImge').each(function() {
-        $(this).add($(this).next()).wrapAll('<div class="imageInputWrapper"></div>');
-      });
-      $('#calendar').click(function() { alert('Popup some calendar here'); });
-
+    
 
 });
 </script>
-<table><tr><td>
-<a id="change-${g.key.id}"style="font-size: x-small;"  >変更/削除</a></td><td><span id="out-${g.key.id}"><input type="password" name="Pass" style="width: 40px;"class="inputWithImge">
-</span></td></tr>
-</table>
+<div align="right"><fmt:formatDate  value="${g.date}" pattern="MM/dd HH:mm" /><br></div>
+
+<div align="right">アクセス数：1234　コメント数：567　評価：89</div>
+<h4>内容</h4>
+${g.contents }
+<h4>操作説明</h4>
+${g.operations }<br>
+<div align="right">
+<form action="change" method="post">
+<a id="change-${g.key.id}"style="font-size: x-small;">変更/削除</a><a id="out-${g.key.id}"><input type="password" name="Pass" style="width: 40px;">
+<button type="submit" ><img id="sub" src="/images/red.gif" /></button> 
+          </a>
+</form>
+<div id="br-${g.key.id}"><br><br></div>
+</div>
+
 </td>
 <c:if test="${loop.count mod 3 == 0}"></tr><tr></c:if>
+
 </c:forEach>
+
 </tr>
 </table>
+
 
 </body>
 </html>

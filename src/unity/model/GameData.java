@@ -22,16 +22,19 @@ public class GameData implements Serializable {
 
     @Attribute(primaryKey = true)
     private Key key;
-    private Key ThumbNailKey;
-    private Key NoteKey;
-    private String GameName;
-    private String GameURL;
+    private Key thumbNailKey;
+    private Key noteKey;
+    private String gameName;
+    private String gameURL;
     private int length;
     private Date date;
-    private String ThumbNailURL;
-    private String HpURL;
-    private String Pass;
-    
+    private String thumbNailURL;
+    private String hpURL;
+    private String pass;
+    @Attribute(lob = true)
+    private String contents;
+    @Attribute(lob = true)
+    private String operations;
     @Attribute(version = true)
     private Long version;
 
@@ -118,13 +121,7 @@ public class GameData implements Serializable {
  
 
 
-    public void setGameURL(String gameURL) {
-        GameURL = gameURL;
-    }
 
-    public String getGameURL() {
-        return GameURL;
-    }
 
 
     public InverseModelListRef<UploadedDataFragment, GameData> getFragmentListRef() {
@@ -147,52 +144,80 @@ public class GameData implements Serializable {
         return length;
     }
 
-    
-    public void setGameName(String gameName) {
-        GameName = gameName;
-    }
-
-    public String getGameName() {
-        return GameName;
+    public Key getThumbNailKey() {
+        return thumbNailKey;
     }
 
     public void setThumbNailKey(Key thumbNailKey) {
-        ThumbNailKey = thumbNailKey;
-    }
-
-    public Key getThumbNailKey() {
-        return ThumbNailKey;
-    }
-
-    public void setThumbNailURL(String thumbNailURL) {
-        ThumbNailURL = thumbNailURL;
-    }
-
-    public String getThumbNailURL() {
-        return ThumbNailURL;
-    }
-
-    public void setNoteKey(Key noteKey) {
-        NoteKey = noteKey;
+        this.thumbNailKey = thumbNailKey;
     }
 
     public Key getNoteKey() {
-        return NoteKey;
+        return noteKey;
     }
 
-    public void setHpURL(String hpURL) {
-        HpURL = hpURL;
+    public void setNoteKey(Key noteKey) {
+        this.noteKey = noteKey;
+    }
+
+    public String getGameName() {
+        return gameName;
+    }
+
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
+    }
+
+    public String getGameURL() {
+        return gameURL;
+    }
+
+    public void setGameURL(String gameURL) {
+        this.gameURL = gameURL;
+    }
+
+    public String getThumbNailURL() {
+        return thumbNailURL;
+    }
+
+    public void setThumbNailURL(String thumbNailURL) {
+        this.thumbNailURL = thumbNailURL;
     }
 
     public String getHpURL() {
-        return HpURL;
+        return hpURL;
     }
 
-    public void setPass(String pass) {
-        Pass = pass;
+    public void setHpURL(String hpURL) {
+        this.hpURL = hpURL;
     }
 
     public String getPass() {
-        return Pass;
+        return pass;
     }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
+    public String getContents() {
+        return contents;
+    }
+
+    public void setContents(String contents) {
+        this.contents = contents;
+    }
+
+    public String getOperations() {
+        return operations;
+    }
+
+    public void setOperations(String operations) {
+        this.operations = operations;
+    }
+
+ 
+
+    
+ 
 }
