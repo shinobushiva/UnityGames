@@ -6,6 +6,7 @@ import org.slim3.datastore.Datastore;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.Transaction;
 
 import unity.model.GameData;
 import unity.model.Note;
@@ -26,11 +27,18 @@ public class GameController extends Controller {
         
         GameData u = Datastore.get(GameData.class, keyy);
         
-        Note n = Datastore.get(Note.class,u.getNoteKey());
+//        Note n = Datastore.get(Note.class,u.getNoteKey());
+        
+        
+        Transaction tx = Datastore.beginTransaction();
+        u.setAccess(u.getAccess()+1);
+        Datastore.put(u);
+        tx.commit();
+        System.out.println(u.getAccess());
         
         requestScope("url",u.getGameURL());   
-        requestScope("Contents",n.getContents());
-        requestScope("Operations",n.getOperations());
+        requestScope("Contents",u.getContents());
+        requestScope("Operations",u.getOperations());
     
         if(u.getGameURL().isEmpty()){
             requestScope("play","unityObject.embedUnity('unityPlayer','/unitygames/GameData?key="+key+"', 600, 450);");

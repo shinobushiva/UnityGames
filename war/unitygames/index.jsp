@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="/css/docs.css" rel="StyleSheet" type="text/css" />
+<link href="/css/css.css" rel="StyleSheet" type="text/css" />
 <script src="/js/jquery-1.5.1.min.js"></script>
 <title>Index</title>
 
@@ -73,25 +74,25 @@
 <tr>
 <c:forEach var="g" items="${GameList}" varStatus="loop">
 
-<td>
+<td align="center" valign="middle">
 
 <c:choose>
 <c:when test="${empty g.hpURL}">
-<input type="button" onClick="location.href='/unitygames/Game?key=${f:h(g.key)}'" value="${g.gameName }"><br>
+<a href="/unitygames/Game?key=${f:h(g.key)}" class="title">${g.gameName }</a><br>
 </c:when>
 <c:when  test="${not empty g.hpURL}">
-<input type="button" onClick="location.href='${g.hpURL}'" value="${g.gameName }"><br>
+<a href="${g.hpURL}">${g.gameName }</a><br>
 </c:when>
 </c:choose>
 <c:choose>
 <c:when test="${empty g.thumbNailURL}">
-<img src="/unitygames/thumbNail?thumbNailKey=${f:h(g.thumbNailKey)}"width="100" height="100"/><br>
+<img src="/unitygames/thumbNail?thumbNailKey=${f:h(g.thumbNailKey)}"width="100" height="100" class="image"/><br>
 </c:when>
 <c:when test="${not empty g.thumbNailURL}">
-<img src="${g.thumbNailURL}"width="100" height="100"><br>
+<img src="${g.thumbNailURL}"width="100" height="100" class="image"><br>
 </c:when>
 </c:choose>
-</td><td>
+</td><td width="300">
 <script type="text/javascript">
 
 $(function(){
@@ -107,7 +108,7 @@ $( "#out-${g.key.id}" ).hide();
 </script>
 <div align="right"><fmt:formatDate  value="${g.date}" pattern="MM/dd HH:mm" /><br></div>
 
-<div align="right">アクセス数：1234　コメント数：567　評価：89</div>
+<div align="right">アクセス数：${g.access}　コメント数：未実装　評価：未実装</div>
 <h4>内容</h4>
 ${g.contents }
 <h4>操作説明</h4>
@@ -116,7 +117,8 @@ ${g.operations }<br>
 <form action="change" method="post">
 <a id="change-${g.key.id}"style="font-size: x-small;">変更/削除</a><a id="out-${g.key.id}"><input type="password" name="Pass" style="width: 40px;">
 <button type="submit" ><img id="sub" src="/images/red.gif" /></button> 
-          </a>
+</a>
+<input type="hidden" name="key" value="${f:h(g.key)}">        
 </form>
 <div id="br-${g.key.id}"><br><br></div>
 </div>

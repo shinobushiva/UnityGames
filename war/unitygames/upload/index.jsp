@@ -130,21 +130,20 @@ $( "div#tu" ).hide();
 <td><label for="ThumbNail"><h2>サムネイル画像</h2></label><br>
 
 サムネイル画像の登録方法をお選びください<br>
-<label><input type="radio" name="t"  id="tdata" checked>画像データをアップロードする(画像形式のみ)</label><br>
-<label><input type="radio" name="t"  id="turl">画像URLを指定する(画像データのURL)<br></label></td>
+<label><input type="radio" name="ThumbNailType" value="data" id="tdata" checked>画像データをアップロードする(画像形式のみ)</label><br>
+<label><input type="radio" name="ThumbNailType" value="url" id="turl">画像URLを指定する(画像データのURL)<br></label></td>
 
 </tr><tr><td><div id="tf"><label for="ThumbNail">画像データ：</label><input type="file" name="ThumbNail" id="ThumbNail"></div>
 <div id="tu"><label for="ThumbNailURL">画像URL：</label><input type="text" name="ThumbNailURL" id="ThumbNailURL" style="width:260px" title="画像URLを入力"><br></div>
 </td></tr>
 <tr><td><label for="d"><h2>Gameデータ</h2></label><br>
 Gameデータを投稿するかGameURLを投稿するかお選びください<br>
-<label><input type="radio" name="d"  id="data" checked>Gameデータ(unity3d形式のみ。10mまで)</label><br>
-<label><input type="radio" name="d"  id="url">GameURL(unity3d形式のデータURL)<br></label>
-<label><input type="radio" name="d"  id="hp">GameURL(外部サイトURL)<br></label></td>
+<label><input type="radio" name="GameType" value="data" id="data" checked>Gameデータ(unity3d形式のみ。10mまで)</label><br>
+<label><input type="radio" name="GameType" value="url" id="url">GameURL(unity3d形式のデータURL)<br></label>
+<label><input type="radio" name="GameType" value="hpurl" id="hp">GameURL(外部サイトURL)<br></label></td>
 </tr><tr><td>
 <div id="G1"><label for="GameData">Gameデータ：</label>
 <input type="file" name="GameFile" id="GameData"><br></div>
-
 <div id="G2"><label for="GameURL">GameURL:</label>
 <input type="text" name="GameURL" id="GameURL" style="width:260px" title="unity3dデータのURLを入力"/><br></div>
 <div id="G3"><label for="HpURL">GameURL:</label>

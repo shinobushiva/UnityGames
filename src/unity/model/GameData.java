@@ -31,6 +31,11 @@ public class GameData implements Serializable {
     private String thumbNailURL;
     private String hpURL;
     private String pass;
+    private String thumbNailType;
+    private String gameType;
+    private int access;
+    private int comment;
+    private int assessment;
     @Attribute(lob = true)
     private String contents;
     @Attribute(lob = true)
@@ -215,6 +220,47 @@ public class GameData implements Serializable {
     public void setOperations(String operations) {
         this.operations = operations;
     }
+
+    public void setAccess(int access) {
+        this.access = access;
+    }
+
+    public int getAccess() {
+        return access;
+    }
+
+    public void setComment(int comment) {
+        this.comment = comment;
+    }
+
+    public int getComment() {
+        return comment;
+    }
+
+    public void setAssessment(int assessment) {
+        this.assessment = assessment;
+    }
+
+    public int getAssessment() {
+        return assessment;
+    }
+
+    public void setGameType(String gameType) {
+        this.gameType = gameType;
+    }
+
+    public String getGameType() {
+        return gameType;
+    }
+
+    public void setThumbNailType(String thumbNailType) {
+        this.thumbNailType = thumbNailType;
+    }
+
+    public String getThumbNailType() {
+        return thumbNailType;
+    }
+
 
  
 

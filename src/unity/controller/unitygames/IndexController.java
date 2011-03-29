@@ -33,6 +33,16 @@ public class IndexController extends Controller {
             long l = game.getDate().getTime() + 1000 * 60 * 60 * 9;
             game.getDate().setTime(l);
             
+            if(game.getContents().length() >= 80){
+            String s = game.getContents().substring(0,80);
+            game.setContents(s+"...");
+            }
+            if(game.getOperations().length() >= 80){
+            String o = game.getOperations().substring(0,80);
+            game.setOperations(o+"...");
+            }
+            
+          
         }
         
 //List<Note> note =Datastore.query(n).asList();

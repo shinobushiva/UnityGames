@@ -44,7 +44,7 @@ public class UploadService {
        }
     
     
-    public GameData upload(String GameName,String GameURL,FileItem GameFile,FileItem ThumbNail,String ThumbNailURL,String Contents,String Operations,String HpURL,String Pass) {
+    public GameData upload(String GameName,String GameURL,FileItem GameFile,FileItem ThumbNail,String ThumbNailURL,String Contents,String Operations,String HpURL,String Pass,String ThumbNailType,String GameType) {
       
         
         List<Object> models = new ArrayList<Object>();
@@ -63,6 +63,9 @@ public class UploadService {
         d.setPass(Pass);
         d.setContents(Contents);
         d.setOperations(Operations);
+        System.out.println(ThumbNailType);
+        d.setThumbNailType(ThumbNailType);
+        d.setGameType(GameType);
 //        List<Note> note = new ArrayList<Note>();
 //        Iterator<Key> ke = Datastore.allocateIds(allocateId, Note.class,1).iterator();
 //        while (ke.hasNext()){    
