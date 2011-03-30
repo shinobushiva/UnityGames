@@ -34,10 +34,14 @@ public class ChangeService {
        if(ThumbNailChange != null){
            g.setThumbNailURL(ThumbNailURL);
            g.setThumbNailType(ThumbNailType);
-         if(ThumbNail != null)
-           g.setThumbNailURL(null);
-         ThumbNailData t = Datastore.get(ThumbNailData.class, g.getThumbNailKey());
-         Datastore.delete(t.getKey());
+           ThumbNailData t = Datastore.get(ThumbNailData.class, g.getThumbNailKey());
+                     
+           UploadedDataFragment uf = Datastore.query(UploadedDataFragment.class).filter(UploadedDataFragmentMeta.get().uploadDataRef2.equal(t.getKey())).asSingle();
+           if(uf != null){
+               Datastore.delete(uf.getKey());
+           }
+     
+          
          List<ThumbNailData> list = new ArrayList<ThumbNailData>();
          Iterator<Key> keyss = Datastore.allocateIds(g.getKey(), ThumbNailData.class,1).iterator();
          while (keyss.hasNext()){    
@@ -45,6 +49,9 @@ public class ChangeService {
              child.setKey(keyss.next());
              child.setGameName(GameName);
              child.setDate(new Date());
+             if(ThumbNail != null){
+                 g.setThumbNailURL(null);
+               Datastore.delete(t.getKey());
              child.setLength(ThumbNail.getData().length);
          byte[] bytes2 = ThumbNail.getData();
          byte[][] bytesArray2 = ByteUtil.split(bytes2, FRAGMENT_SIZE);
@@ -75,7 +82,7 @@ public class ChangeService {
      Datastore.put(model);
  }
        }
-
+       }
        Transaction tx = Datastore.beginTransaction();
       
        Datastore.put(g);
