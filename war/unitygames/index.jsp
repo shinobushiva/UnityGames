@@ -74,22 +74,24 @@
 <tr>
 <c:forEach var="g" items="${GameList}" varStatus="loop">
 
-<td align="center" valign="middle">
+<td align="center" valign="middle"width="200">
 
 <c:choose>
 <c:when test="${empty g.hpURL}">
 <a href="/unitygames/Game?key=${f:h(g.key)}" class="title">${g.gameName }</a><br>
+<c:set var="url" value="/unitygames/Game?key=${f:h(g.key)}"/>
 </c:when>
-<c:when  test="${not empty g.hpURL}">
-<a href="${g.hpURL}">${g.gameName }</a><br>
+<c:when  test="${not empty g.hpURL}" >
+<a href="${g.hpURL}" class="title">${g.gameName }</a><br>
+<c:set var="url" value="${g.hpURL}"/>
 </c:when>
 </c:choose>
 <c:choose>
 <c:when test="${empty g.thumbNailURL}">
-<img src="/unitygames/thumbNail?thumbNailKey=${f:h(g.thumbNailKey)}"width="100" height="100" class="image"/><br>
+<a href="${url}"><img src="/unitygames/thumbNail?thumbNailKey=${f:h(g.thumbNailKey)}"width="150" height="150" class="image"/></a><br>
 </c:when>
 <c:when test="${not empty g.thumbNailURL}">
-<img src="${g.thumbNailURL}"width="100" height="100" class="image"><br>
+<a href="${url}"><img src="${g.thumbNailURL}"width="150" height="150" class="image"></a><br>
 </c:when>
 </c:choose>
 </td><td width="300">

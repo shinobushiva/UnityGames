@@ -143,10 +143,11 @@ $( "div#tu" ).hide();
 	</table>
 <h1>変更/削除</h1>
 <div id="commentForm"> 
-<table class="purchase-options" border="0" align="center">
+<div style="word-break:break-all">
+<table class="purchase-options" border="0" align="center" width="859">
 <tr class="top"><td colspan="2">&nbsp;</td></tr>
 <tr>
-<form action="${f:url('upload')}" method="post" enctype="multipart/form-data">
+<form action="${f:url('changeUp')}" method="post" enctype="multipart/form-data">
 <td><label for="GameName"><h2>Game名</h2></label></td>
 
 <td rowspan="6"><h2>Game説明文</h2>(HTML,css,Javascript使用できます)<br>
@@ -157,13 +158,20 @@ $( "div#tu" ).hide();
 </tr><tr><td><label for="GameName">Game名：</label><input type="text" name="GameName" id="GameName" value="${g.gameName }"title="Game名を入力"/><br></td>
 </tr>
 <tr>
-<td><label for="ThumbNail"><h2>サムネイル画像</h2></label><br>
+<td><label for="ThumbNail"><h2>サムネイル画像<c:if test="${g.thumbNailType =='data' }">
+<img src="/unitygames/thumbNail?thumbNailKey=${f:h(g.thumbNailKey)}"width="50" height="50" align="right"></h2></label><br>
+現在の設定：
+<label><font color="red">画像データをアップロードする(画像形式のみ)</font></label><br>
 
-サムネイル画像の登録方法をお選びください<br>
-<c:if test="${g.thumbNailType =='data' }">
-<label><font color="red">画像データをアップロードする(画像形式のみ)</font></label><br></c:if>
-<c:if test="${g.thumbNailType =='url' }"><label><font color="red">画像URLを指定する(画像データのURL)</font></label><br>${g.thumbNailURL}<br></c:if>
-<input type="checkbox" name="ThumbNailChange" id="ThumbNailChange">変更する<br>
+
+</c:if>
+
+<c:if test="${g.thumbNailType =='url' }"><img src="${g.thumbNailURL}"width="50" height="50" align="right"></h2><label>現在の設定：<font color="red">画像URLを指定する(画像データのURL)</font></label><br>
+</h2></label><br>
+
+
+${g.thumbNailURL}<br></c:if>
+<input type="checkbox" name="ThumbNailChange" id="ThumbNailChange" value="ThumbNailChange">変更する<br>
 <div id="ThumbNailChange1">
 <label><input type="radio" name="ThumbNailType" value="data" id="tdata" checked>画像データをアップロードする(画像形式のみ)</label><br>
 <label><input type="radio" name="ThumbNailType" value="url" id="turl">画像URLを指定する(画像データのURL)<br></label></td>
@@ -176,12 +184,11 @@ $( "div#tu" ).hide();
 </td></tr>
 
 <tr><td><label for="d"><h2>Gameデータ</h2></label><br>
-Gameデータを投稿するかGameURLを投稿するかお選びください<br>
-
+現在の設定：
 <c:if test="${g.gameType =='data' }"><label><font color="red">Gameデータ(unity3d形式のみ。10mまで)</font><br></label></c:if>
 <c:if test="${g.gameType =='url' }"><label><font color="red">GameURL(unity3d形式のデータURL)</font><br></label>${g.gameURL}<br></c:if>
 <c:if test="${g.gameType =='hpurl' }"><label><font color="red">GameURL(外部サイトURL)</font><br></label></td>${g.hpURL}<br></c:if>
-<input type="checkbox" name="GameChange" id="GameChange">変更する<br>
+<input type="checkbox" name="GameChange" id="GameChange" value="GameChange">変更する<br>
 <div id="GameChange1">
 <label><input type="radio" name="GameType" value="data" id="data" checked>Gameデータ(unity3d形式のみ。10mまで)</label><br>
 <label><input type="radio" name="GameType" value="url" id="url">GameURL(unity3d形式のデータURL)<br></label>
@@ -197,11 +204,12 @@ Gameデータを投稿するかGameURLを投稿するかお選びください<br
 <input type="text" name="HpURL" id="HpURL" style="width:260px" title="すでにゲームの出来るURLを入力"/><br></div>
 </div>
 </td></tr><tr><td>
-<div align="left"><h2>変更/削除キー:<input type="password" name="pass" value="${g.pass}"></h2></div></td><td> <div align="right"><input type="submit" value="ゲーム登録！" style="font-size:large;"/></div>
+<div align="left"><h2>変更/削除キー:<input type="password" name="pass" value="${g.pass}"></h2></div></td><td> <div align="right"><input type="submit" value="変更！" style="font-size:large;"/><input type="hidden" name="key" value="${f:h(g.key)}"></div>
 </td></tr >
 <tr class="bottom"><td colspan="2">&nbsp;</td></tr>
 </form>
 </table>
+</div>
 </div>
 サムネイル画像URL、GameURLで利用する際はdropboxなどオンラインストレージが便利です
 
