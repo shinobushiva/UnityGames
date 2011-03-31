@@ -5,22 +5,18 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.tools.ant.util.XMLFragment.Child;
 import org.slim3.controller.upload.FileItem;
 import org.slim3.datastore.Datastore;
 import org.slim3.util.ByteUtil;
 
 import unity.meta.GameDataMeta;
-import unity.meta.ThumbNailDataMeta;
 import unity.meta.UploadedDataFragmentMeta;
 
 import unity.model.GameData;
-import unity.model.Note;
 import unity.model.ThumbNailData;
 import unity.model.UploadedDataFragment;
 
 import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.Text;
 import com.google.appengine.api.datastore.Transaction;
 
 
@@ -34,14 +30,17 @@ public class UploadService {
     
     private UploadedDataFragmentMeta f = UploadedDataFragmentMeta.get();
 
-    public GameData getData1(Key key, Long version) {
-        
-        return Datastore.get(dd, key, version);
-       }
-    public UploadedDataFragment getData2(String type) {
-        
-        return Datastore.query(f).filter(UploadedDataFragmentMeta.get().type.equal("ThumbNail")).asSingle();
-       }
+    
+   
+    
+//    public GameData getData1(Key key, Long version) {
+//        
+//        return Datastore.get(dd, key, version);
+//       }
+//    public UploadedDataFragment getData2(String type) {
+//        
+//        return Datastore.query(f).filter(UploadedDataFragmentMeta.get().type.equal("ThumbNail")).asSingle();
+//       }
     
     
     public GameData upload(String GameName,String GameURL,FileItem GameFile,FileItem ThumbNail,String ThumbNailURL,String Contents,String Operations,String HpURL,String Pass,String ThumbNailType,String GameType) {
@@ -60,6 +59,7 @@ public class UploadService {
         d.setGameURL(GameURL);
         d.setHpURL(HpURL);
         d.setDate(new Date());
+        d.setLastDate(new Date());
         d.setPass(Pass);
         d.setContents(Contents);
         d.setOperations(Operations);

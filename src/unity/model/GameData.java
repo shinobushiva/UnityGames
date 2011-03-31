@@ -28,6 +28,7 @@ public class GameData implements Serializable {
     private String gameURL;
     private int length;
     private Date date;
+    private Date lastDate;
     private String thumbNailURL;
     private String hpURL;
     private String pass;
@@ -259,6 +260,14 @@ public class GameData implements Serializable {
 
     public String getThumbNailType() {
         return thumbNailType;
+    }
+
+    public void setLastDate(Date lastDate) {
+        this.lastDate = lastDate;
+    }
+
+    public Date getLastDate() {
+        return lastDate;
     }
 
 

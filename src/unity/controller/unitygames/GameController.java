@@ -1,50 +1,64 @@
 package unity.controller.unitygames;
 
+
+import java.net.URI;
+
+
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
 
-import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Transaction;
 
+
+import unity.meta.GameDataMeta;
 import unity.model.GameData;
-import unity.model.Note;
 
 
 public class GameController extends Controller {
 
-   
-    
+   private GameDataMeta dd = GameDataMeta.get();
     @Override
     public Navigation run() throws Exception {
-        
-        
-        String key = asString("key");
-        Key keyy = KeyFactory.stringToKey(key);
+       
+        //どっからきたかを確認してアクセス数を増やさないようにしたい（分からないので保留）
+        StringBuffer path = request.getRequestURL();
+        path.append("?").append(request.getQueryString());
+//        String path = new URI(request.getHeader("referrer")).getPath();
+       
+        System.out.println(path);
+        long id = asLong("id");
+     
+        GameData g = Datastore.get(GameData.class, KeyFactory.createKey(dd.getKind(), id));
 
-        requestScope("key", key);
+        System.out.println(g.getKey());
+       
+       
+       
+       
+
+        System.out.println(id);      
+        requestScope("key", g.getKey());
         
-        GameData u = Datastore.get(GameData.class, keyy);
         
-//        Note n = Datastore.get(Note.class,u.getNoteKey());
+        
         
         
         Transaction tx = Datastore.beginTransaction();
-        u.setAccess(u.getAccess()+1);
-        Datastore.put(u);
+        g.setAccess(g.getAccess()+1);
+        Datastore.put(g);
         tx.commit();
-        System.out.println(u.getAccess());
+        System.out.println(g.getAccess());
         
-        requestScope("url",u.getGameURL());   
-        requestScope("Contents",u.getContents());
-        requestScope("Operations",u.getOperations());
+        requestScope("g",g);   
+        
     
-        if(u.getGameURL().isEmpty()){
-            requestScope("play","unityObject.embedUnity('unityPlayer','/unitygames/GameData?key="+key+"', 600, 450);");
+        if(g.getGameURL().isEmpty()){
+            requestScope("play","unityObject.embedUnity('unityPlayer','/unitygames/GameData?id="+g.getKey().getId()+"', 600, 450);");
             
         }else{
-          requestScope("play","unityObject.embedUnity('unityPlayer','"+u.getGameURL()+"', 600, 450);");
+          requestScope("play","unityObject.embedUnity('unityPlayer','"+g.getGameURL()+"', 600, 450);");
         }
      
         

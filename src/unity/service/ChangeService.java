@@ -30,7 +30,39 @@ public class ChangeService {
        g.setPass(Pass);
        g.setContents(Contents);
        g.setOperations(Operations);
-       
+       g.setLastDate(new Date());
+       if(GameChange !=null){
+           g.setGameType(GameType);
+           g.setHpURL(HpURL);
+           g.setGameURL(GameURL);
+                     
+           UploadedDataFragment uf1 = Datastore.query(UploadedDataFragment.class).filter(UploadedDataFragmentMeta.get().uploadDataRef.equal(g.getKey())).asSingle();
+           if(uf1 != null){
+               Datastore.delete(uf1.getKey());
+           }
+           if(GameFile !=null){
+           g.setLength(GameFile.getData().length);  
+           byte[] bytes = GameFile.getData();
+           byte[][] bytesArray1 = ByteUtil.split(bytes, FRAGMENT_SIZE);
+           Iterator<Key> keys =
+               Datastore
+                   .allocateIds(g.getKey(), f, bytesArray1.length)
+                   .iterator();
+           for (int i = 0; i < bytesArray1.length; i++) {
+               byte[] fragmentData = bytesArray1[i];
+               UploadedDataFragment fragment = new UploadedDataFragment();
+               models.add(fragment);
+               fragment.setKey(keys.next());
+               fragment.setBytes(fragmentData);
+               fragment.setType("GameFile");
+               fragment.setIndex(i);
+               fragment.getUploadDataRef().setModel(g);
+       }
+           for (Object model : models) {
+               Datastore.put(model);
+           }
+           }
+           }
        if(ThumbNailChange != null){
            g.setThumbNailURL(ThumbNailURL);
            g.setThumbNailType(ThumbNailType);

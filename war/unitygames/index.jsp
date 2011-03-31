@@ -8,6 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="/css/docs.css" rel="StyleSheet" type="text/css" />
 <link href="/css/css.css" rel="StyleSheet" type="text/css" />
+<link type='text/css' href='/css/button.css' rel='stylesheet'/>　
 <script src="/js/jquery-1.5.1.min.js"></script>
 <title>Index</title>
 
@@ -67,8 +68,8 @@
 			</tr>
 		</tbody>
 	</table>
-
-<a href="upload/">Uploadする!!ここくりっく！右上のManualなどは現在意味ないです</a><br>
+<div align="right"><a href="upload/" class="button silver"><span>Gameを登録する</span></a></div>
+<br>
 
 <table border="1">
 <tr>
@@ -108,7 +109,10 @@ $( "#out-${g.key.id}" ).hide();
 
 });
 </script>
-<div align="right"><fmt:formatDate  value="${g.date}" pattern="MM/dd HH:mm" /><br></div>
+<div align="right">
+<c:if test="${not empty g.hpURL}"><a style="font-size: x-small;color: red;">外部サイト</a>
+</c:if>
+<fmt:formatDate  value="${g.date}" pattern="MM/dd HH:mm" /><br></div>
 
 <div align="right">アクセス数：${g.access}　コメント数：未実装　評価：未実装</div>
 <h4>内容</h4>

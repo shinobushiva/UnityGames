@@ -2,13 +2,15 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="f" uri="http://www.slim3.org/functions"%>
-
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html >
 	<head>
-		<title>Unity Web Player | WebPlayer</title>
+		<title>${g.gameName}</title>
 		<script type="text/javascript" src="http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject.js"></script>
 		<link href="/css/docs.css" rel="StyleSheet" type="text/css" />
-		
+		<link href="/css/jquery-ui-1.8.11.custom.css" rel="StyleSheet" type="text/css"  />
+		<script src="/js/jquery-1.5.1.min.js"></script>
+		<script src="/js/jquery-ui-1.8.11.custom.min.js"></script>
 		<style type="text/css">
 		<!--
 		body {
@@ -28,6 +30,7 @@
 		}
 		p.header span {
 			font-weight: bold;
+			font-size: 30px;
 		}
 		p.footer {
 			font-size: x-small;
@@ -72,12 +75,34 @@
 		}
 		-->
 		</script>
-
+<script>
+$(function() {   
+	  $('#tabs').tabs();   
+	});  
+	</script>
+		 
+		   
+		
 	
-		<p class="header"><span>Unity Web Player | </span>WebPlayer</p>
+		<p class="header" align="left"><span>${g.gameName}</span></p>
 		<table class="purchase-options" align="center">
-		<tr class="top"><td><h2>ゲーム説明</h2>${Contents}</td></tr>
-		<tr class="bottom"><td><h2>操作内容</h2>${Operations}</td></tr>
+		<tr class="top"><td>
+		<div id="tabs"> 
+		<ul>  
+      <li><a href="#tab1"><span>ゲーム説明</span></a></li>  
+      <li><a href="#tab2"><span>操作内容</span></a></li>  
+	<div align="right"><span>投稿日：<fmt:formatDate  value="${g.date}" pattern="MM/dd" /></span><br><span>最終更新日：<fmt:formatDate  value="${g.lastDate}" pattern="MM/dd" /></span></div> 	
+      </ul>   
+		 
+		<div id="tab1">  
+		<p>${g.contents}</p>
+		</div >
+		<div id="tab2">
+		<p>${g.operations}</p>
+		</div>
+		</div></td></tr>
+		  
+		<tr class="bottom"><td></td></tr>
 		</table>
 		<div class="content">
 			<div id="unityPlayer">
@@ -88,6 +113,6 @@
 				</div>
 			</div>
 		</div>
-		<p class="footer">&laquo; created with <a href="http://unity3d.com/unity/" title="Go to unity3d.com">Unity</a> &raquo;</p>
+		
 	</body>
 </html>

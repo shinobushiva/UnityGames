@@ -1,0 +1,95 @@
+
+        
+        /*----------------------------*/
+        
+
+        
+        .button
+        {
+            
+            text-decoration: none;
+            font: bold 10.0em ; /*Change the em value to scale the button*/
+            display: inline-block;
+            text-align: center;
+            color: white;
+            font-size: 30px;
+            border: 1px solid #9c9c9c; /* Fallback style */
+            border: 1px solid rgba(0, 0, 0, 0.3);            
+            
+            text-shadow: 0 1px 0 rgba(0,0,0,0.4);
+            
+            box-shadow: 0 0 .05em rgba(0,0,0,0.4);
+            -moz-box-shadow: 0 0 .05em rgba(0,0,0,0.4);
+            -webkit-box-shadow: 0 0 .05em rgba(0,0,0,0.4);
+            
+        }
+        
+        
+        
+        .button, .button span
+        {
+            -moz-border-radius: .3em;
+            border-radius: .3em;
+        }
+        
+        .button span
+        {
+            border-top: 1px solid #fff; /* Fallback style */
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            display: block;
+            padding: 0.3em ;
+            
+            /* The background pattern */
+            
+            background-image: -webkit-gradient(linear, 0 0, 100% 100%, color-stop(.75, rgba(0, 0, 0, 0.05)), color-stop(.75, transparent), to(transparent)),
+                              -webkit-gradient(linear, 0 100%, 100% 0, color-stop(.75, rgba(0, 0, 0, 0.05)), color-stop(.75, transparent), to(transparent)),
+                              -webkit-gradient(linear, 0 0, 100% 100%, color-stop(.25, transparent), color-stop(.25, rgba(0, 0, 0, 0.05))),
+                              -webkit-gradient(linear, 0 100%, 100% 0, color-stop(.25, transparent), color-stop(.25, rgba(0, 0, 0, 0.05)));
+            background-image: -moz-linear-gradient(45deg, rgba(0, 0, 0, 0.05) 75%, transparent 75%, transparent),
+                              -moz-linear-gradient(-45deg, rgba(0, 0, 0, 0.05) 75%, transparent 75%, transparent),
+                              -moz-linear-gradient(45deg, transparent 25%, rgba(0, 0, 0, 0.05) 25%),
+                              -moz-linear-gradient(-45deg, transparent 25%, rgba(0, 0, 0, 0.05) 25%);
+
+            /* Pattern settings */
+            
+            -moz-background-size: 3px 3px;
+            -webkit-background-size: 3px 3px;            
+        }
+
+        .button:hover
+        {
+            box-shadow: 0 0 .1em rgba(0,0,0,0.4);
+            -moz-box-shadow: 0 0 .1em rgba(0,0,0,0.4);
+            -webkit-box-shadow: 0 0 .1em rgba(0,0,0,0.4);
+        }
+        
+        .button:active
+        {
+            /* When pressed, move it down 1px */
+            position: relative;
+            top: 1.5px;
+        }
+        
+
+        /*----------------------------*/
+        
+        .silver
+        {
+            background: #080808;
+            background: -webkit-gradient(linear, left top, left bottom, from(#080808), to(#6d6d6d) );
+            background: -moz-linear-gradient(-90deg, #080808, #6d6d6d);
+            filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#080808', EndColorStr='#6d6d6d');
+        }
+        
+        .silver:hover
+        {
+            background: #080808;
+            background: -webkit-gradient(linear, left top, left bottom, from(#6d6d6d), to(#080808) );
+            background: -moz-linear-gradient(-90deg, #6d6d6d, #080808);
+            filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#6d6d6d', EndColorStr='#080808');
+        }
+        
+        .silver:active
+        {
+            background: #6d6d6d;
+        }         
