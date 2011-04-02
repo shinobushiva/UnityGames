@@ -1,14 +1,8 @@
-<!-- Indices written at Sat, 2 Apr 2011 12:00:47 UTC -->
+<!-- Indices written at Sat, 2 Apr 2011 19:45:07 UTC -->
 
 <datastore-indexes>
 
-    <!-- Used 75 times in query history -->
-    <datastore-index kind="UploadedDataFragment" ancestor="false" source="auto">
-        <property name="uploadDataRef2" direction="asc"/>
-        <property name="index" direction="asc"/>
-    </datastore-index>
-
-    <!-- Used 127 times in query history -->
+    <!-- Used 1 time in query history -->
     <datastore-index kind="Comment" ancestor="false" source="auto">
         <property name="gameDataKey" direction="asc"/>
         <property name="date" direction="asc"/>

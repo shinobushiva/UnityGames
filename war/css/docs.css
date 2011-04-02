@@ -59,7 +59,8 @@ table.purchase-options  {
 }
 table.purchase-options tr.top {
 	background: url(/images/bottom-box/wb_large_t.png) top left  no-repeat;
-	
+	-webkit-transform: rotate(0deg) skew(0deg, 0deg);
+	-moz-transform: rotate(0deg) skew(0deg, 0deg);
 }
 table.purchase-options tr.top td {
 	padding: 0;
@@ -69,6 +70,7 @@ table.purchase-options tr.bottom td {
 }
 table.purchase-options tr.bottom {
 	background: url(/images/bottom-box/wb_large_b.png) bottom left  no-repeat;
+	
 }
 table.purchase-options td {
 	padding-left: 15px;

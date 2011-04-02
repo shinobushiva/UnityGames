@@ -69,12 +69,12 @@ public class GameController extends Controller {
       
        
 //    編集中のみ隠す
-//        if(g.getGameURL().isEmpty()){
-//            requestScope("play","unityObject.embedUnity('unityPlayer','/unitygames/GameData?id="+g.getKey().getId()+"', 600, 450);");
-//            
-//        }else{
-//          requestScope("play","unityObject.embedUnity('unityPlayer','"+g.getGameURL()+"', 600, 450);");
-//        }
+        if(g.getGameURL().isEmpty()){
+            requestScope("play","unityObject.embedUnity('unityPlayer','/unitygames/GameData?id="+g.getKey().getId()+"', 600, 450);");
+            
+        }else{
+          requestScope("play","unityObject.embedUnity('unityPlayer','"+g.getGameURL()+"', 600, 450);");
+        }
 //     ここまで
         
         

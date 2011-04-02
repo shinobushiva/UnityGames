@@ -1,0 +1,53 @@
+<%@page pageEncoding="UTF-8" isELIgnored="false" session="false"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@taglib prefix="f" uri="http://www.slim3.org/functions"%>
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>share Header</title>
+	<script type="text/javascript" src="http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject.js"></script>
+	
+<link href="/css/lavalamp.css" rel="StyleSheet" type="text/css" />
+<link href="/css/css.css" rel="StyleSheet" type="text/css" />
+<link href="/css/docs.css" rel="StyleSheet" type="text/css" />
+	<link href="/css/prettify.css" rel="StyleSheet" type="text/css"  />
+	<script src="/js/jquery-1.5.1.min.js"></script>
+<script src="/js/jquery.updnWatermark.js"></script>
+<script src="/js/jquery.validate.min.js"></script>
+<script src="/js/jquery.validate.messages_jp.js"></script>
+<script src="/js/cmxform.js"></script>
+<script src="/js/jquery-ui-1.8.11.custom.min.js"></script>
+<script src="/js/jquery.spasticNav.js"></script>
+<script src="/js/prettify.js"></script>
+
+</head>
+
+<body>
+<div class="cube" >
+	<div class="face top">
+            <img src="/images/logo/top.png" width="50%" height="50%">
+        </div>
+	<div class="face left">
+            <img src="/images/logo/left.png" width="50%" height="50%">
+        </div>
+	<div class="face right">
+            <img src="/images/logo/right.png"width="50%" height="50%">
+        </div>
+</div>
+ <ul id="nav1">
+        <li id="selected"><a href="/unitygames/">ホーム</a></li>
+        <li><a href="">UnityGamesについて(未実装)</a></li>
+        <li><a href="">(未実装)</a></li>
+        <li><a href="/unitygames/upload">Gameを登録する</a></li>
+    </ul>
+    
+
+  <script type="text/javascript">
+  $('#nav1').spasticNav();
+        </script>
+
+
+</body>
+</html>

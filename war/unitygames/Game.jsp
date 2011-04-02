@@ -17,12 +17,6 @@
 		<script src="/js/prettify.js"></script>
 		<style type="text/css">
 		<!--
-		body {
-			font-family: Helvetica, Verdana, Arial, sans-serif;
-			background-color: white;
-			color: black;
-			text-align: center;
-		}
 		a:link, a:visited {
 			color: #000;
 		}
@@ -71,6 +65,8 @@
 		</style>
 	</head>
 	<body onload="prettyPrint()">
+	<jsp:include page="/share/header.jsp" />
+	<br><br><br><br><br><br><br><br><br>
 	<script type="text/javascript">
 		<!--
 		function GetUnity() {
@@ -118,7 +114,7 @@ $(function(){
 		   
 		<table border="0" align="center"><tr><td>
 	
-		<p class="header" align="left"><span>${g.gameName}</span></p>
+		
 		<table class="purchase-options" align="center">
 		<tr class="top"><td>
 		<div id="tabs"> 
