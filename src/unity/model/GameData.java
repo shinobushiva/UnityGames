@@ -41,6 +41,8 @@ public class GameData implements Serializable {
     private String contents;
     @Attribute(lob = true)
     private String operations;
+    @Attribute(lob = true)
+    private String code;
     @Attribute(version = true)
     private Long version;
 
@@ -268,6 +270,14 @@ public class GameData implements Serializable {
 
     public Date getLastDate() {
         return lastDate;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getCode() {
+        return code;
     }
 
 

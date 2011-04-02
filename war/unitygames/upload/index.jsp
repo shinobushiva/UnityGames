@@ -9,17 +9,24 @@
 <link href="/css/docs.css" rel="StyleSheet" type="text/css" />
 <script src="/js/jquery-1.5.1.min.js"></script>
 <script src="/js/jquery.updnWatermark.js"></script>
-
+<script src="/js/jquery.validate.min.js"></script>
+<script src="/js/jquery.validate.messages_jp.js"></script>
+<script src="/js/cmxform.js"></script>
 <title>ゲーム登録</title>
+
 </head>
 <body>
 
 <script type="text/javascript">
 jQuery(document).ready(function($) {  
-    $.updnWatermark.attachAll();  
+	   
+	$.updnWatermark.attachAll();  
 });  
 
+
 $(function(){
+    $("#commentForm").validate();  
+
 $( "#tu" ).hide();
 $( "#G2" ).hide();
 $( "#G3" ).hide();
@@ -56,6 +63,30 @@ $( "div#tu" ).hide();
 		$( "#ThumbNail" ).val("");
 	});
 });
+function tagCheck(){
+var flag = 0;
+var str = $("#tag").val();
+var tag = str.split(",");
+if(tag.length >= 4){
+	
+	flag = 1;
+}
+
+
+if(flag){
+
+	window.alert('固定タグは3つまでです'); // 入力漏れがあれば警告ダイアログを表示
+	return false; // 送信を中止
+
+}
+else{
+
+	return true; // 送信を実行
+
+}
+
+}
+
 </script>
 
 
@@ -111,20 +142,24 @@ $( "div#tu" ).hide();
 			</tr>
 		</tbody>
 	</table>
-<h1>ゲームを登録する</h1>
-<div id="commentForm"> 
+
+
+<form action="${f:url('upload')}" method="post"　class="cmxform"  id="commentForm"  enctype="multipart/form-data" onSubmit="return tagCheck()" name="form1">
 <table class="purchase-options" border="0" align="center">
 <tr class="top"><td colspan="2">&nbsp;</td></tr>
 <tr>
-<form action="${f:url('upload')}" method="post" enctype="multipart/form-data">
-<td><label for="GameName"><h2>Game名</h2></label></td>
+<td><h1>ゲームを登録する</h1></td>
 
-<td rowspan="6"><h2>Game説明文</h2>(HTML,css,Javascript使用できます)<br>
-<textarea rows="13" cols="60" name="Contents" title="ゲームの内容を記入してください。改行は<br>を使用してください。"></textarea><br>
-<h2>操作方法</h2>(HTML,css,Javascript使用できます)<br>
-<textarea rows="13" cols="60" name="Operations" title="出来るだけ詳しくアクションボタンの説明を記入してください。改行は<br>です。"></textarea>
-</td>
-</tr><tr><td><label for="GameName">Game名：</label><input type="text" name="GameName" id="GameName" title="Game名を入力"/><br></td>
+<td rowspan="6">
+
+<h2>Game説明文</h2>
+<textarea  style="width: 440;height: 90;" name="Contents" title="ゲームの内容を記入してください。"></textarea><br>
+<h2>操作方法</h2>
+<textarea  style="width: 440;height: 110;" name="Operations" title="出来るだけ詳しくアクションボタンの説明を記入してください。"></textarea>
+<h2>ソースコード(未実装)</h2>
+<textarea  style="width: 440;height: 110;" name="Code" title="ゲームに使用したJavaScriptなどを記入してください"></textarea>
+
+</td></tr><tr><td><label for="GameName">Game名：</label><input type="text" name="GameName" id="GameName" class="required"/></td>
 </tr>
 <tr>
 <td><label for="ThumbNail"><h2>サムネイル画像</h2></label><br>
@@ -148,14 +183,24 @@ Gameデータを投稿するかGameURLを投稿するかお選びください<br
 <input type="text" name="GameURL" id="GameURL" style="width:260px" title="unity3dデータのURLを入力"/><br></div>
 <div id="G3"><label for="HpURL">GameURL:</label>
 <input type="text" name="HpURL" id="HpURL" style="width:260px" title="すでにゲームの出来るURLを入力"/><br></div>
+<div style="position: relative;top: 20;">
+<b>固定タグは3つまでです。複数登録は｢,  ｣で区切りを入れてください</b>
+<h2>固定タグ：<input type="text" name="fixTag"></h2>
+</div>
 </td></tr>
+
 <tr><td>
-<div align="left"><h2>変更/削除キー:<input type="password" name="pass"></h2></div></td><td> <div align="right"><input type="submit" value="ゲーム登録！" style="font-size:large;"/></div>
+<div align="left">
+
+
+<h2>変更/削除キー	：<input type="password" name="pass" style="width: 117;"class="required"></h2></div></td>
+<td> <div align="center"><input type="submit" value="ゲーム登録！" style="font-size:large;" class="submit"/></div>
 </td></tr >
 <tr class="bottom"><td colspan="2">&nbsp;</td></tr>
-</form>
+
 </table>
-</div>
+</form>
+
 サムネイル画像URL、GameURLで利用する際はdropboxなどオンラインストレージが便利です
 
 </body>

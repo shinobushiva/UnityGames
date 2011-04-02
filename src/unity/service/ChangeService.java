@@ -12,8 +12,10 @@ import org.slim3.util.ByteUtil;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.Transaction;
 
+import unity.meta.TagMeta;
 import unity.meta.UploadedDataFragmentMeta;
 import unity.model.GameData;
+import unity.model.Tag;
 import unity.model.ThumbNailData;
 import unity.model.UploadedDataFragment;
 
@@ -21,7 +23,7 @@ import unity.model.UploadedDataFragment;
 public class ChangeService {
     private static final int FRAGMENT_SIZE = 900000;
     private UploadedDataFragmentMeta f = UploadedDataFragmentMeta.get();
-    public GameData change(Key key, String GameName,String GameURL,FileItem GameFile,FileItem ThumbNail,String ThumbNailURL,String Contents,String Operations,String HpURL,String Pass,String ThumbNailType,String GameType,String ThumbNailChange,String GameChange) {
+    public GameData change(Key key, String GameName,String GameURL,FileItem GameFile,FileItem ThumbNail,String ThumbNailURL,String Contents,String Operations,String HpURL,String Pass,String ThumbNailType,String GameType,String ThumbNailChange,String GameChange,String fixTag,String code) {
     
         List<Object> models = new ArrayList<Object>();
        GameData g = Datastore.get(GameData.class, key);
@@ -30,6 +32,7 @@ public class ChangeService {
        g.setPass(Pass);
        g.setContents(Contents);
        g.setOperations(Operations);
+       g.setCode(code);
        g.setLastDate(new Date());
        if(GameChange !=null){
            g.setGameType(GameType);
@@ -115,20 +118,20 @@ public class ChangeService {
  }
        }
        }
+     
+       
+       Tag tag = Datastore.query(Tag.class).filter(TagMeta.get().gameDataKey.equal(g.getKey())).asSingle();
+       System.out.println("tagu:"+tag.getKey());
+       tag.setFixTag(fixTag);
+      Datastore.put(tag);
+       
        Transaction tx = Datastore.beginTransaction();
-      
+       
        Datastore.put(g);
        tx.commit();
        
-//       g.setGameURL(GameURL);
-//       g.setThumbNailURL(ThumbNailURL);
-//       g.setContents(Contents);
-//       g.setOperations(Operations);
-//       g.setHpURL(HpURL);
-//       g.setPass(Pass);
-//       g.setThumbNailType(ThumbNailType);
-//       g.setGameType(GameType);
-       
+
+      
         
         
         

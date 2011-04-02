@@ -5,12 +5,16 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html >
 	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>${g.gameName}</title>
 		<script type="text/javascript" src="http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject.js"></script>
 		<link href="/css/docs.css" rel="StyleSheet" type="text/css" />
 		<link href="/css/jquery-ui-1.8.11.custom.css" rel="StyleSheet" type="text/css"  />
+		<link href="/css/prettify.css" rel="StyleSheet" type="text/css"  />
 		<script src="/js/jquery-1.5.1.min.js"></script>
 		<script src="/js/jquery-ui-1.8.11.custom.min.js"></script>
+		<script src="/js/jquery.validate.min.js"></script>
+		<script src="/js/prettify.js"></script>
 		<style type="text/css">
 		<!--
 		body {
@@ -58,10 +62,15 @@
 			height: 450px;
 			width: 600px;
 		}
+		td.comment{
+		margin-right: 100px;
+		position:relative;
+		width: 300px;
+		}
 		-->
 		</style>
 	</head>
-	<body>
+	<body onload="prettyPrint()">
 	<script type="text/javascript">
 		<!--
 		function GetUnity() {
@@ -74,15 +83,40 @@
 		${play}			
 		}
 		-->
-		</script>
-<script>
 $(function() {   
 	  $('#tabs').tabs();   
+	  $('#contentTab').tabs();   
 	});  
-	</script>
+	
+$(function(){
+	$("#ttt").hide();
+	$("#tt").click(function(){
+		$("#ttt").show();
+	});
+	$("#tagButton").click(function(){
+		$.ajax({
+			type : "post",
+			url : "/tagRegist",
+			dataType: "application/JSON",
+			data :{
+			a:	$("#tagReg").serialize() , 
+			b:	$("#GameKey").serialize()
+			},
+		success: $(function(){
+			$('#tagReg').val("");
+			$('#tagUpload2').load("/ajax/TagUpload2?id=${g.key.id}")
+		})
+		});
+		$(function(){
+			$('#tagUpload').load("/ajax/TagUpload?id=${g.key.id}")
+		});
+	});
+
+});
+</script>
 		 
 		   
-		
+		<table border="0" align="center"><tr><td>
 	
 		<p class="header" align="left"><span>${g.gameName}</span></p>
 		<table class="purchase-options" align="center">
@@ -95,15 +129,30 @@ $(function() {
       </ul>   
 		 
 		<div id="tab1">  
-		<p>${g.contents}</p>
+		<pre>${g.contents}</pre>
 		</div >
 		<div id="tab2">
-		<p>${g.operations}</p>
+		<pre>${g.operations}</pre>
 		</div>
 		</div></td></tr>
 		  
 		<tr class="bottom"><td></td></tr>
-		</table>
+		</table></td></tr><tr><td>
+		<b style="font-size: 20px;color: red;">登録中タグ</b>
+		<c:forEach var="ft" items="${fixTag}">
+		  <b><a href="">${ft}</a></b>
+		</c:forEach>
+		<span id="tagUpload">
+		<c:forEach var="t" items="${tag}">
+		 <a href="">${t}</a>
+		</c:forEach>
+		</span>
+		</td></tr><tr><td>
+		<table border="0" align="center" class="purchase-options" >
+		<div style="word-break:break-all">
+		<tr><td width="200" align="left">
+	
+		</td><td>
 		<div class="content">
 			<div id="unityPlayer">
 				<div class="missing">
@@ -112,7 +161,121 @@ $(function() {
 					</a>
 				</div>
 			</div>
+			
 		</div>
+		</td><td class="comment"　nowrap>
+			</td></tr>
+		</div>
+		</table></td></tr></table>
+			<table border="0" class="purchase-options" align="center" word-break:break-all">
+		<tr><td>
+
+		<div id="contentTab"> 
+		<ul>  
+      <li><a href="#comment"><span>コメント</span></a></li>  
+      <li><a href="#code"><span>ソースコード</span></a></li>
+      <li><a href="#tagg"><span>タグ登録</span></a></li>
+      </ul>   
+		 
+		<div id="comment">  
+		<script type="text/javascript">
+		jQuery.extend(jQuery.validator.messages, {
+	        required: "<br>コメントを記入してください"
+		});
+		
+	$(function(){
+		$(".success").hide();
+		$("#fo").validate();  
+		$("#commentUp").click(function(){
+			$(".error").hide();
+			$(".success").show();
+			$.ajax({
+				type : "post",
+				url : "/commentUp",
+				dataType: "application/JSON",
+				data :{
+				a:	$("#commentR").serialize() , 
+				b:	$("#GameKey").serialize()
+				},
+				success: $(function(){
+						$('#commentLoad').load("/ajax/commentLoad?id=${g.key.id}")
+						$("#commentR").val("");
+						$(".success").fadeOut("slow");
+						
+						
+				})
+				
+		})
+		});
+		
+			
+	});
+	</script>
+	<div id="commentLoad">
+		<c:forEach var="c" items="${c}" >
+		<div align="center">
+		${c.comment}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fmt:formatDate  value="${c.date}" pattern="MM月dd日（E） a KK時mm分"/><br>
+		</div>
+		</c:forEach>	
+	</div>
+		<form id="fo">
+		<p align="center">
+		<textarea id="commentR" style="width:150 ;height:20 ;" name="comment" class="required"></textarea><br><input type="submit" id="commentUp" class="submit">
+		<span class="success">コメントされました</span>
+		</p>
+		</form>
+		</div >
+		<div id="code">
+	
+		<pre class="prettyprint">${g.code}</pre>
+		
+		</div>
+		<div id="tagg">
+		
+		<input type="text" name="tag" style="width: 50%;" id="tagReg">
+		<input type="hidden"id="GameKey" name="GameKey" value="${f:h(g.key)}"><br>
+		<input type="submit" style="width: 50%;" id="tagButton"><br>
+		<br>
+		<div id="tagUpload2">
+		<c:forEach var="t" items="${tag}" varStatus="loop">
+		<script type="text/javascript">
+	$(function(){
+		
+		$("#tagDeleteButton-${loop.index}").click(function(){
+		$.ajax({
+			type : "post",
+			url : "/tagDelete",
+			dataType: "application/JSON",
+			data :{
+			a:	$("#tagDel-${loop.index}").serialize() , 
+			b:	$("#GameKey").serialize()
+			},
+			success: $(function(){
+				
+				$('#tagUpload2').load("/ajax/TagUpload2?id=${g.key.id}")
+			})
+			});
+		$(function(){
+			$('#tagUpload').load("/ajax/TagUpload?id=${g.key.id}")
+		});
+	});
+});
+</script>
+		 <a href="">${t}</a><br>
+		<input type="hidden"id="tagDel-${loop.index}" name="tagDel" value="${t}">
+		<input type="submit" style="width: 30%;" id="tagDeleteButton-${loop.index}" value="削除">
+		<br>
+		</c:forEach>
+		</div>
+		
+		
+		</div>
+		
+		</div>
+		
+		</td></tr>
+		
+		</table>
 		
 	</body>
 </html>

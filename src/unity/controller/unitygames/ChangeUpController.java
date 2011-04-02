@@ -3,6 +3,7 @@ package unity.controller.unitygames;
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.controller.upload.FileItem;
+import org.slim3.util.BeanUtil;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
@@ -30,8 +31,21 @@ public class ChangeUpController extends Controller {
         String GameType =requestScope("GameType");
         String ThumbNailChange =requestScope("ThumbNailChange");
         String GameChange =requestScope("GameChange");
+        String fixTag = requestScope("fixTag");
+        String code = requestScope("Code");
        
-        service.change(key,GameName,GameURL,GameFile,ThumbNail,ThumbNailURL,Contents,Operations,HpURL,Pass,ThumbNailType,GameType,ThumbNailChange,GameChange);
+        
+//        String[] tag = fixTag.split(",");
+//       
+//        if(tag.length >= 4){
+//            System.out.println("エラーです");
+//        
+//            
+//            return forward("change");
+//        }
+        
+        service.change(key,GameName,GameURL,GameFile,ThumbNail,ThumbNailURL,Contents,Operations,HpURL,Pass,ThumbNailType,GameType,ThumbNailChange,GameChange,fixTag,code);
+        
         
         
         

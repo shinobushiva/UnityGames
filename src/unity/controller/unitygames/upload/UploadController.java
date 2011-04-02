@@ -21,10 +21,12 @@ public class UploadController extends Controller {
        String HpURL = requestScope("HpURL");
        String GameURL = requestScope("GameURL");
        String Pass = requestScope("pass");
-       String ThumbNailType =requestScope("ThumbNailType");
-       String GameType =requestScope("GameType");
+       String ThumbNailType = requestScope("ThumbNailType");
+       String GameType = requestScope("GameType");
+       String fixTag = requestScope("fixTag");
+       String code = requestScope("Code");
        
-       service.upload(GameName,GameURL,GameFile,ThumbNail,ThumbNailURL,Contents,Operations,HpURL,Pass,ThumbNailType,GameType);
+       service.upload(GameName,GameURL,GameFile,ThumbNail,ThumbNailURL,Contents,Operations,HpURL,Pass,ThumbNailType,GameType,fixTag,code);
        
            
 

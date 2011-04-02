@@ -6,10 +6,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="/css/jquery-ui-1.8.11.custom.css" rel="StyleSheet" type="text/css"  />
 <link href="/css/docs.css" rel="StyleSheet" type="text/css" />
 <link href="/css/css.css" rel="StyleSheet" type="text/css" />
 <link type='text/css' href='/css/button.css' rel='stylesheet'/>　
 <script src="/js/jquery-1.5.1.min.js"></script>
+		<script src="/js/jquery-ui-1.8.11.custom.min.js"></script>
 <title>Index</title>
 
 
@@ -71,7 +73,7 @@
 <div align="right"><a href="upload/" class="button silver"><span>Gameを登録する</span></a></div>
 <br>
 
-<table border="1">
+<table border="0">
 <tr>
 <c:forEach var="g" items="${GameList}" varStatus="loop">
 
@@ -97,16 +99,16 @@
 </c:choose>
 </td><td width="300">
 <script type="text/javascript">
-
 $(function(){
-$( "#out-${g.key.id}" ).hide();
+	 $("#tabs-${g.key.id}").tabs();  
+});
+$(function(){
+	
+	$( "#out-${g.key.id}" ).hide();
 	$("#change-${g.key.id}").click(function(){
 		$( "#out-${g.key.id}" ).show();
 		$( "#br-${g.key.id}" ).hide();
 	});
-
-    
-
 });
 </script>
 <div align="right">
@@ -114,11 +116,23 @@ $( "#out-${g.key.id}" ).hide();
 </c:if>
 <fmt:formatDate  value="${g.date}" pattern="MM/dd HH:mm" /><br></div>
 
-<div align="right">アクセス数：${g.access}　コメント数：未実装　評価：未実装</div>
-<h4>内容</h4>
-${g.contents }
-<h4>操作説明</h4>
-${g.operations }<br>
+
+<div id="tabs-${g.key.id}" style="word-break:break-all"> 
+		<ul>  
+      <li><a href="#tab1-${g.key.id}"><span>ゲーム説明</span></a></li>  
+      <li><a href="#tab2-${g.key.id}"><span>操作内容</span></a></li>  
+	  <div align="right"><span>アクセス数：${g.access}</span><br><span>コメント数：${g.comment}</span></div> 	
+    
+	  </ul>   
+		 
+		<div id="tab1-${g.key.id}">  
+		<p>${g.contents}</p>
+		</div >
+		<div id="tab2-${g.key.id}">
+		<p>${g.operations}</p>
+		</div>
+		</div>
+		
 <div align="right">
 <form action="change" method="post">
 <a id="change-${g.key.id}"style="font-size: x-small;">変更/削除</a><a id="out-${g.key.id}"><input type="password" name="Pass" style="width: 40px;">
@@ -129,7 +143,7 @@ ${g.operations }<br>
 <div id="br-${g.key.id}"><br><br></div>
 </div>
 
-</td>
+</td><td>&nbsp;</td>
 <c:if test="${loop.count mod 3 == 0}"></tr><tr></c:if>
 
 </c:forEach>

@@ -13,6 +13,7 @@ import unity.meta.GameDataMeta;
 import unity.meta.UploadedDataFragmentMeta;
 
 import unity.model.GameData;
+import unity.model.Tag;
 import unity.model.ThumbNailData;
 import unity.model.UploadedDataFragment;
 
@@ -43,7 +44,7 @@ public class UploadService {
 //       }
     
     
-    public GameData upload(String GameName,String GameURL,FileItem GameFile,FileItem ThumbNail,String ThumbNailURL,String Contents,String Operations,String HpURL,String Pass,String ThumbNailType,String GameType) {
+    public GameData upload(String GameName,String GameURL,FileItem GameFile,FileItem ThumbNail,String ThumbNailURL,String Contents,String Operations,String HpURL,String Pass,String ThumbNailType,String GameType,String fixTag,String code) {
       
         
         List<Object> models = new ArrayList<Object>();
@@ -63,25 +64,22 @@ public class UploadService {
         d.setPass(Pass);
         d.setContents(Contents);
         d.setOperations(Operations);
-        System.out.println(ThumbNailType);
+        d.setCode(code);
         d.setThumbNailType(ThumbNailType);
         d.setGameType(GameType);
-//        List<Note> note = new ArrayList<Note>();
-//        Iterator<Key> ke = Datastore.allocateIds(allocateId, Note.class,1).iterator();
-//        while (ke.hasNext()){    
-//            Note n = new Note();
-//            n.setKey(ke.next());
-//            n.setGameName(GameName);
-//            n.setContents(Contents);
-//            n.setOperations(Operations);
-//            d.setNoteKey(n.getKey());
-//            note.add(n);
-//        }
-//        Datastore.put(note);
         
+
+        List<Tag> taglist = new ArrayList<Tag>();
+        Iterator<Key> tagKeys = Datastore.allocateIds(allocateId, Tag.class,1).iterator();
         List<ThumbNailData> list = new ArrayList<ThumbNailData>();
         Iterator<Key> keyss = Datastore.allocateIds(allocateId, ThumbNailData.class,1).iterator();
-        while (keyss.hasNext()){    
+        while (keyss.hasNext() && tagKeys.hasNext()){    
+            
+            Tag tag = new Tag();
+            tag.setFixTag(fixTag);
+            tag.setGameDataKey(d.getKey());
+            taglist.add(tag);
+            
             ThumbNailData child = new ThumbNailData();
             child.setKey(keyss.next());
             child.setGameName(GameName);
@@ -118,7 +116,7 @@ public class UploadService {
         }
         
         Datastore.put(list);
-        
+        Datastore.put(taglist);
         
         
   if (GameFile != null) {

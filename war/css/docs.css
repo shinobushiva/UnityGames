@@ -9,7 +9,10 @@ body, p, ul, ol, td, li {
 body, p { color: #352f28; line-height: 17px;}
 
 
-
+ #commentForm label.error 
+    { 
+    color: red;
+       }  
 .txt
 {
 	border: solid 1px #999;
@@ -40,7 +43,7 @@ body, p { color: #352f28; line-height: 17px;}
 	white-space: nowrap;
 	color: #999;
 	padding-left: 4px;
-	height: 1.2em;	/* must specify height for consistent vertical alignment */
+	height: 0.2em;	/* must specify height for consistent vertical alignment */
 	vertical-align: middle;
 }
 

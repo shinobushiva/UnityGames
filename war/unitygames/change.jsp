@@ -9,15 +9,20 @@
 <link href="/css/docs.css" rel="StyleSheet" type="text/css" />
 <script src="/js/jquery-1.5.1.min.js"></script>
 <script src="/js/jquery.updnWatermark.js"></script>
+<script src="/js/jquery.validate.min.js"></script>
+<script src="/js/jquery.validate.messages_jp.js"></script>
+<script src="/js/cmxform.js"></script>
 <title>unitygames Change</title>
+
 </head>
 <body>
 <script type="text/javascript">
+
 jQuery(document).ready(function($) {  
     $.updnWatermark.attachAll();  
 });  
-
 $(function(){
+	$("#commentForm").validate(); 
 	$( "#ThumbNailChange1" ).hide();
 	$( "#ThumbNailChange2" ).hide();
 	$( "#GameChange1" ).hide();
@@ -85,7 +90,29 @@ $( "div#tu" ).hide();
 	  }
       });
 });
-	
+function tagCheck(){
+	var flag = 0;
+	var str = $("#tag").val();
+	var tag = str.split(",");
+	if(tag.length >= 4){
+		
+		flag = 1;
+	}
+
+
+	if(flag){
+
+		window.alert('固定タグは3つまでです'); // 入力漏れがあれば警告ダイアログを表示
+		return false; // 送信を中止
+
+	}
+	else{
+
+		return true; // 送信を実行
+
+	}
+
+	}
 </script>
 
 
@@ -141,24 +168,27 @@ $( "div#tu" ).hide();
 			</tr>
 		</tbody>
 	</table>
-<h1>変更/削除</h1>
-<div id="commentForm"> 
+
+<form action="${f:url('changeUp')}" method="post" class="cmxform"  id="commentForm"  enctype="multipart/form-data" onSubmit="return tagCheck()" name="form1"">
+
 <div style="word-break:break-all">
 <table class="purchase-options" border="0" align="center" width="859">
 <tr class="top"><td colspan="2">&nbsp;</td></tr>
 <tr>
-<form action="${f:url('changeUp')}" method="post" enctype="multipart/form-data">
-<td><label for="GameName"><h2>Game名</h2></label></td>
+<td><h1>変更/削除</h1></td>
 
-<td rowspan="6"><h2>Game説明文</h2>(HTML,css,Javascript使用できます)<br>
-<textarea rows="13" cols="60" name="Contents" title="ゲームの内容を記入してください。改行は<br>を使用してください。">${g.contents }</textarea><br>
-<h2>操作方法</h2>(HTML,css,Javascript使用できます)<br>
-<textarea rows="13" cols="60" name="Operations" title="出来るだけ詳しくアクションボタンの説明を記入してください。改行は<br>です。">${g.operations}</textarea>
+<td rowspan="6">
+<h2>Game説明文</h2>
+<textarea  style="width: 440;height: 90;" name="Contents" title="ゲームの内容を記入してください。">${g.contents }</textarea><br>
+<h2>操作方法</h2>
+<textarea  style="width: 440;height: 110;" name="Operations" title="出来るだけ詳しくアクションボタンの説明を記入してください。">${g.operations}</textarea>
+<h2>ソースコード(未実装)</h2>
+<textarea  style="width: 440;height: 110;" name="Code" title="ゲームに使用したJavaScriptなどを記入してください">${g.code}</textarea>
 </td>
-</tr><tr><td><label for="GameName">Game名：</label><input type="text" name="GameName" id="GameName" value="${g.gameName }"title="Game名を入力"/><br></td>
+</tr><tr><td><h2><label for="GameName">Game名：</label><input type="text" name="GameName" class="required" id="GameName" value="${g.gameName }" /></h2></td>
 </tr>
 <tr>
-<td><label for="ThumbNail"><h2>サムネイル画像<c:if test="${g.thumbNailType =='data' }">
+<td><h2><label for="ThumbNail">サムネイル画像<c:if test="${g.thumbNailType =='data' }">
 <img src="/unitygames/thumbNail?thumbNailKey=${f:h(g.thumbNailKey)}"width="50" height="50" align="right"></h2></label><br>
 現在の設定：
 <label><font color="red">画像データをアップロードする(画像形式のみ)</font></label><br>
@@ -203,14 +233,22 @@ ${g.thumbNailURL}<br></c:if>
 <div id="G3"><label for="HpURL">GameURL:</label>
 <input type="text" name="HpURL" id="HpURL" style="width:260px" title="すでにゲームの出来るURLを入力"/><br></div>
 </div>
+<div style="position: relative;top: 20;">
+<b>固定タグは3つまでです。複数登録は｢,  ｣で区切りを入れてください</b><br>
+
+<h2>固定タグ：<input type="text" name="fixTag" value="${tag.fixTag}"id="tag"></h2>
+</div>
 </td></tr><tr><td>
-<div align="left"><h2>変更/削除キー:<input type="password" name="pass" value="${g.pass}"></h2></div></td><td> <div align="right"><input type="submit" value="変更！" style="font-size:large;"/><input type="hidden" name="key" value="${f:h(g.key)}"></div>
+<div align="left"><h2>変更/削除キー ：<input type="password" name="pass"  class="required"  value="${g.pass}" style="width: 117;"></h2></div></td>
+<td> <div align="center"><input type="submit" value="変更！" class="submit" style="font-size:large;"/><input type="hidden" name="key" value="${f:h(g.key)}"></div>
 </td></tr >
 <tr class="bottom"><td colspan="2">&nbsp;</td></tr>
-</form>
 </table>
 </div>
-</div>
+</form>
+
+
+
 サムネイル画像URL、GameURLで利用する際はdropboxなどオンラインストレージが便利です
 
 

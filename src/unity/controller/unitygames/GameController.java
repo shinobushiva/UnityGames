@@ -2,6 +2,7 @@ package unity.controller.unitygames;
 
 
 import java.net.URI;
+import java.util.List;
 
 
 import org.slim3.controller.Controller;
@@ -12,8 +13,12 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Transaction;
 
 
+import unity.meta.CommentMeta;
 import unity.meta.GameDataMeta;
+import unity.meta.TagMeta;
+import unity.model.Comment;
 import unity.model.GameData;
+import unity.model.Tag;
 
 
 public class GameController extends Controller {
@@ -31,36 +36,46 @@ public class GameController extends Controller {
         long id = asLong("id");
      
         GameData g = Datastore.get(GameData.class, KeyFactory.createKey(dd.getKind(), id));
-
-        System.out.println(g.getKey());
-       
-       
-       
-       
-
-        System.out.println(id);      
-        requestScope("key", g.getKey());
-        
-        
-        
-        
+               requestScope("key", g.getKey());
         
         Transaction tx = Datastore.beginTransaction();
         g.setAccess(g.getAccess()+1);
         Datastore.put(g);
         tx.commit();
-        System.out.println(g.getAccess());
         
         requestScope("g",g);   
-        
-    
-        if(g.getGameURL().isEmpty()){
-            requestScope("play","unityObject.embedUnity('unityPlayer','/unitygames/GameData?id="+g.getKey().getId()+"', 600, 450);");
-            
-        }else{
-          requestScope("play","unityObject.embedUnity('unityPlayer','"+g.getGameURL()+"', 600, 450);");
+
+        //tagを表示
+        Tag tag = Datastore.query(Tag.class).filter(TagMeta.get().gameDataKey.equal(g.getKey())).asSingle();
+      
+        String str = tag.getTag();
+        String fixStr = tag.getFixTag();
+        if(str != null){
+        String[] Tag = str.split(",");
+        requestScope("tag",Tag);
         }
-     
+        String[] fixTag = fixStr.split(",");
+        
+        requestScope("fixTag",fixTag );
+       System.out.println(fixTag); 
+        
+       //コメント表示
+       List<Comment> comment = Datastore.query(Comment.class).filter(CommentMeta.get().gameDataKey.equal(g.getKey())).sort(CommentMeta.get().date.asc).asList();
+       requestScope("c",comment );
+       for(Comment co : comment){
+           long l = co.getDate().getTime() + 1000 * 60 * 60 * 9;
+           co.getDate().setTime(l);
+       }
+      
+       
+//    編集中のみ隠す
+//        if(g.getGameURL().isEmpty()){
+//            requestScope("play","unityObject.embedUnity('unityPlayer','/unitygames/GameData?id="+g.getKey().getId()+"', 600, 450);");
+//            
+//        }else{
+//          requestScope("play","unityObject.embedUnity('unityPlayer','"+g.getGameURL()+"', 600, 450);");
+//        }
+//     ここまで
         
         
         return forward("Game.jsp");
