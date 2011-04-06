@@ -12,6 +12,7 @@ import org.slim3.util.ByteUtil;
 import unity.meta.GameDataMeta;
 import unity.meta.UploadedDataFragmentMeta;
 
+import unity.model.Comment;
 import unity.model.GameData;
 import unity.model.Tag;
 import unity.model.ThumbNailData;
@@ -56,8 +57,26 @@ public class UploadService {
         Key allocateId = Datastore.allocateId(dd);
         d.setKey(allocateId);
         d.setGameName(GameName);
-        d.setThumbNailURL(ThumbNailURL);
-        d.setGameURL(GameURL);
+        
+      if(ThumbNailURL.isEmpty() && ThumbNail == null){
+          d.setThumbNailURL("http://unity-games.appspot.com/DefaultSet/UnityGames.png");
+          d.setThumbNailType("url");
+      }else{
+          d.setThumbNailURL(ThumbNailURL);
+          d.setThumbNailType(ThumbNailType);
+      }
+
+      if(GameURL.isEmpty() && HpURL.isEmpty() && GameFile == null){
+          d.setGameURL("http://unity-games.appspot.com/DefaultSet/UnityGames.unity3d");
+          d.setGameType("url");  
+      }else{
+          d.setGameURL(GameURL);
+          d.setGameType(GameType);
+      }
+        
+     
+      
+      
         d.setHpURL(HpURL);
         d.setDate(new Date());
         d.setLastDate(new Date());
@@ -65,23 +84,23 @@ public class UploadService {
         d.setContents(Contents);
         d.setOperations(Operations);
         d.setCode(code);
-        d.setThumbNailType(ThumbNailType);
-        d.setGameType(GameType);
+        
         
 
-        List<Tag> taglist = new ArrayList<Tag>();
-        Iterator<Key> tagKeys = Datastore.allocateIds(allocateId, Tag.class,1).iterator();
-        List<ThumbNailData> list = new ArrayList<ThumbNailData>();
-        Iterator<Key> keyss = Datastore.allocateIds(allocateId, ThumbNailData.class,1).iterator();
-        while (keyss.hasNext() && tagKeys.hasNext()){    
-            
+//        List<Tag> taglist = new ArrayList<Tag>();
+//        Iterator<Key> tagKeys = Datastore.allocateIds(allocateId, Tag.class,1).iterator();
+//        List<ThumbNailData> list = new ArrayList<ThumbNailData>();
+//        Iterator<Key> keyss = Datastore.allocateIds(allocateId, ThumbNailData.class,1).iterator();
+      
+        Key tagKeys = Datastore.allocateId(allocateId, Tag.class);
+        Key keyss = Datastore.allocateId(allocateId, ThumbNailData.class);
             Tag tag = new Tag();
+            tag.setKey(tagKeys);
             tag.setFixTag(fixTag);
-            tag.setGameDataKey(d.getKey());
-            taglist.add(tag);
+            tag.setTag("");
             
             ThumbNailData child = new ThumbNailData();
-            child.setKey(keyss.next());
+            child.setKey(keyss);
             child.setGameName(GameName);
             child.setDate(new Date());
             
@@ -111,12 +130,11 @@ public class UploadService {
 
                 
             }
-            d.setThumbNailKey(child.getKey());
-            list.add(child);
-        }
+           
         
-        Datastore.put(list);
-        Datastore.put(taglist);
+        
+        Datastore.put(tag);
+        Datastore.put(child);
         
         
   if (GameFile != null) {

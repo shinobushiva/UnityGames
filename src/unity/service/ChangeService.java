@@ -69,7 +69,7 @@ public class ChangeService {
        if(ThumbNailChange != null){
            g.setThumbNailURL(ThumbNailURL);
            g.setThumbNailType(ThumbNailType);
-           ThumbNailData t = Datastore.get(ThumbNailData.class, g.getThumbNailKey());
+           ThumbNailData t = Datastore.query(ThumbNailData.class, g.getKey()).asSingle();
                      
            UploadedDataFragment uf = Datastore.query(UploadedDataFragment.class).filter(UploadedDataFragmentMeta.get().uploadDataRef2.equal(t.getKey())).asSingle();
            if(uf != null){
@@ -108,7 +108,6 @@ public class ChangeService {
 
          
      
-     g.setThumbNailKey(child.getKey());
      list.add(child);
  }
  
@@ -120,7 +119,7 @@ public class ChangeService {
        }
      
        
-       Tag tag = Datastore.query(Tag.class).filter(TagMeta.get().gameDataKey.equal(g.getKey())).asSingle();
+       Tag tag = Datastore.query(Tag.class,g.getKey()).asSingle();
        System.out.println("tagu:"+tag.getKey());
        tag.setFixTag(fixTag);
       Datastore.put(tag);

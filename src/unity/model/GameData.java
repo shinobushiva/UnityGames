@@ -22,7 +22,6 @@ public class GameData implements Serializable {
 
     @Attribute(primaryKey = true)
     private Key key;
-    private Key thumbNailKey;
     private Key noteKey;
     private String gameName;
     private String gameURL;
@@ -152,13 +151,7 @@ public class GameData implements Serializable {
         return length;
     }
 
-    public Key getThumbNailKey() {
-        return thumbNailKey;
-    }
-
-    public void setThumbNailKey(Key thumbNailKey) {
-        this.thumbNailKey = thumbNailKey;
-    }
+ 
 
     public Key getNoteKey() {
         return noteKey;

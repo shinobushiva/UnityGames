@@ -43,7 +43,7 @@ public class TagRegistController extends Controller {
         if(!tagR.isEmpty()){
        String tagReg = tagR + ",";
        System.out.println(tagReg); 
-       Tag tag = Datastore.query(Tag.class).filter(TagMeta.get().gameDataKey.equal(key)).asSingle();
+       Tag tag = Datastore.query(Tag.class,key).asSingle();
        String tagRegist = tag.getTag() + tagReg ;
        tag.setTag(tagRegist);
        Transaction tx = Datastore.beginTransaction();

@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="f" uri="http://www.slim3.org/functions"%>
-
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -12,7 +12,7 @@
 <script src="/js/jquery.validate.min.js"></script>
 <script src="/js/jquery.validate.messages_jp.js"></script>
 <script src="/js/cmxform.js"></script>
-<title>unitygames Change</title>
+<title><fmt:message key="change.home" /></title>
 
 </head>
 <body>
@@ -91,28 +91,13 @@ $( "div#tu" ).hide();
       });
 });
 function tagCheck(){
-	var flag = 0;
-	var str = $("#tag").val();
-	var tag = str.split(",");
-	if(tag.length >= 4){
-		
-		flag = 1;
-	}
-
-
-	if(flag){
-
-		window.alert('固定タグは3つまでです'); // 入力漏れがあれば警告ダイアログを表示
-		return false; // 送信を中止
-
-	}
-	else{
-
-		return true; // 送信を実行
-
-	}
-
-	}
+var flag = 0;var str = $("#tag").val();var tag = str.split(",");
+if(tag.length >= 4){flag = 1;}
+if(flag){window.alert('<fmt:message key="fixTag.notice" />'); // 入力漏れがあれば警告ダイアログを表示
+return false; // 送信を中止
+}
+else{return true; // 送信を実行
+}}
 </script>
 
 <jsp:include page="/share/header.jsp" />
@@ -123,81 +108,81 @@ function tagCheck(){
 <table class="purchase-options" border="0" align="center" width="859">
 <tr class="top"><td colspan="2">&nbsp;</td></tr>
 <tr>
-<td><h1>変更/削除</h1></td>
+<td><h1><fmt:message key="change.delete" /></h1></td>
 
 <td rowspan="6">
-<h2>Game説明文</h2>
-<textarea  style="width: 440;height: 90;" name="Contents" title="ゲームの内容を記入してください。">${g.contents }</textarea><br>
-<h2>操作方法</h2>
-<textarea  style="width: 440;height: 110;" name="Operations" title="出来るだけ詳しくアクションボタンの説明を記入してください。">${g.operations}</textarea>
-<h2>ソースコード</h2>
-<textarea  style="width: 440;height: 110;" name="Code" title="ゲームに使用したJavaScriptなどを記入してください">${g.code}</textarea>
+<h2><fmt:message key="explanation" /></h2>
+<textarea  style="width: 440;height: 90;" name="Contents" title="<fmt:message key="contents.title" />">${g.contents }</textarea><br>
+<h2><fmt:message key="operation" /></h2>
+<textarea  style="width: 440;height: 110;" name="Operations" title="<fmt:message key="operation.title" />">${g.operations}</textarea>
+<h2><fmt:message key="code" /></h2>
+<textarea  style="width: 440;height: 110;" name="Code" title="<fmt:message key="code.title" />">${g.code}</textarea>
 </td>
-</tr><tr><td><h2><label for="GameName">Game名：</label><input type="text" name="GameName" class="required" id="GameName" value="${g.gameName }" /></h2></td>
+</tr><tr><td><h2><label for="GameName"><fmt:message key="gameName" /></label><input type="text" name="GameName" class="required" id="GameName" value="${g.gameName }" /></h2></td>
 </tr>
 <tr>
-<td><h2><label for="ThumbNail">サムネイル画像<c:if test="${g.thumbNailType =='data' }">
-<img src="/unitygames/thumbNail?thumbNailKey=${f:h(g.thumbNailKey)}"width="50" height="50" align="right"></h2></label><br>
-現在の設定：
-<label><font color="red">画像データをアップロードする(画像形式のみ)</font></label><br>
+<td><h2><label for="ThumbNail"><fmt:message key="thumbNail" /><c:if test="${g.thumbNailType =='data' }">
+<img src="/unitygames/thumbNail?thumbNailKey=${f:h(g.key)}"width="50" height="50" align="right"></h2></label><br>
+<fmt:message key="now" />：
+<label><font color="red"><fmt:message key="thumbNail.pictureDataUp" /></font></label><br>
 
 
 </c:if>
 
-<c:if test="${g.thumbNailType =='url' }"><img src="${g.thumbNailURL}"width="50" height="50" align="right"></h2><label>現在の設定：<font color="red">画像URLを指定する(画像データのURL)</font></label><br>
+<c:if test="${g.thumbNailType =='url' }"><img src="${g.thumbNailURL}"width="50" height="50" align="right"></h2><label><fmt:message key="now" />：<font color="red"><fmt:message key="thumbNail.urlUp" /></font></label><br>
 </h2></label><br>
 
 
 ${g.thumbNailURL}<br></c:if>
-<input type="checkbox" name="ThumbNailChange" id="ThumbNailChange" value="ThumbNailChange">変更する<br>
+<input type="checkbox" name="ThumbNailChange" id="ThumbNailChange" value="ThumbNailChange"><fmt:message key="change" /><br>
 <div id="ThumbNailChange1">
-<label><input type="radio" name="ThumbNailType" value="data" id="tdata" checked>画像データをアップロードする(画像形式のみ)</label><br>
-<label><input type="radio" name="ThumbNailType" value="url" id="turl">画像URLを指定する(画像データのURL)<br></label></td>
+<label><input type="radio" name="ThumbNailType" value="data" id="tdata" checked><fmt:message key="thumbNail.pictureDataUp" /></label><br>
+<label><input type="radio" name="ThumbNailType" value="url" id="turl"><fmt:message key="thumbNail.urlUp" /><br></label></td>
 </div>
 </tr><tr><td>
 <div id="ThumbNailChange2">
-<div id="tf"><label for="ThumbNail">画像データ：</label><input type="file" name="ThumbNail" id="ThumbNail"></div>
-<div id="tu"><label for="ThumbNailURL">画像URL：</label><input type="text" name="ThumbNailURL" id="ThumbNailURL" style="width:260px" title="画像URLを入力"><br></div>
+<div id="tf"><label for="ThumbNail"><fmt:message key="thumbNail.data" /></label><input type="file" name="ThumbNail" id="ThumbNail"></div>
+<div id="tu"><label for="ThumbNailURL"><fmt:message key="thumbNail.url" /></label><input type="text" name="ThumbNailURL" id="ThumbNailURL" style="width:260px" title="<fmt:message key="thumbNail.url.title" />"><br></div>
 </div>
 </td></tr>
 
-<tr><td><label for="d"><h2>Gameデータ</h2></label><br>
-現在の設定：
-<c:if test="${g.gameType =='data' }"><label><font color="red">Gameデータ(unity3d形式のみ。10mまで)</font><br></label></c:if>
-<c:if test="${g.gameType =='url' }"><label><font color="red">GameURL(unity3d形式のデータURL)</font><br></label>${g.gameURL}<br></c:if>
-<c:if test="${g.gameType =='hpurl' }"><label><font color="red">GameURL(外部サイトURL)</font><br></label></td>${g.hpURL}<br></c:if>
-<input type="checkbox" name="GameChange" id="GameChange" value="GameChange">変更する<br>
+<tr><td><label for="d"><h2><fmt:message key="game.select" /></h2></label><br>
+<fmt:message key="now" />：
+<c:if test="${g.gameType =='data' }"><label><font color="red"><fmt:message key="game.select.data" /></font><br></label></c:if>
+<c:if test="${g.gameType =='url' }"><label><font color="red"><fmt:message key="game.select.url" /></font><br></label>${g.gameURL}<br></c:if>
+<c:if test="${g.gameType =='hpurl' }"><label><font color="red"><fmt:message key="game.select.url.outside" /></font><br></label></td>${g.hpURL}<br></c:if>
+<input type="checkbox" name="GameChange" id="GameChange" value="GameChange"><fmt:message key="change" /><br>
 <div id="GameChange1">
-<label><input type="radio" name="GameType" value="data" id="data" checked>Gameデータ(unity3d形式のみ。10mまで)</label><br>
-<label><input type="radio" name="GameType" value="url" id="url">GameURL(unity3d形式のデータURL)<br></label>
-<label><input type="radio" name="GameType" value="hpurl" id="hp">GameURL(外部サイトURL)<br></label></td>
+<label><input type="radio" name="GameType" value="data" id="data" checked><fmt:message key="game.select.data" /></label><br>
+<label><input type="radio" name="GameType" value="url" id="url"><fmt:message key="game.select.url" /><br></label>
+<label><input type="radio" name="GameType" value="hpurl" id="hp"><fmt:message key="game.select.url.outside" /><br></label></td>
 </div>
 </tr><tr><td>
 <div id="GameChange2">
-<div id="G1"><label for="GameData">Gameデータ：</label>
+<div id="G1"><label for="GameData"><fmt:message key="game.data" /></label>
 <input type="file" name="GameFile" id="GameData"><br></div>
-<div id="G2"><label for="GameURL">GameURL:</label>
-<input type="text" name="GameURL" id="GameURL" style="width:260px" title="unity3dデータのURLを入力"/><br></div>
-<div id="G3"><label for="HpURL">GameURL:</label>
-<input type="text" name="HpURL" id="HpURL" style="width:260px" title="すでにゲームの出来るURLを入力"/><br></div>
+<div id="G2"><label for="GameURL"><fmt:message key="game.url" /></label>
+<input type="text" name="GameURL" id="GameURL" style="width:260px" title="<fmt:message key="game.url.title" />"/><br></div>
+<div id="G3"><label for="HpURL"><fmt:message key="game.url.outside" /></label>
+<input type="text" name="HpURL" id="HpURL" style="width:260px" title="<fmt:message key="game.url.outside.title" />"/><br></div>
 </div>
 <div style="position: relative;top: 20;">
-<b>固定タグは3つまでです。複数登録は｢,  ｣で区切りを入れてください</b><br>
+<b><fmt:message key="fixTag.explanation" /></b><br>
 
-<h2>固定タグ：<input type="text" name="fixTag" value="${tag.fixTag}"id="tag"></h2>
+<h2><fmt:message key="fixTag" /><input type="text" name="fixTag" value="${tag.fixTag}"id="tag"></h2>
 </div>
 </td></tr><tr><td>
-<div align="left"><h2>変更/削除キー ：<input type="password" name="pass"  class="required"  value="${g.pass}" style="width: 117;"></h2></div></td>
+<div align="left"><h2><fmt:message key="change.delete.key" /><input type="password" name="pass"  class="required"  value="${g.pass}" style="width: 117;"></h2></div></td>
 <td> <div align="center"><input type="submit" value="変更！" class="submit" style="font-size:large;"/><input type="hidden" name="key" value="${f:h(g.key)}"></div>
 </td></tr >
 <tr class="bottom"><td colspan="2">&nbsp;</td></tr>
 </table>
 </div>
 </form>
+<form action="delete" method="post"><div align="center"><input type="submit" value="削除！"　name="delete" value="ok" style="font-size:large;width: 859;position:relative;top:-50;" /></div><input type="hidden" name="key" value="${f:h(g.key)}"></form>
 
 
-
-サムネイル画像URL、GameURLで利用する際はdropboxなどオンラインストレージが便利です
+<fmt:message key="url.explanation" />
 
 
 

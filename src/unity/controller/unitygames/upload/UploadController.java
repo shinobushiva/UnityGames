@@ -13,9 +13,13 @@ public class UploadController extends Controller {
     public Navigation run() throws Exception {
         
        String GameName = requestScope("GameName");
+       
        String ThumbNailURL = requestScope("ThumbNailURL");
-       FileItem GameFile = requestScope("GameFile"); 
        FileItem ThumbNail = requestScope("ThumbNail");
+       
+       
+       
+       FileItem GameFile = requestScope("GameFile"); 
        String Contents = requestScope("Contents");
        String Operations = requestScope("Operations");
        String HpURL = requestScope("HpURL");

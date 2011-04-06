@@ -23,7 +23,7 @@ public class CommentLoadController extends Controller {
         GameData g = Datastore.get(GameData.class, KeyFactory.createKey(dd.getKind(), id));
         
         //コメント表示
-        List<Comment> comment = Datastore.query(Comment.class).filter(CommentMeta.get().gameDataKey.equal(g.getKey())).sort(CommentMeta.get().date.asc).asList();
+        List<Comment> comment = Datastore.query(Comment.class,g.getKey()).sort(CommentMeta.get().date.asc).asList();
         requestScope("c",comment );
         for(Comment co : comment){
             long l = co.getDate().getTime() + 1000 * 60 * 60 * 9;

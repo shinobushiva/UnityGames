@@ -33,7 +33,8 @@ public class ChangeUpController extends Controller {
         String GameChange =requestScope("GameChange");
         String fixTag = requestScope("fixTag");
         String code = requestScope("Code");
-       
+        String delete = requestScope("delete");
+        
         
 //        String[] tag = fixTag.split(",");
 //       

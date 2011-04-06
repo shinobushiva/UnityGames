@@ -14,7 +14,6 @@ public class Tag implements Serializable {
 
     @Attribute(primaryKey = true)
     private Key key;
-    private Key gameDataKey;
     
     
 
@@ -95,13 +94,6 @@ public class Tag implements Serializable {
 
    
 
-    public void setGameDataKey(Key gameDataKey) {
-        this.gameDataKey = gameDataKey;
-    }
-
-    public Key getGameDataKey() {
-        return gameDataKey;
-    }
 
     public void setTag(String tag) {
         this.tag = tag;

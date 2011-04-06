@@ -3,10 +3,11 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="f" uri="http://www.slim3.org/functions"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<html >
+<html xmlns:og="http://ogp.me/ns#"  xmlns:mixi="http://mixi-platform.com/ns#" xmlns:fb="http://www.facebook.com/2008/fbml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>${g.gameName}</title>
+		<meta name="mixi-check-robots" content="noimage" />
 		<script type="text/javascript" src="http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject.js"></script>
 		<link href="/css/docs.css" rel="StyleSheet" type="text/css" />
 		<link href="/css/jquery-ui-1.8.11.custom.css" rel="StyleSheet" type="text/css"  />
@@ -65,8 +66,13 @@
 		</style>
 	</head>
 	<body onload="prettyPrint()">
-	<jsp:include page="/share/header.jsp" />
+	
+	<jsp:include page="/share/header.jsp" >
+	<jsp:param value='${g.gameName}' name='name' />
+</jsp:include>
+	
 	<br><br><br><br><br><br><br><br><br>
+	
 	<script type="text/javascript">
 		<!--
 		function GetUnity() {
@@ -79,6 +85,7 @@
 		${play}			
 		}
 		-->
+		
 $(function() {   
 	  $('#tabs').tabs();   
 	  $('#contentTab').tabs();   
@@ -114,14 +121,34 @@ $(function(){
 		   
 		<table border="0" align="center"><tr><td>
 	
+	<div align="right">
+    <fb:like layout="button_count" width="0"></fb:like>
+    <a id="fb-root"></a>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({appId: '214224191925233', status: true, cookie: true,
+                 xfbml: true});
+      };
+      (function() {
+        var e = document.createElement('script');
+        e.type = 'text/javascript';
+        e.src = document.location.protocol +
+          '//connect.facebook.net/ja_JP/all.js';
+        e.async = true;
+        document.getElementById('fb-root').appendChild(e);
+      }());
+    </script>
+<a href="http://mixi.jp/share.pl" class="mixi-check-button" data-key="42bc93a615261cdd8e17e115918eb36ebf60a729" data-button="button-1"></a><script type="text/javascript" src="http://static.mixi.jp/js/share.js"></script>
+<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="UGames" data-lang="ja"></a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+	</div>
 		
 		<table class="purchase-options" align="center">
 		<tr class="top"><td>
 		<div id="tabs"> 
 		<ul>  
-      <li><a href="#tab1"><span>ゲーム説明</span></a></li>  
-      <li><a href="#tab2"><span>操作内容</span></a></li>  
-	<div align="right"><span>投稿日：<fmt:formatDate  value="${g.date}" pattern="MM/dd" /></span><br><span>最終更新日：<fmt:formatDate  value="${g.lastDate}" pattern="MM/dd" /></span></div> 	
+      <li><a href="#tab1"><span><fmt:message key="explanation" /></span></a></li>  
+      <li><a href="#tab2"><span><fmt:message key="operation" /></span></a></li>  
+    <div align="right"><span><fmt:message key="entryDay" />：<fmt:formatDate  value="${g.date}" pattern="MM/dd" /></span><br><span><fmt:message key="LastEntryDay" />：<fmt:formatDate  value="${g.lastDate}" pattern="MM/dd" /></span></div> 	
       </ul>   
 		 
 		<div id="tab1">  
@@ -130,17 +157,19 @@ $(function(){
 		<div id="tab2">
 		<pre>${g.operations}</pre>
 		</div>
+				
+		
 		</div></td></tr>
 		  
 		<tr class="bottom"><td></td></tr>
 		</table></td></tr><tr><td>
-		<b style="font-size: 20px;color: red;">登録中タグ</b>
+		<b style="font-size: 20px;color: red;"><fmt:message key="registerTag" /></b>
 		<c:forEach var="ft" items="${fixTag}">
-		  <b><a href="">${ft}</a></b>
+		  <b><a href="/search?tag=${ft}">${ft}</a></b>
 		</c:forEach>
 		<span id="tagUpload">
 		<c:forEach var="t" items="${tag}">
-		 <a href="">${t}</a>
+		 <a href="/search?tag=${t}">${t}</a>
 		</c:forEach>
 		</span>
 		</td></tr><tr><td>
@@ -163,20 +192,21 @@ $(function(){
 			</td></tr>
 		</div>
 		</table></td></tr></table>
-			<table border="0" class="purchase-options" align="center" word-break:break-all">
+			<table border="0" class="purchase-options" align="center" style="word-break:break-all">
 		<tr><td>
 
 		<div id="contentTab"> 
 		<ul>  
-      <li><a href="#comment"><span>コメント</span></a></li>  
-      <li><a href="#code"><span>ソースコード</span></a></li>
-      <li><a href="#tagg"><span>タグ登録</span></a></li>
+      <li><a href="#comment"><span><fmt:message key="comment" /></span></a></li>  
+      <li><a href="#code"><span><fmt:message key="code" /></span></a></li>
+	  <li><a href="#tagg"><span><fmt:message key="registTag" /></span></a></li>
+   
       </ul>   
 		 
 		<div id="comment">  
 		<script type="text/javascript">
 		jQuery.extend(jQuery.validator.messages, {
-	        required: "<br>コメントを記入してください"
+	        required: "<br><fmt:message key='not.comment'/>"
 		});
 		
 	$(function(){
@@ -210,14 +240,14 @@ $(function(){
 	<div id="commentLoad">
 		<c:forEach var="c" items="${c}" >
 		<div align="center">
-		${c.comment}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fmt:formatDate  value="${c.date}" pattern="MM月dd日（E） a KK時mm分"/><br>
+		${c.comment}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <fmt:formatDate value="${c.date}" pattern="hh:mm MM/dd/yyyy"/><br>
 		</div>
 		</c:forEach>	
 	</div>
 		<form id="fo">
 		<p align="center">
 		<textarea id="commentR" style="width:150 ;height:20 ;" name="comment" class="required"></textarea><br><input type="submit" id="commentUp" class="submit">
-		<span class="success">コメントされました</span>
+		<span class="success"><fmt:message key="commented" /></span>
 		</p>
 		</form>
 		</div >
@@ -226,7 +256,7 @@ $(function(){
 		<pre class="prettyprint">${g.code}</pre>
 		
 		</div>
-		<div id="tagg">
+<div id="tagg">
 		
 		<input type="text" name="tag" style="width: 50%;" id="tagReg">
 		<input type="hidden"id="GameKey" name="GameKey" value="${f:h(g.key)}"><br>

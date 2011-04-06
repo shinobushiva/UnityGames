@@ -28,7 +28,7 @@ public class ThumbNailController extends Controller {
         String thumbNailKey = asString("thumbNailKey");
         Key key = KeyFactory.stringToKey(thumbNailKey);
 
-        ThumbNailData u = Datastore.get(ThumbNailData.class, key);
+        ThumbNailData u = Datastore.query(ThumbNailData.class, key).asSingle();
         Key upk = u.getKey();
         
        

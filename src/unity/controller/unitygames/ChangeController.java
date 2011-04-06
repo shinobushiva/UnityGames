@@ -30,7 +30,7 @@ public class ChangeController extends Controller {
        requestScope("g",g);
        requestScope("ttt", g.getThumbNailURL());
        
-       Tag tag = Datastore.query(Tag.class).filter(TagMeta.get().gameDataKey.equal(g.getKey())).asSingle();
+       Tag tag = Datastore.query(Tag.class,g.getKey()).asSingle();
        
        requestScope("tag", tag);
      

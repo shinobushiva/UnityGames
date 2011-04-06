@@ -12,12 +12,9 @@
 
 <script src="/js/jquery-1.5.1.min.js"></script>
 		<script src="/js/jquery-ui-1.8.11.custom.min.js"></script>
-<title><fmt:message key="unitygames.top" /></title>
-
-
+<title>${type}<fmt:message key="Result" />：${word}</title>
 </head>
 <body>
-
 <jsp:include page="/share/header.jsp" />
 
 <script type="text/javascript">
@@ -25,6 +22,8 @@ $(function(){
 	 $("#tabss").tabs();  
 });
 </script>
+<div style="position:absolute;top: 140;left:100;font-size: 40px;"><fmt:message key='saerch.${type}' /><fmt:message key="Result" /><br><br>「${word}」</div>
+
 <form action="/search" method="post">
 <div id="tabss" style="position:absolute;top: 120;left:400; width: 459;"> 
 		<ul>  

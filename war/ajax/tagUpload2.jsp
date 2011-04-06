@@ -33,7 +33,7 @@
 	});
 });
 </script>
-		 <a href="">${t}</a><br>
+		 <a href="/search?tag=${t}">${t}</a><br>
 		<input type="hidden"id="tagDel-${loop.index}" name="tagDel" value="${t}">
 	
 		<input type="submit" style=" width: 100%;" id="tagDeleteButton-${loop.index}" value="削除">

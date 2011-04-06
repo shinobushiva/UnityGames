@@ -33,7 +33,7 @@ public class TagDeleteController extends Controller {
         System.out.println("きい"+GameKeyy);
         Key key = KeyFactory.stringToKey(GameKeyy);
         System.out.println(key);
-        Tag tag = Datastore.query(Tag.class).filter(TagMeta.get().gameDataKey.equal(key)).asSingle();
+        Tag tag = Datastore.query(Tag.class,key).asSingle();
         
         
         String str = tag.getTag();

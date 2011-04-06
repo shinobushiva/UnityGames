@@ -46,7 +46,7 @@ public class GameController extends Controller {
         requestScope("g",g);   
 
         //tagを表示
-        Tag tag = Datastore.query(Tag.class).filter(TagMeta.get().gameDataKey.equal(g.getKey())).asSingle();
+        Tag tag = Datastore.query(Tag.class,g.getKey()).asSingle();
       
         String str = tag.getTag();
         String fixStr = tag.getFixTag();
@@ -60,7 +60,10 @@ public class GameController extends Controller {
        System.out.println(fixTag); 
         
        //コメント表示
-       List<Comment> comment = Datastore.query(Comment.class).filter(CommentMeta.get().gameDataKey.equal(g.getKey())).sort(CommentMeta.get().date.asc).asList();
+//       List<Child> list = Datastore.query(Child.class, ancestorKey).asList();
+       List<Comment> comment = Datastore.query(Comment.class,g.getKey()).sort(CommentMeta.get().date.asc).asList();
+       
+       //       List<Comment> comment = Datastore.query(Comment.class).filter(CommentMeta.get().gameDataKey.equal(g.getKey())).sort(CommentMeta.get().date.asc).asList();
        requestScope("c",comment );
        for(Comment co : comment){
            long l = co.getDate().getTime() + 1000 * 60 * 60 * 9;
