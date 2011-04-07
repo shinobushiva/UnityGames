@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="/css/docs.css" rel="StyleSheet" type="text/css" />
+<link href="/css/buttons.css" rel="StyleSheet" type="text/css" />
 <script src="/js/jquery-1.5.1.min.js"></script>
 <script src="/js/jquery.updnWatermark.js"></script>
 <script src="/js/jquery.validate.min.js"></script>
@@ -66,7 +67,7 @@ $( "div#tu" ).hide();
 function tagCheck(){
 	var flag = 0;var str = $("#tag").val();var tag = str.split(",");
 	if(tag.length >= 4){flag = 1;}
-	if(flag){window.alert('固定タグは3つまでです'); // 入力漏れがあれば警告ダイアログを表示
+	if(flag){window.alert('<fmt:message key="fixTag.notice" />'); // 入力漏れがあれば警告ダイアログを表示
 	return false; // 送信を中止
 	}
 	else{return true; // 送信を実行
@@ -125,7 +126,10 @@ function tagCheck(){
 
 
 <h2><fmt:message key="change.delete.key" /><input type="password" name="pass" style="width: 117;"class="required"></h2></div></td>
-<td> <div align="center"><input type="submit" value="ゲーム登録！" style="font-size:large;" class="submit"/></div>
+<td> 
+	<div id="wrapper" align="center"　>	
+		<button class="button" style="position: absolute;bottom: -270px;left: 700px;width: 250px; height: 80px;font-size: xx-large;">登録！</button>
+		</div>
 </td></tr >
 <tr class="bottom"><td colspan="2">&nbsp;</td></tr>
 

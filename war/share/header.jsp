@@ -34,11 +34,12 @@
 <script src="/js/jquery-ui-1.8.11.custom.min.js"></script>
 <script src="/js/jquery.spasticNav.js"></script>
 <script src="/js/prettify.js"></script>
-
+<script src="/js/reflection.js"></script>
 </head>
 
 <body>
 <div style="width:1000; ">
+<%-- 
 <div class="cube" >
 	<div class="face top">
             <img src="/images/logo/top.png" width="50%" height="50%">
@@ -50,6 +51,10 @@
             <img src="/images/logo/right.png"width="50%" height="50%">
         </div>
 </div>
+ --%>
+
+<a href="/unitygames/"><img src="/images/logo/Logo.png" width="250" style="position: absolute; top: 30;"></a>
+
  <ul id="nav1">
         <li id="selected"><a href="/unitygames/"><fmt:message key="home" /></a></li>
         <li><a href=""><fmt:message key="howto" /></a></li>

@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="/css/docs.css" rel="StyleSheet" type="text/css" />
+<link href="/css/buttons.css" rel="StyleSheet" type="text/css" />
 <script src="/js/jquery-1.5.1.min.js"></script>
 <script src="/js/jquery.updnWatermark.js"></script>
 <script src="/js/jquery.validate.min.js"></script>
@@ -173,13 +174,22 @@ ${g.thumbNailURL}<br></c:if>
 </div>
 </td></tr><tr><td>
 <div align="left"><h2><fmt:message key="change.delete.key" /><input type="password" name="pass"  class="required"  value="${g.pass}" style="width: 117;"></h2></div></td>
-<td> <div align="center"><input type="submit" value="変更！" class="submit" style="font-size:large;"/><input type="hidden" name="key" value="${f:h(g.key)}"></div>
+<td> <div id="wrapper" align="center"　>	
+		<button class="button" name="delete" style="position: absolute;bottom: -270px;left: 700px;width: 250px; height: 80px;font-size: xx-large;"><fmt:message key="button.change" />
+</button>
+		<input type="hidden" name="key" value="${f:h(g.key)}"></div>
 </td></tr >
 <tr class="bottom"><td colspan="2">&nbsp;</td></tr>
 </table>
 </div>
 </form>
-<form action="delete" method="post"><div align="center"><input type="submit" value="削除！"　name="delete" value="ok" style="font-size:large;width: 859;position:relative;top:-50;" /></div><input type="hidden" name="key" value="${f:h(g.key)}"></form>
+<form action="delete" method="post">
+<div id="wrapper" align="center"　>	
+		<button class="button" name="delete" style="position: relative;top:-30;width:859px;font-size: xx-large;"><fmt:message key="button.delete" />
+</button>
+		</div>
+
+<input type="hidden" name="key" value="${f:h(g.key)}"></form>
 
 
 <fmt:message key="url.explanation" />

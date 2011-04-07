@@ -9,7 +9,7 @@
 <link href="/css/jquery-ui-1.8.11.custom.css" rel="StyleSheet" type="text/css"  />
 <link href="/css/docs.css" rel="StyleSheet" type="text/css" />
 <link href="/css/css.css" rel="StyleSheet" type="text/css" />
-
+<link href="/css/button.css" rel="StyleSheet" type="text/css" />
 <script src="/js/jquery-1.5.1.min.js"></script>
 		<script src="/js/jquery-ui-1.8.11.custom.min.js"></script>
 <title><fmt:message key="unitygames.top" /></title>
@@ -23,24 +23,44 @@
 <script type="text/javascript">
 $(function(){
 	 $("#tabss").tabs();  
+
+$("#tak").click(function(){
+	$( "#k" ).val("");
 });
+$("#kik").click(function(){
+	$( "#t" ).val("");
+});
+
+
+
+});
+function Check(){
+	var flag = 0;
+	var str1 = $("#k").val();
+	var str2 = $("#t").val();
+	if(str1.length == 0 && str2.length == 0){flag = 1;}
+	if(flag){
+		return false; // 送信を中止
+	}
+	else{return true; // 送信を実行
+	}}
 </script>
-<form action="/search" method="post">
+<form action="/search" method="post" onSubmit="return Check()">
 <div id="tabss" style="position:absolute;top: 120;left:400; width: 459;"> 
 		<ul>  
-      <li><a href="#tab11"><span><fmt:message key="keyword" /></span></a></li>  
-      <li><a href="#tab22"><span><fmt:message key="tag" /></span></a></li>  
+      <li><a href="#tab11" id="kik"><span><fmt:message key="keyword" /></span></a></li>  
+      <li><a href="#tab22" id="tak"><span><fmt:message key="tag" /></span></a></li>  
 	  </ul>   
 		
 		<div id="tab11" >
 		<div style="position:absolute; bottom: 5;">  
-		<input type="text" name="word" style=" font-size: 20;"><input type="submit">
+		<input type="text" name="word" style=" font-size: 20;" id="k"><button class="silver"><span  class="button">a</span></button>
 		</div>
 		<br>
 		</div >
 		<div id="tab22">
 		<div style="position:absolute; bottom: 5;">  
-		<input type="text" name="tag" style=" font-size: 20;"><input type="submit">
+		<input type="text" name="tag" style=" font-size: 20;" id="t"><input type="submit">
 		</div>
 		<br></div>
 		</div>
