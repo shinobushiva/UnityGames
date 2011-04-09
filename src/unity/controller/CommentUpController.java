@@ -3,10 +3,7 @@ package unity.controller;
 
 
 import java.net.URLDecoder;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
 
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
@@ -14,7 +11,6 @@ import org.slim3.datastore.Datastore;
 
 import unity.model.Comment;
 import unity.model.GameData;
-import unity.model.Tag;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
@@ -24,6 +20,8 @@ public class CommentUpController extends Controller {
 
     @Override
     public Navigation run() throws Exception {
+
+        System.out.println("コメントアップ読み込み");
         
         String co = requestScope("a");
         String Ga = requestScope("b");

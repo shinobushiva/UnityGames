@@ -9,9 +9,10 @@
 		<title>${g.gameName}</title>
 		<meta name="mixi-check-robots" content="noimage" />
 		<script type="text/javascript" src="http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject.js"></script>
-		<link href="/css/docs.css" rel="StyleSheet" type="text/css" />
+		<link href="/css/docs2.css" rel="StyleSheet" type="text/css" />
 		<link href="/css/jquery-ui-1.8.11.custom.css" rel="StyleSheet" type="text/css"  />
 		<link href="/css/prettify.css" rel="StyleSheet" type="text/css"  />
+		<link href="/css/button.css" rel="StyleSheet" type="text/css" />
 		<script src="/js/jquery-1.5.1.min.js"></script>
 		<script src="/js/jquery-ui-1.8.11.custom.min.js"></script>
 		<script src="/js/jquery.validate.min.js"></script>
@@ -107,7 +108,9 @@ $(function(){
 			},
 		success: $(function(){
 			$('#tagReg').val("");
-			$('#tagUpload2').load("/ajax/TagUpload2?id=${g.key.id}")
+			$('#TagUp2').each(function() {
+				 this.contentWindow.location.reload(true);
+				});
 		})
 		});
 		$(function(){
@@ -116,6 +119,7 @@ $(function(){
 	});
 
 });
+
 </script>
 		 
 		   
@@ -209,33 +213,36 @@ $(function(){
 	        required: "<br><fmt:message key='not.comment'/>"
 		});
 		
+	
 	$(function(){
 		$(".success").hide();
 		$("#fo").validate();  
-		$("#commentUp").click(function(){
+		$("#commentUp-${g.key.id}").click(function(){
 			$(".error").hide();
 			$(".success").show();
+		
+			var a = $("#commentR").serialize()
+			var b = $("#GameKey").serialize()
+			var data = {a:a, b:b};
 			$.ajax({
 				type : "post",
 				url : "/commentUp",
-				dataType: "application/JSON",
-				data :{
-				a:	$("#commentR").serialize() , 
-				b:	$("#GameKey").serialize()
-				},
-				success: $(function(){
+				
+				data : data,
+				success: setTimeout(function(){
 						$('#commentLoad').load("/ajax/commentLoad?id=${g.key.id}")
 						$("#commentR").val("");
 						$(".success").fadeOut("slow");
 						
 						
-				})
+				},500)
 				
-		})
+		});
 		});
 		
 			
 	});
+	
 	</script>
 	<div id="commentLoad">
 		<c:forEach var="c" items="${c}" >
@@ -244,12 +251,17 @@ $(function(){
 		</div>
 		</c:forEach>	
 	</div>
-		<form id="fo">
+		
 		<p align="center">
-		<textarea id="commentR" style="width:150 ;height:20 ;" name="comment" class="required"></textarea><br><input type="submit" id="commentUp" class="submit">
+		
+		<input type="text" id="commentR" style="width:150 ;height:20 ;" name="comment" class="required"><br>
+		
+		<button type="submit" class="button delete"　id="commentUp-${g.key.id}" ><span id="commentUp-${g.key.id}">　<fmt:message key="button.comment"/>　</span></button>
+		
+	
 		<span class="success"><fmt:message key="commented" /></span>
 		</p>
-		</form>
+		
 		</div >
 		<div id="code">
 	
@@ -258,41 +270,11 @@ $(function(){
 		</div>
 <div id="tagg">
 		
-		<input type="text" name="tag" style="width: 50%;" id="tagReg">
+		<input type="text" name="tag" style="width:200;" id="tagReg">
+		<button class="button regist" ><span id="tagButton">&nbsp;<fmt:message key="button.regist"/>&nbsp;</span></button>	
 		<input type="hidden"id="GameKey" name="GameKey" value="${f:h(g.key)}"><br>
-		<input type="submit" style="width: 50%;" id="tagButton"><br>
 		<br>
-		<div id="tagUpload2">
-		<c:forEach var="t" items="${tag}" varStatus="loop">
-		<script type="text/javascript">
-	$(function(){
-		
-		$("#tagDeleteButton-${loop.index}").click(function(){
-		$.ajax({
-			type : "post",
-			url : "/tagDelete",
-			dataType: "application/JSON",
-			data :{
-			a:	$("#tagDel-${loop.index}").serialize() , 
-			b:	$("#GameKey").serialize()
-			},
-			success: $(function(){
-				
-				$('#tagUpload2').load("/ajax/TagUpload2?id=${g.key.id}")
-			})
-			});
-		$(function(){
-			$('#tagUpload').load("/ajax/TagUpload?id=${g.key.id}")
-		});
-	});
-});
-</script>
-		 <a href="">${t}</a><br>
-		<input type="hidden"id="tagDel-${loop.index}" name="tagDel" value="${t}">
-		<input type="submit" style="width: 30%;" id="tagDeleteButton-${loop.index}" value="削除">
-		<br>
-		</c:forEach>
-		</div>
+		<iframe src="/ajax/TagUpload2?id=${g.key.id}" scrolling="no" frameborder="0" width="800" align="middle" id="TagUp2"></iframe>
 		
 		
 		</div>

@@ -90,7 +90,9 @@ function tagCheck(){
 <textarea  style="width: 440;height: 110;" name="Operations" title="<fmt:message key="operation.title" />"></textarea>
 <h2><fmt:message key="code" /></h2>
 <textarea  style="width: 440;height: 110;" name="Code" title="<fmt:message key="code.title" />"></textarea>
-
+<div id="wrapper" align="center"　>	
+		<button class="button" style="position: relative;top:30px; width: 250px; height: 80px;font-size: xx-large;"><fmt:message key="button.regist" /></button>
+		</div>
 </td></tr><tr><td><h2><label for="GameName"><fmt:message key="gameName" /></label><input type="text" name="GameName" id="GameName" class="required"/></h2></td>
 </tr>
 <tr>
@@ -127,9 +129,7 @@ function tagCheck(){
 
 <h2><fmt:message key="change.delete.key" /><input type="password" name="pass" style="width: 117;"class="required"></h2></div></td>
 <td> 
-	<div id="wrapper" align="center"　>	
-		<button class="button" style="position: absolute;bottom: -270px;left: 700px;width: 250px; height: 80px;font-size: xx-large;">登録！</button>
-		</div>
+	
 </td></tr >
 <tr class="bottom"><td colspan="2">&nbsp;</td></tr>
 

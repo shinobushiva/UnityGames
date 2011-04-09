@@ -7,12 +7,21 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>ajax CommentLoad</title>
+<link href="/css/docs.css" rel="StyleSheet" type="text/css" />
+		<link href="/css/jquery-ui-1.8.11.custom.css" rel="StyleSheet" type="text/css"  />
+		<link href="/css/prettify.css" rel="StyleSheet" type="text/css"  />
+		<script src="/js/jquery-1.5.1.min.js"></script>
+		<script src="/js/jquery-ui-1.8.11.custom.min.js"></script>
+		<script src="/js/jquery.validate.min.js"></script>
+		<script src="/js/prettify.js"></script>
 </head>
 <body>
+
 <c:forEach var="c" items="${c}" >
 		<div align="center">
 		${c.comment}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fmt:formatDate  value="${c.date}" pattern="MM月dd日（E） a KK時mm分"/><br>
 		</div>
 		</c:forEach>
 </body>
+
 </html>

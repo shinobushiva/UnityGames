@@ -175,7 +175,7 @@ ${g.thumbNailURL}<br></c:if>
 </td></tr><tr><td>
 <div align="left"><h2><fmt:message key="change.delete.key" /><input type="password" name="pass"  class="required"  value="${g.pass}" style="width: 117;"></h2></div></td>
 <td> <div id="wrapper" align="center"　>	
-		<button class="button" name="delete" style="position: absolute;bottom: -270px;left: 700px;width: 250px; height: 80px;font-size: xx-large;"><fmt:message key="button.change" />
+		<button class="button"  style="position: absolute;bottom: -50px;left: 700px;width: 250px; height: 80px;font-size: xx-large;"><fmt:message key="button.change" />
 </button>
 		<input type="hidden" name="key" value="${f:h(g.key)}"></div>
 </td></tr >

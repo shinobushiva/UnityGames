@@ -27,7 +27,7 @@ body, p { color: #352f28; line-height: 17px;}
 	position: relative;	/* positioning container */
 	width: 0;
 	height: 1.25em;	/* must specify height for consistent vertical alignment */
-	vertical-align: top;
+	vertical-align: middle;
 }
 /* IE7/6 hasLayout hack */
 .updnWatermark
@@ -39,7 +39,7 @@ body, p { color: #352f28; line-height: 17px;}
 {
 	position: absolute;
 	left: 0;
-	top: 5;
+	top: 0;
 	white-space: nowrap;
 	color: #999;
 	padding-left: 4px;
@@ -53,12 +53,12 @@ table {
 	font-size: 13px;
 }
 table.purchase-options  {
-	background: url(/images/bottom-box/wb_large_m.png) top left repeat-y;
+	background: url(/images/spacer.gif) top left repeat-y;
 	width:859px;
 	margin-bottom: 50px;
 }
 table.purchase-options tr.top {
-	background: url(/images/bottom-box/wb_large_t.png) top left  no-repeat;
+	background: url(/images/spacer.gif) top left  no-repeat;
 	-webkit-transform: rotate(0deg) skew(0deg, 0deg);
 	-moz-transform: rotate(0deg) skew(0deg, 0deg);
 }
@@ -69,7 +69,7 @@ table.purchase-options tr.bottom td {
 	padding: 0;
 }
 table.purchase-options tr.bottom {
-	background: url(/images/bottom-box/wb_large_b.png) bottom left  no-repeat;
+	background: url(/images/spacer.gif) bottom left  no-repeat;
 	
 }
 table.purchase-options td {

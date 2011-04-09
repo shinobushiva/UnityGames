@@ -9,61 +9,16 @@
 <link href="/css/jquery-ui-1.8.11.custom.css" rel="StyleSheet" type="text/css"  />
 <link href="/css/docs.css" rel="StyleSheet" type="text/css" />
 <link href="/css/css.css" rel="StyleSheet" type="text/css" />
-
+<link href="/css/button.css" rel="StyleSheet" type="text/css" />
 <script src="/js/jquery-1.5.1.min.js"></script>
 		<script src="/js/jquery-ui-1.8.11.custom.min.js"></script>
 <title>${type}<fmt:message key="Result" />：${word}</title>
 </head>
 <body>
-<jsp:include page="/share/header.jsp" />
+<jsp:include page="/share/headerSearch.jsp" />
 
-<script type="text/javascript">
-$(function(){
-	 $("#tabss").tabs();  
+<div style="position:absolute;top: 140;left:50;font-size: 40px;"><fmt:message key='saerch.${type}' /><fmt:message key="Result" /><br><br>「${word}」</div>
 
-$("#tak").click(function(){
-	$( "#k" ).val("");
-});
-$("#kik").click(function(){
-	$( "#t" ).val("");
-});
-
-
-
-});
-function Check(){
-	var flag = 0;
-	var str1 = $("#k").val();
-	var str2 = $("#t").val();
-	if(str1.length == 0 && str2.length == 0){flag = 1;}
-	if(flag){
-		return false; // 送信を中止
-	}
-	else{return true; // 送信を実行
-	}}
-</script>
-<div style="position:absolute;top: 140;left:100;font-size: 40px;"><fmt:message key='saerch.${type}' /><fmt:message key="Result" /><br><br>「${word}」</div>
-
-<form action="/search" method="post" onSubmit="return Check()">
-<div id="tabss" style="position:absolute;top: 120;left:400; width: 459;"> 
-		<ul>  
-      <li><a href="#tab11" id="kik"><span><fmt:message key="keyword" /></span></a></li>  
-      <li><a href="#tab22" id="tak"><span><fmt:message key="tag" /></span></a></li>  
-	  </ul>   
-		
-		<div id="tab11" >
-		<div style="position:absolute; bottom: 5;">  
-		<input type="text" name="word" style=" font-size: 20;" id="k"><input type="submit" id="s">
-		</div>
-		<br>
-		</div >
-		<div id="tab22">
-		<div style="position:absolute; bottom: 5;">  
-		<input type="text" name="tag" style=" font-size: 20;" id="t"><input type="submit">
-		</div>
-		<br></div>
-		</div>
-		</form>
 <br><br><br><br><br><br><br><br><br><br><br><br>
 
 <table border="0" style="width: 1000;">
@@ -110,13 +65,13 @@ $(function(){
 <fmt:formatDate  value="${g.date}" pattern="MM/dd HH:mm" /><br></div>
 
 
-<div id="tabs-${g.key.id}" style="word-break:break-all"> 
-		<ul>  
+<div id="tabs-${g.key.id}" style="word-break:break-all;" > 
+	<ul>  
       <li><a href="#tab1-${g.key.id}"><span><fmt:message key="explanation" /></span></a></li>  
       <li><a href="#tab2-${g.key.id}"><span><fmt:message key="operation" /></span></a></li>  
 	  <div align="right"><span><fmt:message key="access" />：${g.access}</span><br><span><fmt:message key="comment" />：${g.comment}</span></div> 	
     
-	  </ul>   
+  </ul>   
 		 
 		<div id="tab1-${g.key.id}">  
 		<p>${g.contents}</p>

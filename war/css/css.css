@@ -1,41 +1,9 @@
 .title{
-	font-size: 15px;
-	
-	}
-
-.cube{
+	font-size: 30px;
 	position: relative;
-	left:100;
-	top: -20;
-	
+	right: 1em;
 	}
-
-.face {
-	position: absolute;
-	width: 100px;
-	height: 100px;
-	overflow: hidden;
-}
-.top {
-	top: 0;
-	left: 89px;
-	background: #ffffff;
-	-webkit-transform: rotate(-45deg) skew(15deg, 15deg);
-	-moz-transform: rotate(-45deg) skew(15deg, 15deg);
-}
-.left {
-	top: 77px;
-	left: 44px;
-	background: #ffffff;
-	color: #ffffff;
-	-webkit-transform: rotate(15deg) skew(15deg, 15deg);
-	-moz-transform: rotate(15deg) skew(15deg, 15deg);
-}
-.right {
-	top: 52px;
-	left: 88px;
-	background: #ffffff;
-	color: #ffffff;
-	-webkit-transform: rotate(-15deg) skew(-15deg, -15deg);
-	-moz-transform: rotate(-15deg) skew(-15deg, -15deg);
+	
+	a img {
+    border-style:none;
 }
