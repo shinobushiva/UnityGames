@@ -24,20 +24,24 @@
 	
 <link href="/css/lavalamp.css" rel="StyleSheet" type="text/css" />
 <link href="/css/css.css" rel="StyleSheet" type="text/css" />
-<link href="/css/docs.css" rel="StyleSheet" type="text/css" />
+<link href="/css/docs2.css" rel="StyleSheet" type="text/css" />
 <link href="/css/jquery-ui-1.8.11.custom.css" rel="StyleSheet" type="text/css"  />
-	<link href="/css/button.css" rel="StyleSheet" type="text/css" />
-	<script src="/js/jquery-1.5.1.min.js"></script>
+<link href="/css/button.css" rel="StyleSheet" type="text/css" />
+<script src="/js/jquery-1.5.1.min.js"></script>
 <script src="/js/jquery-ui-1.8.11.custom.min.js"></script>
 <script src="/js/jquery.spasticNav.js"></script>
-
+<script src="/js/jquery.validate.min.js"></script>
+<script src="/js/jquery.validate.messages_jp.js"></script>
+<script src="/js/cmxform.js"></script>
 </head>
 
 <body>
+
+<table  align="center" style=" position: relative;right: 10%; " border="0"><tr><td>
 <div style="width:1000; ">
 
 
-<a href="/unitygames/"><img src="/images/logo/Logo.png" width="250px" style="position: absolute; top: 30; right: 1020px;"></a>
+<a href="/unitygames/"><img src="/images/logo/Logo.png" width="250px" style="position: absolute; top: 30;"></a>
 
  <ul id="nav1">
         <li id="selected"><a href="/unitygames/"><fmt:message key="home" /></a></li>
@@ -77,7 +81,7 @@ function Check(){
 	
 </script>
 <form action="/search" method="post" onSubmit="return Check()">
-<div id="tabss" style="position:absolute;top: 120;left:400; width: 459;"> 
+<div id="tabss" style="position:absolute; ;top: 120;left:40%; width: 459;"> 
 		<ul>  
       <li><a href="#tab11" id="kik"><span><fmt:message key="keyword" /></span></a></li>  
       <li><a href="#tab22" id="tak"><span><fmt:message key="tag" /></span></a></li>  
@@ -97,6 +101,6 @@ function Check(){
 		</div>
 		</form>
 
-
+</td></tr></table>
 </body>
 </html>

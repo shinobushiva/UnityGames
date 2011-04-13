@@ -73,6 +73,21 @@ public class SearchController extends Controller {
                     
                   GameData ggg = Datastore.get(GameData.class,tagg.getKey().getParent());
                     System.out.println("あ:"+ggg.getGameName());
+                   
+                    long l = ggg.getDate().getTime() + 1000 * 60 * 60 * 9;
+                    ggg.getDate().setTime(l);
+                    
+                    if(ggg.getContents().length() >= 80){
+                    String s = ggg.getContents().substring(0,80);
+                    ggg.setContents(s+"...");
+                    }
+                    if(ggg.getOperations().length() >= 80){
+                    String o = ggg.getOperations().substring(0,80);
+                    ggg.setOperations(o+"...");
+                    }
+                    
+                    
+                    
                     
                     tr.add(ggg);
                     

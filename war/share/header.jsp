@@ -33,9 +33,9 @@
 </head>
 
 <body>
+<table  align="center" style=" position: relative;right: 10%; " border="0"><tr><td>
 
-
-<a href="/unitygames/"><img src="/images/logo/Logo.png" width="250px" style="position: absolute; top: 30; right: 1010px;"></a>
+<a href="/unitygames/"><img src="/images/logo/Logo.png" width="250px" style="position: absolute; top: 30;"></a>
 
 
  <ul id="nav1">
@@ -50,6 +50,6 @@
   $('#nav1').spasticNav();
         </script>
 
-
+</td></tr></table>
 </body>
 </html>

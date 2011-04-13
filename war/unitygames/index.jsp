@@ -22,12 +22,12 @@
 
 <br><br><br><br><br><br><br><br><br><br><br><br>
 
-<table><tr>
+<table align="center"><tr>
 <c:forEach var="g" items="${GameList}" varStatus="loop">
 
 
 <td>
-<table width="600" border="1" style="position: relative;"><tr><td>
+<table width="600" border="0" style="position: relative;"><tr><td style="padding-left: 20px;">
 
 <script type="text/javascript">
 $(function(){
@@ -45,7 +45,7 @@ $(function(){
 <div align="right">
 <c:if test="${not empty g.hpURL}"><a style="font-size: x-small;color: red;"><fmt:message key="outside" /></a>
 </c:if>
-<fmt:formatDate  value="${g.date}" pattern="MM/dd HH:mm" /><br></div>
+<fmt:message key="entryDay"/>：<fmt:formatDate  value="${g.date}" pattern="MM/dd HH:mm" /><br></div>
 
 
 <div id="tabs-${g.key.id}"  style="word-break:break-all"> 
@@ -62,22 +62,24 @@ $(function(){
 </c:when>
 </c:choose></div>
 		
-      <li style="position: relative;left: 320px;top:5px;"><a href="#tab1-${g.key.id}"><span　><fmt:message key="explanation" /></span></a></li>  
-      <li style="position: relative;left: 320px;top:5px;"><a href="#tab2-${g.key.id}"><span><fmt:message key="operation" /></span></a></li>  
+      <li style="position: relative;left: 170px;top:75px;"><a href="#tab1-${g.key.id}"><span　><fmt:message key="explanation" /></span></a></li>  
+      <li style="position: relative;left: 170px;top:75px;"><a href="#tab2-${g.key.id}"><span><fmt:message key="operation" /></span></a></li>  
 	  <div align="right"><span><fmt:message key="access" />：${g.access}</span><br><span><fmt:message key="comment" />：${g.comment}</span></div> 	
     
 	  </ul>   
 		 
 		<div id="tab1-${g.key.id}">  
+
 <c:choose>
 <c:when test="${empty g.thumbNailURL}">
-<a href="${url}"><img src="/unitygames/thumbNail?thumbNailKey=${f:h(g.key)}"width="150" height="150" class="image"/></a><br>
+ <a href="${url}"><img src="/unitygames/thumbNail?thumbNailKey=${f:h(g.key)}"width="150" height="150" class="image"/></a><br>
 </c:when>
 <c:when test="${not empty g.thumbNailURL}">
 <a href="${url}"><img src="${g.thumbNailURL}"width="150" height="150" class="image"></a><br>
 </c:when>
 </c:choose>
-		<a style="position: absolute;left: 200;bottom: 100;font-size: 15px;font: bold;">${g.contents}</a>
+
+		<a style="position: absolute;left: 200;top: 110px;font-size: 15px;font: bold;">${g.contents}</a>
 		</div >
 		<div id="tab2-${g.key.id}">
 <c:choose>
@@ -88,7 +90,8 @@ $(function(){
 <a href="${url}"><img src="${g.thumbNailURL}"width="150" height="150" class="image"></a><br>
 </c:when>
 </c:choose>
-		<a style="position: absolute;left: 200;bottom: 100;font-size: 15px;font: bold;">${g.operations}</a>
+
+		<a style="position: absolute;left: 200;top: 110px;font-size: 15px;font: bold;">${g.operations}</a>
 		</div>
 		</div>
 		
@@ -109,5 +112,6 @@ $(function(){
 </c:forEach>
 </tr></table>
 <jsp:include page="/share/footer.jsp"  />
+
 </body>
 </html>

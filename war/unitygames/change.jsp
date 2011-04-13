@@ -118,6 +118,10 @@ else{return true; // 送信を実行
 <textarea  style="width: 440;height: 110;" name="Operations" title="<fmt:message key="operation.title" />">${g.operations}</textarea>
 <h2><fmt:message key="code" /></h2>
 <textarea  style="width: 440;height: 110;" name="Code" title="<fmt:message key="code.title" />">${g.code}</textarea>
+<div id="wrapper" align="center"　>	
+		<button class="button"  style="position: relative;top:30px; width: 250px; height: 80px;font-size: xx-large;"><fmt:message key="button.change" />
+</button>
+		<input type="hidden" name="key" value="${f:h(g.key)}"></div>
 </td>
 </tr><tr><td><h2><label for="GameName"><fmt:message key="gameName" /></label><input type="text" name="GameName" class="required" id="GameName" value="${g.gameName }" /></h2></td>
 </tr>
@@ -174,10 +178,7 @@ ${g.thumbNailURL}<br></c:if>
 </div>
 </td></tr><tr><td>
 <div align="left"><h2><fmt:message key="change.delete.key" /><input type="password" name="pass"  class="required"  value="${g.pass}" style="width: 117;"></h2></div></td>
-<td> <div id="wrapper" align="center"　>	
-		<button class="button"  style="position: absolute;bottom: -50px;left: 700px;width: 250px; height: 80px;font-size: xx-large;"><fmt:message key="button.change" />
-</button>
-		<input type="hidden" name="key" value="${f:h(g.key)}"></div>
+<td> 
 </td></tr >
 <tr class="bottom"><td colspan="2">&nbsp;</td></tr>
 </table>

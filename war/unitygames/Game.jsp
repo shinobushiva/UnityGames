@@ -68,7 +68,7 @@
 	</head>
 	<body onload="prettyPrint()">
 	
-	<jsp:include page="/share/header.jsp" >
+	<jsp:include page="/share/headerSearch.jsp" >
 	<jsp:param value='${g.gameName}' name='name' />
 </jsp:include>
 	
@@ -98,24 +98,26 @@ $(function(){
 		$("#ttt").show();
 	});
 	$("#tagButton").click(function(){
+		
+		var a = $("#tagReg").serialize()
+		var b = $("#GameKey").serialize()
+		var data = {a:a, b:b};
+		
+		
 		$.ajax({
 			type : "post",
 			url : "/tagRegist",
-			dataType: "application/JSON",
-			data :{
-			a:	$("#tagReg").serialize() , 
-			b:	$("#GameKey").serialize()
-			},
-		success: $(function(){
-			$('#tagReg').val("");
-			$('#TagUp2').each(function() {
-				 this.contentWindow.location.reload(true);
-				});
-		})
+			data :data,
+		success:
+			setTimeout(function(){
+			$('#tagUpload2').load("/ajax/tagUpload2?id=${g.key.id}")
+			$('#tagUpload').load("/ajax/tagUpload?id=${g.key.id}")
+		},250)
 		});
-		$(function(){
-			$('#tagUpload').load("/ajax/TagUpload?id=${g.key.id}")
-		});
+		
+		
+		
+		$('#tagReg').val("")		
 	});
 
 });
@@ -125,8 +127,10 @@ $(function(){
 		   
 		<table border="0" align="center"><tr><td>
 	
+	<a style="font-size: 30px;">${g.gameName}</a>
+	
 	<div align="right">
-    <fb:like layout="button_count" width="0"></fb:like>
+	<fb:like layout="button_count" width="0"></fb:like>
     <a id="fb-root"></a>
     <script>
       window.fbAsyncInit = function() {
@@ -167,13 +171,13 @@ $(function(){
 		  
 		<tr class="bottom"><td></td></tr>
 		</table></td></tr><tr><td>
-		<b style="font-size: 20px;color: red;"><fmt:message key="registerTag" /></b>
+		<b style="font-size:x-small; ;color: red;"><fmt:message key="registerTag" /></b>
 		<c:forEach var="ft" items="${fixTag}">
-		  <b><a href="/search?tag=${ft}">${ft}</a></b>
+		  <b style="font-size: 30px;"><a href="/search?tag=${ft}">${ft}</a></b>
 		</c:forEach>
 		<span id="tagUpload">
 		<c:forEach var="t" items="${tag}">
-		 <a href="/search?tag=${t}">${t}</a>
+		 <a href="/search?tag=${t}"style="font-size: 20px;" >${t}</a>
 		</c:forEach>
 		</span>
 		</td></tr><tr><td>
@@ -220,24 +224,21 @@ $(function(){
 		$("#commentUp-${g.key.id}").click(function(){
 			$(".error").hide();
 			$(".success").show();
-		
+			
+			$(".success").fadeOut("slow");
 			var a = $("#commentR").serialize()
 			var b = $("#GameKey").serialize()
 			var data = {a:a, b:b};
 			$.ajax({
 				type : "post",
 				url : "/commentUp",
-				
 				data : data,
 				success: setTimeout(function(){
 						$('#commentLoad').load("/ajax/commentLoad?id=${g.key.id}")
-						$("#commentR").val("");
-						$(".success").fadeOut("slow");
-						
-						
-				},500)
+				},250)
 				
 		});
+			$("#commentR").val("");
 		});
 		
 			
@@ -271,11 +272,47 @@ $(function(){
 <div id="tagg">
 		
 		<input type="text" name="tag" style="width:200;" id="tagReg">
-		<button class="button regist" ><span id="tagButton">&nbsp;<fmt:message key="button.regist"/>&nbsp;</span></button>	
+		<button class="button regist" id="tagButton"><span id="tagButton">&nbsp;<fmt:message key="button.regist"/>&nbsp;</span></button>	
 		<input type="hidden"id="GameKey" name="GameKey" value="${f:h(g.key)}"><br>
 		<br>
-		<iframe src="/ajax/TagUpload2?id=${g.key.id}" scrolling="no" frameborder="0" width="800" align="middle" id="TagUp2"></iframe>
+		<div id="tagUpload2">
+<table border="0" style="word-break:break-all">
+	<tr>
+		<c:forEach var="t" items="${tag}" varStatus="loop">
+		<script type="text/javascript">
+		$(function(){
+			$("#tagDeleteButton-${loop.index}").click(function(){
+			
+				var a = $("#tagDel-${loop.index}").serialize()
+				var b = 	$("#GameKey").serialize()
+				var data = {a:a, b:b};
+				
+				$.ajax({
+				type : "post",
+				url : "/tagDelete",
+				data :data,
+				success: setTimeout(function(){
+					$('#tagUpload2').load("/ajax/TagUpload2?id=${g.key.id}")
+					$('#tagUpload').load("/ajax/TagUpload?id=${g.key.id}")
+				},250)
+				});
+			});
+
+		});
+</script>
+		<td width="250" align="center">
 		
+		<input type="hidden"id="GameKey" name="GameKey" value="${f:h(g.key)}"><br>
+		 <a id="t" style="font-size: 20px;">${t}</a><br>
+		<input type="hidden"id="tagDel-${loop.index}" name="tagDel" value="${t}">
+		<button type="submit" class="button delete"　id="tagDeleteButton-${loop.index}"><span id="tagDeleteButton-${loop.index}" style="color: white;font-size: 20;width: 70; height:20;position: relative;right: 0;bottom: 1;">　<fmt:message key="button.delete"/>　</span></button>
+		</td>
+		<c:if test="${loop.count mod 3 == 0}"></tr><tr></c:if>
+		
+		</c:forEach>
+	</tr>
+	</table>
+		</div>
 		
 		</div>
 		

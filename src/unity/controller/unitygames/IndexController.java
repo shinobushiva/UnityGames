@@ -2,6 +2,8 @@ package unity.controller.unitygames;
 
 import java.util.List;
 
+import javax.xml.crypto.Data;
+
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
@@ -9,14 +11,16 @@ import org.slim3.datastore.Datastore;
 
 import unity.meta.GameDataMeta;
 import unity.meta.NoteMeta;
+import unity.meta.TagMeta;
 
 import unity.model.Note;
 import unity.model.GameData;
+import unity.model.Tag;
 
 public class IndexController extends Controller {
  
     private GameDataMeta g = GameDataMeta.get();
-    private NoteMeta n = NoteMeta.get();
+//    private NoteMeta n = NoteMeta.get();
    
     @Override
     public Navigation run() throws Exception {
@@ -41,7 +45,8 @@ public class IndexController extends Controller {
             String o = game.getOperations().substring(0,80);
             game.setOperations(o+"...");
             }
-            
+//          Tag t = Datastore.query(Tag.class,game.getKey().getChild(basePath, id)).asSingle();  
+//          System.out.println("ttt:"+t);
           
         }
         
