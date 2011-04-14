@@ -15,26 +15,32 @@ public class ChangeController extends Controller {
 
     @Override
     public Navigation run() throws Exception {
-        
-       String k = requestScope("key");
-       String pass = requestScope("Pass");
-      
-       Key key = KeyFactory.stringToKey(k);
-       
-       GameData g = Datastore.get(GameData.class, key);
-       
-       if(!g.getPass().equals(pass)){
-           return redirect("index");
-       }
-       
-       requestScope("g",g);
-       requestScope("ttt", g.getThumbNailURL());
-       
-       Tag tag = Datastore.query(Tag.class,g.getKey()).asSingle();
-       
-       requestScope("tag", tag);
-     
-        
+
+        String k = requestScope("key");
+        String pass = requestScope("Pass");
+
+        Key key = KeyFactory.stringToKey(k);
+
+        GameData g = Datastore.get(GameData.class, key);
+
+        if (!g.getPass().equals(pass)) {
+            return redirect("index");
+        }
+
+        requestScope("g", g);
+        requestScope("ttt", g.getThumbNailURL());
+
+        StringBuilder buf = new StringBuilder();
+        for (Tag t : g.getFixTags()) {
+            buf.insert(0, t.getName() + ",");
+
+        }
+        buf.deleteCharAt(buf.length() - 1);
+
+        // Tag tag = Datastore.query(Tag.class,g.getKey()).asSingle();
+
+        requestScope("tag", buf.toString());
+
         return forward("change.jsp");
     }
 }

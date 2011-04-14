@@ -172,12 +172,12 @@ $(function(){
 		<tr class="bottom"><td></td></tr>
 		</table></td></tr><tr><td>
 		<b style="font-size:x-small; ;color: red;"><fmt:message key="registerTag" /></b>
-		<c:forEach var="ft" items="${fixTag}">
-		  <b style="font-size: 30px;"><a href="/search?tag=${ft}">${ft}</a></b>
+		<c:forEach var="ft" items="${g.fixTags}">
+		  <b style="font-size: 30px;"><a href="/search?tag=${ft.name}">${ft.name}</a></b>
 		</c:forEach>
 		<span id="tagUpload">
-		<c:forEach var="t" items="${tag}">
-		 <a href="/search?tag=${t}"style="font-size: 20px;" >${t}</a>
+		<c:forEach var="t" items="${g.tags}">
+		 <a href="/search?tag=${t.name}"style="font-size: 20px;" >${t.name}</a>
 		</c:forEach>
 		</span>
 		</td></tr><tr><td>

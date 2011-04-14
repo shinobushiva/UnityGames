@@ -20,7 +20,7 @@
 <br><br><br><br><br><br><br><br><br><br><br><br>
 
 <table align="center"><tr>
-<c:forEach var="g" items="${Result}" varStatus="loop">
+<c:forEach var="g"  items="${games}" varStatus="loop">
 
 
 <td>
@@ -90,7 +90,7 @@ $(function(){
 		</div>
 		
 <div align="right" style="position: relative;bottom: 25px;">
-<form action="change" method="post">
+<form action="unitygames/change" method="post">
 <a id="change-${g.key.id}"style="font-size: x-small;"><fmt:message key="change.delete" /></a><a id="out-${g.key.id}"><input type="password" name="Pass" style="width: 40px;">
 <button type="submit" ><img id="sub" src="/images/red.gif" /></button> 
 </a>

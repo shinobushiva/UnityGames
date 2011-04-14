@@ -20,7 +20,7 @@ public class UploadedDataFragment implements Serializable {
 
     @Attribute(lob = true)
     private byte[] bytes;
-   
+
     private ShortBlob bytes2;
 
     /**
@@ -45,9 +45,9 @@ public class UploadedDataFragment implements Serializable {
     private org.slim3.datastore.ModelRef<unity.model.ThumbNailData> uploadDataRef2 =
         new org.slim3.datastore.ModelRef<unity.model.ThumbNailData>(
             unity.model.ThumbNailData.class);
-    
+
     private int index;
-    
+
     /**
      * @return the key
      */
@@ -86,7 +86,6 @@ public class UploadedDataFragment implements Serializable {
         this.index = index;
     }
 
-    
     /**
      * @return the index
      */
@@ -104,7 +103,7 @@ public class UploadedDataFragment implements Serializable {
     public ModelRef<ThumbNailData> getUploadDataRef2() {
         return uploadDataRef2;
     }
-    
+
     public void setType(String type) {
         this.type = type;
     }
@@ -113,8 +112,4 @@ public class UploadedDataFragment implements Serializable {
         return type;
     }
 
-  
-
-  
 }
-

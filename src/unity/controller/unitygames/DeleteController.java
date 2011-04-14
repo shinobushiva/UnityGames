@@ -11,17 +11,17 @@ import com.google.appengine.api.datastore.KeyFactory;
 public class DeleteController extends Controller {
 
     private DeleteService service = new DeleteService();
+
     @Override
     public Navigation run() throws Exception {
-        
+
         String k = requestScope("key");
         Key key = KeyFactory.stringToKey(k);
-        
-        System.out.println("dedede:"+key);
-        
+
+        System.out.println("dedede:" + key);
+
         service.delete(key);
-        
-        
+
         return forward(basePath);
     }
 }

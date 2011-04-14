@@ -2,6 +2,8 @@ package unity.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.google.appengine.api.datastore.Key;
 
@@ -10,7 +12,6 @@ import org.slim3.datastore.InverseModelListRef;
 import org.slim3.datastore.Model;
 import org.slim3.datastore.ModelRef;
 import org.slim3.datastore.Sort;
-
 
 import unity.model.GameData;
 import unity.model.UploadedDataFragment;
@@ -45,8 +46,12 @@ public class GameData implements Serializable {
     @Attribute(version = true)
     private Long version;
 
-    
-    
+    @Attribute(lob = true)
+    private Set<Tag> fixTags = new HashSet<Tag>();
+
+    @Attribute(lob = true)
+    private Set<Tag> tags = new HashSet<Tag>();
+
     @Attribute(persistent = false)
     private org.slim3.datastore.InverseModelListRef<unity.model.UploadedDataFragment, unity.model.GameData> fragmentListRef =
         new org.slim3.datastore.InverseModelListRef<unity.model.UploadedDataFragment, unity.model.GameData>(
@@ -54,12 +59,10 @@ public class GameData implements Serializable {
             "uploadDataRef",
             this,
             new Sort("index"));
-    
 
-    
     /**
      * Returns the key.
-     *
+     * 
      * @return the key
      */
     public Key getKey() {
@@ -68,7 +71,7 @@ public class GameData implements Serializable {
 
     /**
      * Sets the key.
-     *
+     * 
      * @param key
      *            the key
      */
@@ -78,7 +81,7 @@ public class GameData implements Serializable {
 
     /**
      * Returns the version.
-     *
+     * 
      * @return the version
      */
     public Long getVersion() {
@@ -87,7 +90,7 @@ public class GameData implements Serializable {
 
     /**
      * Sets the version.
-     *
+     * 
      * @param version
      *            the version
      */
@@ -125,12 +128,6 @@ public class GameData implements Serializable {
         return true;
     }
 
- 
-
-
-
-
-
     public InverseModelListRef<UploadedDataFragment, GameData> getFragmentListRef() {
         return fragmentListRef;
     }
@@ -150,8 +147,6 @@ public class GameData implements Serializable {
     public int getLength() {
         return length;
     }
-
- 
 
     public Key getNoteKey() {
         return noteKey;
@@ -273,9 +268,20 @@ public class GameData implements Serializable {
         return code;
     }
 
+    public void setFixTags(Set<Tag> fixTags) {
+        this.fixTags = fixTags;
+    }
 
- 
+    public Set<Tag> getFixTags() {
+        return fixTags;
+    }
 
-    
- 
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
 }

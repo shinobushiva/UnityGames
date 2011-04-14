@@ -23,13 +23,10 @@ public class ThumbNailData implements Serializable {
     private int length;
     private Date date;
     private String GameName;
-    
-    
+
     @Attribute(version = true)
     private Long version;
 
-    
-    
     @Attribute(persistent = false)
     private org.slim3.datastore.InverseModelListRef<unity.model.UploadedDataFragment, unity.model.ThumbNailData> fragmentListRef =
         new org.slim3.datastore.InverseModelListRef<unity.model.UploadedDataFragment, unity.model.ThumbNailData>(
@@ -37,11 +34,10 @@ public class ThumbNailData implements Serializable {
             "uploadDataRef2",
             this,
             new Sort("index"));
-    
-    
+
     /**
      * Returns the key.
-     *
+     * 
      * @return the key
      */
     public Key getKey() {
@@ -50,7 +46,7 @@ public class ThumbNailData implements Serializable {
 
     /**
      * Sets the key.
-     *
+     * 
      * @param key
      *            the key
      */
@@ -60,7 +56,7 @@ public class ThumbNailData implements Serializable {
 
     /**
      * Returns the version.
-     *
+     * 
      * @return the version
      */
     public Long getVersion() {
@@ -69,7 +65,7 @@ public class ThumbNailData implements Serializable {
 
     /**
      * Sets the version.
-     *
+     * 
      * @param version
      *            the version
      */
@@ -107,12 +103,6 @@ public class ThumbNailData implements Serializable {
         return true;
     }
 
- 
-
-   
-
-
-
     public InverseModelListRef<UploadedDataFragment, ThumbNailData> getFragmentListRef() {
         return fragmentListRef;
     }
@@ -141,6 +131,4 @@ public class ThumbNailData implements Serializable {
         return GameName;
     }
 
-
-
-   }
+}

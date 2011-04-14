@@ -10,7 +10,7 @@ public class SampleControllerTest extends ControllerTestCase {
     @Test
     public void run() throws Exception {
         tester.start("/sample");
-        SampleController controller = tester.getController();
+        UpDateController controller = tester.getController();
         assertThat(controller, is(notNullValue()));
         assertThat(tester.isRedirect(), is(false));
         assertThat(tester.getDestinationPath(), is("/sample.jsp"));

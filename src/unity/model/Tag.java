@@ -14,19 +14,17 @@ public class Tag implements Serializable {
 
     @Attribute(primaryKey = true)
     private Key key;
-    
-    
 
     @Attribute(version = true)
     private Long version;
 
     private String fixTag;
     private String tag;
-    
-    
+    private String name;
+
     /**
      * Returns the key.
-     *
+     * 
      * @return the key
      */
     public Key getKey() {
@@ -35,7 +33,7 @@ public class Tag implements Serializable {
 
     /**
      * Sets the key.
-     *
+     * 
      * @param key
      *            the key
      */
@@ -45,7 +43,7 @@ public class Tag implements Serializable {
 
     /**
      * Returns the version.
-     *
+     * 
      * @return the version
      */
     public Long getVersion() {
@@ -54,7 +52,7 @@ public class Tag implements Serializable {
 
     /**
      * Sets the version.
-     *
+     * 
      * @param version
      *            the version
      */
@@ -92,9 +90,6 @@ public class Tag implements Serializable {
         return true;
     }
 
-   
-
-
     public void setTag(String tag) {
         this.tag = tag;
     }
@@ -111,5 +106,12 @@ public class Tag implements Serializable {
         return fixTag;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 
 }

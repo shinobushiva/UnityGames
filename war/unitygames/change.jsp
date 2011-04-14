@@ -174,7 +174,7 @@ ${g.thumbNailURL}<br></c:if>
 <div style="position: relative;top: 20;">
 <b><fmt:message key="fixTag.explanation" /></b><br>
 
-<h2><fmt:message key="fixTag" /><input type="text" name="fixTag" value="${tag.fixTag}"id="tag"></h2>
+<h2><fmt:message key="fixTag" /><input type="text" name="fixTag" value="${tag}"id="tag"></h2>
 </div>
 </td></tr><tr><td>
 <div align="left"><h2><fmt:message key="change.delete.key" /><input type="password" name="pass"  class="required"  value="${g.pass}" style="width: 117;"></h2></div></td>

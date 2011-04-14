@@ -1,24 +1,27 @@
 package unity.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import com.google.appengine.api.datastore.Key;
 
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.Model;
+import org.slim3.datastore.ModelRef;
 
 @Model(schemaVersion = 1)
-public class Comment implements Serializable {
+public class TagGame implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Attribute(primaryKey = true)
     private Key key;
+
+    private ModelRef<Tag> tagRef = new ModelRef<Tag>(Tag.class);
+
+    private ModelRef<GameData> gameRef = new ModelRef<GameData>(GameData.class);
+
     @Attribute(version = true)
     private Long version;
-    private String comment;
-    private Date date;
 
     /**
      * Returns the key.
@@ -77,7 +80,7 @@ public class Comment implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        Comment other = (Comment) obj;
+        TagGame other = (TagGame) obj;
         if (key == null) {
             if (other.key != null) {
                 return false;
@@ -88,19 +91,12 @@ public class Comment implements Serializable {
         return true;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public ModelRef<GameData> getGameRef() {
+        return gameRef;
     }
 
-    public String getComment() {
-        return comment;
+    public ModelRef<Tag> getTagRef() {
+        return tagRef;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Date getDate() {
-        return date;
-    }
 }

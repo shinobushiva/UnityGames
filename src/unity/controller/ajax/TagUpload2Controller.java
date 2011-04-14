@@ -12,19 +12,23 @@ import com.google.appengine.api.datastore.KeyFactory;
 
 public class TagUpload2Controller extends Controller {
     private GameDataMeta dd = GameDataMeta.get();
+
     @Override
     public Navigation run() throws Exception {
-        
-  long id = asLong("id");
-        
-        GameData g = Datastore.get(GameData.class, KeyFactory.createKey(dd.getKind(), id));
-        
-        Tag tag = Datastore.query(Tag.class,g.getKey()).asSingle();
-        
+
+        long id = asLong("id");
+
+        GameData g =
+            Datastore.get(
+                GameData.class,
+                KeyFactory.createKey(dd.getKind(), id));
+
+        Tag tag = Datastore.query(Tag.class, g.getKey()).asSingle();
+
         String str = tag.getTag();
         String[] Tag = str.split(",");
-        requestScope("tag",Tag);
-        requestScope("g",g);
+        requestScope("tag", Tag);
+        requestScope("g", g);
         return forward("tagUpload2.jsp");
     }
 }

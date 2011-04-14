@@ -1,7 +1,5 @@
 package unity.controller;
 
-
-
 import java.net.URLDecoder;
 import java.util.Date;
 
@@ -22,32 +20,32 @@ public class CommentUpController extends Controller {
     public Navigation run() throws Exception {
 
         System.out.println("コメントアップ読み込み");
-        
+
         String co = requestScope("a");
         String Ga = requestScope("b");
-        
+
         String com = co.substring(8);
         com = URLDecoder.decode(com, "UTF-8");
 
         String GameKeyy = Ga.substring(8);
-        System.out.println("コメント："+com);
-        System.out.println("きい"+GameKeyy);
+        System.out.println("コメント：" + com);
+        System.out.println("きい" + GameKeyy);
         Key key = KeyFactory.stringToKey(GameKeyy);
-       
+
         System.out.println(key);
-        if(!com.isEmpty()){
-        Key commentKey = Datastore.allocateId(key, Comment.class);
-        Comment comment = new Comment();
-        comment.setKey(commentKey);
-        comment.setComment(com);
-        comment.setDate(new Date());
-        GameData g = Datastore.get(GameData.class,key);
-        g.setComment(g.getComment()+1);
-        Datastore.put(g);
-        Transaction tx = Datastore.beginTransaction();
-        Datastore.put(comment);
-        tx.commit();
-            }
+        if (!com.isEmpty()) {
+            Key commentKey = Datastore.allocateId(key, Comment.class);
+            Comment comment = new Comment();
+            comment.setKey(commentKey);
+            comment.setComment(com);
+            comment.setDate(new Date());
+            GameData g = Datastore.get(GameData.class, key);
+            g.setComment(g.getComment() + 1);
+            Datastore.put(g);
+            Transaction tx = Datastore.beginTransaction();
+            Datastore.put(comment);
+            tx.commit();
+        }
         return null;
     }
 }

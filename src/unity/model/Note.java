@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import com.google.appengine.api.datastore.Key;
 
-
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.Model;
 
@@ -20,13 +19,13 @@ public class Note implements Serializable {
     private String Contents;
     @Attribute(lob = true)
     private String Operations;
-    
+
     @Attribute(version = true)
     private Long version;
 
     /**
      * Returns the key.
-     *
+     * 
      * @return the key
      */
     public Key getKey() {
@@ -35,7 +34,7 @@ public class Note implements Serializable {
 
     /**
      * Sets the key.
-     *
+     * 
      * @param key
      *            the key
      */
@@ -45,7 +44,7 @@ public class Note implements Serializable {
 
     /**
      * Returns the version.
-     *
+     * 
      * @return the version
      */
     public Long getVersion() {
@@ -54,7 +53,7 @@ public class Note implements Serializable {
 
     /**
      * Sets the version.
-     *
+     * 
      * @param version
      *            the version
      */
@@ -92,8 +91,6 @@ public class Note implements Serializable {
         return true;
     }
 
-
-
     public void setGameName(String gameName) {
         GameName = gameName;
     }
@@ -118,5 +115,4 @@ public class Note implements Serializable {
         return Operations;
     }
 
- 
 }

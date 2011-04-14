@@ -14,34 +14,35 @@ import unity.service.UploadService;
 public class GameDataController extends Controller {
     private UploadService service = new UploadService();
     private GameDataMeta dd = GameDataMeta.get();
+
     @Override
     public Navigation run() throws Exception {
-        
+
         long id = asLong("id");
-        
-        GameData g = Datastore.get(GameData.class, KeyFactory.createKey(dd.getKind(), id));
-        
-//        String key = asString("key");
-//        System.out.println(key);
-//        Key keyy = KeyFactory.stringToKey(key);
 
-//        /        Key upKey = KeyFactory.stringToKey(upk);
+        GameData g =
+            Datastore.get(
+                GameData.class,
+                KeyFactory.createKey(dd.getKind(), id));
 
-        if(g.getGameURL() != null){
-        
-          requestScope("url", g.getGameURL()) ;
-            
+        // String key = asString("key");
+        // System.out.println(key);
+        // Key keyy = KeyFactory.stringToKey(key);
+
+        // / Key upKey = KeyFactory.stringToKey(upk);
+
+        if (g.getGameURL() != null) {
+
+            requestScope("url", g.getGameURL());
+
         }
-        
-        
+
         GameData data = Datastore.get(GameData.class, g.getKey());
         byte[] bytes = service.getBytes(data);
         System.out.println(data.getGameName());
         requestScope("key", g.getKey());
-        show(data.getGameName()+".unity3d", bytes);
-        
-        
-        
+        show(data.getGameName() + ".unity3d", bytes);
+
         return null;
     }
 }
