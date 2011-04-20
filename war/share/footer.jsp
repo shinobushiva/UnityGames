@@ -7,10 +7,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>share Footer</title>
+<style type="text/css">
+.pointer{
+cursor: pointer;
+}
+</style>
 </head>
 <body>
 <div align="center">
-UnityGamesについて　|　ご利用について　|　お問い合わせ　|　ヘルプ
+<a id="howto2" class="pointer">UnityGamesについて</a>　|　<a id=""class="">ご利用について</a>　|　<a id="contact"class="pointer">お問い合わせ</a>　|　<a id=""class="">ヘルプ</a>
 </div>
 </body>
 </html>

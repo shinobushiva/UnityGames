@@ -22,14 +22,14 @@ public class UpDateController extends Controller {
         List<Tag> asList = Datastore.query(Tag.class).asList();
         for (Tag t : asList) {
 
-            String tag = t.getTag();
+//            String tag = t.getTag();
             String ft = t.getFixTag();
-            String[] Tag = tag.split(",");
-            for (String string : Tag) {
-
-                service.getTag(string.trim());
-
-            }
+//            String[] Tag = tag.split(",");
+//            for (String string : Tag) {
+//
+//                service.getTag(string.trim());
+//
+//            }
             String[] fixTag = ft.split(",");
             for (String string : fixTag) {
 

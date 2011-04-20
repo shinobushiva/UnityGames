@@ -23,11 +23,11 @@ public class TagUpload2Controller extends Controller {
                 GameData.class,
                 KeyFactory.createKey(dd.getKind(), id));
 
-        Tag tag = Datastore.query(Tag.class, g.getKey()).asSingle();
-
-        String str = tag.getTag();
-        String[] Tag = str.split(",");
-        requestScope("tag", Tag);
+//        Tag tag = Datastore.query(Tag.class, g.getKey()).asSingle();
+//
+//        String str = tag.getTag();
+//        String[] Tag = str.split(",");
+//        requestScope("tag", Tag);
         requestScope("g", g);
         return forward("tagUpload2.jsp");
     }

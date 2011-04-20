@@ -23,7 +23,6 @@ public class GameData implements Serializable {
 
     @Attribute(primaryKey = true)
     private Key key;
-    private Key noteKey;
     private String gameName;
     private String gameURL;
     private int length;
@@ -148,13 +147,7 @@ public class GameData implements Serializable {
         return length;
     }
 
-    public Key getNoteKey() {
-        return noteKey;
-    }
-
-    public void setNoteKey(Key noteKey) {
-        this.noteKey = noteKey;
-    }
+  
 
     public String getGameName() {
         return gameName;

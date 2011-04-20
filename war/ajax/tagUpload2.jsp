@@ -22,7 +22,7 @@
 <body>
 	<table border="0" style="word-break:break-all">
 	<tr>
-		<c:forEach var="t" items="${tag}" varStatus="loop">
+		<c:forEach var="t" items="${g.tags}" varStatus="loop">
 		<script type="text/javascript">
 		$(function(){
 			$("#tagDeleteButton-${loop.index}").click(function(){
@@ -45,8 +45,8 @@
 		});
 </script>
 		<td width="250" align="center"><input type="hidden"id="GameKey" name="GameKey" value="${f:h(g.key)}"><br>
-		 <a id="t" style="font-size: 20px;">${t}</a><br>
-		<input type="hidden"id="tagDel-${loop.index}" name="tagDel" value="${t}">
+		 <a id="t" style="font-size: 20px;">${t.name}</a><br>
+		<input type="hidden"id="tagDel-${loop.index}" name="tagDel" value="${t.name}">
 		<button type="submit" class="button delete"　id="tagDeleteButton-${loop.index}"><span id="tagDeleteButton-${loop.index}" style="color: white;font-size: 20;width: 70;height:20; position: relative;right: 0;bottom: 1;">　<fmt:message key="button.delete"/>　</span></button>
 		</td>
 		<c:if test="${loop.count mod 3 == 0}"></tr><tr></c:if>

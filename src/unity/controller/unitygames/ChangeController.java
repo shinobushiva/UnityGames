@@ -29,7 +29,7 @@ public class ChangeController extends Controller {
 
         requestScope("g", g);
         requestScope("ttt", g.getThumbNailURL());
-
+if(g.getFixTags() !=null){
         StringBuilder buf = new StringBuilder();
         for (Tag t : g.getFixTags()) {
             buf.insert(0, t.getName() + ",");
@@ -37,10 +37,8 @@ public class ChangeController extends Controller {
         }
         buf.deleteCharAt(buf.length() - 1);
 
-        // Tag tag = Datastore.query(Tag.class,g.getKey()).asSingle();
-
         requestScope("tag", buf.toString());
-
+}
         return forward("change.jsp");
     }
 }

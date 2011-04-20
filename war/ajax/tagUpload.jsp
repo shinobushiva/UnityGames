@@ -16,8 +16,8 @@
 		<script src="/js/prettify.js"></script>
 </head>
 <body>
-<c:forEach var="t" items="${tag}" >
-		  <a href="/search?tag=${t}"style="font-size: 20px;" >${t}</a>
+<c:forEach var="t" items="${g.tags}" >
+		  <a href="/search?tag=${t.name}"style="font-size: 20px;" >${t.name}</a>
 		</c:forEach>
 </body>
 </html>

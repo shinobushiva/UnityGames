@@ -15,6 +15,8 @@ public class Comment implements Serializable {
 
     @Attribute(primaryKey = true)
     private Key key;
+    private Key gameKey;
+
     @Attribute(version = true)
     private Long version;
     private String comment;
@@ -102,5 +104,13 @@ public class Comment implements Serializable {
 
     public Date getDate() {
         return date;
+    }
+
+    public void setGameKey(Key gameKey) {
+        this.gameKey = gameKey;
+    }
+
+    public Key getGameKey() {
+        return gameKey;
     }
 }

@@ -45,7 +45,7 @@
 
  <ul id="nav1">
         <li id="selected"><a href="/unitygames/"><fmt:message key="home" /></a></li>
-        <li><a href="/howto"><fmt:message key="howto" /></a></li>
+        <li><a  id="howto"><fmt:message key="howto" /></a></li>
         <li><a href="/tutorial"><fmt:message key="tutorial" /></a></li>
         <li><a href="/unitygames/upload"><fmt:message key="upload" /></a></li>
     </ul>

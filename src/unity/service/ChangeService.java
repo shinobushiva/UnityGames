@@ -2,14 +2,17 @@ package unity.service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.slim3.controller.upload.FileItem;
 import org.slim3.datastore.Datastore;
 import org.slim3.datastore.GlobalTransaction;
 import org.slim3.util.ByteUtil;
 
+import sun.util.logging.resources.logging;
 import unity.meta.TagGameMeta;
 import unity.meta.UploadedDataFragmentMeta;
 import unity.model.GameData;
@@ -24,7 +27,8 @@ import com.google.appengine.api.datastore.Transaction;
 public class ChangeService {
     private static final int FRAGMENT_SIZE = 900000;
     private UploadedDataFragmentMeta f = UploadedDataFragmentMeta.get();
-
+    private static final Logger log = Logger.getLogger(ChangeService.class
+        .getName());
     private TagService ts = new TagService();
 
     public GameData change(Key key, String GameName, String GameURL,
@@ -170,7 +174,9 @@ public class ChangeService {
             }
         }
 
-        g.getFixTags().clear();
+        if (g.getFixTags() != null) {
+            g.getFixTags().clear();
+        }
         List<Key> tgs =
             Datastore
                 .query(TagGame.class)
@@ -188,7 +194,18 @@ public class ChangeService {
                 continue;
             }
             Tag tag2 = ts.getTag(t);
-            g.getFixTags().add(tag2);
+            log.info("1234:" + t);
+            System.out.println("tag2" + tag2);
+            System.out.println("Fix:" + g.getFixTags());
+
+            if (g.getFixTags() == null) {
+
+            g.setFixTags(new HashSet<Tag>());    
+                
+            } 
+                g.getFixTags().add(tag2);
+
+            
 
             TagGame tt = new TagGame();
             tt.getGameRef().setKey(g.getKey());

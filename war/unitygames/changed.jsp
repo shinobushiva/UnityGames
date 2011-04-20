@@ -12,6 +12,6 @@
 <jsp:include page="/share/header.jsp" />
 <br><br><br><br><br><br><br><br><br>
 
-<p>Hello unitygames Changed !!!</p>
+<p>変更されました！</p>
 </body>
 </html>

@@ -25,9 +25,7 @@ public class IndexController extends Controller {
     @Override
     public Navigation run() throws Exception {
 
-        List<GameData> Game = Datastore.query(g).asList();
-
-        System.out.println(Game);
+        List<GameData> Game = Datastore.query(g).sort(g.access.desc).asList();
 
         requestScope("GameList", Game);
         for (GameData game : Game) {
@@ -43,17 +41,7 @@ public class IndexController extends Controller {
                 game.setOperations(o + "...");
             }
 
-            // Tag t = Datastore.query(Tag.class,game.get).asSingle();
-            // System.out.println("ttt:"+t);
-
         }
-
-        // List<Note> note =Datastore.query(n).asList();
-        // requestScope("note",note);
-        // for(Note notee: note){
-        //
-        // System.out.println(notee.getContents());
-        // }
 
         return forward("index.jsp");
     }
