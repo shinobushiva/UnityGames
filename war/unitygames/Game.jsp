@@ -23,7 +23,6 @@
 <script src="/js/prettify.js"></script>
 <style type="text/css">
 <!--
-
 div.content {
 	margin: auto;
 	width: 600px;
@@ -65,16 +64,6 @@ td.comment {
 	<jsp:include page="/share/headerSearch.jsp">
 		<jsp:param value='${g.gameName}' name='name' />
 	</jsp:include>
-
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
 
 	<script type="text/javascript">
 		$(function() {
@@ -209,27 +198,27 @@ td.comment {
 					<div style="word-break: break-all">
 						<tr>
 							<td width="200" align="left"></td>
-							<td><div style="position: relative;"><a id="Loaded">
-									
-									
-									<button id="Load"
-										style="background-color: transparent; border: 0;">
-										<img src="/images/Start.png"
-											style="position: absolute; left: 200; top: 300; z-index: 1;">
-									</button> <c:choose>
-										<c:when test="${empty g.thumbNailURL}">
-											<img src="/unitygames/thumbNail?thumbNailKey=${f:h(g.key)}"	width="600" height="450"
-											style="position: relative; opacity: 0.3; filter: alpha(opacity = 30);z-index: 0;" />
-										</c:when>
-										<c:when test="${not empty g.thumbNailURL}">
-											<img src="${g.thumbNailURL}" border="1" width="600"
-												height="450"
-												style="position: relative; opacity: 0.3; filter: alpha(opacity = 30);z-index: 0;" />
-										</c:when>
-									</c:choose>
-									 </a> 
-<button id ="ReLoad" style="position: absolute; left:260; top: ; z-index: 1;">リロード</button></div>
-</td>
+							<td><div style="position: relative;">
+									<a id="Loaded">
+										<button id="Load"
+											style="background-color: transparent; border: 0; position: absolute; left: 200; top: 300; z-index: 1;">
+											<img src="/images/Start.png">
+										</button> <c:choose>
+											<c:when test="${empty g.thumbNailURL}">
+												<img src="/unitygames/thumbNail?thumbNailKey=${f:h(g.key)}"
+													width="600" height="450"
+													style="position: relative; opacity: 0.3; filter: alpha(opacity =     30); z-index: 0;" />
+											</c:when>
+											<c:when test="${not empty g.thumbNailURL}">
+												<img src="${g.thumbNailURL}" border="1" width="600"
+													height="450"
+													style="position: relative; opacity: 0.3; filter: alpha(opacity =     30); z-index: 0;" />
+											</c:when>
+										</c:choose> </a>
+									<button id="ReLoad"
+										style="position: absolute; left: 260; top: ; z-index: 1;">リロード</button>
+								</div>
+							</td>
 							<td class="comment" 　nowrap></td>
 						</tr>
 					</div>

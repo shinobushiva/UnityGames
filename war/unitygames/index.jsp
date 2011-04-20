@@ -14,35 +14,37 @@
 <script src="/js/jquery-1.5.1.min.js"></script>
 <script src="/js/jquery-ui-1.8.11.custom.min.js"></script>
 <script src="/js/jquery.history.js"></script>
-<title><fmt:message key="unitygames.top" /></title>
+<title><fmt:message key="unitygames.top" />
+</title>
 <script type="text/javascript">
-(function($){
-    var origContent = "";
+	(function($) {
+		var origContent = "";
 
-    function loadContent(hash) {
-        if(hash != "") {
-            if(origContent == "") {
-                origContent = $('#content').html();
-            }
-            $('#content').load(hash +".html",
-                               function(){ prettyPrint(); });
-        } else if(origContent != "") {
-            $('#content').html(origContent);
-        }
-    }
+		function loadContent(hash) {
+			if (hash != "") {
+				if (origContent == "") {
+					origContent = $('#content').html();
+				}
+				$('#content').load(hash + ".html", function() {
+					prettyPrint();
+				});
+			} else if (origContent != "") {
+				$('#content').html(origContent);
+			}
+		}
 
-    $(document).ready(function() {
-            $.history.init(loadContent);
-            $('#navigation a').click(function(e) {
-                    var url = $(this).attr('href');
-                    url = url.replace(/^.*#/, '');
-                    $.history.load(url);
-                    return false;
-                });
-        });
-})(jQuery);
+		$(document).ready(function() {
+			$.history.init(loadContent);
+			$('#navigation a').click(function(e) {
+				var url = $(this).attr('href');
+				url = url.replace(/^.*#/, '');
+				$.history.load(url);
+				return false;
+			});
+		});
+	})(jQuery);
 	$(function() {
-		
+
 		$("#View").load("/view?view=default");
 		$("#howto,#howto2").click(function() {
 			$(function() {
@@ -55,7 +57,7 @@
 			})
 		});
 		$("#selectView").change(function() {
-			
+
 			var data = $(this).serialize();
 
 			$.ajax({
@@ -89,19 +91,7 @@
 <body>
 
 	<jsp:include page="/share/headerSearch.jsp" />
-
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
+										
 	<div id="PageLoad">
 
 		<select name="view" id="selectView">
