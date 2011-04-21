@@ -107,6 +107,7 @@ td.comment {
 			<td><a style="font-size: 30px;">${g.gameName}</a>
 
 				<div align="right">
+					<%-- 
 					<fb:like layout="button_count" width="0"></fb:like>
 					<a id="fb-root"></a>
 					<script>
@@ -119,6 +120,9 @@ td.comment {
 							});
 						};
 						(function() {
+							
+							
+							
 							var e = document.createElement('script');
 							e.type = 'text/javascript';
 							e.src = document.location.protocol
@@ -127,6 +131,7 @@ td.comment {
 							document.getElementById('fb-root').appendChild(e);
 						}());
 					</script>
+					--%>
 					<a href="http://mixi.jp/share.pl" class="mixi-check-button"
 						data-key="42bc93a615261cdd8e17e115918eb36ebf60a729"
 						data-button="button-1"></a>
@@ -144,9 +149,11 @@ td.comment {
 							<div id="tabs">
 								<ul>
 									<li><a href="#tab1"><span><fmt:message
-													key="explanation" /> </span> </a></li>
+													key="explanation" /> </span> </a>
+									</li>
 									<li><a href="#tab2"><span><fmt:message
-													key="operation" /> </span> </a></li>
+													key="operation" /> </span> </a>
+									</li>
 									<div align="right">
 										<span><fmt:message key="entryDay" />：<fmt:formatDate
 												value="${g.date}" pattern="MM/dd" /> </span><br> <span><fmt:message
@@ -163,13 +170,15 @@ td.comment {
 								</div>
 
 
-							</div></td>
+							</div>
+						</td>
 					</tr>
 
 					<tr class="bottom">
 						<td></td>
 					</tr>
-				</table></td>
+				</table>
+			</td>
 		</tr>
 		<tr>
 			<td><b style="font-size: x-small;; color: red;"><fmt:message
@@ -178,8 +187,7 @@ td.comment {
 					</b>
 				</c:forEach> <span id="tagUpload"> <c:forEach var="t" items="${g.tags}">
 						<a href="/search?tag=${t.name}" style="font-size: 20px;">${t.name}</a>
-					</c:forEach> </span>
-			</td>
+					</c:forEach> </span></td>
 		</tr>
 		<tr>
 			<td>
@@ -197,22 +205,22 @@ td.comment {
 											<c:when test="${empty g.thumbNailURL}">
 												<img src="/unitygames/thumbNail?thumbNailKey=${f:h(g.key)}"
 													width="600" height="450"
-													style="position: relative; opacity: 0.3; filter: alpha(opacity =         30); z-index: 0;" />
+													style="position: relative; opacity: 0.3; filter: alpha(opacity =           30); z-index: 0;" />
 											</c:when>
 											<c:when test="${not empty g.thumbNailURL}">
 												<img src="${g.thumbNailURL}" border="1" width="600"
 													height="450"
-													style="position: relative; opacity: 0.3; filter: alpha(opacity =         30); z-index: 0;" />
+													style="position: relative; opacity: 0.3; filter: alpha(opacity =           30); z-index: 0;" />
 											</c:when>
 										</c:choose> </a>
 									<button id="ReLoad"
 										style="position: absolute; left: 260; top: ; z-index: 1;">リロード</button>
-								</div>
-							</td>
+								</div></td>
 							<td class="comment" 　nowrap></td>
 						</tr>
 					</div>
-				</table></td>
+				</table>
+			</td>
 		</tr>
 	</table>
 	<table border="0" class="purchase-options" align="center"
@@ -223,11 +231,14 @@ td.comment {
 				<div id="contentTab">
 					<ul>
 						<li><a href="#comment"><span><fmt:message
-										key="comment" /> </span> </a></li>
+										key="comment" /> </span> </a>
+						</li>
 						<li><a href="#code"><span><fmt:message key="code" />
-							</span> </a></li>
+							</span> </a>
+						</li>
 						<li><a href="#tagg"><span><fmt:message
-										key="registTag" /> </span> </a></li>
+										key="registTag" /> </span> </a>
+						</li>
 
 					</ul>
 
@@ -264,8 +275,7 @@ td.comment {
 																type : "post",
 																url : "/commentUp",
 																data : data,
-																success : function(
-																		) {
+																success : function() {
 																	$(
 																			'#commentLoad')
 																			.load(
@@ -371,8 +381,7 @@ td.comment {
 												<span id="tagDeleteButton-${loop.index}"
 													style="color: white; font-size: 20; width: 70; height: 20; position: relative; right: 0; bottom: 1;">
 													<fmt:message key="button.delete" /> </span>
-											</button>
-										</td>
+											</button></td>
 										<c:if test="${loop.count mod 3 == 0}">
 								</tr>
 								<tr>
@@ -385,8 +394,7 @@ td.comment {
 
 					</div>
 
-				</div>
-			</td>
+				</div></td>
 		</tr>
 
 	</table>

@@ -6,13 +6,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link href="/css/docs.css" rel="StyleSheet" type="text/css" />
-<link href="/css/buttons.css" rel="StyleSheet" type="text/css" />
-<script src="/js/jquery-1.5.1.min.js"></script>
-<script src="/js/jquery.updnWatermark.js"></script>
-<script src="/js/jquery.validate.min.js"></script>
-<script src="/js/jquery.validate.messages_jp.js"></script>
-<script src="/js/cmxform.js"></script>
+<%@ include file="/share/css.jsp"%>
+<%@ include file="/share/js.jsp"%>
 <title><fmt:message key="change.home" /></title>
 
 </head>
@@ -100,9 +95,7 @@ return false; // 送信を中止
 else{return true; // 送信を実行
 }}
 </script>
-
-<jsp:include page="/share/header.jsp" />
-<br><br><br><br><br><br><br>
+<%@ include file="/share/header.jsp"%>
 <form action="${f:url('changeUp')}" method="post" class="cmxform"  id="commentForm"  enctype="multipart/form-data" onSubmit="return tagCheck()" name="form1"">
 
 <div style="word-break:break-all">

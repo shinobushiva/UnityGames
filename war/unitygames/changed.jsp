@@ -7,10 +7,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>unitygames Changed</title>
+<%@ include file="/share/css.jsp"%>
+<%@ include file="/share/js.jsp"%>
 </head>
 <body>
-<jsp:include page="/share/header.jsp" />
-<br><br><br><br><br><br><br><br><br>
+<%@ include file="/share/header.jsp"%>
 
 <p>変更されました！</p>
 </body>

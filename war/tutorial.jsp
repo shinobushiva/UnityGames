@@ -14,7 +14,7 @@
 <body>
 	<%@ include file="/share/header.jsp"%>
 	<img src="<fmt:message key='tutorial.picture' />" width="500"
-		align="left" class="tutorial">
+		 >
 
 	<table align="center">
 		<tr>

@@ -6,14 +6,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link href="/css/docs.css" rel="StyleSheet" type="text/css" />
+<%@ include file="/share/css.jsp"%>
+<%@ include file="/share/js.jsp"%>
 <title>Uploadedしました</title>
 </head>
 <body>
-
-<jsp:include page="/share/header.jsp" />
-<br><br><br><br><br><br><br><br><br>
-<p>Uploadしました</p>
+<%@ include file="/share/header.jsp"%>
+	<p>Uploadしました</p>
 
 
 
