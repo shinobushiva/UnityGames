@@ -5,8 +5,7 @@
 	</a>
 
 	<ul id="nav1" style="display: inline; left: 0;">
-		<li id="selected"><a href="/unitygames/"><fmt:message
-					key="home" /> </a>
+		<li id="selected"><a href="/unitygames/"><fmt:message key="home" /> </a>
 		</li>
 		<li><a href="/howto"><fmt:message key="howto" /> </a>
 		</li>

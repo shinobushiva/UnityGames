@@ -22,7 +22,7 @@
 
 
 				<td>
-					<table width="600" border="0" style="position: relative;">
+					<table width="500" border="0" style="position: relative;">
 						<tr>
 							<td style="padding-left: 20px;"><script
 									type="text/javascript">

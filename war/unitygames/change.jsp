@@ -187,7 +187,7 @@ ${g.thumbNailURL}<br></c:if>
 
 <fmt:message key="url.explanation" />
 
-
+<%@ include file="/share/footer.jsp"%>
 
 </body>
 </html>

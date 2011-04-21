@@ -1,13 +1,13 @@
-<!-- Indices written at Thu, 21 Apr 2011 10:44:49 UTC -->
+<!-- Indices written at Thu, 21 Apr 2011 13:12:03 UTC -->
 
 <datastore-indexes>
 
-    <!-- Used 12 times in query history -->
+    <!-- Used 42 times in query history -->
     <datastore-index kind="Comment" ancestor="true" source="auto">
         <property name="date" direction="asc"/>
     </datastore-index>
 
-    <!-- Used 2 times in query history -->
+    <!-- Used 1 time in query history -->
     <datastore-index kind="Comment" ancestor="false" source="auto">
         <property name="gameKey" direction="asc"/>
         <property name="date" direction="desc"/>
