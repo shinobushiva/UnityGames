@@ -4,7 +4,7 @@
         
 
         
-        .button
+        .searchButton
         {
             
             text-decoration: none;
@@ -26,13 +26,13 @@
         
         
         
-        .button, .button span
+        .searchButton, .searchButton span
         {
             -moz-border-radius: .3em;
             border-radius: .3em;
         }
         
-        .button span
+        .searchButton span
         {
             border-top: 1px solid #fff; /* Fallback style */
             border-top: 1px solid rgba(255, 255, 255, 0.5);
@@ -56,14 +56,14 @@
             -webkit-background-size: 3px 3px;            
         }
 
-        .button:hover
+        .searchButton:hover
         {
             box-shadow: 0 0 .1em rgba(0,0,0,0.4);
             -moz-box-shadow: 0 0 .1em rgba(0,0,0,0.4);
             -webkit-box-shadow: 0 0 .1em rgba(0,0,0,0.4);
         }
         
-        .button:active
+        .searchButton:active
         {
             /* When pressed, move it down 1px */
             position: relative;
@@ -73,7 +73,7 @@
 
         /*----------------------------*/
         
-        .silver
+        .black
         {
             background: #080808;
             background: -webkit-gradient(linear, left top, left bottom, from(#080808), to(#6d6d6d) );
@@ -81,7 +81,7 @@
             filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#080808', EndColorStr='#6d6d6d');
         }
         
-        .silver:hover
+        .black:hover
         {
             background: #080808;
             background: -webkit-gradient(linear, left top, left bottom, from(#6d6d6d), to(#080808) );
@@ -89,7 +89,7 @@
             filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#6d6d6d', EndColorStr='#080808');
         }
         
-        .silver:active
+        .black:active
         {
             background: #6d6d6d;
         }         

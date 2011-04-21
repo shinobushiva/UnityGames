@@ -7,6 +7,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>View</title>
+<link href="/css/global.css" rel="StyleSheet" type="text/css" />
+
 </head>
 <body>
 <table align="center">
@@ -15,7 +17,7 @@
 
 
 						<td>
-							<table width="600" border="0" style="position: relative;">
+							<table width="500" border="0" style="position: relative;">
 								<tr>
 									<td style="padding-left: 20px;"><script
 											type="text/javascript">
@@ -51,10 +53,10 @@
 												<div style="position: absolute; left: 35px;">
 													<c:choose>
 														<c:when test="${empty g.hpURL}">
-															<a href="/unitygames/Game?id=${f:h(g.key.id)}"
+															<a href="/unitygames/game?id=${f:h(g.key.id)}"
 																class="title">${g.gameName }</a>
 															<c:set var="url"
-																value="/unitygames/Game?id=${f:h(g.key.id)}" />
+																value="/unitygames/game?id=${f:h(g.key.id)}" />
 														</c:when>
 														<c:when test="${not empty g.hpURL}">
 															<a href="${g.hpURL}" class="title">${g.gameName }</a>
@@ -125,7 +127,7 @@
 										</div>
 
 										<div align="right" style="position: relative; bottom: 25px;">
-											<form action="change" method="post">
+											<form action="/unitygames/change" method="post">
 												<a id="change-${g.key.id}" style="font-size: x-small;"><fmt:message
 														key="change.delete" /> </a><a id="out-${g.key.id}"><input
 													type="password" name="Pass" style="width: 40px;">

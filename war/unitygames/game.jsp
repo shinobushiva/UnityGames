@@ -10,17 +10,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${g.gameName}</title>
 <meta name="mixi-check-robots" content="noimage" />
-<script type="text/javascript"
-	src="http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject.js"></script>
-<link href="/css/docs2.css" rel="StyleSheet" type="text/css" />
-<link href="/css/jquery-ui-1.8.11.custom.css" rel="StyleSheet"
-	type="text/css" />
-<link href="/css/prettify.css" rel="StyleSheet" type="text/css" />
-<link href="/css/button.css" rel="StyleSheet" type="text/css" />
-<script src="/js/jquery-1.5.1.min.js"></script>
-<script src="/js/jquery-ui-1.8.11.custom.min.js"></script>
-<script src="/js/jquery.validate.min.js"></script>
-<script src="/js/prettify.js"></script>
+<%@ include file="/share/css.jsp"%>
+<%@ include file="/share/js.jsp"%>
 <style type="text/css">
 <!--
 div.content {
@@ -61,10 +52,8 @@ td.comment {
 </head>
 <body onload="prettyPrint()">
 
-	<jsp:include page="/share/headerSearch.jsp">
-		<jsp:param value='${g.gameName}' name='name' />
-	</jsp:include>
-
+	<%@ include file="/share/header.jsp"%>
+	<%@ include file="/share/search.jsp"%>
 	<script type="text/javascript">
 		$(function() {
 			$('#tabs').tabs();
@@ -167,10 +156,10 @@ td.comment {
 								</ul>
 
 								<div id="tab1">
-									<pre>${g.contents}</pre>
+									<span>${f:h(g.contents)}</span>
 								</div>
 								<div id="tab2">
-									<pre>${g.operations}</pre>
+									<span>${f:h(g.operations)}</span>
 								</div>
 
 
@@ -194,7 +183,8 @@ td.comment {
 		</tr>
 		<tr>
 			<td>
-				<table border="0" align="center" class="purchase-options">
+				<table border="0" align="center" class="purchase-options"
+					style="background-image: none;">
 					<div style="word-break: break-all">
 						<tr>
 							<td width="200" align="left"></td>
@@ -207,12 +197,12 @@ td.comment {
 											<c:when test="${empty g.thumbNailURL}">
 												<img src="/unitygames/thumbNail?thumbNailKey=${f:h(g.key)}"
 													width="600" height="450"
-													style="position: relative; opacity: 0.3; filter: alpha(opacity =     30); z-index: 0;" />
+													style="position: relative; opacity: 0.3; filter: alpha(opacity =         30); z-index: 0;" />
 											</c:when>
 											<c:when test="${not empty g.thumbNailURL}">
 												<img src="${g.thumbNailURL}" border="1" width="600"
 													height="450"
-													style="position: relative; opacity: 0.3; filter: alpha(opacity =     30); z-index: 0;" />
+													style="position: relative; opacity: 0.3; filter: alpha(opacity =         30); z-index: 0;" />
 											</c:when>
 										</c:choose> </a>
 									<button id="ReLoad"
@@ -275,7 +265,7 @@ td.comment {
 																url : "/commentUp",
 																data : data,
 																success : function(
-																		e) {
+																		) {
 																	$(
 																			'#commentLoad')
 																			.load(
@@ -303,7 +293,7 @@ td.comment {
 							<input type="text" id="commentR" style="width: 150; height: 20;"
 								name="comment" class="required"><br>
 
-							<button type="submit" class="button delete"
+							<button type="submit" class="searchButton black"
 								　id="commentUp-${g.key.id}">
 								<span id="commentUp-${g.key.id}"> <fmt:message
 										key="button.comment" /> </span>
@@ -322,7 +312,7 @@ td.comment {
 					<div id="tagg">
 
 						<input type="text" name="tag" style="width: 200;" id="tagReg">
-						<button class="button regist" id="tagButton">
+						<button class="searchButton black" id="tagButton">
 							<span id="tagButton">&nbsp;<fmt:message
 									key="button.regist" />&nbsp;</span>
 						</button>

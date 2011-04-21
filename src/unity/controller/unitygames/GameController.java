@@ -85,6 +85,6 @@ public class GameController extends Controller {
 //         }
         // ここまで
 
-        return forward("Game.jsp");
+        return forward("game.jsp");
     }
 }

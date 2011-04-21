@@ -61,6 +61,7 @@ table.purchase-options tr.top {
 	background: url(/images/bottom-box/wb_large_t.png) top left  no-repeat;
 	-webkit-transform: rotate(0deg) skew(0deg, 0deg);
 	-moz-transform: rotate(0deg) skew(0deg, 0deg);
+	
 }
 table.purchase-options tr.top td {
 	padding: 0;

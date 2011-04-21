@@ -7,23 +7,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link href="/css/jquery-ui-1.8.11.custom.css" rel="StyleSheet"
-	type="text/css" />
-<link href="/css/docs.css" rel="StyleSheet" type="text/css" />
-<link href="/css/css.css" rel="StyleSheet" type="text/css" />
-<link href="/css/tutorial.css" rel="StyleSheet" type="text/css" />
-<script src="/js/jquery-1.5.1.min.js"></script>
-<script src="/js/jquery-ui-1.8.11.custom.min.js"></script>
+<%@ include file="/share/css.jsp"%>
+<%@ include file="/share/js.jsp"%>
 <title>Tutorial</title>
 </head>
 <body>
-	<jsp:include page="/share/header.jsp" />
-
+	<%@ include file="/share/header.jsp"%>
 	<img src="<fmt:message key='tutorial.picture' />" width="500"
 		align="left" class="tutorial">
-<br><br><br><br><br><br><br>
-
-
 
 	<table align="center">
 		<tr>
@@ -151,7 +142,7 @@
 			</c:forEach>
 		</tr>
 	</table>
-	<jsp:include page="/share/footer.jsp" />
+	<%@ include file="/share/footer.jsp" %>
 
 
 

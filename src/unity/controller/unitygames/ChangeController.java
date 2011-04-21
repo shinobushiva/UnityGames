@@ -33,11 +33,11 @@ if(g.getFixTags() !=null){
         StringBuilder buf = new StringBuilder();
         for (Tag t : g.getFixTags()) {
             buf.insert(0, t.getName() + ",");
+            buf.deleteCharAt(buf.length() - 1);
 
+            requestScope("tag", buf.toString());
         }
-        buf.deleteCharAt(buf.length() - 1);
-
-        requestScope("tag", buf.toString());
+       
 }
         return forward("change.jsp");
     }

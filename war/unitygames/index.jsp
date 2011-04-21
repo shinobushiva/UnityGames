@@ -6,16 +6,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link href="/css/jquery-ui-1.8.11.custom.css" rel="StyleSheet"
-	type="text/css" />
-<link href="/css/docs.css" rel="StyleSheet" type="text/css" />
-<link href="/css/css.css" rel="StyleSheet" type="text/css" />
-<link href="/css/button.css" rel="StyleSheet" type="text/css" />
-<script src="/js/jquery-1.5.1.min.js"></script>
-<script src="/js/jquery-ui-1.8.11.custom.min.js"></script>
-<script src="/js/jquery.history.js"></script>
-<title><fmt:message key="unitygames.top" />
-</title>
+<%@ include file="/share/css.jsp"%>
+<%@ include file="/share/js.jsp"%>
+<title><fmt:message key="unitygames.top" /></title>
 <script type="text/javascript">
 	(function($) {
 		var origContent = "";
@@ -90,8 +83,9 @@
 </head>
 <body>
 
-	<jsp:include page="/share/headerSearch.jsp" />
-										
+	<%@ include file="/share/header.jsp"%>
+	<%@ include file="/share/search.jsp"%>
+
 	<div id="PageLoad">
 
 		<select name="view" id="selectView">
@@ -104,7 +98,7 @@
 		</select>
 		<div id="View"></div>
 	</div>
-	<jsp:include page="/share/footer.jsp" />
+	<%@ include file="/share/footer.jsp" %>
 
 </body>
 </html>

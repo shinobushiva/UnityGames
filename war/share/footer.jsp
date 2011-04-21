@@ -1,21 +1,5 @@
 <%@page pageEncoding="UTF-8" isELIgnored="false" session="false"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@taglib prefix="f" uri="http://www.slim3.org/functions"%>
 
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>share Footer</title>
-<style type="text/css">
-.pointer{
-cursor: pointer;
-}
-</style>
-</head>
-<body>
 <div align="center">
-<a id="howto2" class="pointer">UnityGamesについて</a>　|　<a id=""class="">ご利用について</a>　|　<a id="contact"class="pointer">お問い合わせ</a>　|　<a id=""class="">ヘルプ</a>
+<a id="howto2"  style="cursor: pointer;">UnityGamesについて</a>　|　<a id=""class="">ご利用について</a>　|　<a id="contact"style="cursor: pointer;">お問い合わせ</a>　|　<a id=""class="">ヘルプ</a>
 </div>
-</body>
-</html>

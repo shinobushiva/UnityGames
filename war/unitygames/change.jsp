@@ -102,7 +102,7 @@ else{return true; // 送信を実行
 </script>
 
 <jsp:include page="/share/header.jsp" />
-<br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br>
 <form action="${f:url('changeUp')}" method="post" class="cmxform"  id="commentForm"  enctype="multipart/form-data" onSubmit="return tagCheck()" name="form1"">
 
 <div style="word-break:break-all">
@@ -111,7 +111,7 @@ else{return true; // 送信を実行
 <tr>
 <td><h1><fmt:message key="change.delete" /></h1></td>
 
-<td rowspan="6">
+<td rowspan="7">
 <h2><fmt:message key="explanation" /></h2>
 <textarea  style="width: 440;height: 90;" name="Contents" title="<fmt:message key="contents.title" />">${g.contents }</textarea><br>
 <h2><fmt:message key="operation" /></h2>
@@ -178,8 +178,7 @@ ${g.thumbNailURL}<br></c:if>
 </div>
 </td></tr><tr><td>
 <div align="left"><h2><fmt:message key="change.delete.key" /><input type="password" name="pass"  class="required"  value="${g.pass}" style="width: 117;"></h2></div></td>
-<td> 
-</td></tr >
+</tr >
 <tr class="bottom"><td colspan="2">&nbsp;</td></tr>
 </table>
 </div>
