@@ -49,42 +49,97 @@ td.comment {
 }
 -->
 </style>
+
+<script type="text/javascript">
+function GetUnity() {
+	if (typeof unityObject != "undefined") {
+		return unityObject.getObjectById("unityPlayer");
+	}
+	return null;
+}
+</script>
+
 <script type="text/javascript">
 	jQuery.extend(jQuery.validator.messages, {
 		required : "<br><fmt:message key='not.comment'/>"
 	});
 
+	<%-- Initialization --%>
 	$(function() {
 		$(".success").hide();
 		$("#fo").validate();
-		$("#commentUp-${g.key.id}").click(function() {
-			alert("click");
+		$("#commentUp").click(function() {
 			$(".error").hide();
 			$(".success").show();
 
 			$(".success").fadeOut("slow");
-			var a = $("#commentR").serialize();
+			var a = $("#commentInput").serialize();
 			var b = $("#gameKey").serialize();
-			var data = {
-				a : a,
-				b : b
-			};
 			$.ajax({
 				type : "post",
 				url : "/commentUp",
-				data : data,
+				data : a+"&"+b,
 				success : function() {
-					$('#commentLoad').load("/ajax/commentLoad?id=${g.key.id}");
+					loadComments();
 				}
 
 			});
-			$("#commentR").val("");
+			$("#commentInput").val("");
 		});
 
-	});
-</script>
+		$('#tabs').tabs();
+		$('#contentTab').tabs();
 
-<script type="text/javascript">
+		updateTags();
+		loadComments();
+
+		$("#reload").hide();
+		$("#ttt").hide();
+		$("#tt").click(function() {
+			$("#ttt").show();
+		});
+		$("#tagButton").click(function() {
+
+			var a = $("#tagReg").serialize();
+			var b = $("#gameKey").serialize();
+
+			$.ajax({
+				type : "post",
+				url : "/tagRegist",
+				data : a + "&" + b,
+				success : updateTags
+			});
+
+			$('#tagReg').val("");
+		});
+
+		$("#load,#reload").click(loadClicked);
+
+	});
+
+	function loadComments() {
+
+		$.ajax({
+			type : "post",
+			url : "/ajax/commentLoad",
+			data : "id=${g.key.id}",
+			success : function(e) {
+				var dateFormat = new DateFormat("yyyy/MM/dd HH:mm:ss");
+				
+				var html = "";
+				var cms = e.comments;
+				for (i in cms) {
+					var c = cms[i];
+					html += "<div>";
+					html += "" + c.comment + " " +dateFormat.format(new Date(c.date));
+					html += "</div>";
+				}
+				$('#commentLoad').html(html);
+			}
+
+		});
+	}
+
 	function updateTags() {
 		$.ajax({
 			type : "post",
@@ -105,7 +160,6 @@ td.comment {
 					html += '<a href="/search?tag=' + t.name
 							+ '"style="font-size: 2em; padding:3px;" >'
 							+ t.name + '</a>';
-
 				}
 
 				tags = e.gameData.tags;
@@ -144,42 +198,30 @@ td.comment {
 		});
 	}
 
-	$(function() {
-		$('#tabs').tabs();
-		$('#contentTab').tabs();
+	function loadClicked() {
+		$("#reload").show();
 
-		updateTags();
-	});
-
-	$(function() {
-		$("#ReLoad").hide();
-		$("#ttt").hide();
-		$("#tt").click(function() {
-			$("#ttt").show();
-		});
-		$("#tagButton").click(function() {
-
-			var a = $("#tagReg").serialize();
-			var b = $("#gameKey").serialize();
-
-			$.ajax({
-				type : "post",
-				url : "/tagRegist",
-				data : a + "&" + b,
-				success : updateTags
-			});
-
-			$('#tagReg').val("");
-		});
-
-		$("#Load,#ReLoad").click(function() {
-			$(function() {
-				$("#ReLoad").show();
-				$("#Loaded").load("/ajax/gameLoad?id=${g.key.id}");
-			});
-		});
-
-	});
+		$
+				.ajax({
+					type : "post",
+					url : "/ajax/gameLoad",
+					data : "id=${g.key.id}",
+					success : function(e) {
+						var html = "";
+						html += '<div class="content">';
+						html += '<div id="unityPlayer">';
+						html += '<div class="missing">';
+						html += '<a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now!">';
+						html += '<img alt="Unity Web Player. Install now!" src="http://webplayer.unity3d.com/installation/getunity.png" width="193" height="63" />';
+						html += '</a>';
+						html += '</div>';
+						html += '</div>';
+						html += '</div>';
+						$("#loaded").html(html);
+						eval(e.play);
+					}
+				});
+	}
 </script>
 
 
@@ -190,12 +232,18 @@ td.comment {
 
 	<%@ include file="/share/header.jsp"%>
 	<%@ include file="/share/search.jsp"%>
+
 	<div>
+		<%--  Tags --%>
+		<b style="font-size: x-small; color: red;"><fmt:message
+				key="registerTag" /> </b> <span id="tagUpload"></span>
+	</div>
+	<div style="padding-top: 1em;">
 		<%-- Game Name --%>
-		<a style="font-size: 30px;">${g.gameName}</a>
+		<span style="font-size: 2.5em;">${g.gameName} </span>
 	</div>
 
-	<div align="right">
+	<div align="right" style="position: relative; top: -2em;">
 		<%-- Social Buttons --%>
 		<a href="http://mixi.jp/share.pl" class="mixi-check-button"
 			data-key="42bc93a615261cdd8e17e115918eb36ebf60a729"
@@ -234,11 +282,9 @@ td.comment {
 		<%-- Top Tabs --%>
 		<ul>
 			<li><a href="#tab1"><span><fmt:message
-							key="explanation" /> </span> </a>
-			</li>
+							key="explanation" /> </span> </a></li>
 			<li><a href="#tab2"><span><fmt:message
-							key="operation" /> </span> </a>
-			</li>
+							key="operation" /> </span> </a></li>
 			<div align="right">
 				<span><fmt:message key="entryDay" />：<fmt:formatDate
 						value="${g.date}" pattern="MM/dd" /> </span><br> <span><fmt:message
@@ -254,33 +300,32 @@ td.comment {
 		</div>
 	</div>
 
-	<div style="padding-top: 3em;">
-		<%--  Tags --%>
-		<b style="font-size: x-small; color: red;"><fmt:message
-				key="registerTag" /> </b> <span id="tagUpload"></span>
-	</div>
-	<div>
+	<div
+		style="margin-top: 1em; margin-bottom: 1em; margin-left: auto; margin-right: auto;">
 		<%-- Game --%>
 		<div>
-			<div id="Loaded">
+			<div id="loaded">
 				<c:choose>
 					<c:when test="${empty g.thumbNailURL}">
 						<img src="/unitygames/thumbNail?thumbNailKey=${f:h(g.key)}"
 							width="600" height="450"
-							style="position: relative; opacity: 0.3; filter: alpha(opacity =                                                                                                                                                                                                                                                                           30); z-index: 0;" />
+							style="opacity: 0.3; filter: alpha(opacity =                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 30); z-index: 0;" />
 					</c:when>
 					<c:when test="${not empty g.thumbNailURL}">
 						<img src="${g.thumbNailURL}" border="1" width="600" height="450"
-							style="position: relative; opacity: 0.3; filter: alpha(opacity =                                                                                                                                                                                                                                                                           30); z-index: 0;" />
+							style="opacity: 0.3; filter: alpha(opacity =                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 30); z-index: 0;" />
 					</c:when>
 				</c:choose>
-				<button id="Load"
+				<button id="load"
 					style="background-color: transparent; border: 0; z-index: 1; position: relative; left: -400px; top: -180px">
 					<img src="/images/Start.png">
 				</button>
+
 			</div>
-			<button id="ReLoad"
-				style="position: absolute; left: 260; top: ; z-index: 1;">リロード</button>
+			<div>
+				<button id="reload"
+					style="position: relative; left: 400px; z-index: 1;">リロード</button>
+			</div>
 		</div>
 	</div>
 
@@ -288,41 +333,31 @@ td.comment {
 		<%-- Bottom Tabs --%>
 		<ul>
 			<li><a href="#comment"><span><fmt:message
-							key="comment" /> </span> </a>
-			</li>
+							key="comment" /> </span> </a></li>
 			<li><a href="#code"><span><fmt:message key="code" />
-				</span> </a>
-			</li>
+				</span> </a></li>
 			<li><a href="#tagg"><span><fmt:message
-							key="registTag" /> </span> </a>
-			</li>
+							key="registTag" /> </span> </a></li>
 
 		</ul>
 
-		<div id="comment">
-			<div id="commentLoad">
-				<c:forEach var="c" items="${c}">
-					<div align="center">
-						${c.comment}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<fmt:formatDate value="${c.date}" pattern="hh:mm MM/dd/yyyy" />
-						<br>
-					</div>
-				</c:forEach>
-			</div>
-
-			<div style="margin-left: auto; margin-right: auto;">
+		<div id="comment" style="margin-left: auto; margin-right: auto;">
+			<div>
 				<div>
-					<input type="text" id="commentR" style="width: 150; height: 20;"
-						name="comment" class="required"><br>
+					<input type="text" id="commentInput"
+						style="width: 150; height: 20;" name="comment" class="required"><br>
 				</div>
 				<div>
-					<button class="searchButton black" id="commentUp-${g.key.id}">
+					<button class="searchButton black" id="commentUp">
 						<fmt:message key="button.comment" />
 					</button>
 				</div>
 
 				<span class="success"><fmt:message key="commented" /> </span>
 			</div>
+			<div id="commentLoad"></div>
+
+
 
 		</div>
 		<div id="code">
@@ -334,32 +369,7 @@ td.comment {
 			<button class="searchButton black" id="tagButton">
 				<fmt:message key="button.regist" />
 			</button>
-			<div id="tagUpload2">
-				<%--
-				<c:forEach var="t" items="${g.tags}" varStatus="loop">
-					<script type="text/javascript">
-						$(function() {
-							$("#tagDeleteButton-${loop.index}").click(
-									function() {
-										deleteButtonClicked("${loop.index}",
-												"${g.key.id}")
-									});
-						});
-					</script>
-					<input type="hidden" id="tagDel-${loop.index}" name="tagDel"
-						value="${t.name}">
-					<div>
-						<a id="t" style="font-size: 20px;">${t.name}</a>
-						<button type="submit" class="button delete"
-							id="tagDeleteButton-${loop.index}">
-							<span id="tagDeleteButton-${loop.index}"
-								style="color: white; font-size: 20; width: 70; height: 20; position: relative; right: 0; bottom: 1;">
-								<fmt:message key="button.delete" /> </span>
-						</button>
-					</div>
-				</c:forEach>
-				 --%>
-			</div>
+			<div id="tagUpload2"></div>
 		</div>
 	</div>
 </body>

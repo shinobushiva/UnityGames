@@ -1,7 +1,10 @@
 package unity.controller.ajax;
 
-import org.slim3.controller.Controller;
-import org.slim3.controller.Navigation;
+import java.util.HashMap;
+import java.util.Map;
+
+import jp.co.topgate.controller.JsonController;
+
 import org.slim3.datastore.Datastore;
 
 import unity.meta.GameDataMeta;
@@ -9,33 +12,36 @@ import unity.model.GameData;
 
 import com.google.appengine.api.datastore.KeyFactory;
 
-public class GameLoadController extends Controller {
+public class GameLoadController extends JsonController {
     private GameDataMeta dd = GameDataMeta.get();
+
     @Override
-    public Navigation run() throws Exception {
-        
-      
-//        String co = requestScope("a");
-//        System.out.println("xxx:"+co);
-        
+    protected Map<String, Object> handle() throws Exception {
+
+        Map<String, Object> map = new HashMap<String, Object>();
+
         long id = asLong("id");
-        
+
         GameData g =
             Datastore.get(
                 GameData.class,
                 KeyFactory.createKey(dd.getKind(), id));
-        
-        System.out.println(g.getGameURL());
-        
-        
-        if(g.getGameURL().isEmpty()){
-            requestScope("play","unityObject.embedUnity('unityPlayer','/unitygames/GameData?id="+g.getKey().getId()+"', 600, 450);");
-           
-            }else{
-            requestScope("play","unityObject.embedUnity('unityPlayer','"+g.getGameURL()+"', 600, 450);");
-            }
-        
-        
-        return forward("gameLoad.jsp");
+
+        if (g.getGameURL().isEmpty()) {
+            map.put(
+                "play",
+                "unityObject.embedUnity('unityPlayer','/unitygames/GameData?id="
+                    + g.getKey().getId()
+                    + "', 600, 450);");
+
+        } else {
+            map.put(
+                "play",
+                "unityObject.embedUnity('unityPlayer','"
+                    + g.getGameURL()
+                    + "', 600, 450);");
+        }
+
+        return map;
     }
 }

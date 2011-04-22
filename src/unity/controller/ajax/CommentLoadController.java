@@ -1,9 +1,11 @@
 package unity.controller.ajax;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.slim3.controller.Controller;
-import org.slim3.controller.Navigation;
+import jp.co.topgate.controller.JsonController;
+
 import org.slim3.datastore.Datastore;
 
 import unity.meta.CommentMeta;
@@ -13,11 +15,13 @@ import unity.model.GameData;
 
 import com.google.appengine.api.datastore.KeyFactory;
 
-public class CommentLoadController extends Controller {
+public class CommentLoadController extends JsonController {
     private GameDataMeta dd = GameDataMeta.get();
 
     @Override
-    public Navigation run() throws Exception {
+    protected Map<String, Object> handle() throws Exception {
+
+        Map<String, Object> map = new HashMap<String, Object>();
 
         long id = asLong("id");
 
@@ -27,17 +31,19 @@ public class CommentLoadController extends Controller {
                 KeyFactory.createKey(dd.getKind(), id));
 
         // コメント表示
-        List<Comment> comment =
+        List<Comment> comments =
             Datastore
                 .query(Comment.class, g.getKey())
-                .sort(CommentMeta.get().date.asc)
+                .sort(CommentMeta.get().date.desc)
                 .asList();
-        requestScope("c", comment);
-        for (Comment co : comment) {
+        // 日本時間に修正
+        for (Comment co : comments) {
             long l = co.getDate().getTime() + 1000 * 60 * 60 * 9;
             co.getDate().setTime(l);
         }
 
-        return forward("commentLoad.jsp");
+        map.put("comments", comments);
+        return map;
     }
+
 }

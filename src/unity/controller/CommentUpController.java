@@ -23,16 +23,13 @@ public class CommentUpController extends Controller {
 
         System.out.println("コメントアップ読み込み");
 
-        String co = requestScope("a");
-        String Ga = requestScope("b");
-
-        String com = co.substring(8);
+        String com = asString("comment");
         com = URLDecoder.decode(com, "UTF-8");
+        String gameKey = asString("gameKey");
 
-        String gameKeyy = Ga.substring(8);
         System.out.println("コメント：" + com);
-        System.out.println("きい" + gameKeyy);
-        Key key = KeyFactory.stringToKey(gameKeyy);
+        System.out.println("きい" + gameKey);
+        Key key = KeyFactory.stringToKey(gameKey);
 
         System.out.println(key);
         if (!com.isEmpty()) {
@@ -59,7 +56,9 @@ public class CommentUpController extends Controller {
                 .filter(CommentMeta.get().gameKey.equal(key))
                 .sort(CommentMeta.get().date.desc)
                 .asList();
-        requestScope("comments", CommentMeta.get().modelsToJson(comments.toArray()));
+        requestScope(
+            "comments",
+            CommentMeta.get().modelsToJson(comments.toArray()));
         System.out.println(requestScope("comments"));
         return null;
     }
