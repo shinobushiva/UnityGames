@@ -282,9 +282,11 @@ function GetUnity() {
 		<%-- Top Tabs --%>
 		<ul>
 			<li><a href="#tab1"><span><fmt:message
-							key="explanation" /> </span> </a></li>
+							key="explanation" /> </span> </a>
+			</li>
 			<li><a href="#tab2"><span><fmt:message
-							key="operation" /> </span> </a></li>
+							key="operation" /> </span> </a>
+			</li>
 			<div align="right">
 				<span><fmt:message key="entryDay" />：<fmt:formatDate
 						value="${g.date}" pattern="MM/dd" /> </span><br> <span><fmt:message
@@ -300,32 +302,27 @@ function GetUnity() {
 		</div>
 	</div>
 
-	<div
-		style="margin-top: 1em; margin-bottom: 1em; margin-left: auto; margin-right: auto;">
-		<%-- Game --%>
+	<%-- Game --%>
+	<div style="margin-top: 1em; margin-bottom: 1em; text-align: right;">
+		<div id="loaded">
+			<c:choose>
+				<c:when test="${empty g.thumbNailURL}">
+					<img src="/unitygames/thumbNail?thumbNailKey=${f:h(g.key)}"
+						width="600" height="450" style="opacity: 0.3; z-index: 0;" />
+				</c:when>
+				<c:when test="${not empty g.thumbNailURL}">
+					<img src="${g.thumbNailURL}" border="1" width="600" height="450"
+						style="opacity: 0.3; z-index: 0;" />
+				</c:when>
+			</c:choose>
+			<button id="load"
+				style="background-color: transparent; border: 0; z-index: 1; position: relative; left: -400px; top: -180px">
+				<img src="/images/Start.png">
+			</button>
+		</div>
 		<div>
-			<div id="loaded">
-				<c:choose>
-					<c:when test="${empty g.thumbNailURL}">
-						<img src="/unitygames/thumbNail?thumbNailKey=${f:h(g.key)}"
-							width="600" height="450"
-							style="opacity: 0.3; filter: alpha(opacity =                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 30); z-index: 0;" />
-					</c:when>
-					<c:when test="${not empty g.thumbNailURL}">
-						<img src="${g.thumbNailURL}" border="1" width="600" height="450"
-							style="opacity: 0.3; filter: alpha(opacity =                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 30); z-index: 0;" />
-					</c:when>
-				</c:choose>
-				<button id="load"
-					style="background-color: transparent; border: 0; z-index: 1; position: relative; left: -400px; top: -180px">
-					<img src="/images/Start.png">
-				</button>
-
-			</div>
-			<div>
-				<button id="reload"
-					style="position: relative; left: 400px; z-index: 1;">リロード</button>
-			</div>
+			<button id="reload"
+				style="position: relative; left: 480px; z-index: 1;">リロード</button>
 		</div>
 	</div>
 
@@ -333,11 +330,14 @@ function GetUnity() {
 		<%-- Bottom Tabs --%>
 		<ul>
 			<li><a href="#comment"><span><fmt:message
-							key="comment" /> </span> </a></li>
+							key="comment" /> </span> </a>
+			</li>
 			<li><a href="#code"><span><fmt:message key="code" />
-				</span> </a></li>
+				</span> </a>
+			</li>
 			<li><a href="#tagg"><span><fmt:message
-							key="registTag" /> </span> </a></li>
+							key="registTag" /> </span> </a>
+			</li>
 
 		</ul>
 
