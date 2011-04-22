@@ -1,61 +1,47 @@
 package unity.controller;
 
-import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.xml.crypto.Data;
-
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
 import org.slim3.datastore.GlobalTransaction;
 
-import unity.meta.GameDataMeta;
-import unity.meta.TagGameMeta;
-import unity.meta.TagMeta;
 import unity.model.GameData;
 import unity.model.Tag;
 import unity.model.TagGame;
 import unity.service.TagService;
 
-import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
-import com.google.appengine.api.datastore.Transaction;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 public class TagDeleteController extends Controller {
-    private GameDataMeta dd = GameDataMeta.get();
+    // private GameDataMeta dd = GameDataMeta.get();
     private TagService ts = new TagService();
 
     @Override
     public Navigation run() throws Exception {
 
-        String ta = requestScope("a");
-        String Ga = requestScope("b");
+        Long tagId = asLong("tagId");
+        Tag tag =
+            Datastore.get(Tag.class, Datastore.createKey(Tag.class, tagId));
 
-        String tagD = ta.substring(7);
-        tagD = URLDecoder.decode(tagD, "UTF-8");
-        String GameKeyy = Ga.substring(8);
-        System.out.println("deleteたぐ" + tagD);
-        System.out.println("きい" + GameKeyy);
-        Key key = KeyFactory.stringToKey(GameKeyy);
-        System.out.println(key);
+        String gameKey = asString("gameKey");
+        GameData g =
+            Datastore.get(GameData.class, KeyFactory.stringToKey(gameKey));
 
-        GameData g = Datastore.get(GameData.class, key);
-        Tag tag = ts.getTag(tagD);
-        TagGame tg = ts.getTagGame(key, tag.getKey());
-        g.getTags().remove(tag);
-        System.out.println(g.getTags());
-        GlobalTransaction x = Datastore.beginGlobalTransaction();
+        // System.out.println("deleteたぐ" + tagD);
+        // System.out.println("きい" + gameKeyy);
+        // System.out.println(key);
+        // System.out.println(g.getTags());
+        TagGame tg = ts.getTagGame(g.getKey(), tag.getKey());
+        GlobalTransaction tx = Datastore.beginGlobalTransaction();
         Datastore.delete(tg.getKey());
-        x.commit();
-        Transaction tx = Datastore.beginTransaction();
+        tx.commit();
+
+        g.getTags().remove(tag);
+        tx = Datastore.beginGlobalTransaction();
         Datastore.put(g);
         tx.commit();
-        System.out.println("bbb:" + g.getTags());
-        requestScope("g", g);
+        // System.out.println("bbb:" + g.getTags());
+        // requestScope("g", g);
 
         return null;
     }

@@ -147,8 +147,6 @@ public class GameData implements Serializable {
         return length;
     }
 
-  
-
     public String getGameName() {
         return gameName;
     }

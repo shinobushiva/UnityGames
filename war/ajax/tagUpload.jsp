@@ -16,7 +16,7 @@
 		<script src="/js/prettify.js"></script>
 </head>
 <body>
-<c:forEach var="t" items="${g.tags}" >
+<c:forEach var="t" items="${gameData.tags}" >
 		  <a href="/search?tag=${t.name}"style="font-size: 20px;" >${t.name}</a>
 		</c:forEach>
 </body>
