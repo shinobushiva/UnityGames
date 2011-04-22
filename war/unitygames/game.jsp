@@ -83,24 +83,7 @@ td.comment {
 
 	});
 </script>
-<script type="text/javascript">
-	window.fbAsyncInit = function() {
-		FB.init({
-			appId : '214224191925233',
-			status : true,
-			cookie : true,
-			xfbml : true
-		});
-	};
-	(function() {
 
-		var e = document.createElement('script');
-		e.type = 'text/javascript';
-		e.src = document.location.protocol + '<fmt:message key="facebook"/>';
-		e.async = true;
-		//	document.getElementById('fb-root').appendChild(e);
-	}());
-</script>
 <script type="text/javascript">
 	$(function() {
 		$('#tabs').tabs();
@@ -190,9 +173,27 @@ td.comment {
 					<script type="text/javascript"
 						src="http://platform.twitter.com/widgets.js"></script>
 
-
 					<fb:like layout="button_count" width="0"></fb:like>
 					<a id="fb-root"></a>
+					<script>
+						window.fbAsyncInit = function() {
+							FB.init({
+								appId : '214224191925233',
+								status : true,
+								cookie : true,
+								xfbml : true
+							});
+						};
+						(function() {
+
+							var e = document.createElement('script');
+							e.type = 'text/javascript';
+							e.src = document.location.protocol
+									+ '<fmt:message key="facebook"/>';
+							e.async = true;
+							document.getElementById('fb-root').appendChild(e);
+						}());
+					</script>
 
 
 
@@ -261,12 +262,12 @@ td.comment {
 											<c:when test="${empty g.thumbNailURL}">
 												<img src="/unitygames/thumbNail?thumbNailKey=${f:h(g.key)}"
 													width="600" height="450"
-													style="position: relative; opacity: 0.3; filter: alpha(opacity =                                               30); z-index: 0;" />
+													style="position: relative; opacity: 0.3; filter: alpha(opacity =                                                       30); z-index: 0;" />
 											</c:when>
 											<c:when test="${not empty g.thumbNailURL}">
 												<img src="${g.thumbNailURL}" border="1" width="600"
 													height="450"
-													style="position: relative; opacity: 0.3; filter: alpha(opacity =                                               30); z-index: 0;" />
+													style="position: relative; opacity: 0.3; filter: alpha(opacity =                                                       30); z-index: 0;" />
 											</c:when>
 										</c:choose> </a>
 									<button id="ReLoad"
