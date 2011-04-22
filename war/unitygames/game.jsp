@@ -49,73 +49,144 @@ td.comment {
 }
 -->
 </style>
+<script type="text/javascript">
+	jQuery.extend(jQuery.validator.messages, {
+		required : "<br><fmt:message key='not.comment'/>"
+	});
+
+	$(function() {
+		$(".success").hide();
+		$("#fo").validate();
+		$("#commentUp-${g.key.id}").click(function() {
+			alert("click");
+			$(".error").hide();
+			$(".success").show();
+
+			$(".success").fadeOut("slow");
+			var a = $("#commentR").serialize();
+			var b = $("#GameKey").serialize();
+			var data = {
+				a : a,
+				b : b
+			};
+			$.ajax({
+				type : "post",
+				url : "/commentUp",
+				data : data,
+				success : function() {
+					$('#commentLoad').load("/ajax/commentLoad?id=${g.key.id}");
+				}
+
+			});
+			$("#commentR").val("");
+		});
+
+	});
+</script>
+<script>
+	window.fbAsyncInit = function() {
+		FB.init({
+			appId : '214224191925233',
+			status : true,
+			cookie : true,
+			xfbml : true
+		});
+	};
+	(function() {
+
+		var e = document.createElement('script');
+		e.type = 'text/javascript';
+		e.src = document.location.protocol + '<fmt:message key="facebook"/>';
+		e.async = true;
+	//	document.getElementById('fb-root').appendChild(e);
+	}());
+</script>
+<script type="text/javascript">
+	$(function() {
+		$('#tabs').tabs();
+		$('#contentTab').tabs();
+	});
+
+	$(function() {
+		$("#ReLoad").hide();
+		$("#ttt").hide();
+		$("#tt").click(function() {
+			$("#ttt").show();
+		});
+		$("#tagButton").click(function() {
+
+			var a = $("#tagReg").serialize();
+			var b = $("#GameKey").serialize();
+			var data = {
+				a : a,
+				b : b
+			};
+
+			$.ajax({
+				type : "post",
+				url : "/tagRegist",
+				data : data,
+				success : function() {
+					$('#tagUpload2').load("/ajax/tagUpload2?id=${g.key.id}")
+					$('#tagUpload').load("/ajax/tagUpload?id=${g.key.id}")
+				}
+			});
+
+			$('#tagReg').val("");
+		});
+
+		$("#Load,#ReLoad").click(function() {
+			$(function() {
+				$("#ReLoad").show();
+				$("#Loaded").load("/ajax/gameLoad?id=${g.key.id}");
+			});
+		});
+
+	});
+
+	function deleteButtonClicked(loop, id) {
+
+		var a = $("#tagDel-" + loop).serialize();
+		var b = $("#GameKey").serialize();
+		var data = {
+			a : a,
+			b : b
+		};
+
+		$.ajax({
+			type : "post",
+			url : "/tagDelete",
+			data : data,
+			success : function() {
+				$('#tagUpload2').load("/ajax/TagUpload2?id=" + id);
+				$('#tagUpload').load("/ajax/TagUpload?id=" + id);
+			}
+		});
+	}
+</script>
+
+
 </head>
 <body onload="prettyPrint()">
 
 	<%@ include file="/share/header.jsp"%>
 	<%@ include file="/share/search.jsp"%>
-	<script type="text/javascript">
-		$(function() {
-			$('#tabs').tabs();
-			$('#contentTab').tabs();
-		});
-
-		$(function() {
-			$("#ReLoad").hide();
-			$("#ttt").hide();
-			$("#tt").click(function() {
-				$("#ttt").show();
-			});
-			$("#tagButton").click(
-					function() {
-
-						var a = $("#tagReg").serialize()
-						var b = $("#GameKey").serialize()
-						var data = {
-							a : a,
-							b : b
-						};
-
-						$.ajax({
-							type : "post",
-							url : "/tagRegist",
-							data : data,
-							success : function() {
-								$('#tagUpload2').load(
-										"/ajax/tagUpload2?id=${g.key.id}")
-								$('#tagUpload').load(
-										"/ajax/tagUpload?id=${g.key.id}")
-							}
-						});
-
-						$('#tagReg').val("")
-					});
-
-			$("#Load,#ReLoad").click(function() {
-				$(function() {
-					$("#ReLoad").show();
-					$("#Loaded").load("/ajax/gameLoad?id=${g.key.id}")
-				});
-			});
-
-		});
-	</script>
-
 
 	<table border="0" align="center">
 		<tr>
 			<td><a style="font-size: 30px;">${g.gameName}</a>
 
 				<div align="right">
-				
+
 					<a href="http://mixi.jp/share.pl" class="mixi-check-button"
 						data-key="42bc93a615261cdd8e17e115918eb36ebf60a729"
 						data-button="button-1"></a>
 					<script type="text/javascript"
 						src="http://static.mixi.jp/js/share.js"></script>
-					
+
 					<a href="http://twitter.com/share" class="twitter-share-button"
-						data-count="horizontal" data-via="UGames" data-lang="<%=request.getLocale().getLanguage() %>"></a>
+						data-count="horizontal" data-via="UGames"
+						data-lang="<%=request.getLocale().getLanguage()%>"></a>
 					<script type="text/javascript"
 						src="http://platform.twitter.com/widgets.js"></script>
 
@@ -123,25 +194,7 @@ td.comment {
 					<fb:like layout="button_count" width="0"></fb:like>
 					<a id="fb-root"></a>
 
-					<script>
-						window.fbAsyncInit = function() {
-							FB.init({
-								appId : '214224191925233',
-								status : true,
-								cookie : true,
-								xfbml : true
-							});
-						};
-						(function() {
 
-							var e = document.createElement('script');
-							e.type = 'text/javascript';
-							e.src = document.location.protocol
-									+ '<fmt:message key="facebook"/>';
-							e.async = true;
-							document.getElementById('fb-root').appendChild(e);
-						}());
-					</script>
 
 
 				</div>
@@ -152,9 +205,11 @@ td.comment {
 							<div id="tabs">
 								<ul>
 									<li><a href="#tab1"><span><fmt:message
-													key="explanation" /> </span> </a></li>
+													key="explanation" /> </span> </a>
+									</li>
 									<li><a href="#tab2"><span><fmt:message
-													key="operation" /> </span> </a></li>
+													key="operation" /> </span> </a>
+									</li>
 									<div align="right">
 										<span><fmt:message key="entryDay" />：<fmt:formatDate
 												value="${g.date}" pattern="MM/dd" /> </span><br> <span><fmt:message
@@ -171,13 +226,15 @@ td.comment {
 								</div>
 
 
-							</div></td>
+							</div>
+						</td>
 					</tr>
 
 					<tr class="bottom">
 						<td></td>
 					</tr>
-				</table></td>
+				</table>
+			</td>
 		</tr>
 		<tr>
 			<td><b style="font-size: x-small;; color: red;"><fmt:message
@@ -186,8 +243,7 @@ td.comment {
 					</b>
 				</c:forEach> <span id="tagUpload"> <c:forEach var="t" items="${g.tags}">
 						<a href="/search?tag=${t.name}" style="font-size: 20px;">${t.name}</a>
-					</c:forEach> </span>
-			</td>
+					</c:forEach> </span></td>
 		</tr>
 		<tr>
 			<td>
@@ -205,22 +261,22 @@ td.comment {
 											<c:when test="${empty g.thumbNailURL}">
 												<img src="/unitygames/thumbNail?thumbNailKey=${f:h(g.key)}"
 													width="600" height="450"
-													style="position: relative; opacity: 0.3; filter: alpha(opacity =                     30); z-index: 0;" />
+													style="position: relative; opacity: 0.3; filter: alpha(opacity =                                       30); z-index: 0;" />
 											</c:when>
 											<c:when test="${not empty g.thumbNailURL}">
 												<img src="${g.thumbNailURL}" border="1" width="600"
 													height="450"
-													style="position: relative; opacity: 0.3; filter: alpha(opacity =                     30); z-index: 0;" />
+													style="position: relative; opacity: 0.3; filter: alpha(opacity =                                       30); z-index: 0;" />
 											</c:when>
 										</c:choose> </a>
 									<button id="ReLoad"
 										style="position: absolute; left: 260; top: ; z-index: 1;">リロード</button>
-								</div>
-							</td>
+								</div></td>
 							<td class="comment" 　nowrap></td>
 						</tr>
 					</div>
-				</table></td>
+				</table>
+			</td>
 		</tr>
 	</table>
 	<table border="0" class="purchase-options" align="center"
@@ -231,60 +287,19 @@ td.comment {
 				<div id="contentTab">
 					<ul>
 						<li><a href="#comment"><span><fmt:message
-										key="comment" /> </span> </a></li>
+										key="comment" /> </span> </a>
+						</li>
 						<li><a href="#code"><span><fmt:message key="code" />
-							</span> </a></li>
+							</span> </a>
+						</li>
 						<li><a href="#tagg"><span><fmt:message
-										key="registTag" /> </span> </a></li>
+										key="registTag" /> </span> </a>
+						</li>
 
 					</ul>
 
 					<div id="comment">
-						<script type="text/javascript">
-							jQuery
-									.extend(
-											jQuery.validator.messages,
-											{
-												required : "<br><fmt:message key='not.comment'/>"
-											});
 
-							$(function() {
-								$(".success").hide();
-								$("#fo").validate();
-								$("#commentUp-${g.key.id}")
-										.click(
-												function() {
-													alart("click");
-													$(".error").hide();
-													$(".success").show();
-
-													$(".success").fadeOut(
-															"slow");
-													var a = $("#commentR")
-															.serialize()
-													var b = $("#GameKey")
-															.serialize()
-													var data = {
-														a : a,
-														b : b
-													};
-													$.ajax({
-																type : "post",
-																url : "/commentUp",
-																data : data,
-																success : function() {
-																	$(
-																			'#commentLoad')
-																			.load(
-																					"/ajax/commentLoad?id=${g.key.id}")
-																}
-
-															});
-													$("#commentR").val("");
-												});
-
-							});
-						</script>
 						<div id="commentLoad">
 							<c:forEach var="c" items="${c}">
 								<div align="center">
@@ -300,9 +315,9 @@ td.comment {
 							<input type="text" id="commentR" style="width: 150; height: 20;"
 								name="comment" class="required"><br>
 
-							<button type="submit" class="searchButton black"
+							<button  class="searchButton black"
 								　id="commentUp-${g.key.id}">
-								  <fmt:message key="button.comment" />
+								<fmt:message key="button.comment" />
 							</button>
 
 
@@ -334,37 +349,9 @@ td.comment {
 												$(
 														"#tagDeleteButton-${loop.index}")
 														.click(
-																function() {
-
-																	var a = $(
-																			"#tagDel-${loop.index}")
-																			.serialize()
-																	var b = $(
-																			"#GameKey")
-																			.serialize()
-																	var data = {
-																		a : a,
-																		b : b
-																	};
-
-																	$
-																			.ajax({
-																				type : "post",
-																				url : "/tagDelete",
-																				data : data,
-																				success : function() {
-																					$(
-																							'#tagUpload2')
-																							.load(
-																									"/ajax/TagUpload2?id=${g.key.id}")
-																					$(
-																							'#tagUpload')
-																							.load(
-																									"/ajax/TagUpload?id=${g.key.id}")
-																				}
-																			});
-																});
-
+																deleteButtonClicked(
+																		"${loop.index}",
+																		"${g.key.id}"));
 											});
 										</script>
 										<td width="250" align="center"><input type="hidden"
@@ -377,8 +364,7 @@ td.comment {
 												<span id="tagDeleteButton-${loop.index}"
 													style="color: white; font-size: 20; width: 70; height: 20; position: relative; right: 0; bottom: 1;">
 													<fmt:message key="button.delete" /> </span>
-											</button>
-										</td>
+											</button></td>
 										<c:if test="${loop.count mod 3 == 0}">
 								</tr>
 								<tr>
@@ -391,8 +377,7 @@ td.comment {
 
 					</div>
 
-				</div>
-			</td>
+				</div></td>
 		</tr>
 
 	</table>

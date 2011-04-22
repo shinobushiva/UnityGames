@@ -37,7 +37,7 @@ public class TagRegistController extends Controller {
             String Ga = requestScope("b");
 
             String GameKeyy = Ga.substring(8);
-     
+
             Key key = KeyFactory.stringToKey(GameKeyy);
 
             System.out.println("きい" + key);
@@ -57,10 +57,13 @@ public class TagRegistController extends Controller {
             Tag tag2 = ts.getTag(tagR);
             g.getTags().add(tag2);
             Datastore.put(g);
-System.out.println("aa:"+g.getTags());
-            TagGame tt = new TagGame();
-            tt.getGameRef().setKey(g.getKey());
-            tt.getTagRef().setModel(tag2);
+            System.out.println("aa:" + g.getTags());
+            TagGame tt = ts.getTagGame(g.getKey(), tag2.getKey());
+            if (tt == null) {
+                tt = new TagGame();
+                tt.getGameRef().setKey(g.getKey());
+                tt.getTagRef().setModel(tag2);
+            }
             GlobalTransaction tx = Datastore.beginGlobalTransaction();
             Datastore.put(tt);
             tx.commit();
