@@ -83,7 +83,7 @@ td.comment {
 
 	});
 </script>
-<script>
+<script type="text/javascript">
 	window.fbAsyncInit = function() {
 		FB.init({
 			appId : '214224191925233',
@@ -98,7 +98,7 @@ td.comment {
 		e.type = 'text/javascript';
 		e.src = document.location.protocol + '<fmt:message key="facebook"/>';
 		e.async = true;
-	//	document.getElementById('fb-root').appendChild(e);
+		//	document.getElementById('fb-root').appendChild(e);
 	}());
 </script>
 <script type="text/javascript">
@@ -261,18 +261,18 @@ td.comment {
 											<c:when test="${empty g.thumbNailURL}">
 												<img src="/unitygames/thumbNail?thumbNailKey=${f:h(g.key)}"
 													width="600" height="450"
-													style="position: relative; opacity: 0.3; filter: alpha(opacity =                                       30); z-index: 0;" />
+													style="position: relative; opacity: 0.3; filter: alpha(opacity =                                               30); z-index: 0;" />
 											</c:when>
 											<c:when test="${not empty g.thumbNailURL}">
 												<img src="${g.thumbNailURL}" border="1" width="600"
 													height="450"
-													style="position: relative; opacity: 0.3; filter: alpha(opacity =                                       30); z-index: 0;" />
+													style="position: relative; opacity: 0.3; filter: alpha(opacity =                                               30); z-index: 0;" />
 											</c:when>
 										</c:choose> </a>
 									<button id="ReLoad"
 										style="position: absolute; left: 260; top: ; z-index: 1;">リロード</button>
 								</div></td>
-							<td class="comment" 　nowrap></td>
+							<td class="comment" nowrap></td>
 						</tr>
 					</div>
 				</table>
@@ -310,19 +310,19 @@ td.comment {
 							</c:forEach>
 						</div>
 
-						<p align="center">
-
-							<input type="text" id="commentR" style="width: 150; height: 20;"
-								name="comment" class="required"><br>
-
-							<button  class="searchButton black"
-								　id="commentUp-${g.key.id}">
-								<fmt:message key="button.comment" />
-							</button>
-
+						<div style="margin-left: auto; margin-right: auto;">
+							<div>
+								<input type="text" id="commentR" style="width: 150; height: 20;"
+									name="comment" class="required"><br>
+							</div>
+							<div>
+								<button class="searchButton black" id="commentUp-${g.key.id}">
+									<fmt:message key="button.comment" />
+								</button>
+							</div>
 
 							<span class="success"><fmt:message key="commented" /> </span>
-						</p>
+						</div>
 
 					</div>
 					<div id="code">
@@ -334,8 +334,7 @@ td.comment {
 
 						<input type="text" name="tag" style="width: 200;" id="tagReg">
 						<button class="searchButton black" id="tagButton">
-							<span id="tagButton">&nbsp;<fmt:message
-									key="button.regist" />&nbsp;</span>
+							<fmt:message key="button.regist" />
 						</button>
 						<input type="hidden" id="GameKey" name="GameKey"
 							value="${f:h(g.key)}"><br> <br>
@@ -360,7 +359,7 @@ td.comment {
 											type="hidden" id="tagDel-${loop.index}" name="tagDel"
 											value="${t.name}">
 											<button type="submit" class="button delete"
-												　id="tagDeleteButton-${loop.index}">
+												id="tagDeleteButton-${loop.index}">
 												<span id="tagDeleteButton-${loop.index}"
 													style="color: white; font-size: 20; width: 70; height: 20; position: relative; right: 0; bottom: 1;">
 													<fmt:message key="button.delete" /> </span>
