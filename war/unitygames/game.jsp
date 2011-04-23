@@ -322,7 +322,7 @@ function GetUnity() {
 		</div>
 		<div>
 			<button id="reload"
-				style="position: relative; left: 480px; z-index: 1;">リロード</button>
+				style=" position:relative; left:-512px; z-index: 1;">リロード</button>
 		</div>
 	</div>
 
