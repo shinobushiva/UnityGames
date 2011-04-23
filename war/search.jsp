@@ -16,7 +16,7 @@
 
 	<table align="center">
 		<tr>
-			<c:forEach var="g" items="${GameList}" varStatus="loop">
+			<c:forEach var="g" items="${games}" varStatus="loop">
 
 
 				<td>
