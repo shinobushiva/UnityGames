@@ -224,7 +224,6 @@ function GetUnity() {
 	}
 </script>
 
-
 </head>
 <body onload="prettyPrint()">
 
@@ -356,10 +355,8 @@ function GetUnity() {
 				<span class="success"><fmt:message key="commented" /> </span>
 			</div>
 			<div id="commentLoad"></div>
-
-
-
 		</div>
+
 		<div id="code">
 			<pre class="prettyprint">${g.code}</pre>
 		</div>
