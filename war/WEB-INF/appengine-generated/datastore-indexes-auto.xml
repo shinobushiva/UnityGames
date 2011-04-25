@@ -1,25 +1,19 @@
-<!-- Indices written at Fri, 22 Apr 2011 18:11:08 UTC -->
+<!-- Indices written at Mon, 25 Apr 2011 12:43:35 UTC -->
 
 <datastore-indexes>
 
-    <!-- Used 129 times in query history -->
+    <!-- Used 2 times in query history -->
     <datastore-index kind="Comment" ancestor="true" source="auto">
         <property name="date" direction="asc"/>
     </datastore-index>
 
-    <!-- Used 167 times in query history -->
+    <!-- Used 2 times in query history -->
     <datastore-index kind="UploadedDataFragment" ancestor="false" source="auto">
         <property name="uploadDataRef" direction="asc"/>
         <property name="index" direction="asc"/>
     </datastore-index>
 
-    <!-- Used 6 times in query history -->
-    <datastore-index kind="Comment" ancestor="false" source="auto">
-        <property name="gameKey" direction="asc"/>
-        <property name="date" direction="desc"/>
-    </datastore-index>
-
-    <!-- Used 1 time in query history -->
+    <!-- Used 2 times in query history -->
     <datastore-index kind="Comment" ancestor="true" source="auto">
         <property name="date" direction="desc"/>
     </datastore-index>

@@ -1,6 +1,7 @@
 package unity.controller;
 
 import java.net.URLDecoder;
+import java.util.HashSet;
 
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
@@ -14,6 +15,7 @@ import unity.service.TagService;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
+import com.google.apphosting.api.DatastorePb.BeginTransactionRequest;
 
 public class TagRegistController extends Controller {
     private TagService ts = new TagService();
@@ -31,9 +33,18 @@ public class TagRegistController extends Controller {
             Key key = KeyFactory.stringToKey(GameKeyy);
 
             System.out.println("きい" + key);
-
+            System.out.println("game??:" + Datastore.get(GameData.class, key));
             GameData g = Datastore.get(GameData.class, key);
+            System.out.println("g" + g);
             Tag tag2 = ts.getTag(tagR);
+            if (g.getTags() == null) {
+                g.setTags(new HashSet<Tag>());
+                GlobalTransaction txt = Datastore.beginGlobalTransaction();
+                Datastore.put(g);
+                txt.commit();
+            }
+            System.out.println("g.getTags:" + g.getTags());
+            System.out.println("tag2:" + tag2);
             g.getTags().add(tag2);
             GlobalTransaction tx = Datastore.beginGlobalTransaction();
             Datastore.put(g);
@@ -41,28 +52,21 @@ public class TagRegistController extends Controller {
 
             System.out.println("aa:" + g.getTags());
             TagGame tt = ts.getTagGame(g.getKey(), tag2.getKey());
+            System.out.println("TagGame一致かどうか：" + tt);
+            System.out.println("ゲームの中のタグ：" + g.getTags());
             if (tt == null) {
                 tt = new TagGame();
                 tt.getGameRef().setKey(g.getKey());
                 tt.getTagRef().setModel(tag2);
             }
-            
+
             tx = Datastore.beginGlobalTransaction();
             Datastore.put(tt);
             tx.commit();
 
         }
 
-        // if (!tagR.isEmpty()) {
-        // String tagReg = tagR + ",";
-        // System.out.println(tagReg);
-        // Tag tag = Datastore.query(Tag.class, key).asSingle();
-        // String tagRegist = tag.getTag() + tagReg;
-        // tag.setTag(tagRegist);
-        // Transaction tx = Datastore.beginTransaction();
-        // Datastore.put(tag);
-        // tx.commit();
-        // }
+      
 
         return null;
     }
