@@ -125,11 +125,17 @@ function GetUnity() {
 			data : "id=${g.key.id}",
 			success : function(e) {
 				var dateFormat = new DateFormat("yyyy/MM/dd HH:mm:ss");
-				
 				var html = "";
 				var cms = e.comments;
+				$("div").remove(".comment_floating");
 				for (i in cms) {
 					var c = cms[i];
+				//	var d = Math.floor( Math.random() * (100 - 0) )+offset.left;
+					var com = c.comment;
+					funct(com,$("#comments-top"),i*500, 1000, 200);
+					funct(com,$("#comments-left"),i*500, 200, 450);
+					funct(com,$("#comments-right"),i*500, 200, 450);
+					funct(com,$("#comments-bottom"),i*500, 1000, 200);
 					html += "<div>";
 					html += "" + c.comment + " " +dateFormat.format(new Date(c.date));
 					html += "</div>";
@@ -139,7 +145,54 @@ function GetUnity() {
 
 		});
 	}
+	function funct(com, cc, delay, width, height){
 
+		var offset = cc.offset();
+		
+		var xMin = offset.left;
+		var xMax = xMin+width;
+		var yMin = offset.top;
+		var yMax = yMin+height;
+		
+		
+		var x = Math.floor( Math.random() * (xMax - xMin) )+xMin;
+		var y = Math.floor( Math.random() * (yMax - yMin) )+yMin;
+
+		var red = Math.floor( Math.random() * 256);
+        var green = Math.floor( Math.random() * 256);
+        var blue = Math.floor( Math.random() * 256);
+        var col = 'rgb('+ red +','+ green +','+ blue +')';
+        //var fs = Math.floor( Math.random() * (32 - 16) ) + 16;
+		
+		var fc = $("<div class='comment_floating'>"+com+"</div>");
+		fc.css("position","absolute");
+		fc.css("left",""+x+"px");
+		fc.css("top",""+y+"px");
+		fc.css('word-wrap', 'break-word');
+		
+		fc.css('color',col);
+		fc.css('width',""+(xMax-x)+"px");
+		
+		var func = function(){
+			var x = Math.floor( Math.random() * (xMax - xMin) )+xMin;
+			var y = Math.floor( Math.random() * (yMax - yMin) )+yMin;
+			
+			var red = Math.floor( Math.random() * 256);
+	        var green = Math.floor( Math.random() * 256);
+	        var blue = Math.floor( Math.random() * 256);
+	        var col = 'rgb('+ red +','+ green +','+ blue +')';
+
+			fc.css("left",""+x+"px");
+			fc.css("top",""+y+"px");
+			fc.css('color',col);
+			fc.css('width',""+(xMax-x)+"px");
+			//fc.css('font-size', ""+fs);
+			fc.fadeIn(2000).delay(2000).fadeOut(2000,func);
+		}
+		fc.hide().delay(delay).fadeIn(2000).delay(2000).fadeOut(2000,func);
+		cc.append(fc);
+	}	
+	
 	function updateTags() {
 		$.ajax({
 			type : "post",
@@ -152,7 +205,7 @@ function GetUnity() {
 				var i;
 				var t;
 
-				console.log(e.gameData);
+		//		console.log(e.gameData);
 				var tags = e.gameData.fixTags;
 				for (i in tags) {
 					t = tags[i]
@@ -173,7 +226,7 @@ function GetUnity() {
 					html2 += '<span style="padding:10px;">';
 					html2 += '<span style="font-size: 20px;">' + t.name
 							+ '</span>';
-					console.log(t.key);
+				//	console.log(t.key);
 					html2 += '<a onclick="deleteTag(\'' + t.key.id + '\');">'
 							+ '<img src="/images/delete.png">' + '</a>'
 					html2 += '</span>';
@@ -245,6 +298,7 @@ function GetUnity() {
 
 	<div align="right" style="position: relative; top: -2em;">
 		<%-- Social Buttons --%>
+		<%-- 
 		<a href="http://mixi.jp/share.pl" class="mixi-check-button"
 			data-key="42bc93a615261cdd8e17e115918eb36ebf60a729"
 			data-button="button-1"></a>
@@ -276,17 +330,16 @@ function GetUnity() {
 				document.getElementById('fb-root').appendChild(e);
 			}());
 		</script>
+		--%>
 	</div>
 
 	<div id="tabs">
 		<%-- Top Tabs --%>
 		<ul>
 			<li><a href="#tab1"><span><fmt:message
-							key="explanation" /> </span> </a>
-			</li>
+							key="explanation" /> </span> </a></li>
 			<li><a href="#tab2"><span><fmt:message
-							key="operation" /> </span> </a>
-			</li>
+							key="operation" /> </span> </a></li>
 			<div align="right">
 				<span><fmt:message key="entryDay" />：<fmt:formatDate
 						value="${g.date}" pattern="MM/dd" /> </span><br> <span><fmt:message
@@ -301,43 +354,49 @@ function GetUnity() {
 			<span>${f:h(g.operations)}</span>
 		</div>
 	</div>
-
 	<%-- Game --%>
-	<div style="margin-top: 1em; margin-bottom: 1em; text-align: right;">
-		<div id="loaded">
-			<c:choose>
-				<c:when test="${empty g.thumbNailURL}">
-					<img src="/unitygames/thumbNail?thumbNailKey=${f:h(g.key)}"
-						width="600" height="450" style="opacity: 0.3; z-index: 0;" />
-				</c:when>
-				<c:when test="${not empty g.thumbNailURL}">
-					<img src="${g.thumbNailURL}" border="1" width="600" height="450"
-						style="opacity: 0.3; z-index: 0;" />
-				</c:when>
-			</c:choose>
-			<button id="load"
-				style="background-color: transparent; border: 0; z-index: 1; position: relative; left: -400px; top: -180px">
-				<img src="/images/Start.png">
-			</button>
+	<div style="margin-top: 1em; margin-bottom: 1em;">
+
+		<div id="comments-top"
+			style="width: 1000px; height: 200px;">&nbsp;</div>
+	
+		<div id="comments-left" style="float: left; width: 200px;">&nbsp;</div>
+		<div id="game-center" style="float: left; width: 600px;">
+			<div id="loaded">
+				<c:choose>
+					<c:when test="${empty g.thumbNailURL}">
+						<img src="/unitygames/thumbNail?thumbNailKey=${f:h(g.key)}"
+							width="600" height="450" style="opacity: 0.3; z-index: 0;" />
+					</c:when>
+					<c:when test="${not empty g.thumbNailURL}">
+						<img src="${g.thumbNailURL}" border="1" width="600" height="450"
+							style="opacity: 0.3; z-index: 0;" />
+					</c:when>
+				</c:choose>
+				<button id="load"
+					style="background-color: transparent; border: 0; z-index: 1; position: relative; left: 200px; top: -180px">
+					<img src="/images/Start.png">
+				</button>
+				<div>
+					<button id="reload"
+						style="position: relative; left: -512px; z-index: 1;">リロード</button>
+				</div>
+			</div>
 		</div>
-		<div>
-			<button id="reload"
-				style=" position:relative; left:-512px; z-index: 1;">リロード</button>
-		</div>
+		<div id="comments-right" style="float: left; width: 200px;">&nbsp;</div>
+		<div id="comments-bottom"
+			style="clear: both; width: 1000px; height: 200px;">&nbsp;</div>
 	</div>
 
-	<div id="contentTab">
+	<div id="contentTab" style="clear: both;">
 		<%-- Bottom Tabs --%>
 		<ul>
 			<li><a href="#comment"><span><fmt:message
-							key="comment" /> </span> </a>
-			</li>
+							key="comment" /> </span> </a></li>
 			<li><a href="#code"><span><fmt:message key="code" />
-				</span> </a>
-			</li>
+				</span> </a></li>
 			<li><a href="#tagg"><span><fmt:message
-							key="registTag" /> </span> </a>
-			</li>
+							key="registTag" /> </span> </a></li>
 
 		</ul>
 
