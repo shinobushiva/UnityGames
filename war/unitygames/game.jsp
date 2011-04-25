@@ -135,7 +135,7 @@ function GetUnity() {
 					funct(com,$("#comments-top"),i*500, 1000, 200);
 					funct(com,$("#comments-left"),i*500, 200, 450);
 					funct(com,$("#comments-right"),i*500, 200, 450);
-					funct(com,$("#comments-bottom"),i*500, 1000, 200);
+					// funct(com,$("#comments-bottom"),i*500, 1000, 200);
 					html += "<div>";
 					html += "" + c.comment + " " +dateFormat.format(new Date(c.date));
 					html += "</div>";
@@ -163,18 +163,28 @@ function GetUnity() {
         var blue = Math.floor( Math.random() * 256);
         var col = 'rgb('+ red +','+ green +','+ blue +')';
         //var fs = Math.floor( Math.random() * (32 - 16) ) + 16;
-		
+        if(xMax -x <100){
+        	x=x-100;
+        }
 		var fc = $("<div class='comment_floating'>"+com+"</div>");
 		fc.css("position","absolute");
 		fc.css("left",""+x+"px");
 		fc.css("top",""+y+"px");
 		fc.css('word-wrap', 'break-word');
+		fc.css("background","white")
 		
 		fc.css('color',col);
 		fc.css('width',""+(xMax-x)+"px");
 		
 		var func = function(){
-			var x = Math.floor( Math.random() * (xMax - xMin) )+xMin;
+			var offset = cc.offset();
+			
+			var xMin = offset.left;
+			var xMax = xMin+width;
+			var yMin = offset.top;
+			var yMax = yMin+height;
+			
+			var x = Math.floor( Math.random() * (xMax-100 - xMin) )+xMin;
 			var y = Math.floor( Math.random() * (yMax - yMin) )+yMin;
 			
 			var red = Math.floor( Math.random() * 256);
@@ -182,14 +192,19 @@ function GetUnity() {
 	        var blue = Math.floor( Math.random() * 256);
 	        var col = 'rgb('+ red +','+ green +','+ blue +')';
 
+	        if(xMax -x <100){
+	        	x=x-100;
+	        }
+	        
 			fc.css("left",""+x+"px");
 			fc.css("top",""+y+"px");
 			fc.css('color',col);
 			fc.css('width',""+(xMax-x)+"px");
+			
 			//fc.css('font-size', ""+fs);
-			fc.fadeIn(2000).delay(2000).fadeOut(2000,func);
+			fc.delay(1000).fadeIn(2000).delay(5000).fadeOut(2000,func);
 		}
-		fc.hide().delay(delay).fadeIn(2000).delay(2000).fadeOut(2000,func);
+		fc.hide().delay(delay).fadeIn(2000).delay(5000).fadeOut(2000,func);
 		cc.append(fc);
 	}	
 	
@@ -298,7 +313,7 @@ function GetUnity() {
 
 	<div align="right" style="position: relative; top: -2em;">
 		<%-- Social Buttons --%>
-		<%-- 
+
 		<a href="http://mixi.jp/share.pl" class="mixi-check-button"
 			data-key="42bc93a615261cdd8e17e115918eb36ebf60a729"
 			data-button="button-1"></a>
@@ -330,7 +345,7 @@ function GetUnity() {
 				document.getElementById('fb-root').appendChild(e);
 			}());
 		</script>
-		--%>
+
 	</div>
 
 	<div id="tabs">
@@ -340,6 +355,8 @@ function GetUnity() {
 							key="explanation" /> </span> </a></li>
 			<li><a href="#tab2"><span><fmt:message
 							key="operation" /> </span> </a></li>
+			<li><a href="#tagg"><span><fmt:message
+							key="registTag" /> </span> </a></li>
 			<div align="right">
 				<span><fmt:message key="entryDay" />：<fmt:formatDate
 						value="${g.date}" pattern="MM/dd" /> </span><br> <span><fmt:message
@@ -353,13 +370,19 @@ function GetUnity() {
 		<div id="tab2">
 			<span>${f:h(g.operations)}</span>
 		</div>
+		<div id="tagg">
+			<input type="text" name="tag" style="width: 200;" id="tagReg">
+			<button class="searchButton black" id="tagButton">
+				<fmt:message key="button.regist" />
+			</button>
+			<div id="tagUpload2"></div>
+		</div>
 	</div>
 	<%-- Game --%>
 	<div style="margin-top: 1em; margin-bottom: 1em;">
 
-		<div id="comments-top"
-			style="width: 1000px; height: 200px;">&nbsp;</div>
-	
+		<div id="comments-top" style="width: 1000px; height: 200px;">&nbsp;</div>
+
 		<div id="comments-left" style="float: left; width: 200px;">&nbsp;</div>
 		<div id="game-center" style="float: left; width: 600px;">
 			<div id="loaded">
@@ -384,19 +407,21 @@ function GetUnity() {
 			</div>
 		</div>
 		<div id="comments-right" style="float: left; width: 200px;">&nbsp;</div>
-		<div id="comments-bottom"
+		<%--	<div id="comments-bottom"
 			style="clear: both; width: 1000px; height: 200px;">&nbsp;</div>
+			--%>
 	</div>
 
 	<div id="contentTab" style="clear: both;">
-		<%-- Bottom Tabs --%>
+		<%-- Tabs --%>
 		<ul>
 			<li><a href="#comment"><span><fmt:message
 							key="comment" /> </span> </a></li>
 			<li><a href="#code"><span><fmt:message key="code" />
 				</span> </a></li>
-			<li><a href="#tagg"><span><fmt:message
-							key="registTag" /> </span> </a></li>
+			<li><a href="#relation"><span><fmt:message key="code" />
+				</span> </a></li>
+
 
 		</ul>
 
@@ -422,14 +447,10 @@ function GetUnity() {
 		<div id="code">
 			<pre class="prettyprint">${g.code}</pre>
 		</div>
-
-		<div id="tagg">
-			<input type="text" name="tag" style="width: 200;" id="tagReg">
-			<button class="searchButton black" id="tagButton">
-				<fmt:message key="button.regist" />
-			</button>
-			<div id="tagUpload2"></div>
+		<div id="relation">
+			<pre class="prettyprint">${g.code}</pre>
 		</div>
+
 	</div>
 </body>
 </html>
