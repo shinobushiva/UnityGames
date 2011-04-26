@@ -111,7 +111,7 @@ else{return true; // 送信を実行
 <textarea  style="width: 440;height: 110;" name="Operations" title="<fmt:message key="operation.title" />">${g.operations}</textarea>
 <h2><fmt:message key="code" /></h2>
 <textarea  style="width: 440;height: 110;" name="Code" title="<fmt:message key="code.title" />">${g.code}</textarea>
-<div id="wrapper" align="center"　>	
+<div id="wrapper" align="center">	
 		<button class="button"  style="position: relative;top:30px; width: 250px; height: 80px;font-size: xx-large;"><fmt:message key="button.change" />
 </button>
 		<input type="hidden" name="key" value="${f:h(g.key)}"></div>
@@ -177,7 +177,7 @@ ${g.thumbNailURL}<br></c:if>
 </div>
 </form>
 <form action="delete" method="post">
-<div id="wrapper" align="center"　>	
+<div id="wrapper" align="center">	
 		<button class="button" name="delete" style="position: relative;top:-30;width:859px;font-size: xx-large;"><fmt:message key="button.delete" />
 </button>
 		</div>

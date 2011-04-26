@@ -7,18 +7,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <%@ include file="/share/css.jsp"%>
+<link href="/css/view.css" rel="StyleSheet" type="text/css" />
 <%@ include file="/share/js.jsp"%>
-<title><fmt:message key="unitygames.top" /></title>
+<title><fmt:message key="unitygames.top" />
+</title>
 <script type="text/javascript">
-
 	$(function() {
 
-		$("#View").load("/view?view=default");
-		$("#howto,#howto2").click(function() {
-			$(function() {
-				$("#PageLoad").load("/howto")
-			})
-		});
+	$("#View").load("/view?view=default");
+
 		$("#contact").click(function() {
 			$(function() {
 				$("#PageLoad").load("/contact")
@@ -73,7 +70,7 @@
 		</select>
 		<div id="View"></div>
 	</div>
-	<%@ include file="/share/footer.jsp" %>
+	<%@ include file="/share/footer.jsp"%>
 
 </body>
 </html>

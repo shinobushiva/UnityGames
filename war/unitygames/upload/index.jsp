@@ -74,7 +74,7 @@ function tagCheck(){
 
 	<%@ include file="/share/header.jsp"%>
 	<div style="padding-top: 30px;">
-		<form action="upload" method="post" 　class="cmxform" id="commentForm"
+		<form action="upload" method="post" class="cmxform" id="commentForm"
 			enctype="multipart/form-data" onSubmit="return tagCheck()"
 			name="form1">
 			<table class="purchase-options" border="0" align="center">
@@ -101,7 +101,7 @@ function tagCheck(){
 							<fmt:message key="code" />
 						</h2> <textarea style="width: 440; height: 110;" name="Code"
 							title="<fmt:message key="code.title" />"></textarea>
-						<div id="wrapper" align="center"　>
+						<div id="wrapper" align="center">
 							<button id="regist" class="button"
 								style="width: 250px; height: 80px; font-size: xx-large;">
 								<fmt:message key="button.regist" />
