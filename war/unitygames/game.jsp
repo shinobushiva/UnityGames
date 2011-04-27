@@ -60,6 +60,9 @@ function GetUnity() {
 </script>
 
 <script type="text/javascript">
+	var showComments = false;
+
+
 	jQuery.extend(jQuery.validator.messages, {
 		required : "<br><fmt:message key='not.comment'/>"
 	});
@@ -90,8 +93,7 @@ function GetUnity() {
 		$('#tabs').tabs();
 		$('#contentTab').tabs();
 
-		updateTags();
-		loadComments();
+	
 
 		$("#reload").hide();
 		$("#ttt").hide();
@@ -114,9 +116,24 @@ function GetUnity() {
 		});
 
 		$("#load,#reload").click(loadClicked);
-
+		
+		$("#comments-top").hide();
+		$("#comments-left").hide();
+		$("#comments-right").hide();
+		$("#commentToggle").click(commentToggle);
+		
+		updateTags();
+		loadComments();
 	});
 
+	function commentToggle(){
+		showComments = !showComments;
+		$("#comments-top").slideToggle();
+		$("#comments-left").slideToggle();
+		$("#comments-right").slideToggle();
+		loadComments();
+	}
+	
 	function loadComments() {
 
 		$.ajax({
@@ -128,22 +145,25 @@ function GetUnity() {
 				var html = "";
 				var cms = e.comments;
 			
-				var cmslength = cms.length/3;	
 				
 				$("div").remove(".comment_floating");
 				for (i in cms) {
+						// funct(com,$("#comments-bottom"),i*500, 1000, 200);
 					var c = cms[i];
 					var com = c.comment;
 				
+					html += "<div>";
+					html += "" + c.comment + " " +dateFormat.format(new Date(c.date));
+					html += "</div>";
+					if(showComments){
+					
 					switch(i%3) {
 					case 0:funct(com,$("#comments-top"),i*500, 1000, 200); break;
 					case 1:funct(com,$("#comments-left"),i*500, 200, 450); break;
 					default:funct(com,$("#comments-right"),i*500, 200, 450);
 					}
-					// funct(com,$("#comments-bottom"),i*500, 1000, 200);
-					html += "<div>";
-					html += "" + c.comment + " " +dateFormat.format(new Date(c.date));
-					html += "</div>";
+					}
+				
 				}
 				$('#commentLoad').html(html);
 			}
@@ -207,7 +227,9 @@ function GetUnity() {
 			fc.css('width',""+(xMax-x)+"px");
 			
 			//fc.css('font-size', ""+fs);
-			fc.delay(1000).fadeIn(2000).delay(5000).fadeOut(2000,func);
+			if(showComments){
+				fc.delay(1000).fadeIn(2000).delay(5000).fadeOut(2000,func);
+			}
 		}
 		fc.hide().delay(delay).fadeIn(2000).delay(5000).fadeOut(2000,func);
 		cc.append(fc);
@@ -364,12 +386,17 @@ function GetUnity() {
 			<li><a href="#tagg"><span><fmt:message
 							key="registTag" /> </span> </a>
 			</li>
-			<div align="right">
-				<span><fmt:message key="entryDay" />：<fmt:formatDate
-						value="${g.date}" pattern="MM/dd" /> </span><br> <span><fmt:message
-						key="LastEntryDay" />：<fmt:formatDate value="${g.lastDate}"
-						pattern="MM/dd" /> </span>
-			</div>
+			<span style="position:relative;top: -10px;">
+				<button id="commentToggle"
+					style="line-height: 2em; display: inline-block;">コメントクラウド表示/非表示</button>
+			</span>
+			<span
+				style="text-align: right; display: inline-block; margin-left: 450px;"><fmt:message
+					key="entryDay" />：<fmt:formatDate value="${g.date}"
+					pattern="MM/dd" /> <br>
+			<fmt:message key="LastEntryDay" />：<fmt:formatDate
+					value="${g.lastDate}" pattern="MM/dd" /> </span>
+
 		</ul>
 		<div id="tab1">
 			<span>${f:h(g.contents)}</span>
@@ -389,8 +416,11 @@ function GetUnity() {
 	<div style="margin-top: 1em; margin-bottom: 1em;">
 
 		<div id="comments-top" style="width: 1000px; height: 200px;">&nbsp;</div>
-
-		<div id="comments-left" style="float: left; width: 200px;">&nbsp;</div>
+		<%-- &nbsp;は無いとつぶれる --%>
+		<div style="float: left; width: 200px;">
+			&nbsp;
+			<div id="comments-left" style="width: 200px;">&nbsp;</div>
+		</div>
 		<div id="game-center" style="float: left; width: 600px;">
 			<div id="loaded">
 				<c:choose>
@@ -428,8 +458,7 @@ function GetUnity() {
 			<li><a href="#code"><span><fmt:message key="code" />
 				</span> </a>
 			</li>
-			<li><a href="#relation"><span>未実装
-				</span> </a>
+			<li><a href="#relation"><span>未実装 </span> </a>
 			</li>
 
 

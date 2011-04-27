@@ -37,10 +37,10 @@ public class CommentLoadController extends JsonController {
                 .sort(CommentMeta.get().date.desc)
                 .asList();
         // 日本時間に修正
-        for (Comment co : comments) {
-            long l = co.getDate().getTime() + 1000 * 60 * 60 * 9;
-            co.getDate().setTime(l);
-        }
+//        for (Comment co : comments) {
+//            long l = co.getDate().getTime() + 1000 * 60 * 60 * 9;
+//            co.getDate().setTime(l);
+//        }
 
         map.put("comments", comments);
         return map;

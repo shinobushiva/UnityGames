@@ -51,10 +51,10 @@ public class GameController extends Controller {
                 .sort(CommentMeta.get().date.asc)
                 .asList();
         requestScope("c", comment);
-        for (Comment co : comment) {
-            long l = co.getDate().getTime() + 1000 * 60 * 60 * 9;
-            co.getDate().setTime(l);
-        }
+//        for (Comment co : comment) {
+//            long l = co.getDate().getTime() + 1000 * 60 * 60 * 9;
+//            co.getDate().setTime(l);
+//        }
 
         return forward("game.jsp");
     }
