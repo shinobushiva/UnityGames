@@ -23,19 +23,7 @@ public class GameData implements Serializable {
 
     @Attribute(primaryKey = true)
     private Key key;
-    private String gameName;
-    private String gameURL;
-    private int length;
-    private Date date;
-    private Date lastDate;
-    private String thumbNailURL;
-    private String hpURL;
-    private String pass;
-    private String thumbNailType;
-    private String gameType;
-    private int access;
-    private int comment;
-    private int assessment;
+
     @Attribute(lob = true)
     private String contents;
     @Attribute(lob = true)
@@ -44,6 +32,32 @@ public class GameData implements Serializable {
     private String code;
     @Attribute(version = true)
     private Long version;
+
+    private String gameName;
+
+    private String gameURL;
+
+    private int length;
+
+    private Date date;
+
+    private Date lastDate;
+
+    private String thumbNailURL;
+
+    private String hpURL;
+
+    private String pass;
+
+    private String thumbNailType;
+
+    private String gameType;
+
+    private int access;
+
+    private int comment;
+
+    private int assessment;
 
     @Attribute(lob = true)
     private Set<Tag> fixTags = new HashSet<Tag>();

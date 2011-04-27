@@ -17,7 +17,7 @@
 
 	<table align="center">
 		<tr>
-			<c:forEach var="g" items="${games}" varStatus="loop">
+			<c:forEach var="g" items="${GameList}" varStatus="loop">
 				<td>
 					<div style="width: 500px; padding-left: 10px; padding-right: 10px;">
 						<script type="text/javascript">
@@ -97,11 +97,9 @@
 								<div id="tabs-${g.key.id}">
 									<ul>
 										<li style=""><a href="#tab1-${g.key.id}"><span><fmt:message
-														key="explanation" /> </span> </a>
-										</li>
+														key="explanation" /> </span> </a></li>
 										<li style=""><a href="#tab2-${g.key.id}"><span><fmt:message
-														key="operation" /> </span> </a>
-										</li>
+														key="operation" /> </span> </a></li>
 									</ul>
 
 									<div id="tab1-${g.key.id}">
@@ -135,8 +133,7 @@
 							</div>
 						</div>
 
-					</div>
-				</td>
+					</div></td>
 				<c:if test="${loop.count mod 2 == 0}">
 		</tr>
 		<tr>

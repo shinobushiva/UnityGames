@@ -58,7 +58,7 @@ public class SearchController extends Controller {
             }
             requestScope("word", word);
             requestScope("type", "keyword");
-            requestScope("games", gr);
+            requestScope("GameList", gr);
 
         }
         // return forward("search?word="+word);
@@ -102,7 +102,7 @@ public class SearchController extends Controller {
 
             requestScope("word", tag);
             requestScope("type", "tag");
-            requestScope("games", gds);
+            requestScope("GameList", gds);
 
         }
         return forward("search.jsp");

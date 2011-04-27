@@ -12,11 +12,7 @@
 	height: 260px;
 }
 
-.bounded {
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
+
 
 .gameViewHead {
 	margin: 0;

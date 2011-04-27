@@ -8,3 +8,5 @@
 <script type="text/javascript"
 	src="http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject.js"></script>
 <script src="/js/dateformat.js"></script>
+<script src="/js/super_load.js"></script>
+<script src="/js/easySlider.js"></script>

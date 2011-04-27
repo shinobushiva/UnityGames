@@ -14,12 +14,15 @@
 						$(function() {
 
 							$("#out-${g.key.id}").hide();
-							$("#change-${g.key.id}").click(function() {
-								$("#change-${g.key.id}").css("position","relative");
-								$("#change-${g.key.id}").css("top","-5px");
-								$("#out-${g.key.id}").show();
-								$("#br-${g.key.id}").hide();
-							});
+							$("#change-${g.key.id}").click(
+									function() {
+										$("#change-${g.key.id}").css(
+												"position", "relative");
+										$("#change-${g.key.id}").css("top",
+												"-5px");
+										$("#out-${g.key.id}").show();
+										$("#br-${g.key.id}").hide();
+									});
 						});
 					</script>
 
@@ -36,26 +39,32 @@
 
 					<div class="gameView">
 						<div class="gameViewHead">
-							<div style="width: 400px; float: left;" class="bounded">
+							<div style="width: 350px; float: left;" class="bounded">
 								<c:choose>
 									<c:when test="${empty g.hpURL}">
-										<a href="/unitygames/game?id=${f:h(g.key.id)}" class="title">
-											${g.gameName} </a>
 										<c:set var="url" value="/unitygames/game?id=${f:h(g.key.id)}" />
+										<a href="${url}" class="title"> ${g.gameName} </a>
 									</c:when>
 									<c:when test="${not empty g.hpURL}">
-										<a href="${g.hpURL}" class="title">${g.gameName }</a>
 										<c:set var="url" value="${g.hpURL}" />
+										<a href="${url}" class="title">${g.gameName }</a>
+
 									</c:when>
 								</c:choose>
 							</div>
-
+							<div style="float: right;">
+								<ul>
+									<li class="noListPoint"><fmt:message key="access" />：${g.access}</li>
+									<li class="noListPoint"><fmt:message key="comment" />：${g.comment}</li>
+								</ul>
+							</div>
 							<div style="clear: both;"></div>
 						</div>
-						<div style="margin-top: 0.5em; ">
+						<div style="margin-top: 0.5em;" class="bounded">
 							<c:forEach var="ft" items="${g.fixTags}">
-								<a href="/search?tag=${ft.name}" style="font-size: 18px;font-weight: 900;">${ft.name}</a>
-								
+								<a href="/search?tag=${ft.name}"
+									style="font-size: 18px; font-weight: 900;">${ft.name}</a>
+
 							</c:forEach>
 						</div>
 						<div
@@ -80,9 +89,12 @@
 							<div id="tabs-${g.key.id}">
 								<ul>
 									<li style=""><a href="#tab1-${g.key.id}"><span><fmt:message
-													key="explanation" /> </span> </a></li>
+													key="explanation" /> </span> </a>
+									</li>
 									<li style=""><a href="#tab2-${g.key.id}"><span><fmt:message
-													key="operation" /> </span> </a></li>
+													key="operation" /> </span> </a>
+									</li>
+
 								</ul>
 
 								<div id="tab1-${g.key.id}">
@@ -95,14 +107,12 @@
 							</div>
 						</div>
 						<div style="clear: both;">
-							<div style="float: left;font-size: 20px;position: relative;top:-10px; margin-top:0.3em; margin-left: 8em;">
-								<span><fmt:message key="access" />：${g.access}</span>
-								<span><fmt:message key="comment" />：${g.comment}</span>
-							</div>
-							<div align="right" >
+
+							<div align="right">
 								<form action="/unitygames/change" method="post">
 									<a id="change-${g.key.id}" style="font-size: x-small;"><fmt:message
-											key="change.delete" /> </a><a id="out-${g.key.id}"style="position: relative;top:-5px;"><input
+											key="change.delete" /> </a><a id="out-${g.key.id}"
+										style="position: relative; top: -5px;"><input
 										type="password" name="Pass" style="width: 40px;"><input
 										type="hidden" name="key" value="${f:h(g.key)}">
 										<button type="submit">
@@ -114,7 +124,8 @@
 						</div>
 					</div>
 
-				</div></td>
+				</div>
+			</td>
 			<c:if test="${loop.count mod 2 == 0}">
 	</tr>
 	<tr>

@@ -8,19 +8,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <%@ include file="/share/css.jsp"%>
 <link href="/css/view.css" rel="StyleSheet" type="text/css" />
+
 <%@ include file="/share/js.jsp"%>
-<title><fmt:message key="unitygames.top" />
-</title>
+
+<title><fmt:message key="unitygames.top" /></title>
 <script type="text/javascript">
 	$(function() {
-
-	$("#View").load("/view?view=default");
-
-		$("#contact").click(function() {
-			$(function() {
-				$("#PageLoad").load("/contact")
-			})
-		});
+		$("#View").load("/view?view=default");
+		$("#campaign").super_load("/campaignList");
+		
+	
 		$("#selectView").change(function() {
 
 			var data = $(this).serialize();
@@ -35,6 +32,7 @@
 				}
 			})
 		})
+
 	});
 
 	var _gaq = _gaq || [];
@@ -51,11 +49,14 @@
 		var s = document.getElementsByTagName('script')[0];
 		s.parentNode.insertBefore(ga, s);
 	})();
+	
 </script>
 </head>
 <body>
 
 	<%@ include file="/share/header.jsp"%>
+	<div id="campaign"></div>
+
 	<%@ include file="/share/search.jsp"%>
 
 	<div id="PageLoad">
@@ -73,4 +74,5 @@
 	<%@ include file="/share/footer.jsp"%>
 
 </body>
+
 </html>
