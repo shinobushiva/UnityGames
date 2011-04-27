@@ -127,14 +127,19 @@ function GetUnity() {
 				var dateFormat = new DateFormat("yyyy/MM/dd HH:mm:ss");
 				var html = "";
 				var cms = e.comments;
+			
+				var cmslength = cms.length/3;	
+				
 				$("div").remove(".comment_floating");
 				for (i in cms) {
 					var c = cms[i];
-				//	var d = Math.floor( Math.random() * (100 - 0) )+offset.left;
 					var com = c.comment;
-					funct(com,$("#comments-top"),i*500, 1000, 200);
-					funct(com,$("#comments-left"),i*500, 200, 450);
-					funct(com,$("#comments-right"),i*500, 200, 450);
+				
+					switch(i%3) {
+					case 0:funct(com,$("#comments-top"),i*500, 1000, 200); break;
+					case 1:funct(com,$("#comments-left"),i*500, 200, 450); break;
+					default:funct(com,$("#comments-right"),i*500, 200, 450);
+					}
 					// funct(com,$("#comments-bottom"),i*500, 1000, 200);
 					html += "<div>";
 					html += "" + c.comment + " " +dateFormat.format(new Date(c.date));
@@ -351,11 +356,14 @@ function GetUnity() {
 		<%-- Top Tabs --%>
 		<ul>
 			<li><a href="#tab1"><span><fmt:message
-							key="explanation" /> </span> </a></li>
+							key="explanation" /> </span> </a>
+			</li>
 			<li><a href="#tab2"><span><fmt:message
-							key="operation" /> </span> </a></li>
+							key="operation" /> </span> </a>
+			</li>
 			<li><a href="#tagg"><span><fmt:message
-							key="registTag" /> </span> </a></li>
+							key="registTag" /> </span> </a>
+			</li>
 			<div align="right">
 				<span><fmt:message key="entryDay" />：<fmt:formatDate
 						value="${g.date}" pattern="MM/dd" /> </span><br> <span><fmt:message
@@ -415,11 +423,14 @@ function GetUnity() {
 		<%-- Tabs --%>
 		<ul>
 			<li><a href="#comment"><span><fmt:message
-							key="comment" /> </span> </a></li>
+							key="comment" /> </span> </a>
+			</li>
 			<li><a href="#code"><span><fmt:message key="code" />
-				</span> </a></li>
-			<li><a href="#relation"><span><fmt:message key="code" />
-				</span> </a></li>
+				</span> </a>
+			</li>
+			<li><a href="#relation"><span>未実装
+				</span> </a>
+			</li>
 
 
 		</ul>
