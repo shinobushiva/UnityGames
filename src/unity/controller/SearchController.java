@@ -37,6 +37,9 @@ public class SearchController extends Controller {
                     .getGameName()
                     .toLowerCase()
                     .contains(word.toLowerCase())) {
+                    
+                    long l = gameName.getDate().getTime() + 1000 * 60 * 60 * 9;
+                    gameName.getDate().setTime(l);
 
                     if (gameName.getContents().length() >= 80) {
                         String s = gameName.getContents().substring(0, 80);
@@ -78,6 +81,22 @@ public class SearchController extends Controller {
             for (TagGame gameData : tgl) {
 
                 gds.add(gameData.getGameRef().getModel());
+
+            }
+
+            for (GameData game : gds) {
+
+                long l = game.getDate().getTime() + 1000 * 60 * 60 * 9;
+                game.getDate().setTime(l);
+
+                if (game.getContents().length() >= 80) {
+                    String s = game.getContents().substring(0, 80);
+                    game.setContents(s + "...");
+                }
+                if (game.getOperations().length() >= 80) {
+                    String o = game.getOperations().substring(0, 80);
+                    game.setOperations(o + "...");
+                }
 
             }
 
