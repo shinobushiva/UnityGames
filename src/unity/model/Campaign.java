@@ -1,12 +1,13 @@
 package unity.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.slim3.datastore.Attribute;
+import org.slim3.datastore.InverseModelListRef;
 import org.slim3.datastore.Model;
+
+import unity.meta.CampaignGameMeta;
 
 import com.google.appengine.api.datastore.Key;
 
@@ -23,9 +24,13 @@ public class Campaign implements Serializable {
     private Long version;
 
     private String title;
-
-    @Attribute(lob = true)
-    private List<GameData> games = new ArrayList<GameData>();
+    @Attribute(persistent = false)
+    private InverseModelListRef<CampaignGame, Campaign> campaignGameRef =
+        new InverseModelListRef<CampaignGame, Campaign>(
+            CampaignGame.class,
+            CampaignGameMeta.get().gameRef.getName(),
+            this)
+            ;
 
     private Date start;
 
@@ -109,14 +114,6 @@ public class Campaign implements Serializable {
         return title;
     }
 
-    public void setGames(List<GameData> games) {
-        this.games = games;
-    }
-
-    public List<GameData> getGames() {
-        return games;
-    }
-
     public void setStart(Date start) {
         this.start = start;
     }
@@ -139,5 +136,9 @@ public class Campaign implements Serializable {
 
     public int getState() {
         return state;
+    }
+
+    public InverseModelListRef<CampaignGame, Campaign> getCampaignGameRef() {
+        return campaignGameRef;
     }
 }

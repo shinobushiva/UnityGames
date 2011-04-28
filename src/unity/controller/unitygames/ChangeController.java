@@ -4,7 +4,6 @@ import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
 
-import unity.meta.TagMeta;
 import unity.model.GameData;
 import unity.model.Tag;
 

@@ -5,16 +5,12 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.google.appengine.api.datastore.Key;
-
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.InverseModelListRef;
 import org.slim3.datastore.Model;
-import org.slim3.datastore.ModelRef;
 import org.slim3.datastore.Sort;
 
-import unity.model.GameData;
-import unity.model.UploadedDataFragment;
+import com.google.appengine.api.datastore.Key;
 
 @Model(schemaVersion = 1)
 public class GameData implements Serializable {

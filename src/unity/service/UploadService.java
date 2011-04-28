@@ -4,21 +4,13 @@ import java.util.List;
 
 import org.slim3.util.ByteUtil;
 
-import unity.meta.GameDataMeta;
-import unity.meta.UploadedDataFragmentMeta;
 import unity.model.GameData;
 import unity.model.ThumbNailData;
 import unity.model.UploadedDataFragment;
 
 public class UploadService {
 
-    private static final int FRAGMENT_SIZE = 900000;
-
-    private GameDataMeta dd = GameDataMeta.get();
-    private TagService ts = new TagService();
-
-    private UploadedDataFragmentMeta f = UploadedDataFragmentMeta.get();
-
+  
     // public GameData getData1(Key key, Long version) {
     //
     // return Datastore.get(dd, key, version);

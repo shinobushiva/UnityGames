@@ -2,19 +2,12 @@ package unity.controller.unitygames;
 
 import java.util.List;
 
-import javax.xml.crypto.Data;
-
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
 
 import unity.meta.GameDataMeta;
-import unity.meta.NoteMeta;
-import unity.meta.TagMeta;
-
-import unity.model.Note;
 import unity.model.GameData;
-import unity.model.Tag;
 
 public class IndexController extends Controller {
 

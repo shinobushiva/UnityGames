@@ -16,7 +16,6 @@ public class ViewController extends Controller {
     public Navigation run() throws Exception {
 
         String data = asString("view");
-        System.out.println("se:" + data);
         // 投稿日時が古い順
    
             if (data.equals("OldEntry")) {
@@ -120,7 +119,6 @@ public class ViewController extends Controller {
             }
             // 投稿日時が新しい順&デフォルト
             else {
-                System.out.println("koko");
                 List<GameData> Game =
                     Datastore.query(g).sort(g.date.desc).asList();
                 requestScope("GameList", Game);

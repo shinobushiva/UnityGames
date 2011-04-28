@@ -5,7 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
-public class commentTest extends AppEngineTestCase {
+public class CommentTest extends AppEngineTestCase {
 
     private Comment model = new Comment();
 

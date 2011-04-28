@@ -15,7 +15,6 @@ import unity.service.TagService;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
-import com.google.apphosting.api.DatastorePb.BeginTransactionRequest;
 
 public class TagRegistController extends Controller {
     private TagService ts = new TagService();

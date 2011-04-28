@@ -4,12 +4,11 @@ import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
 
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
-
 import unity.meta.GameDataMeta;
 import unity.model.GameData;
 import unity.service.UploadService;
+
+import com.google.appengine.api.datastore.KeyFactory;
 
 public class GameDataController extends Controller {
     private UploadService service = new UploadService();

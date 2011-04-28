@@ -6,7 +6,6 @@
 <link href="/css/global.css" rel="StyleSheet" type="text/css" />
 <link href="/css/lavalamp.css" rel="StyleSheet" type="text/css" />
 <link href="/css/prettify.css" rel="StyleSheet" type="text/css" />
-<link href="/css/screen.css" rel="StyleSheet" type="text/css" />
 
 
 

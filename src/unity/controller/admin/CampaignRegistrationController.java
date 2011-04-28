@@ -4,6 +4,7 @@ import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 
 import unity.model.Campaign;
+import unity.model.CampaignGame;
 import unity.model.GameData;
 import unity.service.CampaignService;
 import unity.service.GameDataService;
@@ -23,7 +24,11 @@ public class CampaignRegistrationController extends Controller {
         c.setTitle(title);
         for (String s : ga) {
             GameData gameData = gds.load(Long.parseLong(s));
-            c.getGames().add(gameData);
+            CampaignGame cg = new CampaignGame();
+            cg.getCampaignRef().setModel(c);
+            cg.getGameRef().setModel(gameData);
+
+           cs.save(cg);
 
         }
         c.setState(Campaign.STATE_NOW);

@@ -2,26 +2,28 @@ package unity.model;
 
 import java.io.Serializable;
 
-import com.google.appengine.api.datastore.Key;
-
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.Model;
+import org.slim3.datastore.ModelRef;
+
+import com.google.appengine.api.datastore.Key;
 
 @Model(schemaVersion = 1)
-public class Note implements Serializable {
-
+public class CampaignGame implements Serializable {
+    public static final int STATE_NOW = 1;
+    public static final int STATE_FINISHED = 0;
     private static final long serialVersionUID = 1L;
 
     @Attribute(primaryKey = true)
     private Key key;
-    private String GameName;
-    @Attribute(lob = true)
-    private String Contents;
-    @Attribute(lob = true)
-    private String Operations;
 
     @Attribute(version = true)
     private Long version;
+
+    private ModelRef<Campaign> campaignRef = new ModelRef<Campaign>(
+        Campaign.class);
+
+    private ModelRef<GameData> gameRef = new ModelRef<GameData>(GameData.class);
 
     /**
      * Returns the key.
@@ -80,7 +82,7 @@ public class Note implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        Note other = (Note) obj;
+        CampaignGame other = (CampaignGame) obj;
         if (key == null) {
             if (other.key != null) {
                 return false;
@@ -91,28 +93,12 @@ public class Note implements Serializable {
         return true;
     }
 
-    public void setGameName(String gameName) {
-        GameName = gameName;
+    public ModelRef<Campaign> getCampaignRef() {
+        return campaignRef;
     }
 
-    public String getGameName() {
-        return GameName;
-    }
-
-    public void setContents(String contents) {
-        Contents = contents;
-    }
-
-    public String getContents() {
-        return Contents;
-    }
-
-    public void setOperations(String operations) {
-        Operations = operations;
-    }
-
-    public String getOperations() {
-        return Operations;
+    public ModelRef<GameData> getGameRef() {
+        return gameRef;
     }
 
 }

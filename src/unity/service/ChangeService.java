@@ -12,7 +12,6 @@ import org.slim3.datastore.Datastore;
 import org.slim3.datastore.GlobalTransaction;
 import org.slim3.util.ByteUtil;
 
-import sun.util.logging.resources.logging;
 import unity.meta.TagGameMeta;
 import unity.meta.UploadedDataFragmentMeta;
 import unity.model.GameData;

@@ -1,6 +1,5 @@
 package unity.service;
 
-import java.util.Date;
 import java.util.List;
 
 import org.slim3.datastore.Datastore;
@@ -8,6 +7,7 @@ import org.slim3.datastore.GlobalTransaction;
 
 import unity.meta.CampaignMeta;
 import unity.model.Campaign;
+import unity.model.CampaignGame;
 
 public class CampaignService {
 
@@ -26,4 +26,11 @@ public class CampaignService {
             .asList();
 
     }
+    public void save(CampaignGame cg){
+        GlobalTransaction tx = Datastore.beginGlobalTransaction();
+        Datastore.put(cg);
+        tx.commit();
+        
+    }
+    
 }

@@ -22,7 +22,7 @@ a img {
 	list-style-type: none;
 }
 
-.adminGameView{
+.adminGameView {
 	border-radius: 4px 4px 4px 4px;
 	-webkit-border-radius: 4px 4px 4px 4px;
 	-moz-border-radius: 4px 4px 4px 4px;
@@ -34,12 +34,14 @@ a img {
 	font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
 	font-size: 1.1em;
 	height: 100px;
-	}
-.campaign{
+}
+
+.campaign {
 	color: red;
 	font-size: 30px;
-	}
-.campaignTitle{
-	font-size: 30px;
-	border: 900;
-	}
+}
+
+.campaignTitle {
+	font-size: 50px;
+	text-align: center;
+}

@@ -1,6 +1,5 @@
 package unity.controller.unitygames;
 
-import java.net.URI;
 import java.util.List;
 
 import org.slim3.controller.Controller;
@@ -8,15 +7,13 @@ import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
 import org.slim3.memcache.Memcache;
 
-import com.google.appengine.api.datastore.KeyFactory;
-import com.google.appengine.api.datastore.Transaction;
-
 import unity.meta.CommentMeta;
 import unity.meta.GameDataMeta;
-import unity.meta.TagMeta;
 import unity.model.Comment;
 import unity.model.GameData;
-import unity.model.Tag;
+
+import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.Transaction;
 
 public class GameController extends Controller {
 

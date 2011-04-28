@@ -1,13 +1,8 @@
 package unity.service;
 
-import java.util.Date;
-import java.util.List;
-
 import org.slim3.datastore.Datastore;
 import org.slim3.datastore.GlobalTransaction;
 
-import unity.meta.CampaignMeta;
-import unity.model.Campaign;
 import unity.model.GameData;
 
 public class GameDataService {

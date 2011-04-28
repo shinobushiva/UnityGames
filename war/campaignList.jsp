@@ -9,74 +9,69 @@
 <%@ include file="/share/css.jsp"%>
 <link href="/css/css.css" rel="StyleSheet" type="text/css" />
 <%@ include file="/share/js.jsp"%>
+<script type="text/javascript" src="/js/jquery.movingboxes.js"
+	charset="utf-8"></script>
 
-<title><fmt:message key="unitygames.top" /></title>
+<link type="text/css" href="/css/campaign.css" media="screen"
+	charset="utf-8" rel="stylesheet" />
+<script type="text/javascript" src="/js/campaign.js"></script>
 <script type="text/javascript">
-	$(function() {
-		//	$("#campaign").super_load("/campaignList");
-		$("#slider").easySlider({
-			auto : true,
-			continuous : true
-		});
-	});
+$("#test").click(function(){
+	
+	console.log($.movingBoxes.el);
+	//$.movingBoxes.goForward();
+	
+});
+
 </script>
 </head>
 <body>
-
+<button id="test">test</button>
 	<c:forEach var="c" items="${campaigns}">
-		<div>
-			<span class="campaign">~キャンペーン中~</span><span class="campaignTitle">${c.title}</span>
+	
+		<div id="wrapper">
+			<!-- Slider #2 (images of slider #1 reversed) -->
+			<div id="slider">
+
+				<c:forEach var="g" items="${c.games}">
+					<%--サムネイルの保存パターンを判別 --%>
+					<c:choose>
+						<c:when test="${empty g.thumbNailURL}">
+							<c:set var="thUrl"
+								value="/unitygames/thumbNail?thumbNailKey=${f:h(g.key)}" />
+
+						</c:when>
+						<c:when test="${not empty g.thumbNailURL}">
+							<c:set var="thUrl" value="${g.thumbNailURL}" />
+
+						</c:when>
+					</c:choose>
+					<%--内部か外部サイトかを判別 --%>
+					<c:choose>
+						<c:when test="${empty g.hpURL}">
+							<c:set var="url" value="/unitygames/game?id=${g.key.id}" />
+
+
+						</c:when>
+						<c:when test="${not empty g.hpURL}">
+							<c:set var="url" value="${g.hpURL}"/>
+
+						</c:when>
+					</c:choose>
+					<div>
+						<a href="${url}">
+						 <img src="${thUrl }" alt="picture"/><div style="text-align: center">${g.gameName}</div>
+						</a>
+					</div>
+				</c:forEach>
+
+			</div><div style="margin-left: 30px;">
+<div style="display: inline-block;"><img src="/images/campaign.png"/></div><div style="display:inline-block;" class="campaignTitle">${c.title}</div>
 		</div>
-		<div id="container">
-
-
-
-			<div id="content">
-
-				<div id="slider">
-					<ul>
-						<li><c:forEach var="g" items="${c.games}" varStatus="loop">
-								<div style="display: inline-block;">
-									<c:choose>
-										<c:when test="${empty g.thumbNailURL}">
-											<c:set var="thUrl"
-												value="/unitygames/thumbNail?thumbNailKey=${f:h(g.key)}" />
-
-										</c:when>
-										<c:when test="${not empty g.thumbNailURL}">
-											<c:set var="thUrl" value="${g.thumbNailURL}" />
-
-										</c:when>
-									</c:choose>
-									<c:choose>
-										<c:when test="${empty g.hpURL}">
-											<c:set var="url" value="/unitygames/game?id=${g.key.id}" />
-
-
-										</c:when>
-										<c:when test="${not empty g.hpURL}">
-											<c:set var="url" value="${g.hpURL}" />
-
-										</c:when>
-									</c:choose>
-									<div>
-										<a href="${url}"><img src="${thUrl }" width="150"
-											height="150" class="image" /> </a>
-									</div>
-									<div style="text-align: center;font-size: 15px;" class="bounded">
-										<a href="${url}" >${g.gameName}</a>
-									</div>
-								</div>
-								<c:if test="${loop.count mod 5 == 0}">
-						</li>
-						<li></c:if>
+		</div>
+		<!-- end wrapper -->
 	</c:forEach>
-	</li>
-	</ul>
-	</div>
-	</div>
-	</div>
-	</c:forEach>
+
 </body>
 </html>
 

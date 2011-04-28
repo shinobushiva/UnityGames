@@ -15,9 +15,11 @@
 <script type="text/javascript">
 	$(function() {
 		$("#View").load("/view?view=default");
-		$("#campaign").super_load("/campaignList");
-		
-	
+		$("#campaign").hide();
+		$("#campaign").load("/campaignList",show);
+function show(){
+		$("#campaign").show();
+}
 		$("#selectView").change(function() {
 
 			var data = $(this).serialize();
@@ -55,9 +57,10 @@
 <body>
 
 	<%@ include file="/share/header.jsp"%>
-	<div id="campaign"></div>
+	
 
 	<%@ include file="/share/search.jsp"%>
+<div id="campaign" style="margin-top: 20px;margin-bottom: 20px;"></div>
 
 	<div id="PageLoad">
 

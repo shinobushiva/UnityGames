@@ -7,7 +7,6 @@ import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
 
 import unity.model.GameData;
-import unity.service.CampaignService;
 
 public class CampaignController extends Controller {
 
