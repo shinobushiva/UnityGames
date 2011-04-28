@@ -1,11 +1,4 @@
-<!-- Indices written at Thu, 28 Apr 2011 12:40:14 UTC -->
+<!-- Indices written at Thu, 28 Apr 2011 14:35:11 UTC -->
 
-<datastore-indexes>
+<datastore-indexes/>
 
-    <!-- Used 29 times in query history -->
-    <datastore-index kind="CampaignGame" ancestor="false" source="auto">
-        <property name="gameRef" direction="asc"/>
-        <property name="__key__" direction="desc"/>
-    </datastore-index>
-
-</datastore-indexes>

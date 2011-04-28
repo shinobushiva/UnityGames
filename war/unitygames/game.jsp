@@ -327,17 +327,17 @@ function GetUnity() {
 	<%@ include file="/share/header.jsp"%>
 	<%@ include file="/share/search.jsp"%>
 
-	<div>
+	<div style="margin-top: 20px;">
 		<%--  Tags --%>
 		<b style="font-size: x-small; color: red;"><fmt:message
 				key="registerTag" /> </b> <span id="tagUpload"></span>
 	</div>
-	<div style="padding-top: 1em;">
+	<div style="padding-top: 1em;width: 720px; line-height: 2.5em;float:left;">
 		<%-- Game Name --%>
 		<span style="font-size: 2.5em;">${g.gameName} </span>
 	</div>
 
-	<div align="right" style="position: relative; top: -2em;">
+	<div align="right" style="float:right;padding-top: 15px;">
 		<%-- Social Buttons --%>
 
 		<a href="http://mixi.jp/share.pl" class="mixi-check-button"
@@ -374,27 +374,23 @@ function GetUnity() {
 
 	</div>
 
-	<div id="tabs">
+	<div id="tabs" style="clear:both;">
 		<%-- Top Tabs --%>
 		<ul>
 			<li><a href="#tab1"><span><fmt:message
-							key="explanation" /> </span> </a>
-			</li>
+							key="explanation" /> </span> </a></li>
 			<li><a href="#tab2"><span><fmt:message
-							key="operation" /> </span> </a>
-			</li>
+							key="operation" /> </span> </a></li>
 			<li><a href="#tagg"><span><fmt:message
-							key="registTag" /> </span> </a>
-			</li>
-			<span style="position:relative;top: -10px;">
+							key="registTag" /> </span> </a></li>
+			<span style="position: relative; top: -10px;">
 				<button id="commentToggle"
 					style="line-height: 2em; display: inline-block;">コメントクラウド表示/非表示</button>
 			</span>
 			<span
 				style="text-align: right; display: inline-block; margin-left: 450px;"><fmt:message
 					key="entryDay" />：<fmt:formatDate value="${g.date}"
-					pattern="MM/dd" /> <br>
-			<fmt:message key="LastEntryDay" />：<fmt:formatDate
+					pattern="MM/dd" /> <br> <fmt:message key="LastEntryDay" />：<fmt:formatDate
 					value="${g.lastDate}" pattern="MM/dd" /> </span>
 
 		</ul>
@@ -453,13 +449,10 @@ function GetUnity() {
 		<%-- Tabs --%>
 		<ul>
 			<li><a href="#comment"><span><fmt:message
-							key="comment" /> </span> </a>
-			</li>
+							key="comment" /> </span> </a></li>
 			<li><a href="#code"><span><fmt:message key="code" />
-				</span> </a>
-			</li>
-			<li><a href="#relation"><span>未実装 </span> </a>
-			</li>
+				</span> </a></li>
+			<li><a href="#relation"><span>未実装 </span> </a></li>
 
 
 		</ul>

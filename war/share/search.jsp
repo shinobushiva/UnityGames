@@ -1,6 +1,6 @@
 <%@page pageEncoding="UTF-8" isELIgnored="false" session="false"%>
 <div
-	style="clear: both; width: 440px; padding-top: 20px; margin-left: auto; margin-right: auto;">
+	style="clear: both; width: 440px; margin-top: 20px; margin-left: auto; margin-right: auto;">
 
 	<script type="text/javascript">
 		$(function() {
@@ -31,15 +31,13 @@
 	</script>
 
 
-	<form action="/search" method="post" onSubmit="return Check()">
-		<div id="tabss">
+	<div id="tabss">
+		<form action="/search" method="post" onSubmit="return Check()">
 			<ul id="tabHeader">
 				<li><a href="#tab11" id="kik"><span><fmt:message
-								key="keyword" /> </span> </a>
-				</li>
+								key="keyword" /> </span> </a></li>
 				<li><a href="#tab22" id="tak"><span><fmt:message
-								key="tag" /> </span> </a>
-				</li>
+								key="tag" /> </span> </a></li>
 			</ul>
 
 			<div id="tab11" style="height: 36px;">
@@ -49,7 +47,7 @@
 					<button
 						style="background-color: transparent; border: 0; color: white; font-size: 20;"
 						class="searchButton black">
-						<fmt:message key="button.search"/>
+						<fmt:message key="button.search" />
 					</button>
 				</div>
 				<br>
@@ -65,7 +63,7 @@
 					</button>
 				</div>
 			</div>
-		</div>
-	</form>
+		</form>
+	</div>
 </div>
 

@@ -8,18 +8,32 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <%@ include file="/share/css.jsp"%>
 <link href="/css/view.css" rel="StyleSheet" type="text/css" />
+<link type="text/css" href="/css/campaign.css" media="screen"
+	charset="utf-8" rel="stylesheet" />
 
 <%@ include file="/share/js.jsp"%>
+<script type="text/javascript" src="/js/jquery.movingboxes.js"
+	charset="utf-8"></script>
+<script type="text/javascript" src="/js/campaign.js"></script>
 
-<title><fmt:message key="unitygames.top" /></title>
+<title><fmt:message key="unitygames.top" />
+</title>
 <script type="text/javascript">
 	$(function() {
 		$("#View").load("/view?view=default");
-		$("#campaign").hide();
-		$("#campaign").load("/campaignList",show);
-function show(){
-		$("#campaign").show();
-}
+		$("#campaign").css("visibility", "hidden");
+		$("#campaign").load("/campaignList", null, function() {
+			var tid; //timeoutID
+
+			initMovingBoxes(function() {
+				$("#campaign").css("visibility", "visible");
+			}, function() {
+				clearTimeout(tid);
+				tid = setTimeout(function() {
+					forwardFunc();
+				}, 2500);
+			});
+		});
 		$("#selectView").change(function() {
 
 			var data = $(this).serialize();
@@ -51,16 +65,13 @@ function show(){
 		var s = document.getElementsByTagName('script')[0];
 		s.parentNode.insertBefore(ga, s);
 	})();
-	
 </script>
 </head>
 <body>
 
 	<%@ include file="/share/header.jsp"%>
-	
-
 	<%@ include file="/share/search.jsp"%>
-<div id="campaign" style="margin-top: 20px;margin-bottom: 20px;"></div>
+	<div id="campaign" style="margin-top: 20px; margin-bottom: 20px;"></div>
 
 	<div id="PageLoad">
 
