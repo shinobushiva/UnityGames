@@ -1,6 +1,9 @@
 package unity.controller.unitygames;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
@@ -40,6 +43,35 @@ public class GameController extends Controller {
             Datastore.put(g);
             tx.commit();
         }
+
+        // ug形式の短縮リンク変換
+        String t = g.getContents();
+        String regex = "ug[0-9]*";
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(t);
+        List<String> list = new ArrayList<String>();
+        while (m.find()) {
+            list.add(m.group());
+        }
+        String ts = t;
+        for (String st : list) {
+            //ugを無くしてidだけを抽出　例）ug1234　→ 1234　
+            String ug = st.replaceAll("ug", "");
+            String s =
+
+                ts.replaceAll(
+                    st,
+                    "<a href='http://unity-games.appspot.com/unitygames/game?id="
+                        + ug
+                        + "'class='ugLink'>"
+                        + st
+                        + "</a>");
+            //繰り返し置換していく
+            ts = s;
+
+        }
+        g.setContents(ts);
+
         requestScope("g", g);
 
         List<Comment> comment =
@@ -48,10 +80,10 @@ public class GameController extends Controller {
                 .sort(CommentMeta.get().date.asc)
                 .asList();
         requestScope("c", comment);
-//        for (Comment co : comment) {
-//            long l = co.getDate().getTime() + 1000 * 60 * 60 * 9;
-//            co.getDate().setTime(l);
-//        }
+        // for (Comment co : comment) {
+        // long l = co.getDate().getTime() + 1000 * 60 * 60 * 9;
+        // co.getDate().setTime(l);
+        // }
 
         return forward("game.jsp");
     }

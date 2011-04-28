@@ -395,7 +395,7 @@ function GetUnity() {
 
 		</ul>
 		<div id="tab1">
-			<span>${f:h(g.contents)}</span>
+			<span>${g.contents}</span>
 		</div>
 		<div id="tab2">
 			<span>${f:h(g.operations)}</span>

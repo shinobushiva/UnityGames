@@ -36,12 +36,13 @@ a img {
 	height: 100px;
 }
 
-.campaign {
-	color: red;
-	font-size: 30px;
-}
-
 .campaignTitle {
 	font-size: 50px;
 	text-align: center;
+}
+
+.ugLink {
+	color: blue !important;
+	font-size:15px;
+	font-weight: 900;
 }
