@@ -68,7 +68,7 @@
 										</div>
 
 										<li style="position: relative; left: 170px; top: 75px;"><a
-											href="#tab1-${g.key.id}"><span　><fmt:message
+											href="#tab1-${g.key.id}"><span><fmt:message
 														key="explanation" /> </span> </a>
 										</li>
 										<li style="position: relative; left: 170px; top: 75px;"><a

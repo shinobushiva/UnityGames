@@ -27,7 +27,6 @@ public class GameController extends Controller {
 
         String remoteAddr = request.getRemoteAddr();
 
-        System.out.println(remoteAddr);
 
         long id = asLong("id");
 
@@ -52,22 +51,29 @@ public class GameController extends Controller {
         List<String> list = new ArrayList<String>();
         while (m.find()) {
             list.add(m.group());
+            System.out.println("m:" + m.group());
         }
         String ts = t;
         for (String st : list) {
-            //ugを無くしてidだけを抽出　例）ug1234　→ 1234　
-            String ug = st.replaceAll("ug", "");
-            String s =
 
-                ts.replaceAll(
-                    st,
-                    "<a href='http://unity-games.appspot.com/unitygames/game?id="
-                        + ug
-                        + "'class='ugLink'>"
-                        + st
-                        + "</a>");
-            //繰り返し置換していく
-            ts = s;
+            // ugの後が数字でないものはリンク化行わない
+            if (!st.matches("ug[^0-9]*")) {
+
+                // ugを無くしてidだけを抽出 例）ug1234 → 1234
+                String ug = st.replaceAll("ug", "");
+
+                String s =
+
+                    ts.replaceAll(
+                        st,
+                        "<a href='http://unity-games.appspot.com/unitygames/game?id="
+                            + ug
+                            + "'class='ugLink'>"
+                            + st
+                            + "</a>");
+                // 繰り返し置換していく
+                ts = s;
+            }
 
         }
         g.setContents(ts);
