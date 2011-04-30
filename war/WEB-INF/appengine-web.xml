@@ -7,6 +7,8 @@
 	
 	<system-properties>
 	    <property name="slim3.hotReloading" value="true"/>
+	    <property name="oauth.consumerKey" value="4ixwuTarUfXOoq0OoP4tbg"/>
+	    <property name="oauth.consumerSecret" value="c20uWdD06ThIkAoCgJ78MITfMoK4CcuHWJLVCoXJw"/>
 	    <!--
         <property name="slim3.datastoreDeadline" value="8"/>
         <property name="slim3.uploadSizeMax" value="1000000"/>
@@ -14,5 +16,5 @@
         -->
 	    <property name="java.util.logging.config.file" value="WEB-INF/classes/logging.properties"/>
 	</system-properties>
-	<sessions-enabled>false</sessions-enabled>
+	<sessions-enabled>true</sessions-enabled>
 </appengine-web-app>

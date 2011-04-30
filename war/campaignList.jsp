@@ -14,30 +14,10 @@
 			<div id="slider">
 
 				<c:forEach var="g" items="${c.games}">
-					<%--サムネイルの保存パターンを判別 --%>
-					<c:choose>
-						<c:when test="${empty g.thumbNailURL}">
-							<c:set var="thUrl"
-								value="/unitygames/thumbNail?thumbNailKey=${f:h(g.key)}" />
-
-						</c:when>
-						<c:when test="${not empty g.thumbNailURL}">
-							<c:set var="thUrl" value="${g.thumbNailURL}" />
-
-						</c:when>
-					</c:choose>
-					<%--内部か外部サイトかを判別 --%>
-					<c:choose>
-						<c:when test="${empty g.hpURL}">
-							<c:set var="url" value="/unitygames/game?id=${g.key.id}" />
 
 
-						</c:when>
-						<c:when test="${not empty g.hpURL}">
-							<c:set var="url" value="${g.hpURL}" />
 
-						</c:when>
-					</c:choose>
+					<%@ include file="/share/patternDistinction.jsp"%>
 					<div>
 						<a href="${url}"> <img src="${thUrl}" alt="picture" />
 							<div style="text-align: center">${g.gameName}</div> </a>

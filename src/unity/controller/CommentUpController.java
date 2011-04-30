@@ -11,24 +11,22 @@ import org.slim3.datastore.Datastore;
 import unity.meta.CommentMeta;
 import unity.model.Comment;
 import unity.model.GameData;
+import unity.service.GameDataService;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Transaction;
 
 public class CommentUpController extends Controller {
+    private GameDataService gs = new GameDataService();
 
     @Override
     public Navigation run() throws Exception {
-
-        System.out.println("コメントアップ読み込み");
 
         String com = asString("comment");
         com = URLDecoder.decode(com, "UTF-8");
         String gameKey = asString("gameKey");
 
-        System.out.println("コメント：" + com);
-        System.out.println("きい" + gameKey);
         Key key = KeyFactory.stringToKey(gameKey);
 
         System.out.println(key);
@@ -47,7 +45,7 @@ public class CommentUpController extends Controller {
             Transaction tx = Datastore.beginTransaction();
             Datastore.put(comment);
             tx.commit();
-
+            gs.addPoint(g);
         }
 
         List<Comment> comments =
@@ -59,7 +57,6 @@ public class CommentUpController extends Controller {
         requestScope(
             "comments",
             CommentMeta.get().modelsToJson(comments.toArray()));
-        System.out.println(requestScope("comments"));
         return null;
     }
 }

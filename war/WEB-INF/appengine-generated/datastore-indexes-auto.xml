@@ -1,21 +1,4 @@
-<!-- Indices written at Thu, 28 Apr 2011 21:07:10 UTC -->
+<!-- Indices written at Sat, 30 Apr 2011 11:06:34 UTC -->
 
-<datastore-indexes>
+<datastore-indexes/>
 
-    <!-- Used 13 times in query history -->
-    <datastore-index kind="Comment" ancestor="true" source="auto">
-        <property name="date" direction="asc"/>
-    </datastore-index>
-
-    <!-- Used 15 times in query history -->
-    <datastore-index kind="Comment" ancestor="true" source="auto">
-        <property name="date" direction="desc"/>
-    </datastore-index>
-
-    <!-- Used 13 times in query history -->
-    <datastore-index kind="UploadedDataFragment" ancestor="false" source="auto">
-        <property name="uploadDataRef" direction="asc"/>
-        <property name="index" direction="asc"/>
-    </datastore-index>
-
-</datastore-indexes>

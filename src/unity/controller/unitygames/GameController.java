@@ -14,6 +14,7 @@ import unity.meta.CommentMeta;
 import unity.meta.GameDataMeta;
 import unity.model.Comment;
 import unity.model.GameData;
+import unity.service.GameDataService;
 
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Transaction;
@@ -21,12 +22,12 @@ import com.google.appengine.api.datastore.Transaction;
 public class GameController extends Controller {
 
     private GameDataMeta dd = GameDataMeta.get();
+    private GameDataService gs = new GameDataService();
 
     @Override
     public Navigation run() throws Exception {
 
         String remoteAddr = request.getRemoteAddr();
-
 
         long id = asLong("id");
 
@@ -41,6 +42,7 @@ public class GameController extends Controller {
             g.setAccess(g.getAccess() + 1);
             Datastore.put(g);
             tx.commit();
+            gs.addPoint(g);
         }
 
         // ug形式の短縮リンク変換
@@ -86,10 +88,6 @@ public class GameController extends Controller {
                 .sort(CommentMeta.get().date.asc)
                 .asList();
         requestScope("c", comment);
-        // for (Comment co : comment) {
-        // long l = co.getDate().getTime() + 1000 * 60 * 60 * 9;
-        // co.getDate().setTime(l);
-        // }
 
         return forward("game.jsp");
     }

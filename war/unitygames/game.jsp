@@ -5,8 +5,10 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html xmlns:og="http://ogp.me/ns#"
 	xmlns:mixi="http://mixi-platform.com/ns#"
-	xmlns:fb="http://www.facebook.com/2008/fbml">
+	xmlns:fb="http://www.facebook.com/2008/fbml"
+	xmlns:gr="http://gree.jp/ns">
 <head>
+<meta property="og:title" content="${g.gameName}" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${g.gameName}</title>
 <meta name="mixi-check-robots" content="noimage" />
@@ -332,18 +334,26 @@ function GetUnity() {
 		<b style="font-size: x-small; color: red;"><fmt:message
 				key="registerTag" /> </b> <span id="tagUpload"></span>
 	</div>
-	<div style="padding-top: 1em;width: 720px; line-height: 2.5em;float:left;">
+	<div
+		style="padding-top: 1em; width: 720px; line-height: 2.5em; float: left;">
 		<%-- Game Name --%>
 		<span style="font-size: 2.5em;">${g.gameName} </span>
 	</div>
 
-	<div align="right" style="float:right;padding-top: 15px;">
+	<div align="right" style="float: right; padding-top: 15px;">
 		<%-- Social Buttons --%>
 
 		<a href="http://mixi.jp/share.pl" class="mixi-check-button"
 			data-key="42bc93a615261cdd8e17e115918eb36ebf60a729"
 			data-button="button-1"></a>
 		<script type="text/javascript" src="http://static.mixi.jp/js/share.js"></script>
+
+		<iframe
+			src="http://share.gree.jp/share?url=http%3A%2F%2Funity-games.appspot.com%2Funitygames%2Fgame%3Fid%3D${g.key.id}&type=0&height=20"
+			scrolling="no" frameborder="0" marginwidth="0" marginheight="0"
+			style="border: none; overflow: hidden; width: 100px; height: 20px;"
+			allowTransparency="true"></iframe>
+
 
 		<a href="http://twitter.com/share" class="twitter-share-button"
 			data-count="horizontal" data-via="UGames"
@@ -374,15 +384,18 @@ function GetUnity() {
 
 	</div>
 
-	<div id="tabs" style="clear:both;">
+	<div id="tabs" style="clear: both;">
 		<%-- Top Tabs --%>
 		<ul>
 			<li><a href="#tab1"><span><fmt:message
-							key="explanation" /> </span> </a></li>
+							key="explanation" /> </span> </a>
+			</li>
 			<li><a href="#tab2"><span><fmt:message
-							key="operation" /> </span> </a></li>
+							key="operation" /> </span> </a>
+			</li>
 			<li><a href="#tagg"><span><fmt:message
-							key="registTag" /> </span> </a></li>
+							key="registTag" /> </span> </a>
+			</li>
 			<span style="position: relative; top: -10px;">
 				<button id="commentToggle"
 					style="line-height: 2em; display: inline-block;">コメントクラウド表示/非表示</button>
@@ -449,10 +462,13 @@ function GetUnity() {
 		<%-- Tabs --%>
 		<ul>
 			<li><a href="#comment"><span><fmt:message
-							key="comment" /> </span> </a></li>
+							key="comment" /> </span> </a>
+			</li>
 			<li><a href="#code"><span><fmt:message key="code" />
-				</span> </a></li>
-			<li><a href="#relation"><span>未実装 </span> </a></li>
+				</span> </a>
+			</li>
+			<li><a href="#relation"><span>未実装 </span> </a>
+			</li>
 
 
 		</ul>

@@ -8,16 +8,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <%@ include file="/share/css.jsp"%>
 <link href="/css/view.css" rel="StyleSheet" type="text/css" />
-<link type="text/css" href="/css/campaign.css" media="screen"
-	charset="utf-8" rel="stylesheet" />
-
 <%@ include file="/share/js.jsp"%>
-<script type="text/javascript" src="/js/jquery.movingboxes.js"
-	charset="utf-8"></script>
-<script type="text/javascript" src="/js/campaign.js"></script>
-
-<title><fmt:message key="unitygames.top" />
-</title>
+<title><fmt:message key="unitygames.top" /></title>
 <script type="text/javascript">
 	$(function() {
 		$("#View").load("/view?view=default");

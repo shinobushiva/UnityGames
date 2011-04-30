@@ -43,6 +43,20 @@ a img {
 
 .ugLink {
 	color: blue !important;
-	font-size:15px;
+	font-size: 15px;
 	font-weight: 900;
+}
+
+.newGameLine {
+	margin: 0 0 10px 0;
+	padding: 2px 8px;
+	border-width: 0 0 5px 0;
+	border-color: #f79708;
+	border-style: solid;
+	background: #fff;
+	color: #d25c14;
+	line-height: 140%;
+	font-weight: bold;
+	font-size: 25px;
+width: 30em;
 }

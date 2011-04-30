@@ -21,4 +21,17 @@ public class GameDataService {
             Datastore.createKey(GameData.class, id));
 
     }
+
+    public GameData addPoint(GameData g) {
+
+        int point = g.getAccess() + g.getComment() * 3;
+
+        g.setPoint(point);
+
+        GlobalTransaction tx = Datastore.beginGlobalTransaction();
+        Datastore.put(g);
+        tx.commit();
+
+        return null;
+    }
 }

@@ -17,7 +17,7 @@ public class IndexController extends Controller {
 
     @Override
     public Navigation run() throws Exception {
-
+//ゲーム新着順
         List<GameData> Game = Datastore.query(g).sort(g.access.desc).asList();
 
         requestScope("GameList", Game);

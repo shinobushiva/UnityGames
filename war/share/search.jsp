@@ -40,12 +40,12 @@
 								key="tag" /> </span> </a></li>
 			</ul>
 
-			<div id="tab11" style="height: 36px;">
+			<div id="tab11" style="height: 34px;">
 				<div>
 					<input type="text" name="word" style="font-size: 20; width: 300"
 						id="k">
 					<button
-						style="background-color: transparent; border: 0; color: white; font-size: 20;"
+						style="background-color: transparent; border: 0; color: white; font-size: 25;width: 70;"
 						class="searchButton black">
 						<fmt:message key="button.search" />
 					</button>
@@ -57,7 +57,7 @@
 					<input type="text" name="tag" style="font-size: 20; width: 300"
 						id="t">
 					<button
-						style="background-color: transparent; border: 0; color: white; font-size: 20;"
+						style="background-color: transparent; border: 0; color: white; font-size: 25;width: 70;"
 						class="searchButton black">
 						<fmt:message key="button.search"></fmt:message>
 					</button>

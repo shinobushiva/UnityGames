@@ -54,6 +54,8 @@ public class GameData implements Serializable {
     private int comment;
 
     private int assessment;
+    
+    private int point;
 
     @Attribute(lob = true)
     private Set<Tag> fixTags = new HashSet<Tag>();
@@ -283,6 +285,14 @@ public class GameData implements Serializable {
 
     public Set<Tag> getTags() {
         return tags;
+    }
+
+    public void setPoint(int point) {
+        this.point = point;
+    }
+
+    public int getPoint() {
+        return point;
     }
 
 }

@@ -40,17 +40,10 @@
 					<div class="gameView">
 						<div class="gameViewHead">
 							<div style="width: 350px; float: left;" class="bounded">
-								<c:choose>
-									<c:when test="${empty g.hpURL}">
-										<c:set var="url" value="/unitygames/game?id=${f:h(g.key.id)}" />
-										<a href="${url}" class="title"> ${g.gameName} </a>
-									</c:when>
-									<c:when test="${not empty g.hpURL}">
-										<c:set var="url" value="${g.hpURL}" />
-										<a href="${url}" class="title">${g.gameName }</a>
+								<%@ include file="/share/patternDistinction.jsp"%>
 
-									</c:when>
-								</c:choose>
+
+								<a href="${url}" class="title"> ${g.gameName} </a>
 							</div>
 							<div style="float: right;">
 								<ul>
@@ -69,18 +62,9 @@
 						</div>
 						<div
 							style="float: left; width: 150px; height: 170px; padding-right: 5px; margin-top: 0.5em;">
-							<c:choose>
-								<c:when test="${empty g.thumbNailURL}">
-									<a href="${url}"><img
-										src="/unitygames/thumbNail?thumbNailKey=${f:h(g.key)}"
-										width="150" height="150" class="image" /> </a>
-								</c:when>
-								<c:when test="${not empty g.thumbNailURL}">
-									<a href="${url}"><img src="${g.thumbNailURL}" width="150"
-										height="150" class="image"> </a>
-									<br>
-								</c:when>
-							</c:choose>
+							<a href="${url}"><img src="${thUrl}" width="150" height="150"
+								class="image" /> </a>
+
 						</div>
 
 
