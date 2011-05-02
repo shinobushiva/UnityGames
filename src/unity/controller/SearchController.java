@@ -37,7 +37,7 @@ public class SearchController extends Controller {
                     .getGameName()
                     .toLowerCase()
                     .contains(word.toLowerCase())) {
-                    
+
                     long l = gameName.getDate().getTime() + 1000 * 60 * 60 * 9;
                     gameName.getDate().setTime(l);
 

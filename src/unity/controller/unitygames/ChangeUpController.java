@@ -4,6 +4,7 @@ import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.controller.upload.FileItem;
 
+import twitter4j.Twitter;
 import unity.service.ChangeService;
 
 import com.google.appengine.api.datastore.Key;
@@ -18,53 +19,47 @@ public class ChangeUpController extends Controller {
 
         String k = requestScope("key");
         Key key = KeyFactory.stringToKey(k);
-        String GameName = requestScope("GameName");
+        String gameName = requestScope("GameName");
 
-        String ThumbNailURL = requestScope("ThumbNailURL");
-        FileItem ThumbNail = requestScope("ThumbNail");
+        String thumbNailURL = requestScope("ThumbNailURL");
+        FileItem thumbNail = requestScope("ThumbNail");
 
-        FileItem GameFile = requestScope("GameFile");
-        String Contents = requestScope("Contents");
-        String Operations = requestScope("Operations");
-        String HpURL = requestScope("HpURL");
-        String GameURL = requestScope("GameURL");
-        String Pass = requestScope("pass");
-        String ThumbNailType = requestScope("ThumbNailType");
-        String GameType = requestScope("GameType");
+        FileItem gameFile = requestScope("GameFile");
+        String contents = requestScope("Contents");
+        String operations = requestScope("Operations");
+        String hpURL = requestScope("HpURL");
+        String gameURL = requestScope("GameURL");
+        String pass = requestScope("pass");
+        String thumbNailType = requestScope("ThumbNailType");
+        String gameType = requestScope("GameType");
 
-        String ThumbNailChange = requestScope("ThumbNailChange");
-        String GameChange = requestScope("GameChange");
+        String thumbNailChange = requestScope("ThumbNailChange");
+        String gameChange = requestScope("GameChange");
 
         String fixTag = requestScope("fixTag");
         String code = requestScope("Code");
-        // String delete = requestScope("delete");
 
-        // String[] tag = fixTag.split(",");
-        //
-        // if(tag.length >= 4){
-        // System.out.println("エラーです");
-        //
-        //
-        // return forward("change");
-        // }
-
+        Twitter twitter = (Twitter) sessionScope("twitter");
+        long twitterId = twitter.getId();
+     
         service.change(
             key,
-            GameName,
-            GameURL,
-            GameFile,
-            ThumbNail,
-            ThumbNailURL,
-            Contents,
-            Operations,
-            HpURL,
-            Pass,
-            ThumbNailType,
-            GameType,
-            ThumbNailChange,
-            GameChange,
+            gameName,
+            gameURL,
+            gameFile,
+            thumbNail,
+            thumbNailURL,
+            contents,
+            operations,
+            hpURL,
+            pass,
+            thumbNailType,
+            gameType,
+            thumbNailChange,
+            gameChange,
             fixTag,
-            code);
+            code,
+            twitterId);
 
         return forward("changed.jsp");
     }

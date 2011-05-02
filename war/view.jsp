@@ -54,6 +54,7 @@
 							<div style="clear: both;"></div>
 						</div>
 						<div style="margin-top: 0.5em;" class="bounded">
+							<span style="color: red;">登録タグ</span>
 							<c:forEach var="ft" items="${g.fixTags}">
 								<a href="/search?tag=${ft.name}"
 									style="font-size: 18px; font-weight: 900;">${ft.name}</a>
@@ -61,7 +62,7 @@
 							</c:forEach>
 						</div>
 						<div
-							style="float: left; width: 150px; height: 170px; padding-right: 5px; margin-top: 0.5em;">
+							style="float: left; width: 150px; height: 170px;padding-left:3px; padding-right: 3px; margin-top: 1em;">
 							<a href="${url}"><img src="${thUrl}" width="150" height="150"
 								class="image" /> </a>
 
@@ -70,7 +71,7 @@
 
 						<div
 							style="float: left; width: 330px; height: 170px; padding-left: 5px;">
-							<div id="tabs-${g.key.id}">
+							<div id="tabs-${g.key.id}" style="height:170px;">
 								<ul>
 									<li style=""><a href="#tab1-${g.key.id}"><span><fmt:message
 													key="explanation" /> </span> </a>
@@ -91,8 +92,8 @@
 							</div>
 						</div>
 						<div style="clear: both;">
-
-							<div align="right">
+							<%--	変更		--%>
+							<%-- 		<div align="right">
 								<form action="/unitygames/change" method="post">
 									<a id="change-${g.key.id}" style="font-size: x-small;"><fmt:message
 											key="change.delete" /> </a><a id="out-${g.key.id}"
@@ -105,6 +106,7 @@
 								</form>
 								<div id="br-${g.key.id}"></div>
 							</div>
+							--%>
 						</div>
 					</div>
 

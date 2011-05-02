@@ -32,21 +32,59 @@
 	});
 </script>
 </head>
-<body>
+<body style="border: solid;">
 	<%@ include file="/share/header.jsp"%>
 	<div>
 
 		<div id="campaign" style="margin-top: 30px; margin-bottom: 20px;"></div>
 	</div>
 
-	<div>
 
-		<div style="display: inline-block;">
-			<div>
-				<div style="margin-bottom: 20px; display: inline-block;"><%@ include
-						file="/share/search.jsp"%></div>
-				<a href="/login/oAuth"><div style="display: inline-block;">login</div></a>
+
+	<div style="display: inline-block;">
+		<div>
+			<div
+				style="margin-bottom: 20px; margin-left: 200px; display: inline-block;"
+				id="search"><%@ include file="/share/search.jsp"%></div>
+<div style=" display: inline-block;">
+			<div
+				style="border: solid; width: 250; margin-left: 125px;clear:both;">
+				<c:if test="${login == 'no' }">
+					<script type="text/javascript">
+						$(function() {
+							$("#search").css("","");
+
+						});
+					</script>
+					<div>
+						<div style="height: 73px;"align="center">
+							<a href="/login/oAuth"><div><img src="/images/logo/twitter_logo.png"/></div><div style="font-size: 30px;color: #1F98C7;">ログイン</div></a>
+						</div>
+					</div>
+				</c:if>
+				<c:if test="${login == 'yes' }">
+					<%--	普段ユーザー本人が見る情報	 --%>
+					<div>
+						<div style="float: left;">
+							<img src="${p}" />
+						</div>
+						<div>
+
+							<div
+								style="text-align: center; font-weight: 900; font-size: 15px;">kyusyukeigo${user.userName}</div>
+							<div
+								style="text-align: center; font-size: 20px; margin-top: 5px;">活動履歴(未実装)</div>
+							<div style="display: inline-block; padding-left: 10px;">
+								<a href="" style="font-size: x-small; color: #1F98C7;">情報登録/修正</a>
+							</div>
+							<div style="display: inline-block; margin-left: 20px;">
+								<a href="" style="font-size: 15px; color: #1F98C7;">ログアウト</a>
+							</div>
+						</div>
+					</div>
+				</c:if>
 			</div>
+</div>
 			<div
 				style="border: solid; border-color: #e1e1e1; border-radius: 20px; float: right; width: 250px; height: 600px;">
 				<div style="text-align: center;">更新情報</div>
@@ -56,13 +94,15 @@
 				ランキング<img src="/images/click.png"
 					style="position: relative; top: 2px;" />
 			</div>
-			<c:forEach var="g" items="${rankingGameList}">
-				<div style="display: inline-block; text-align: center;">
-					<%@ include file="/share/patternDistinction.jsp"%>
-					<a href="${url}"> <img src="${thUrl}" width="150" height="150" /><br>
-						<div>${g.gameName}</div> </a>
-				</div>
-			</c:forEach>
+			<div>
+				<c:forEach var="g" items="${rankingGameList}">
+					<div style="display: inline-block; text-align: center;">
+						<%@ include file="/share/patternDistinction.jsp"%>
+						<a href="${url}"> <img src="${thUrl}" width="150" height="150" /><br>
+							<div class="bounded" style="width: 150px;">${g.gameName}</div> </a>
+					</div>
+				</c:forEach>
+			</div>
 			<a href="/unitygames/" style="text-decoration: none;"><div
 					class="newGameLine">
 					新着ゲーム<img src="/images/click.png"
@@ -72,7 +112,7 @@
 				<div style="display: inline-block; text-align: center;">
 					<%@ include file="/share/patternDistinction.jsp"%>
 					<a href="${url}"> <img src="${thUrl}" width="150" height="150" /><br>
-						<div>${g.gameName}</div> </a>
+						<div class="bounded" style="width: 150px;">${g.gameName}</div> </a>
 				</div>
 			</c:forEach>
 

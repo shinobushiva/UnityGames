@@ -4,6 +4,7 @@ import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.controller.upload.FileItem;
 
+import twitter4j.Twitter;
 import unity.service.ChangeService;
 
 public class UploadController extends Controller {
@@ -12,40 +13,45 @@ public class UploadController extends Controller {
     @Override
     public Navigation run() throws Exception {
 
-        String GameName = requestScope("GameName");
+        String gameName = requestScope("GameName");
 
-        String ThumbNailURL = requestScope("ThumbNailURL");
-        FileItem ThumbNail = requestScope("ThumbNail");
+        String thumbNailURL = requestScope("ThumbNailURL");
+        FileItem thumbNail = requestScope("ThumbNail");
 
-        FileItem GameFile = requestScope("GameFile");
-        String Contents = requestScope("Contents");
-        String Operations = requestScope("Operations");
-        String HpURL = requestScope("HpURL");
-        String GameURL = requestScope("GameURL");
-        String Pass = requestScope("pass");
-        String ThumbNailType = requestScope("ThumbNailType");
-        String GameType = requestScope("GameType");
+        FileItem gameFile = requestScope("GameFile");
+        String contents = requestScope("Contents");
+        String operations = requestScope("Operations");
+        String hpURL = requestScope("HpURL");
+        String gameURL = requestScope("GameURL");
+        String pass = requestScope("pass");
+        String thumbNailType = requestScope("ThumbNailType");
+        String gameType = requestScope("GameType");
 
         String fixTag = requestScope("fixTag");
         String code = requestScope("Code");
 
-        service.change(
-            null,
-            GameName,
-            GameURL,
-            GameFile,
-            ThumbNail,
-            ThumbNailURL,
-            Contents,
-            Operations,
-            HpURL,
-            Pass,
-            ThumbNailType,
-            GameType,
-            "",
-            "",
-            fixTag,
-            code);
+        Twitter twitter = (Twitter) sessionScope("twitter");
+        long twitterId = twitter.getId();
+        System.out.println("pass:" + pass.isEmpty());
+
+         service.change(
+         null,
+         gameName,
+         gameURL,
+         gameFile,
+         thumbNail,
+         thumbNailURL,
+         contents,
+         operations,
+         hpURL,
+         pass,
+         thumbNailType,
+         gameType,
+         "",
+         "",
+         fixTag,
+         code,
+         twitterId);
         return forward("uploaded.jsp");
     }
 }

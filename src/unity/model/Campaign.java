@@ -29,8 +29,7 @@ public class Campaign implements Serializable {
         new InverseModelListRef<CampaignGame, Campaign>(
             CampaignGame.class,
             CampaignGameMeta.get().gameRef.getName(),
-            this)
-            ;
+            this);
 
     private Date start;
 

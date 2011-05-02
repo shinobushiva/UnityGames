@@ -7,6 +7,14 @@
 	line-height: 1.5em !important;
 }
 
+a {
+	text-decoration: none;
+}
+
+a:HOVER {
+	text-decoration: underline;
+}
+
 a img {
 	border-style: none;
 }
@@ -58,5 +66,5 @@ a img {
 	line-height: 140%;
 	font-weight: bold;
 	font-size: 25px;
-width: 30em;
+	width: 30em;
 }

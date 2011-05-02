@@ -32,17 +32,16 @@ public class TagService {
         }
         return tag;
     }
-    
-    public TagGame getTagGame(Key gameDataKey,Key tagKey){
-        
+
+    public TagGame getTagGame(Key gameDataKey, Key tagKey) {
+
         TagGame tg =
             Datastore
                 .query(TagGame.class)
                 .filter(TagGameMeta.get().gameRef.equal(gameDataKey))
                 .filter(TagGameMeta.get().tagRef.equal(tagKey))
                 .asSingle();
-        
-     
+
         return tg;
     }
 

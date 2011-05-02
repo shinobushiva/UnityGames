@@ -8,8 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <%@ include file="/share/css.jsp"%>
 <%@ include file="/share/js.jsp"%>
-<title><fmt:message key="upload.title" />
-</title>
+<title><fmt:message key="upload.title" /></title>
 
 </head>
 <body>
@@ -23,7 +22,7 @@ jQuery(document).ready(function($) {
 
 $(function(){
     $("#commentForm").validate();  
-
+$( "#changeKey" ).hide();
 $( "#tu" ).hide();
 $( "#G2" ).hide();
 $( "#G3" ).hide();
@@ -59,6 +58,15 @@ $( "div#tu" ).hide();
 		$( "#tu" ).fadeIn("fast");
 		$( "#ThumbNail" ).val("");
 	});
+	$("#ga2").click(function(){
+		$( "#twitterKey" ).hide();
+		$( "#changeKey" ).fadeIn("fast");
+	});
+	$("#ga1").click(function(){
+		$( "#changeKey" ).hide();
+		$( "#twitterKey" ).fadeIn("fast");
+		$( "#adminPass" ).val("");
+	});
 });
 function tagCheck(){
 	var flag = 0;var str = $("#tag").val();var tag = str.split(",");
@@ -84,8 +92,7 @@ function tagCheck(){
 				<tr>
 					<td><h1>
 							<fmt:message key="upload.title" />
-						</h1>
-					</td>
+						</h1></td>
 
 					<td rowspan="6">
 
@@ -106,14 +113,14 @@ function tagCheck(){
 								style="width: 250px; height: 80px; font-size: xx-large;">
 								<fmt:message key="button.regist" />
 							</button>
-						</div></td>
+						</div>
+					</td>
 				</tr>
 				<tr>
 					<td><h2>
 							<label for="GameName"><fmt:message key="gameName" /> </label><input
 								type="text" name="GameName" id="GameName" class="required" />
-						</h2>
-					</td>
+						</h2></td>
 				</tr>
 				<tr>
 					<td><label for="ThumbNail"><h2>
@@ -122,8 +129,7 @@ function tagCheck(){
 							type="radio" name="ThumbNailType" value="data" id="tdata" checked>
 							<fmt:message key="thumbNail.pictureDataUp" /> </label><br> <label><input
 							type="radio" name="ThumbNailType" value="url" id="turl">
-							<fmt:message key="thumbNail.urlUp" /><br> </label>
-					</td>
+							<fmt:message key="thumbNail.urlUp" /><br> </label></td>
 
 				</tr>
 				<tr>
@@ -136,7 +142,8 @@ function tagCheck(){
 									key="thumbNail.url" /> </label><input type="text" name="ThumbNailURL"
 								id="ThumbNailURL" style="width: 260px"
 								title="<fmt:message key="thumbNail.url.title" />"><br>
-						</div></td>
+						</div>
+					</td>
 				</tr>
 				<tr>
 					<td><label for="d"><h2>
@@ -147,8 +154,7 @@ function tagCheck(){
 							type="radio" name="GameType" value="url" id="url"> <fmt:message
 								key="game.select.url" /><br> </label> <label><input
 							type="radio" name="GameType" value="hpurl" id="hp"> <fmt:message
-								key="game.select.url.outside" /><br> </label>
-					</td>
+								key="game.select.url.outside" /><br> </label></td>
 				</tr>
 				<tr>
 					<td>
@@ -171,22 +177,40 @@ function tagCheck(){
 								<fmt:message key="fixTag" />
 								<input type="text" name="fixTag" id="tag">
 							</h2>
-							<span class="warning"><fmt:message key="fixTag.explanation" /> </span>
-							
-						</div>
+							<span class="warning"><fmt:message
+									key="fixTag.explanation" /> </span>
+
+						</div> <%--	ゲームの管理方法	--%>
+						<h2>ゲームの管理方法</h2>
 						<div>
+							<input type="radio" name="gameAdmin" id="ga1" checked />Twitterアカウントで管理<input
+								type="radio" name="gameAdmin" id="ga2" />パスワードを設定して管理する
+						</div>
+
+						<div id="twitterKey">
+							<div style="float: left;">
+								<img
+									src="http://a1.twimg.com/profile_images/1243088874/PzH_28_mini.jpg" />
+							</div>
+							<a style="color: #1F98C7;"><div
+									style="text-align: left; font-weight: 900; font-size: 20px; margin-top: 10px; word-break: break-all;">
+									&nbsp;kyusyukeigo${user.userName}</div> </a>
+
+						</div>
+
+						<div id="changeKey">
 							<h2>
 								<fmt:message key="change.delete.key" />
-								<input type="password" name="pass" style="width: 117;"
-									class="required">
+								<input type="password" name="pass" id="adminPass"
+									style="width: 117;">
 							</h2>
-						</div>
-					</td>
+						</div></td>
 
 				</tr>
 				<tr class="bottom">
 					<td colspan="2" style="padding: 15px;"><span class="warning"><fmt:message
-							key="url.explanation" /></span></td>
+								key="url.explanation" /> </span>
+					</td>
 				</tr>
 
 			</table>

@@ -28,7 +28,7 @@ public class ChangeController extends Controller {
 
         requestScope("g", g);
         requestScope("ttt", g.getThumbNailURL());
-if(g.getFixTags() !=null){
+        if (g.getFixTags() != null) {
         StringBuilder buf = new StringBuilder();
         for (Tag t : g.getFixTags()) {
             buf.insert(0, t.getName() + ",");
@@ -36,7 +36,7 @@ if(g.getFixTags() !=null){
 
             requestScope("tag", buf.toString());
         }
-       
+
 }
         return forward("change.jsp");
     }

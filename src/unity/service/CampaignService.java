@@ -54,11 +54,12 @@ public class CampaignService {
         return cvos;
 
     }
-    public void save(CampaignGame cg){
+
+    public void save(CampaignGame cg) {
         GlobalTransaction tx = Datastore.beginGlobalTransaction();
         Datastore.put(cg);
         tx.commit();
-        
+
     }
-    
+
 }

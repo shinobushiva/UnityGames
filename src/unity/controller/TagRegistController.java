@@ -27,9 +27,9 @@ public class TagRegistController extends Controller {
 
         if (!tagR.isEmpty()) {
 
-            String GameKeyy = asString("gameKey");
+            String gameKeyy = asString("gameKey");
 
-            Key key = KeyFactory.stringToKey(GameKeyy);
+            Key key = KeyFactory.stringToKey(gameKeyy);
 
             System.out.println("きい" + key);
             System.out.println("game??:" + Datastore.get(GameData.class, key));
@@ -65,7 +65,7 @@ public class TagRegistController extends Controller {
 
         }
 
-      
+
 
         return null;
     }

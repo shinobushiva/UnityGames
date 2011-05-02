@@ -14,11 +14,13 @@ import org.slim3.util.ByteUtil;
 
 import unity.meta.TagGameMeta;
 import unity.meta.UploadedDataFragmentMeta;
+import unity.meta.UserMeta;
 import unity.model.GameData;
 import unity.model.Tag;
 import unity.model.TagGame;
 import unity.model.ThumbNailData;
 import unity.model.UploadedDataFragment;
+import unity.model.User;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.Transaction;
@@ -30,11 +32,11 @@ public class ChangeService {
         .getName());
     private TagService ts = new TagService();
 
-    public GameData change(Key key, String GameName, String GameURL,
-            FileItem GameFile, FileItem ThumbNail, String ThumbNailURL,
-            String Contents, String Operations, String HpURL, String Pass,
-            String ThumbNailType, String GameType, String ThumbNailChange,
-            String GameChange, String fixTag, String code) {
+    public GameData change(Key key, String gameName, String gameURL,
+            FileItem gameFile, FileItem thumbNail, String thumbNailURL,
+            String contents, String operations, String hpURL, String pass,
+            String thumbNailType, String gameType, String thumbNailChange,
+            String gameChange, String fixTag, String code, long twitterId) {
 
         List<Object> models = new ArrayList<Object>();
 
@@ -49,23 +51,37 @@ public class ChangeService {
             g = Datastore.get(GameData.class, key);
         }
 
-        g.setGameName(GameName);
-        g.setPass(Pass);
-        g.setContents(Contents);
-        g.setOperations(Operations);
+        g.setGameName(gameName);
+
+        // passが空ならTwittterアカウントで管理
+        if (pass.isEmpty()) {
+            // ここでTwitterアカウントを登録
+            User u =
+                Datastore
+                    .query(User.class)
+                    .filter(UserMeta.get().userId.equal(twitterId))
+                    .asSingle();
+            g.setTwitterUserKey(u.getKey());
+            g.setPass(null);
+        } else {
+            g.setPass(pass);
+            g.setTwitterUserKey(null);
+        }
+        g.setContents(contents);
+        g.setOperations(operations);
         g.setCode(code);
         g.setLastDate(new Date());
-        if (GameChange != null) {
+        if (gameChange != null) {
 
-            if (GameURL.isEmpty() && HpURL.isEmpty() && GameFile == null) {
-                g
-                    .setGameURL("http://unity-games.appspot.com/DefaultSet/UnityGames.unity3d");
+            if (gameURL.isEmpty() && hpURL.isEmpty() && gameFile == null) {
+                g.setGameURL("http://unity-games.appspot.com/"
+                    + "DefaultSet/UnityGames.unity3d");
                 g.setGameType("url");
             } else {
 
-                g.setGameType(GameType);
-                g.setHpURL(HpURL);
-                g.setGameURL(GameURL);
+                g.setGameType(gameType);
+                g.setHpURL(hpURL);
+                g.setGameURL(gameURL);
 
                 UploadedDataFragment uf1 =
                     Datastore
@@ -77,9 +93,9 @@ public class ChangeService {
                 if (uf1 != null) {
                     Datastore.delete(uf1.getKey());
                 }
-                if (GameFile != null) {
-                    g.setLength(GameFile.getData().length);
-                    byte[] bytes = GameFile.getData();
+                if (gameFile != null) {
+                    g.setLength(gameFile.getData().length);
+                    byte[] bytes = gameFile.getData();
                     byte[][] bytesArray1 = ByteUtil.split(bytes, FRAGMENT_SIZE);
                     Iterator<Key> keys =
                         Datastore
@@ -102,15 +118,15 @@ public class ChangeService {
                 }
             }
         }
-        if (ThumbNailChange != null) {
+        if (thumbNailChange != null) {
 
-            if (ThumbNailURL.isEmpty() && ThumbNail == null) {
-                g
-                    .setThumbNailURL("http://unity-games.appspot.com/DefaultSet/UnityGames.png");
+            if (thumbNailURL.isEmpty() && thumbNail == null) {
+                g.setThumbNailURL("http://unity-games.appspot.com/"
+                    + "DefaultSet/UnityGames.png");
                 g.setThumbNailType("url");
             } else {
-                g.setThumbNailURL(ThumbNailURL);
-                g.setThumbNailType(ThumbNailType);
+                g.setThumbNailURL(thumbNailURL);
+                g.setThumbNailType(thumbNailType);
                 ThumbNailData t =
                     Datastore.query(ThumbNailData.class, g.getKey()).asSingle();
                 if (t != null) {
@@ -135,13 +151,13 @@ public class ChangeService {
                 while (keyss.hasNext()) {
                     ThumbNailData child = new ThumbNailData();
                     child.setKey(keyss.next());
-                    child.setGameName(GameName);
+                    child.setGameName(gameName);
                     child.setDate(new Date());
-                    if (ThumbNail != null) {
+                    if (thumbNail != null) {
                         g.setThumbNailURL(null);
                         Datastore.delete(t.getKey());
-                        child.setLength(ThumbNail.getData().length);
-                        byte[] bytes2 = ThumbNail.getData();
+                        child.setLength(thumbNail.getData().length);
+                        byte[] bytes2 = thumbNail.getData();
                         byte[][] bytesArray2 =
                             ByteUtil.split(bytes2, FRAGMENT_SIZE);
                         Iterator<Key> keys2 =
@@ -194,17 +210,13 @@ public class ChangeService {
             }
             Tag tag2 = ts.getTag(t);
             log.info("1234:" + t);
-            System.out.println("tag2" + tag2);
-            System.out.println("Fix:" + g.getFixTags());
 
             if (g.getFixTags() == null) {
 
-            g.setFixTags(new HashSet<Tag>());    
-                
-            } 
-                g.getFixTags().add(tag2);
+                g.setFixTags(new HashSet<Tag>());
 
-            
+            }
+            g.getFixTags().add(tag2);
 
             TagGame tt = new TagGame();
             tt.getGameRef().setKey(g.getKey());

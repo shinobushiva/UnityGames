@@ -18,10 +18,10 @@ public class IndexController extends Controller {
     @Override
     public Navigation run() throws Exception {
 //ゲーム新着順
-        List<GameData> Game = Datastore.query(g).sort(g.access.desc).asList();
+        List<GameData> games = Datastore.query(g).sort(g.access.desc).asList();
 
-        requestScope("GameList", Game);
-        for (GameData game : Game) {
+        requestScope("GameList", games);
+        for (GameData game : games) {
             long l = game.getDate().getTime() + 1000 * 60 * 60 * 9;
             game.getDate().setTime(l);
 

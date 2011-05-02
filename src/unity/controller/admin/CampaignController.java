@@ -10,14 +10,11 @@ import unity.model.GameData;
 
 public class CampaignController extends Controller {
 
-   
-    
     @Override
     public Navigation run() throws Exception {
-      
-        
-  List<GameData> g = Datastore.query(GameData.class).asList();  
-        requestScope("GameList",g);
+
+        List<GameData> g = Datastore.query(GameData.class).asList();
+        requestScope("GameList", g);
         return forward("campaign.jsp");
     }
 }

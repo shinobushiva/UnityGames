@@ -11,13 +11,13 @@ public class CheckController extends Controller {
 
         requestScope("GameName");
         requestScope("ThumbNailURL");
-        FileItem GameFile = requestScope("GameFile");
-        FileItem ThumbNail = requestScope("ThumbNail");
+        FileItem gameFile = requestScope("GameFile");
+        FileItem thumbNail = requestScope("ThumbNail");
         requestScope("Contents");
         requestScope("Operations");
 
-        requestScope("GameFiles", GameFile);
-        requestScope("ThumbNails", ThumbNail);
+        requestScope("GameFiles", gameFile);
+        requestScope("ThumbNails", thumbNail);
         return forward("check.jsp");
     }
 }

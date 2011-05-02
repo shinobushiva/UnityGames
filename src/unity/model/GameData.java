@@ -20,6 +20,8 @@ public class GameData implements Serializable {
     @Attribute(primaryKey = true)
     private Key key;
 
+    private Key twitterUserKey;
+
     @Attribute(lob = true)
     private String contents;
     @Attribute(lob = true)
@@ -54,7 +56,7 @@ public class GameData implements Serializable {
     private int comment;
 
     private int assessment;
-    
+
     private int point;
 
     @Attribute(lob = true)
@@ -293,6 +295,14 @@ public class GameData implements Serializable {
 
     public int getPoint() {
         return point;
+    }
+
+    public void setTwitterUserKey(Key twitterUserKey) {
+        this.twitterUserKey = twitterUserKey;
+    }
+
+    public Key getTwitterUserKey() {
+        return twitterUserKey;
     }
 
 }

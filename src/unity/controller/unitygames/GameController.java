@@ -10,6 +10,8 @@ import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
 import org.slim3.memcache.Memcache;
 
+import twitter4j.Twitter;
+import twitter4j.TwitterFactory;
 import unity.meta.CommentMeta;
 import unity.meta.GameDataMeta;
 import unity.model.Comment;
@@ -18,6 +20,7 @@ import unity.service.GameDataService;
 
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Transaction;
+import com.google.appengine.api.users.User;
 
 public class GameController extends Controller {
 
@@ -28,7 +31,7 @@ public class GameController extends Controller {
     public Navigation run() throws Exception {
 
         String remoteAddr = request.getRemoteAddr();
-
+        // gameIdからgameを持ってくる
         long id = asLong("id");
 
         GameData g =
@@ -43,6 +46,18 @@ public class GameController extends Controller {
             Datastore.put(g);
             tx.commit();
             gs.addPoint(g);
+        }
+        // 投稿者 Twitterアカウント表示
+        if (g.getTwitterUserKey() != null) {
+            unity.model.User uk =
+                Datastore.get(unity.model.User.class, g.getTwitterUserKey());
+            Twitter twitter = new TwitterFactory().getInstance();
+            twitter4j.User u = twitter.showUser(uk.getUserId());
+            // TwitterProfilePicture
+            requestScope("tp", u.getProfileImageURL());
+            // TwitterScreenName
+            requestScope("tn", u.getScreenName());
+
         }
 
         // ug形式の短縮リンク変換
@@ -68,7 +83,8 @@ public class GameController extends Controller {
 
                     ts.replaceAll(
                         st,
-                        "<a href='http://unity-games.appspot.com/unitygames/game?id="
+                        "<a href='http://unity-games.appspot.com/"
+                            + "unitygames/game?id="
                             + ug
                             + "'class='ugLink'>"
                             + st
@@ -81,7 +97,7 @@ public class GameController extends Controller {
         g.setContents(ts);
 
         requestScope("g", g);
-
+        // コメント部分
         List<Comment> comment =
             Datastore
                 .query(Comment.class, g.getKey())

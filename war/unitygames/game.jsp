@@ -328,19 +328,79 @@ function GetUnity() {
 
 	<%@ include file="/share/header.jsp"%>
 	<%@ include file="/share/search.jsp"%>
-
-	<div style="margin-top: 20px;">
-		<%--  Tags --%>
-		<b style="font-size: x-small; color: red;"><fmt:message
-				key="registerTag" /> </b> <span id="tagUpload"></span>
+	<div>
+		<div style="margin-top: 20px;">
+			<%--  Tags --%>
+			<b style="font-size: x-small; color: red;"><fmt:message
+					key="registerTag" /> </b> <span id="tagUpload"></span>
+		</div>
+		<div
+			style="padding-top: 1em; width: 720px; line-height: 2.5em; float: left; word-break: break-all;">
+			<%-- Game Name --%>
+			<span style="font-size: 2.5em;">${g.gameName} </span>
+		</div>
 	</div>
-	<div
-		style="padding-top: 1em; width: 720px; line-height: 2.5em; float: left;">
-		<%-- Game Name --%>
-		<span style="font-size: 2.5em;">${g.gameName} </span>
-	</div>
 
-	<div align="right" style="float: right; padding-top: 15px;">
+	<%--	ゲーム投稿者情報	 --%>
+
+	<div style="float: right; margin-top: 10px;">
+		<div>投稿者</div>
+		<%--	Twitterアカウント	--%>
+		<c:if test="${not empty g.pass}">
+			<div>
+				<div style="float: left;">
+					<img
+						src="http://a1.twimg.com/profile_images/1243088874/PzH_28_normal.jpg" />
+				</div>
+				<a href="/user/?name=kyusyukeigo" style="color: #1F98C7;"
+					target="Twitter"><div
+						style="float: right; text-align: left; font-weight: 900; font-size: 20px; margin-top: 10px; word-break: break-all;">
+						&nbsp;kyusyukeigo${tn}</div> </a>
+
+			</div>
+		</c:if>
+		<%--	変更パスワード入力	--%>
+		<c:if test="${empty g.pass}">
+			<div style="width: 150px;">
+				<div style="float: left; display: inline-block;">
+					<img src="/images/face.png" />
+				</div>
+
+				<div
+					style="font-weight: 900; font-size: 20px; display: inline-block;">
+					&nbsp;Guest</div>
+				<div style="display: inline-block; float: right;">
+					<script type="text/javascript">
+						$(function() {
+
+							$("#out-${g.key.id}").hide();
+							$("#change-${g.key.id}").click(
+									function() {
+										$("#change-${g.key.id}").css(
+												"position", "relative");
+										$("#change-${g.key.id}").css("top",
+												"-5px");
+										$("#out-${g.key.id}").show();
+									//	$("#br-${g.key.id}").hide();
+									});
+						});
+					</script>
+					<form action="/unitygames/change" method="post">
+						<a id="change-${g.key.id}" style="font-size: x-small;"><fmt:message
+								key="change.delete" />
+						</a><a id="out-${g.key.id}" style="position: relative; top: -5px;"><input
+							type="password" name="Pass" style="width: 40px;"><input
+							type="hidden" name="key" value="${f:h(g.key)}">
+							<button type="submit">
+								<img id="sub" src="/images/red.gif" />
+							</button> </a>
+					</form>
+				</div>
+			</div>
+
+		</c:if>
+	</div>
+	<div style="float: right; padding-top: 15px;">
 		<%-- Social Buttons --%>
 
 		<a href="http://mixi.jp/share.pl" class="mixi-check-button"
@@ -351,7 +411,7 @@ function GetUnity() {
 		<iframe
 			src="http://share.gree.jp/share?url=http%3A%2F%2Funity-games.appspot.com%2Funitygames%2Fgame%3Fid%3D${g.key.id}&type=0&height=20"
 			scrolling="no" frameborder="0" marginwidth="0" marginheight="0"
-			style="border: none; overflow: hidden; width: 100px; height: 20px;"
+			style="border: none; overflow: hidden; width: 100px; height: 20px; float: right;"
 			allowTransparency="true"></iframe>
 
 

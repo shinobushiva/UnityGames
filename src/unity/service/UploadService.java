@@ -10,17 +10,19 @@ import unity.model.UploadedDataFragment;
 
 public class UploadService {
 
-  
     // public GameData getData1(Key key, Long version) {
     //
     // return Datastore.get(dd, key, version);
     // }
+    //
     // public UploadedDataFragment getData2(String type) {
     //
-    // return
-    // Datastore.query(f).filter(UploadedDataFragmentMeta.get().type.equal("ThumbNail")).asSingle();
+    // return Datastore
+    // .query(f)
+    // .filter(UploadedDataFragmentMeta.get().type.equal("ThumbNail"))
+    // .asSingle();
     // }
-
+    //
     // public GameData upload(Key key, String GameName, String GameURL,
     // FileItem GameFile, FileItem ThumbNail, String ThumbNailURL,
     // String Contents, String Operations, String HpURL, String Pass,
@@ -36,8 +38,8 @@ public class UploadService {
     // d.setGameName(GameName);
     //
     // if (ThumbNailURL.isEmpty() && ThumbNail == null) {
-    // d
-    // .setThumbNailURL("http://unity-games.appspot.com/DefaultSet/UnityGames.png");
+    // d.setThumbNailURL("http://unity-games.appspot.com/"
+    // + "DefaultSet/UnityGames.png");
     // d.setThumbNailType("url");
     // } else {
     // d.setThumbNailURL(ThumbNailURL);
@@ -46,7 +48,8 @@ public class UploadService {
     //
     // if (GameURL.isEmpty() && HpURL.isEmpty() && GameFile == null) {
     // d
-    // .setGameURL("http://unity-games.appspot.com/DefaultSet/UnityGames.unity3d");
+    // .setGameURL("http://unity-games.appspot.com/" +
+    // "DefaultSet/UnityGames.unity3d");
     // d.setGameType("url");
     // } else {
     // d.setGameURL(GameURL);
