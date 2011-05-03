@@ -71,7 +71,8 @@
 						<div>
 
 							<div
-								style="text-align: center; font-weight: 900; font-size: 15px;">kyusyukeigo${user.userName}</div>
+								style="text-align: center; font-weight: 900; font-size: 15px;">
+								${user.userName}</div>
 							<div
 								style="text-align: center; font-size: 20px; margin-top: 5px;">活動履歴(未実装)</div>
 							<div style="display: inline-block; padding-left: 10px;">

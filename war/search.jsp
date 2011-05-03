@@ -55,9 +55,9 @@
 								<div style="width: 400px; float: left;" class="bounded">
 									<c:choose>
 										<c:when test="${empty g.hpURL}">
-											<a href="/unitygames/game?id=${f:h(g.key.id)}" class="title">
+											<a href="/unitygames/game/ug${f:h(g.key.id)}" class="title">
 												${g.gameName} </a>
-											<c:set var="url" value="/unitygames/game?id=${f:h(g.key.id)}" />
+											<c:set var="url" value="/unitygames/game/ug${f:h(g.key.id)}" />
 										</c:when>
 										<c:when test="${not empty g.hpURL}">
 											<a href="${g.hpURL}" class="title">${g.gameName }</a>

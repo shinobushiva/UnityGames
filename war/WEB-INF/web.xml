@@ -77,6 +77,27 @@
 		<url-pattern>/slim3/gtx</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>json-ws</servlet-name>
+		<servlet-class>net.arnx.jsonic.web.WebServiceServlet</servlet-class>
+		<init-param>
+			<param-name>config</param-name>
+			<param-value>
+				{
+				"debug": true,
+				"encoding": "UTF-8",
+				"mappings": {
+				"/[package]/[class].[ext]": "${package}.${class}Service",
+				}
+				}
+    </param-value>
+		</init-param>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>json-ws</servlet-name>
+		<url-pattern>*.json</url-pattern>
+	</servlet-mapping>
 	<!-- <servlet-mapping> <servlet-name>GWTServiceServlet</servlet-name> <url-pattern>*.s3gwt</url-pattern> 
 		</servlet-mapping> -->
 

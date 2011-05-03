@@ -84,7 +84,7 @@ public class GameController extends Controller {
                     ts.replaceAll(
                         st,
                         "<a href='http://unity-games.appspot.com/"
-                            + "unitygames/game?id="
+                            + "unitygames/game/ug"
                             + ug
                             + "'class='ugLink'>"
                             + st
@@ -103,6 +103,9 @@ public class GameController extends Controller {
                 .query(Comment.class, g.getKey())
                 .sort(CommentMeta.get().date.asc)
                 .asList();
+        
+       
+        
         requestScope("c", comment);
 
         return forward("game.jsp");

@@ -147,6 +147,7 @@ function GetUnity() {
 				var html = "";
 				var cms = e.comments;
 			
+				alert(cms);
 				
 				$("div").remove(".comment_floating");
 				for (i in cms) {
