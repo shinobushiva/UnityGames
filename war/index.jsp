@@ -64,7 +64,7 @@
 				</c:if>
 				<c:if test="${login == 'yes' }">
 					<%--	普段ユーザー本人が見る情報	 --%>
-					<div>
+					<div style="height:73px;">
 						<div style="float: left;">
 							<img src="${p}" />
 						</div>
@@ -72,14 +72,14 @@
 
 							<div
 								style="text-align: center; font-weight: 900; font-size: 15px;">
-								${user.userName}</div>
+								${userName}</div>
 							<div
 								style="text-align: center; font-size: 20px; margin-top: 5px;">活動履歴(未実装)</div>
 							<div style="display: inline-block; padding-left: 10px;">
-								<a href="" style="font-size: x-small; color: #1F98C7;">情報登録/修正</a>
+								<a href="/user/?name=${userName}" style="font-size: x-small; color: #1F98C7;">情報登録/修正</a>
 							</div>
 							<div style="display: inline-block; margin-left: 20px;">
-								<a href="" style="font-size: 15px; color: #1F98C7;">ログアウト</a>
+								<a href="/login/logOut" style="font-size: 15px; color: #1F98C7;">ログアウト</a>
 							</div>
 						</div>
 					</div>

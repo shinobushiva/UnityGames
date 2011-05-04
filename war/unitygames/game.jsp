@@ -147,7 +147,6 @@ function GetUnity() {
 				var html = "";
 				var cms = e.comments;
 			
-				alert(cms);
 				
 				$("div").remove(".comment_floating");
 				for (i in cms) {
@@ -347,21 +346,21 @@ function GetUnity() {
 	<div style="float: right; margin-top: 10px;">
 		<div>投稿者</div>
 		<%--	Twitterアカウント	--%>
-		<c:if test="${not empty g.pass}">
+		<c:if test="${empty g.pass}">
 			<div>
 				<div style="float: left;">
 					<img
-						src="http://a1.twimg.com/profile_images/1243088874/PzH_28_normal.jpg" />
+						src="${tp}" />
 				</div>
-				<a href="/user/?name=kyusyukeigo" style="color: #1F98C7;"
+				<a href="/user/?name=${tn}" style="color: #1F98C7;"
 					target="Twitter"><div
 						style="float: right; text-align: left; font-weight: 900; font-size: 20px; margin-top: 10px; word-break: break-all;">
-						&nbsp;kyusyukeigo${tn}</div> </a>
+						&nbsp;${tn}</div> </a>
 
 			</div>
 		</c:if>
 		<%--	変更パスワード入力	--%>
-		<c:if test="${empty g.pass}">
+		<c:if test="${not empty g.pass}">
 			<div style="width: 150px;">
 				<div style="float: left; display: inline-block;">
 					<img src="/images/face.png" />

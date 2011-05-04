@@ -24,6 +24,7 @@ public class IndexController extends Controller {
         // Twitterアカウント情報
         // ローカル対策 OAuth認証できないので俺のアカウント画像とか直接指定
         if ("127.0.0.1".equals(request.getRemoteHost())) {
+
             requestScope("user.userName", "kyusyukeigo");
             requestScope(
                 "p",
@@ -35,13 +36,10 @@ public class IndexController extends Controller {
             requestScope("campaigns", cvos);
 
             // ランキング
-            List<GameData> rankingGame =
-                Datastore
-                    .query(g)
-                    .sort(g.point.desc)
-                    .sort(g.date.desc)
-                    .limit(5)
-                    .asList();
+            List<GameData> rankingGame = Datastore.query(g).sort(g.point.desc)
+            // .sort(g.date.desc)
+                .limit(5)
+                .asList();
 
             requestScope("rankingGameList", rankingGame);
 
@@ -52,35 +50,36 @@ public class IndexController extends Controller {
 
             return forward("index.jsp");
         }
-        if (sessionScope("twitter") == null) {
+
+        Twitter twitter = (Twitter) sessionScope("twitter");
+
+        if (twitter == null) {
             requestScope("login", "no");
         } else {
             requestScope("login", "yes");
+
+            // // modelのUser情報取得
+            // User user = us.getUser((Long) sessionScope("userId"));
+            // requestScope("user", user);
+            // Twitter側から情報取得
+            ProfileImage profileimage = null;
+            // Twitter画像URL取得
+            requestScope("userName", twitter.getScreenName());
+            requestScope(
+                "p",
+                twitter.getProfileImage(
+                    twitter.getScreenName(),
+                    profileimage.BIGGER).getURL());
         }
-        // // modelのUser情報取得
-        // User user = us.getUser((Long) sessionScope("userId"));
-        // requestScope("user", user);
-        // Twitter側から情報取得
-        Twitter twitter = (Twitter) sessionScope("twitter");
-        ProfileImage profileimage = null;
-        // Twitter画像URL取得
-        requestScope(
-            "p",
-            twitter.getProfileImage(
-                twitter.getScreenName(),
-                profileimage.BIGGER).getURL());
         // キャンペーン
         List<CampaignVo> cvos = cs.loadCampaigns();
         requestScope("campaigns", cvos);
 
         // ランキング
-        List<GameData> rankingGame =
-            Datastore
-                .query(g)
-                .sort(g.point.desc)
-                .sort(g.date.desc)
-                .limit(5)
-                .asList();
+        List<GameData> rankingGame = Datastore.query(g).sort(g.point.desc)
+        // .sort(g.date.desc)
+            .limit(5)
+            .asList();
 
         requestScope("rankingGameList", rankingGame);
 
