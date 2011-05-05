@@ -128,7 +128,7 @@ function tagCheck(){
 					<td><label for="ThumbNail"><h2>
 								<fmt:message key="thumbNail" />
 							</h2> </label><br> <fmt:message key="thumbNail.process" /><br> <label><input
-							type="radio" name="ThumbNailType" value="data" id="tdata" checked>
+							type="radio" name="ThumbNailType" value="data" id="tdata" checked="checked">
 							<fmt:message key="thumbNail.pictureDataUp" /> </label><br> <label><input
 							type="radio" name="ThumbNailType" value="url" id="turl">
 							<fmt:message key="thumbNail.urlUp" /><br> </label>
@@ -151,7 +151,7 @@ function tagCheck(){
 					<td><label for="d"><h2>
 								<fmt:message key="game.select" />
 							</h2> </label><br> <fmt:message key="gamedata.process" /><br> <label><input
-							type="radio" name="GameType" value="data" id="data" checked>
+							type="radio" name="GameType" value="data" id="data" checked="checked">
 							<fmt:message key="game.select.data" /> </label><br> <label><input
 							type="radio" name="GameType" value="url" id="url"> <fmt:message
 								key="game.select.url" /><br> </label> <label><input
@@ -186,18 +186,18 @@ function tagCheck(){
 						</div> <%--	ゲームの管理方法	--%>
 						<h2>ゲームの管理方法</h2> <c:if test="${type == 'twitter' }">
 							<div>
-								<input type="radio" name="gameAdmin" id="ga1" checked />Twitterアカウント<input
+								<input type="radio" name="gameAdmin" id="ga1" checked="checked" />Twitterアカウント<input
 									type="radio" name="gameAdmin" id="ga2" />パスワードを設定
 							</div>
 
 							<div id="twitterKey">
 								<div style="float: left;">
 									<img
-										src="http://a1.twimg.com/profile_images/1243088874/PzH_28_mini.jpg" />
+										src="${p}" />
 								</div>
 								<a style="color: #1F98C7;"><div
 										style="text-align: left; font-weight: 900; font-size: 20px; margin-top: 10px; word-break: break-all;">
-										&nbsp;kyusyukeigo${user.userName}</div> </a>
+										&nbsp;${userName}</div> </a>
 
 							</div>
 
@@ -210,7 +210,7 @@ function tagCheck(){
 							</div>
 						</c:if> <c:if test="${type == 'guest' }">
 							<div>
-						<input type="radio" name="gameAdmin" id="ga2" checked"/>パスワードを設定<input type="radio" id="ga1" name="gameAdmin" disabled/>Twitterアカウント<span style="color: red;">(ログイン後選択可)</span>
+						<input type="radio" name="gameAdmin" id="ga2" checked="checked""/>パスワードを設定<input type="radio" id="ga1" name="gameAdmin" disabled/>Twitterアカウント<span style="color: red;">(ログイン後選択可)</span>
 							</div>
 							<div id="changeKey">
 								<h2>

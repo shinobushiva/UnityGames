@@ -31,27 +31,31 @@ public class UploadController extends Controller {
         String code = requestScope("Code");
 
         Twitter twitter = (Twitter) sessionScope("twitter");
-        long twitterId = twitter.getId();
-        System.out.println("pass:" + pass.isEmpty());
+        long twitterId = 0;
+        if (twitter != null) {
+            twitterId = twitter.getId();
+            System.out.println("pass:" + pass.isEmpty());
+        }
 
-         service.change(
-         null,
-         gameName,
-         gameURL,
-         gameFile,
-         thumbNail,
-         thumbNailURL,
-         contents,
-         operations,
-         hpURL,
-         pass,
-         thumbNailType,
-         gameType,
-         "",
-         "",
-         fixTag,
-         code,
-         twitterId);
+        System.out.println("okかな？"+twitterId);
+        service.change(
+            null,
+            gameName,
+            gameURL,
+            gameFile,
+            thumbNail,
+            thumbNailURL,
+            contents,
+            operations,
+            hpURL,
+            pass,
+            thumbNailType,
+            gameType,
+            "",
+            "",
+            fixTag,
+            code,
+            twitterId);
         return forward("uploaded.jsp");
     }
 }

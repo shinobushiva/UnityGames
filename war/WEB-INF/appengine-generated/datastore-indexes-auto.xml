@@ -1,15 +1,21 @@
-<!-- Indices written at Tue, 3 May 2011 18:46:17 UTC -->
+<!-- Indices written at Thu, 5 May 2011 12:52:58 UTC -->
 
 <datastore-indexes>
 
-	<!-- Used 63 times in query history -->
-	<datastore-index kind="GameData" ancestor="false"
-		source="auto">
-		<property name="twitterUserKey" direction="asc" />
-		<property name="_date_" direction="desc" />
-	</datastore-index>
-	<datastore-index kind="Comment" ancestor="true" source="auto">
-		<property name="date" direction="asc" />
-	</datastore-index>
-	
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="Comment" ancestor="true" source="auto">
+        <property name="date" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="UploadedDataFragment" ancestor="false" source="auto">
+        <property name="uploadDataRef" direction="asc"/>
+        <property name="index" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="Comment" ancestor="true" source="auto">
+        <property name="date" direction="desc"/>
+    </datastore-index>
+
 </datastore-indexes>
