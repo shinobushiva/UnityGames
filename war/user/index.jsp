@@ -12,14 +12,14 @@
 <c:if test="${name == 'myName' }">
 	<script type="text/javascript">
 		$(function() {
-			$("#page").load("myPage/me");
+			$("#page").load("showUser/myPage?name=me");
 		});
 	</script>
 </c:if>
 <c:if test="${name == 'otherName' }">
 	<script type="text/javascript">
 		$(function() {
-			$("#page").load("myPage/${other}");
+			$("#page").load("showUser/myPage?name=${other}");
 		});
 	</script>
 </c:if>

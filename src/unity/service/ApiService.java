@@ -4,10 +4,6 @@ import java.util.List;
 
 import org.slim3.datastore.Datastore;
 
-import com.google.appengine.api.datastore.Key;
-import com.sun.org.apache.bcel.internal.generic.RETURN;
-
-import unity.meta.GameDataMeta;
 import unity.model.GameData;
 
 public class ApiService {

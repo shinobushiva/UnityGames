@@ -349,11 +349,9 @@ function GetUnity() {
 		<c:if test="${empty g.pass}">
 			<div>
 				<div style="float: left;">
-					<img
-						src="${tp}" />
+					<img src="${tp}" />
 				</div>
-				<a href="/user/?name=${tn}" style="color: #1F98C7;"
-					target="Twitter"><div
+				<a href="/user/?name=${tn}" style="color: #1F98C7;" target="Twitter"><div
 						style="float: right; text-align: left; font-weight: 900; font-size: 20px; margin-top: 10px; word-break: break-all;">
 						&nbsp;${tn}</div> </a>
 
@@ -387,10 +385,10 @@ function GetUnity() {
 					</script>
 					<form action="/unitygames/change" method="post">
 						<a id="change-${g.key.id}" style="font-size: x-small;"><fmt:message
-								key="change.delete" />
-						</a><a id="out-${g.key.id}" style="position: relative; top: -5px;"><input
-							type="password" name="Pass" style="width: 40px;"><input
-							type="hidden" name="key" value="${f:h(g.key)}">
+								key="change.delete" /> </a><a id="out-${g.key.id}"
+							style="position: relative; top: -5px;"><input type="password"
+							name="Pass" style="width: 40px;"><input type="hidden"
+							name="key" value="${f:h(g.key)}">
 							<button type="submit">
 								<img id="sub" src="/images/red.gif" />
 							</button> </a>
@@ -402,28 +400,9 @@ function GetUnity() {
 	</div>
 	<div style="float: right; padding-top: 15px;">
 		<%-- Social Buttons --%>
-
-		<a href="http://mixi.jp/share.pl" class="mixi-check-button"
-			data-key="42bc93a615261cdd8e17e115918eb36ebf60a729"
-			data-button="button-1"></a>
-		<script type="text/javascript" src="http://static.mixi.jp/js/share.js"></script>
-
-		<iframe
-			src="http://share.gree.jp/share?url=http%3A%2F%2Funity-games.appspot.com%2Funitygames%2Fgame%3Fid%3D${g.key.id}&type=0&height=20"
-			scrolling="no" frameborder="0" marginwidth="0" marginheight="0"
-			style="border: none; overflow: hidden; width: 100px; height: 20px; float: right;"
-			allowTransparency="true"></iframe>
-
-
-		<a href="http://twitter.com/share" class="twitter-share-button"
-			data-count="horizontal" data-via="UGames"
-			data-lang="<%=request.getLocale().getLanguage()%>"></a>
-		<script type="text/javascript"
-			src="http://platform.twitter.com/widgets.js"></script>
-
-		<fb:like layout="button_count" width="0"></fb:like>
-		<a id="fb-root"></a>
-		<script>
+		<ul >
+			<li style="height: 25px !important;display: inline;"><fb:like layout="button_count"></fb:like> <a id="fb-root"></a>
+				<script>
 			window.fbAsyncInit = function() {
 				FB.init({
 					appId : '214224191925233',
@@ -440,7 +419,22 @@ function GetUnity() {
 				e.async = true;
 				document.getElementById('fb-root').appendChild(e);
 			}());
-		</script>
+		</script></li>
+			<li style="display: inline;"><a href="http://mixi.jp/share.pl" class="mixi-check-button"
+				data-key="42bc93a615261cdd8e17e115918eb36ebf60a729"
+				data-button="button-1"></a> <script type="text/javascript"
+					src="http://static.mixi.jp/js/share.js"></script></li>
+			<li style="display: inline;"><iframe
+					src="http://share.gree.jp/share?url=http%3A%2F%2Funity-games.appspot.com%2Funitygames%2Fgame%3Fid%3D${g.key.id}&type=0&height=20"
+					scrolling="no" frameborder="0" marginwidth="0" marginheight="0"
+					style="border: none; overflow: hidden; width: 75px; height: 20px;"
+					allowTransparency="true"></iframe></li>
+			<li style="display: inline;"><a href="http://twitter.com/share"
+				class="twitter-share-button" data-count="horizontal"
+				data-via="UGames" data-lang="<%=request.getLocale().getLanguage()%>"></a>
+				<script type="text/javascript"
+					src="http://platform.twitter.com/widgets.js"></script></li>
+		</ul>
 
 	</div>
 

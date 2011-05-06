@@ -11,15 +11,11 @@ import java.util.Map;
 import java.util.Set;
 
 import jp.co.topgate.controller.JsonController;
-
 import net.arnx.jsonic.JSON;
 
-import org.slim3.controller.Controller;
-import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
 import org.slim3.datastore.GlobalTransaction;
 
-import twitter4j.Status;
 import twitter4j.Twitter;
 import unity.meta.UserMeta;
 import unity.model.Tweet;

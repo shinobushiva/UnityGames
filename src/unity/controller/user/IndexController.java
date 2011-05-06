@@ -3,8 +3,6 @@ package unity.controller.user;
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 
-import twitter4j.Twitter;
-
 public class IndexController extends Controller {
 
     @Override

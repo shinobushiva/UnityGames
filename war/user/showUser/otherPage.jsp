@@ -19,6 +19,8 @@
 		</div>
 		<%--	Tweet部分	--%>
 		<div style="clear: both;">
+	<div style="height: 50px;padding-top: auto;padding-bottom: auto;border: solid;">testつぶやきてすとおおお${t}</div>
+	
 			<c:forEach var="t" items="${tweet}">
 	
 	<div style="height: 50px;padding-top: auto;padding-bottom: auto;border: solid;">${t}</div>

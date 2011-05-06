@@ -16,33 +16,21 @@
 <title>UnityGames</title>
 
 </head>
+<script type="text/javascript">
+	$(document).ready(
+			function() {
+				$.getJSON("http://localhost:8888/test?id=all&callback=?",
+						function(json) {
+							var jg = json.gameData;
+
+							alert(jg);
+
+						});
+			});
+</script>
 <body>
 
-	<script type="text/javascript">
-		$(function() {
-			$.ajax({
-				type : "get",
-				url : "/test",
-				dataType:"json",
-				data : "id=3398",
-				success : function(e) {
-					var html = "";
-					var gms = e.gameData;
-				//	alert(gms);
-					
-				//	for (i in gms) {
 
-					//	var g = gms[i];
-
-						//html += "<div>";
-						html += "" + e.gameData;
-					//	html += "</div>";
-			//		}
-					$('#Load').html(html);
-				}
-			})
-		});
-	</script>
 
 	<div id="Load"></div>
 

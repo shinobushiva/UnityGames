@@ -20,7 +20,6 @@ import unity.service.GameDataService;
 
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Transaction;
-import com.google.appengine.api.users.User;
 
 public class GameController extends Controller {
 

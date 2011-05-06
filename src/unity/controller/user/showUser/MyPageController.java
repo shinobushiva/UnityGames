@@ -1,18 +1,16 @@
-package unity.controller.user;
+package unity.controller.user.showUser;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import net.arnx.jsonic.JSON;
 
-import org.datanucleus.store.types.URLStringConverter;
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
@@ -23,9 +21,7 @@ import twitter4j.TwitterFactory;
 import unity.meta.GameDataMeta;
 import unity.meta.UserMeta;
 import unity.model.GameData;
-import unity.model.Tag;
 import unity.model.Tweet;
-import unity.model.User;
 
 public class MyPageController extends Controller {
 
@@ -35,80 +31,80 @@ public class MyPageController extends Controller {
 
         String name = asString("name");
 
-        
-//        User uuu = new User();
-//        uuu.setUserName("kyusyukeigo");
-//        uuu.setUserId(163412860);
-//        uuu.setWebUrl("http://unitygames/");
-//        uuu.setTweets(new HashSet<Tweet>());
-//        GlobalTransaction ttt = Datastore.beginGlobalTransaction();
-//        Datastore.put(uuu);
-//        ttt.commit();
-        
         // アカウント名からモデルのuserIdを取り出す
         unity.model.User uk =
             Datastore
                 .query(unity.model.User.class)
                 .filter(UserMeta.get().userName.equal(name))
                 .asSingle();
-
+        System.out.println("uk:" + uk);
         // userIdからイメージ画像を持ってくる
         Twitter twitter = new TwitterFactory().getInstance();
-        twitter4j.User u = twitter.showUser(uk.getUserId());
+        twitter4j.User u = twitter.showUser(163412860);
+        System.out.println("u:" + u);
+
         String imageURL = u.getProfileImageURL().toString();
 
         String picture = imageURL.replace("normal", "reasonably_small");
 
         // TweetIdを取り出す
         Set<Tweet> tweets = uk.getTweets();
+        
+        
+        
+        
 
-        // とってきたTweetをリスト化する準備
-        List<Object> t = new ArrayList<Object>();
+        // /*毎回1つ1つjsonでStatus(Tweet)idで持ってきてそのツイートがあるかないか確認しながら行う処理*/
+        // /*でもAPI１５０回制限で厳しいので保留。まとめて取得できるならこのやり方でいく*/
+        // /*今のところできないので削除は考えず(削除ボタン作ればいいけど2度・・・)モデルに保存する*/
+        // // とってきたTweetをリスト化する準備
+        // List<Object> t = new ArrayList<Object>();
+        // //
         // TweetIdだけのTweetを取り出す　そこでTweetIdがなかったら(削除済みだったら)Userモデルから、Tweetモデルからも削除しておく
-        for (Tweet tt : tweets) {
-
-            String searchedResult = null;
-
-            URL url =
-                new URL("http://twitter.com/statuses/show/"
-                    + tt.getTweetId()
-                    + ".json");
-            URLConnection con = url.openConnection();
-            con.setReadTimeout(30 * 1000);
-            con.setConnectTimeout(30 * 1000);
-            BufferedReader reader =
-                new BufferedReader(new InputStreamReader(
-                    con.getInputStream(),
-                    "utf-8"));
-            String line;
-            StringBuffer sb = new StringBuffer();
-
-            while ((line = reader.readLine()) != null) {
-                sb.append(line);
-            }
-            reader.close();
-
-            searchedResult = sb.toString();
-            Map<String, Object> map =
-                (Map<String, Object>) JSON.decode(searchedResult);
-
-            // tweetなかったらnullがくる
-            String tweet = "" + map.get("text");
-
-            // TweetIdがなかったら(本家で削除済みだったら)UserモデルとTweetモデルから削除
-            if (tweet == null) {
-                // Setの中の１つを削除。これであっているのか不明
-                tweets.remove(tt);
-                // Tweetから削除
-                GlobalTransaction tx = Datastore.beginGlobalTransaction();
-                Datastore.delete(tt.getKey());
-                tx.commit();
-                continue;
-            }
-            // リストに入れていく
-            t.add(tweet);
-
-        }
+        // for (Tweet tt : tweets) {
+        //
+        // String searchedResult = null;
+        //
+        // URL url =
+        // new URL("http://twitter.com/statuses/show/"
+        // + tt.getTweetId()
+        // + ".json");
+        // URLConnection con = url.openConnection();
+        // con.setReadTimeout(30 * 1000);
+        // con.setConnectTimeout(30 * 1000);
+        // BufferedReader reader =
+        // new BufferedReader(new InputStreamReader(
+        // con.getInputStream(),
+        // "utf-8"));
+        // String line;
+        // StringBuffer sb = new StringBuffer();
+        //
+        // while ((line = reader.readLine()) != null) {
+        // sb.append(line);
+        // }
+        // reader.close();
+        //
+        // searchedResult = sb.toString();
+        // Map<String, Object> map =
+        // (Map<String, Object>) JSON.decode(searchedResult);
+        //
+        // // tweetなかったらnullがくる
+        // String tweet = "" + map.get("text");
+        //
+        // // TweetIdがなかったら(本家で削除済みだったら)UserモデルとTweetモデルから削除
+        // if (tweet == null) {
+        // // Setの中の１つを削除。あっていない
+        // tweets.remove(tt);
+        // // Tweetから削除
+        // GlobalTransaction tx = Datastore.beginGlobalTransaction();
+        // Datastore.delete(tt.getKey());
+        // tx.commit();
+        // continue;
+        // }
+        // // リストに入れていく
+        // t.add(tweet);
+        //
+        // }
 
         // ちょい保留 別の方法があると思うから
         //
@@ -142,7 +138,7 @@ public class MyPageController extends Controller {
         // webUrlを表示
         requestScope("webUrl", uk.getWebUrl());
         // 該当したtweetのリスト
-        requestScope("tweet", t);
+        requestScope("tweet", tweets);
         // Twitterアカウント
         requestScope("u", u);
         // TwitterProfilePicture
@@ -174,9 +170,7 @@ public class MyPageController extends Controller {
         System.out.println("TimeZone:" + u.getTimeZone());
         System.out.println("URL:" + u.getURL());
         System.out.println("UtcOffset:" + u.getUtcOffset());
-        
-        
-        System.out.println(t);
+
 
         // 表示だけが違うのでここでjspを判別する
         if (name != "me") {

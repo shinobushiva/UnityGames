@@ -40,8 +40,11 @@ public class ChangeUpController extends Controller {
         String code = requestScope("Code");
 
         Twitter twitter = (Twitter) sessionScope("twitter");
-        long twitterId = twitter.getId();
-     
+        long twitterId = 0;
+        if(twitter !=null){
+        
+        twitterId = twitter.getId();
+        }
         service.change(
             key,
             gameName,

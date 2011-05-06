@@ -21,6 +21,8 @@ public class Tweet implements Serializable {
     private long userId;
 
     private long tweetId;
+    
+    private String text;
 
     /**
      * Returns the key.
@@ -104,6 +106,14 @@ public class Tweet implements Serializable {
 
     public long getTweetId() {
         return tweetId;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getText() {
+        return text;
     }
 
 }

@@ -86,7 +86,7 @@ function tagCheck(){
 		<form action="upload" method="post" class="cmxform" id="commentForm"
 			enctype="multipart/form-data" onSubmit="return tagCheck()"
 			name="form1">
-			<table class="purchase-options" border="0" align="center">
+			<table class="purchase-options" border="0" style="margin-left: auto; margin-right: auto;margin-top: 25px;">
 				<tr class="top">
 					<td colspan="2">&nbsp;</td>
 				</tr>
@@ -209,6 +209,12 @@ function tagCheck(){
 								</h2>
 							</div>
 						</c:if> <c:if test="${type == 'guest' }">
+							<script>
+							$(function(){
+								$( "#changeKey" ).show();
+								
+							});
+							</script>
 							<div>
 						<input type="radio" name="gameAdmin" id="ga2" checked="checked""/>パスワードを設定<input type="radio" id="ga1" name="gameAdmin" disabled/>Twitterアカウント<span style="color: red;">(ログイン後選択可)</span>
 							</div>
