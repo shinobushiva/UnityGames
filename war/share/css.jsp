@@ -7,6 +7,6 @@
 <link href="/css/lavalamp.css" rel="StyleSheet" type="text/css" />
 <link href="/css/prettify.css" rel="StyleSheet" type="text/css" />
 <link href="/css/campaign.css" rel="stylesheet" type="text/css"/>
-
+<link href="/css/Pager.css" rel="stylesheet" type="text/css"/>
 
 

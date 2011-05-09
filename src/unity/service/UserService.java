@@ -38,4 +38,13 @@ public class UserService {
             .filter(UserMeta.get().userId.equal(userId))
             .asSingle();
     }
+
+    public User getName(String name) {
+
+        // アカウント名からモデルのuserIdを取り出す
+        return Datastore
+            .query(User.class)
+            .filter(UserMeta.get().userName.equal(name))
+            .asSingle();
+    }
 }

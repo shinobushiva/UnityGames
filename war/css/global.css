@@ -1,13 +1,15 @@
 @CHARSET "utf-8";
 
 body {
-width: 1024px;
-margin-left: auto;
-margin-right: auto;
+	width: 1024px;
+	margin-left: auto;
+	margin-right: auto;
+}
 
-	 }
-.warning{
+.warning {
 	color: red;
-	}
-	
-	
+}
+
+.exceeded {
+	color: red;
+}

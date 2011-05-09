@@ -9,3 +9,8 @@
 <script src="/js/dateformat.js"></script>
 <script src="/js/jquery.movingboxes.js"></script>
 <script src="/js/campaign.js"></script>
+<script src="/js/superLoad.js"></script>
+<script src="/js/curvycorners.js"></script>
+<script src="/js/charCount.js"></script>
+<script src="/js/charCount.js"></script>
+<script src="/js/jquery.pager.js"></script>
