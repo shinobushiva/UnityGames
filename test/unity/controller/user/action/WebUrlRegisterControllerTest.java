@@ -10,7 +10,7 @@ public class WebUrlRegisterControllerTest extends ControllerTestCase {
     @Test
     public void run() throws Exception {
         tester.start("/user/action/webUrlRegister");
-        WebUrlRegisterController controller = tester.getController();
+        WebUrlRegistController controller = tester.getController();
         assertThat(controller, is(notNullValue()));
         assertThat(tester.isRedirect(), is(false));
         assertThat(tester.getDestinationPath(), is(nullValue()));

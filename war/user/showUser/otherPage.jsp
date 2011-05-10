@@ -4,7 +4,7 @@
 <%@taglib prefix="f" uri="http://www.slim3.org/functions"%>
 
 <div
-	style="float: left; width: 500px; border: solid; height: 1000px; font-size: 15px;"
+	style="float: left; width: 500px; height: 1000px; font-size: 15px;"
 	id="twitter">
 	<div>
 		<div style="float: left; margin-left: 10px; margin-top: 10px;">
@@ -18,7 +18,7 @@
 
 		<c:forEach var="t" items="${tweet}">
 
-			<div style="height: 50px; border: solid;">${t}</div>
+			<div style="height: 50px; border: 1px;">${t}</div>
 
 		</c:forEach>
 	</div>
@@ -133,7 +133,7 @@
 
 				<%@ include file="/share/patternDistinction.jsp"%>
 
-				<div id="more-${g.key.id}" style="border: solid; width: 490px;">
+				<div id="more-${g.key.id}" style=" width: 490px;">
 
 					<img src="${thUrl}" width="400" height="300"
 						style="margin-left: 50px; margin-right: 50px; margin-top: 5px;" />

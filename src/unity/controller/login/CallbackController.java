@@ -30,7 +30,7 @@ public class CallbackController extends Controller {
             e.printStackTrace();
         }
 
-        us.regist(twitter.getId(), twitter.getScreenName());
+        us.regist(twitter.getId(), twitter.getScreenName(),twitter.showUser(twitter.getId()).getDescription());
         // ユーザーのIDを設定しておく なんのため？忘れた
         sessionScope("userId", twitter.getId());
         return redirect("/");

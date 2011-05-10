@@ -152,6 +152,8 @@ public class MyPageController extends Controller {
         requestScope("webUrl", uk.getWebUrl());
         // 該当したtweetのリスト
         requestScope("tweet", t);
+       //モデルのUser情報
+        requestScope("um", uk);
         // Twitterアカウント
         requestScope("u", u);
         // TwitterProfilePicture

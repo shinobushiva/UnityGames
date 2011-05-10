@@ -1,14 +1,17 @@
 package unity.service;
 
+import java.util.HashSet;
+
 import org.slim3.datastore.Datastore;
 import org.slim3.datastore.GlobalTransaction;
 
 import unity.meta.UserMeta;
+import unity.model.Tweet;
 import unity.model.User;
 
 public class UserService {
 
-    public User regist(long userId, String userName) {
+    public User regist(long userId, String userName, String myself) {
 
         User check =
             Datastore
@@ -22,6 +25,9 @@ public class UserService {
             u.setKey(Datastore.allocateId(User.class));
             u.setUserId(userId);
             u.setUserName(userName);
+            u.setMyself(myself);
+            u.setWebUrl("設定されていません");
+            u.setTweets(new HashSet<Tweet>());
 
             GlobalTransaction tx = Datastore.beginGlobalTransaction();
             Datastore.put(u);

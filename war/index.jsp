@@ -32,7 +32,7 @@
 	});
 </script>
 </head>
-<body style="border: solid;">
+<body style="">
 	<%@ include file="/share/header.jsp"%>
 	<div>
 

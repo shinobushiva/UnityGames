@@ -25,6 +25,8 @@ public class User implements Serializable {
     private String userName;
 
     private String webUrl;
+    @Attribute(lob = true)
+    private String myself;
 
     @Attribute(lob = true)
     private Set<Tweet> tweets = new HashSet<Tweet>();
@@ -127,5 +129,13 @@ public class User implements Serializable {
 
     public Set<Tweet> getTweets() {
         return tweets;
+    }
+
+    public void setMyself(String myself) {
+        this.myself = myself;
+    }
+
+    public String getMyself() {
+        return myself;
     }
 }
