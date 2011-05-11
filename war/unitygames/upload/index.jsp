@@ -184,7 +184,10 @@ function tagCheck(){
 									key="fixTag.explanation" /> </span>
 
 						</div> <%--	ゲームの管理方法	--%>
-						<h2>ゲームの管理方法</h2> <c:if test="${type == 'twitter' }">
+						<h2>ゲームの管理方法</h2> 
+						
+						<%--Twitterアカウントでログインしている場合--%>
+						<c:if test="${type == 'twitter' }">
 							<div>
 								<input type="radio" name="gameAdmin" id="ga1" checked="checked" />Twitterアカウント<input
 									type="radio" name="gameAdmin" id="ga2" />パスワードを設定
@@ -208,7 +211,9 @@ function tagCheck(){
 										style="width: 117;">
 								</h2>
 							</div>
-						</c:if> <c:if test="${type == 'guest' }">
+						</c:if>
+						<%--ゲストの場合 --%>
+						<c:if test="${type == 'guest' }">
 							<script>
 							$(function(){
 								$( "#changeKey" ).show();
@@ -216,7 +221,7 @@ function tagCheck(){
 							});
 							</script>
 							<div>
-						<input type="radio" name="gameAdmin" id="ga2" checked="checked""/>パスワードを設定<input type="radio" id="ga1" name="gameAdmin" disabled/>Twitterアカウント<span style="color: red;">(ログイン後選択可)</span>
+						<input type="radio" name="gameAdmin" id="ga2" checked="checked"/>パスワードを設定<input type="radio" id="ga1" name="gameAdmin" disabled/>Twitterアカウント<span style="color: red;">(ログイン後選択可)</span>
 							</div>
 							<div id="changeKey">
 								<h2>

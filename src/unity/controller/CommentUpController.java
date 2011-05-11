@@ -7,6 +7,7 @@ import java.util.List;
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
+import org.slim3.datastore.GlobalTransaction;
 
 import unity.meta.CommentMeta;
 import unity.model.Comment;
@@ -42,8 +43,8 @@ public class CommentUpController extends Controller {
             GameData g = Datastore.get(GameData.class, key);
             g.setComment(g.getComment() + 1);
             Datastore.put(g);
-            Transaction tx = Datastore.beginTransaction();
-            Datastore.put(comment);
+          GlobalTransaction tx = Datastore.beginGlobalTransaction();
+            tx.put(comment);
             tx.commit();
             gs.addPoint(g);
         }

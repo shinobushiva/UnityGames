@@ -155,7 +155,7 @@ else{return true; // 送信を実行
 					<td><h2>
 							<label for="ThumbNail"><fmt:message key="thumbNail" /> <c:if
 									test="${g.thumbNailType =='data' }">
-									<img src="/unitygames/thumbNail?thumbNailKey=${f:h(g.key)}"
+									<img src="/unitygames/thumbNail?id=${f:h(g.key.id)}"
 										width="50" height="50" align="right">
 						</h2> </label><br> <fmt:message key="now" />： <label><font
 							color="red"><fmt:message key="thumbNail.pictureDataUp" />
@@ -259,8 +259,15 @@ ${g.thumbNailURL}<br>
 						</div>
 						<%--ゲームの管理方法--%>
 						<h2>ゲームの管理方法</h2> <c:if test="${not empty g.pass}">
-						<c:if test="${g.twitterUserKey != null}">
+						<c:if test="${type == 'twitter' }">
 							<%--パス入れてる＆Twitterアカウント--%>
+							<script type="text/javascript">
+						$(function(){
+							$("#twitterKey").toggle();
+							$("#changeKey").toggle();
+						});
+							
+							</script>
 							<div>
 								<input type="radio" name="gameAdmin" id="ga1" />Twitterアカウント<input
 									type="radio" name="gameAdmin" id="ga2" checked="checked"/>パスワードを設定
@@ -285,7 +292,7 @@ ${g.thumbNailURL}<br>
 								</h2>
 							</div>
 						</c:if>
-						<c:if test="${g.twitterUserKey == null}">
+						<c:if test="${type == 'guest' }">
 							<%--パス入れてる＆Guest--%>
 							<script>
 							$(function(){

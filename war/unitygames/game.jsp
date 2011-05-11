@@ -351,7 +351,7 @@ function GetUnity() {
 				<div style="float: left;">
 					<img src="${tp}" />
 				</div>
-				<a href="/user/?name=${tn}" style="color: #1F98C7;" target="Twitter"><div
+				<a href="/user/${tn}" style="color: #1F98C7;" target="Twitter"><div
 						style="float: right; text-align: left; font-weight: 900; font-size: 20px; margin-top: 10px; word-break: break-all;">
 						&nbsp;${tn}</div> </a>
 
@@ -425,7 +425,7 @@ function GetUnity() {
 				data-button="button-1"></a> <script type="text/javascript"
 					src="http://static.mixi.jp/js/share.js"></script></li>
 			<li style="display: inline;"><iframe
-					src="http://share.gree.jp/share?url=http%3A%2F%2Funity-games.appspot.com%2Funitygames%2Fgame%3Fid%3D${g.key.id}&type=0&height=20"
+					src="http://share.gree.jp/share?url=http%3A%2F%2Funity-games.appspot.com%2Funitygames%2Fgame%2Fug${g.key.id}&type=0&height=20"
 					scrolling="no" frameborder="0" marginwidth="0" marginheight="0"
 					style="border: none; overflow: hidden; width: 75px; height: 20px;"
 					allowTransparency="true"></iframe></li>
@@ -488,7 +488,7 @@ function GetUnity() {
 			<div id="loaded">
 				<c:choose>
 					<c:when test="${empty g.thumbNailURL}">
-						<img src="/unitygames/thumbNail?thumbNailKey=${f:h(g.key)}"
+						<img src="/unitygames/thumbNail?id=${f:h(g.key.id)}"
 							width="600" height="450" style="opacity: 0.3; z-index: 0;" />
 					</c:when>
 					<c:when test="${not empty g.thumbNailURL}">

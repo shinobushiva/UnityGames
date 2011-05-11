@@ -30,7 +30,7 @@ public class UserService {
             u.setTweets(new HashSet<Tweet>());
 
             GlobalTransaction tx = Datastore.beginGlobalTransaction();
-            Datastore.put(u);
+            tx.put(u);
             tx.commit();
 
         }

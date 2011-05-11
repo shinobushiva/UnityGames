@@ -11,6 +11,6 @@ public class LogOutController extends Controller {
         removeSessionScope("twitter");
         removeSessionScope("userId");
         
-        return null;
+        return forward("/");
     }
 }

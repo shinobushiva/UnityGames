@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
+import org.slim3.datastore.GlobalTransaction;
 import org.slim3.memcache.Memcache;
 
 import twitter4j.Twitter;
@@ -19,7 +20,6 @@ import unity.model.GameData;
 import unity.service.GameDataService;
 
 import com.google.appengine.api.datastore.KeyFactory;
-import com.google.appengine.api.datastore.Transaction;
 
 public class GameController extends Controller {
 
@@ -40,9 +40,9 @@ public class GameController extends Controller {
         requestScope("key", g.getKey());
         if (!remoteAddr.equals(Memcache.get("lastIp-" + g.getGameName()))) {
             Memcache.put("lastIp-" + g.getGameName(), remoteAddr);
-            Transaction tx = Datastore.beginTransaction();
+             GlobalTransaction tx = Datastore.beginGlobalTransaction();
             g.setAccess(g.getAccess() + 1);
-            Datastore.put(g);
+            tx.put(g);
             tx.commit();
             gs.addPoint(g);
         }

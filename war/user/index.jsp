@@ -12,19 +12,19 @@
 <c:if test="${name == 'myName' }">
 	<script type="text/javascript">
 		$(function() {
-			$("#page").super_load("showUser/myPage?name=me");
+			$("#page").super_load("/showUser/myPage?name=me");
 		});
 	</script>
 </c:if>
 <c:if test="${name == 'otherName' }">
 	<script type="text/javascript">
 		$(function() {
-			$("#page").super_load("showUser/myPage?name=${other}");
+			$("#page").super_load("/showUser/myPage?name=${other}");
 		});
 	</script>
 </c:if>
 </head>
-<body>
+<body style="border: 1px;">
 <%@ include file="/share/header.jsp"%>
 
 	<div id="page" style="margin-top: 30px;"></div>

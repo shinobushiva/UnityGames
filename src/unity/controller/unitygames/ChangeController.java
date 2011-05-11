@@ -4,6 +4,7 @@ import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
 
+import twitter4j.ProfileImage;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import unity.meta.UserMeta;
@@ -18,19 +19,33 @@ public class ChangeController extends Controller {
 
     @Override
     public Navigation run() throws Exception {
+        Twitter twitter = (Twitter) sessionScope("twitter");
 
+        long id = asLong("id");
         String k = requestScope("key");
         String pass = requestScope("Pass");
 
-        Key key = KeyFactory.stringToKey(k);
+        System.out.println("kkkk?:"+k);
+        
+        GameData g = null;
+        if (k != null) {
 
-        GameData g = Datastore.get(GameData.class, key);
-
-        // Passが違ったら変更画面へいかせない
-        if (!g.getPass().equals(pass)) {
-            return null;
+            Key key = KeyFactory.stringToKey(k);
+            g = Datastore.get(GameData.class, key);
         }
+        if (id != 0) {
+            g =
+                Datastore.get(
+                    GameData.class,
+                    Datastore.createKey(GameData.class, id));
+        }
+        // Passが違ったら変更画面へいかせない
+        if (k != null) {
 
+            if (!g.getPass().equals(pass) && id == 0) {
+                return null;
+            }
+        }
         requestScope("g", g);
 
         // 固定タグ。複数のを","で１つに
@@ -51,9 +66,9 @@ public class ChangeController extends Controller {
                         .filter(UserMeta.get().key.equal(g.getTwitterUserKey()))
                         .asSingle();
 
-                Twitter twitter = new TwitterFactory().getInstance();
+                Twitter twitt = new TwitterFactory().getInstance();
 
-                twitter4j.User showUser = twitter.showUser(u.getUserId());
+                twitter4j.User showUser = twitt.showUser(u.getUserId());
 
                 String url = showUser.getProfileImageURL().toString();
 
@@ -61,9 +76,43 @@ public class ChangeController extends Controller {
 
                 requestScope("userName", u.getUserName());
                 requestScope("p", picture);
+            
+                if(id !=0){
+                    
+                    if(twitter.getId() !=u.getUserId()){
+                        return null;
+                    }
+                    
+                }
+            
             }
 
         }
+
+        
+        
+        
+        if (twitter == null) {
+
+            requestScope("userName", "Guest");
+            requestScope("type", "guest");
+            // requestScope(
+            // "p",
+            // "/images/face.png");
+
+        } else {
+            ProfileImage profileimage = null;
+            // Twitter画像URL取得
+            requestScope("userName", twitter.getScreenName());
+            requestScope(
+                "p",
+                twitter.getProfileImage(
+                    twitter.getScreenName(),
+                    profileimage.MINI).getURL());
+            requestScope("type", "twitter");
+
+        }
+
         return forward("change.jsp");
     }
 }

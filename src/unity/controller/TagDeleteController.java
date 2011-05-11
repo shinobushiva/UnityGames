@@ -33,12 +33,12 @@ public class TagDeleteController extends Controller {
         // System.out.println(g.getTags());
         TagGame tg = ts.getTagGame(g.getKey(), tag.getKey());
         GlobalTransaction tx = Datastore.beginGlobalTransaction();
-        Datastore.delete(tg.getKey());
+        tx.delete(tg.getKey());
         tx.commit();
 
         g.getTags().remove(tag);
         tx = Datastore.beginGlobalTransaction();
-        Datastore.put(g);
+        tx.put(g);
         tx.commit();
         // System.out.println("bbb:" + g.getTags());
         // requestScope("g", g);

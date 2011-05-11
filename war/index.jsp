@@ -48,7 +48,7 @@
 				id="search"><%@ include file="/share/search.jsp"%></div>
 <div style=" display: inline-block;">
 			<div
-				style="border: solid; width: 250; margin-left: 125px;clear:both;">
+				style="border: solid; width: 250; margin-left: 115px;">
 				<c:if test="${login == 'no' }">
 					<script type="text/javascript">
 						$(function() {
@@ -76,7 +76,7 @@
 							<div
 								style="text-align: center; font-size: 20px; margin-top: 5px;">活動履歴(未実装)</div>
 							<div style="display: inline-block; padding-left: 10px;">
-								<a href="/user/?name=${userName}" style="font-size: x-small; color: #1F98C7;">情報登録/修正</a>
+								<a href="/user/${userName}" style="font-size: x-small; color: #1F98C7;">情報登録/修正</a>
 							</div>
 							<div style="display: inline-block; margin-left: 20px;">
 								<a href="/login/logOut" style="font-size: 15px; color: #1F98C7;">ログアウト</a>
@@ -93,7 +93,7 @@
 			<div class="newGameLine">
 
 				ランキング<img src="/images/click.png"
-					style="position: relative; top: 2px;" />
+					style="position: relative; top: 2px;" />(ページ未実装)
 			</div>
 			<div>
 				<c:forEach var="g" items="${rankingGameList}">

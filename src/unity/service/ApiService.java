@@ -4,21 +4,24 @@ import java.util.List;
 
 import org.slim3.datastore.Datastore;
 
-import unity.model.GameData;
+import unity.meta.api.GameMeta;
+import unity.model.api.Game;
 
 public class ApiService {
 
-    public GameData find(long ids) {
+    public Game find(String ids) {
 
         System.out.println(ids);
-        return Datastore.get(
-            GameData.class,
-            Datastore.createKey(GameData.class, ids));
+        return Datastore
+            .query(Game.class)
+            .filter(GameMeta.get().gameId.equal(ids))
+            .asSingle();
 
     }
-    public List<GameData> findAll() {
-        
-        return Datastore.query(GameData.class).asList();
-        
+
+    public List<Game> findAll() {
+
+        return Datastore.query(Game.class).asList();
+
     }
 }

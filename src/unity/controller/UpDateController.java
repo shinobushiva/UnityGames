@@ -1,30 +1,33 @@
 package unity.controller;
 
-import java.util.HashSet;
+import java.util.List;
 
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
 import org.slim3.datastore.GlobalTransaction;
 
-import unity.model.Tweet;
-import unity.model.User;
+import unity.model.GameData;
 
 public class UpDateController extends Controller {
 
     @Override
     public Navigation run() throws Exception {
 
-        User uuu = new User();
-        uuu.setUserName("kyusyukeigo");
-        uuu.setUserId(163412860);
-        uuu
-            .setMyself("熊本の学生です今からでも何かできることがないか探し中です/ちょっと今サイト作りに本気出してます。就活しろって話なんですけどね・・・");
-        uuu.setWebUrl("http://unitygames/");
-        uuu.setTweets(new HashSet<Tweet>());
-        GlobalTransaction ttt = Datastore.beginGlobalTransaction();
-        Datastore.put(uuu);
-        ttt.commit();
+     List<GameData> asList = Datastore.query(GameData.class).asList();
+     
+     for (GameData g : asList) {
+         int point = g.getAccess() + g.getComment() * 3;
+         g.setPoint(point);
+         g.setTwitterUserKey(null);
+        
+         GlobalTransaction tx = Datastore.beginGlobalTransaction();
+         tx.put(g);
+         tx.commit();
+         
+    }
+        
+        
 
         return null;
     }

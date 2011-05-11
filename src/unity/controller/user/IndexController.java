@@ -13,11 +13,11 @@ public class IndexController extends Controller {
         String name = asString("name");
 
         Twitter t = (Twitter) sessionScope("twitter");
-
+//        System.out.println("誰が見てる？"+t.getScreenName());
+        if (t.getScreenName().equals(name)) {
         // ページを見ている人が本人か他人かを判別
-//         if (t.getScreenName().equals(name)) {
         //ローカルなのでこっちのifつかってる
-        if (name.equals("kyusyukeigo")) {
+//        if (name.equals("kyusyukeigo")) {
             
             requestScope("name", "myName");
         } else {

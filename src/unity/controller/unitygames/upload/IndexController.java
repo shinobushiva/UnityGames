@@ -14,7 +14,7 @@ public class IndexController extends Controller {
         Twitter twitter = (Twitter) sessionScope("twitter");
         
       
-        if(twitter ==null){
+        if(twitter == null){
           
             
             requestScope("userName", "Guest");

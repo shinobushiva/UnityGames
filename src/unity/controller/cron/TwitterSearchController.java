@@ -107,7 +107,7 @@ public class TwitterSearchController extends Controller {
                 long userId = Long.valueOf(userIdString); // long型に変換
                 System.out.println(tweet);
                 // #UnityGamesが含まれていたら登録
-                if (tweet.contains(".*#UnityGames.*")) {
+                if (tweet.contains("#UnityGames")) {
                     // TweetIdが既に保存されているかチェック
                     Tweet check =
                         Datastore
@@ -124,7 +124,7 @@ public class TwitterSearchController extends Controller {
 
                         GlobalTransaction tx =
                             Datastore.beginGlobalTransaction();
-                        Datastore.put(f);
+                        tx.put(f);
                         tx.commit();
 
                         // ここでさらにUserモデルにこのつぶやきを保存するようにする
@@ -141,7 +141,7 @@ public class TwitterSearchController extends Controller {
 
                             GlobalTransaction txx =
                                 Datastore.beginGlobalTransaction();
-                            Datastore.put(userCheck);
+                            txx.put(userCheck);
                             txx.commit();
                         }
 

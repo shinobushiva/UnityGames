@@ -1,11 +1,11 @@
 <%@page pageEncoding="UTF-8" isELIgnored="false" session="false"%>
 <div>
-	<a href="/unitygames/" style="float: left;"><img
+	<a href="/" style="float: left;"><img
 		src="/images/logo/Logo.png" width="250px" style="padding-top: 14px">
 	</a>
 
 	<ul id="nav1" style="display: inline; left: 0;">
-		<li id="selected"><a href="/unitygames/"><fmt:message key="home" /> </a>
+		<li id="selected"><a href="/"><fmt:message key="home" /> </a>
 		</li>
 		<li><a href="/howto"><fmt:message key="howto" /> </a>
 		</li>

@@ -39,14 +39,14 @@ public class TagRegistController extends Controller {
             if (g.getTags() == null) {
                 g.setTags(new HashSet<Tag>());
                 GlobalTransaction txt = Datastore.beginGlobalTransaction();
-                Datastore.put(g);
+                txt.put(g);
                 txt.commit();
             }
             System.out.println("g.getTags:" + g.getTags());
             System.out.println("tag2:" + tag2);
             g.getTags().add(tag2);
             GlobalTransaction tx = Datastore.beginGlobalTransaction();
-            Datastore.put(g);
+            tx.put(g);
             tx.commit();
 
             System.out.println("aa:" + g.getTags());
@@ -60,7 +60,7 @@ public class TagRegistController extends Controller {
             }
 
             tx = Datastore.beginGlobalTransaction();
-            Datastore.put(tt);
+            tx.put(tt);
             tx.commit();
 
         }

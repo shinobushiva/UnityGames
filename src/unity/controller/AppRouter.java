@@ -8,7 +8,7 @@ public class AppRouter extends RouterImpl {
        // addRouting("/_ah/mail/{address}", "/mail/receive?address={address}");
         addRouting("/user/{name}", "/user/?name={name}");
         addRouting("/unitygames/game/ug{id}", "/unitygames/game?id={id}");
-        
+        addRouting("/api/game/{gameId}", "/api/gameApi?id={gameId}");
         /*
          * addRouting( "/{app}/edit/{key}/{version}",
          * "/{app}/edit?key={key}&version={version}"); addRouting(

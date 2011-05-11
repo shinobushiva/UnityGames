@@ -14,3 +14,7 @@
 <script src="/js/charCount.js"></script>
 <script src="/js/charCount.js"></script>
 <script src="/js/jquery.pager.js"></script>
+<script src="/js/jquery.jsonp.js"></script>
+<script src="/js/jquery.timeago.js"></script>
+<script src="/js/jquery.notifyBar.js"></script>
+

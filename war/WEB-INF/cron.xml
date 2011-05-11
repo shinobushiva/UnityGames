@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cronentries>
-<!-- 	<cron>
+
+
+ 	<cron>
 		<url>/cron/twitterSearch</url>
-		<description>Twitter search every 5 minutes</description>
-		<schedule>every 5 minutes</schedule>
+		<description>Twitter search every 10 minutes</description>
+		<schedule>every 10 minutes</schedule>
 	</cron> 
--->
+
 </cronentries>

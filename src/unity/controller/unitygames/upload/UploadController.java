@@ -37,7 +37,7 @@ public class UploadController extends Controller {
             System.out.println("pass:" + pass.isEmpty());
         }
 
-        System.out.println("okかな？"+twitterId);
+    
         service.change(
             null,
             gameName,

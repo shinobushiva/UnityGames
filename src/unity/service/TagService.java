@@ -26,7 +26,7 @@ public class TagService {
             tag.setKey(Datastore.allocateId(Tag.class));
 
             GlobalTransaction tx = Datastore.beginGlobalTransaction();
-            Datastore.put(tag);
+            tx.put(tag);
             tx.commit();
 
         }

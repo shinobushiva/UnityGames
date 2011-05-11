@@ -16,7 +16,7 @@ public class CampaignService {
 
     public void save(Campaign c) {
         GlobalTransaction tx = Datastore.beginGlobalTransaction();
-        Datastore.put(c);
+        tx.put(c);
         tx.commit();
 
     }
@@ -57,7 +57,7 @@ public class CampaignService {
 
     public void save(CampaignGame cg) {
         GlobalTransaction tx = Datastore.beginGlobalTransaction();
-        Datastore.put(cg);
+        tx.put(cg);
         tx.commit();
 
     }

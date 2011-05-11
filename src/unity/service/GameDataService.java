@@ -9,7 +9,7 @@ public class GameDataService {
 
     public void save(GameData c) {
         GlobalTransaction tx = Datastore.beginGlobalTransaction();
-        Datastore.put(c);
+        tx.put(c);
         tx.commit();
 
     }
@@ -29,7 +29,7 @@ public class GameDataService {
         g.setPoint(point);
 
         GlobalTransaction tx = Datastore.beginGlobalTransaction();
-        Datastore.put(g);
+        tx.put(g);
         tx.commit();
 
         return null;

@@ -23,11 +23,12 @@ public class OAuthController extends Controller {
         callbackURL
             .replace(index, callbackURL.length(), "")
             .append("/callback");
+
         // RequestTokenを取得してセッションに格納、アプリケーション認可画面に移動
         RequestToken requestToken =
             twitter.getOAuthRequestToken(callbackURL.toString());
         request.getSession().setAttribute("requestToken", requestToken);
-        System.out.println(requestToken.getAuthenticationURL());
+
         return redirect(requestToken.getAuthenticationURL());
     }
 

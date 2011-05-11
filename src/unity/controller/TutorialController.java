@@ -39,7 +39,7 @@ public class TutorialController extends Controller {
         }
         System.out.println("gds:" + gds);
 
-        requestScope("tutorial", gds);
+        requestScope("GameList", gds);
         for (GameData game : gds) {
             long l = game.getDate().getTime() + 1000 * 60 * 60 * 9;
             game.getDate().setTime(l);

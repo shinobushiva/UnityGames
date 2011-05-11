@@ -39,7 +39,7 @@ public class ChangeService {
             String gameChange, String fixTag, String code, long twitterId) {
 
         List<Object> models = new ArrayList<Object>();
-
+        unity.model.api.Game gg = null;
         GameData g = null;
 
         if (key == null) {
@@ -47,12 +47,23 @@ public class ChangeService {
             g.setDate(new Date());
             key = Datastore.allocateId(GameData.class);
             g.setKey(key);
+      
+            gg = new unity.model.api.Game();
+            gg.setEntry(new Date());
+            Key key2 = Datastore.allocateId(key,unity.model.api.Game.class);
+            gg.setKey(key2);
+            g.setApiData(key2);
         } else {
             g = Datastore.get(GameData.class, key);
-        }
+          if(g.getApiData() !=null){
+            gg= Datastore.get(unity.model.api.Game.class,g.getApiData());
+          }else{
+              gg = new unity.model.api.Game();
+          }
+          }
 
         g.setGameName(gameName);
-
+        gg.setGameName(gameName);
         // passが空ならTwittterアカウントで管理
         if (pass.isEmpty()) {
             // ここでTwitterアカウントを登録
@@ -63,25 +74,44 @@ public class ChangeService {
                     .asSingle();
             g.setTwitterUserKey(u.getKey());
             g.setPass(null);
+            gg.setUser(u.getUserName());
         } else {
             g.setPass(pass);
             g.setTwitterUserKey(null);
+            gg.setUser("Guest");
         }
         g.setContents(contents);
         g.setOperations(operations);
         g.setCode(code);
         g.setLastDate(new Date());
+        
+        gg.setExplanation(contents);
+        gg.setOperations(operations);
+        gg.setCode(code);
+        gg.setLastDate(new Date());
+        
         if (gameChange != null) {
 
             if (gameURL.isEmpty() && hpURL.isEmpty() && gameFile == null) {
                 g.setGameURL("http://unity-games.appspot.com/"
                     + "DefaultSet/UnityGames.unity3d");
                 g.setGameType("url");
+        
+                gg.setGame("http://unity-games.appspot.com/"
+                    + "DefaultSet/UnityGames.unity3d");
+                
             } else {
 
                 g.setGameType(gameType);
                 g.setHpURL(hpURL);
                 g.setGameURL(gameURL);
+                
+                if(hpURL.isEmpty()){
+                    gg.setGame(gameURL);     
+                }
+                if(gameURL.isEmpty()){
+                gg.setGame(hpURL);
+                }
 
                 UploadedDataFragment uf1 =
                     Datastore
@@ -116,6 +146,13 @@ public class ChangeService {
                         Datastore.put(model);
                     }
                 }
+                
+                if(gameFile != null){
+
+                    gg.setGame("http://unity-games.appspot.com/unitygames/GameData?id="+g.getKey().getId());
+                    
+                }
+                
             }
         }
         if (thumbNailChange != null) {
@@ -124,11 +161,20 @@ public class ChangeService {
                 g.setThumbNailURL("http://unity-games.appspot.com/"
                     + "DefaultSet/UnityGames.png");
                 g.setThumbNailType("url");
+ 
+                gg.setThumbNail("http://unity-games.appspot.com/"
+                    + "DefaultSet/UnityGames.png");
+                
             } else {
                 g.setThumbNailURL(thumbNailURL);
                 g.setThumbNailType(thumbNailType);
+                
+                if(thumbNail == null){
+                gg.setThumbNail(thumbNailURL);
+                }
                 ThumbNailData t =
                     Datastore.query(ThumbNailData.class, g.getKey()).asSingle();
+               //更新時あったら削除
                 if (t != null) {
                     UploadedDataFragment uf =
                         Datastore
@@ -140,22 +186,24 @@ public class ChangeService {
                     if (uf != null) {
                         Datastore.delete(uf.getKey());
                     }
+                
                 }
-
+                
                 // creating new
                 List<ThumbNailData> list = new ArrayList<ThumbNailData>();
-                Iterator<Key> keyss =
+               Key keyss =
                     Datastore
-                        .allocateIds(g.getKey(), ThumbNailData.class, 1)
-                        .iterator();
-                while (keyss.hasNext()) {
+                        .allocateId(g.getKey(), ThumbNailData.class);
+                        
                     ThumbNailData child = new ThumbNailData();
-                    child.setKey(keyss.next());
+                    child.setKey(keyss);
                     child.setGameName(gameName);
                     child.setDate(new Date());
                     if (thumbNail != null) {
                         g.setThumbNailURL(null);
+                        if(t !=null){
                         Datastore.delete(t.getKey());
+                        }
                         child.setLength(thumbNail.getData().length);
                         byte[] bytes2 = thumbNail.getData();
                         byte[][] bytesArray2 =
@@ -185,12 +233,18 @@ public class ChangeService {
                     for (Object model : models) {
                         Datastore.put(model);
                     }
+                    if(thumbNail != null){
+                        
+                        gg.setThumbNail("http://unity-games.appspot.com/unitygames/thumbNail?id="+g.getKey().getId());
+                        
+                    }
                 }
             }
-        }
+        
 
-        if (g.getFixTags() != null) {
+        if (g.getFixTags() != null || gg.getFixTags() != null) {
             g.getFixTags().clear();
+            gg.getFixTags().clear();
         }
         List<Key> tgs =
             Datastore
@@ -211,29 +265,31 @@ public class ChangeService {
             Tag tag2 = ts.getTag(t);
             log.info("1234:" + t);
 
-            if (g.getFixTags() == null) {
+            if (g.getFixTags() == null || gg.getFixTags() == null) {
 
                 g.setFixTags(new HashSet<Tag>());
-
+                gg.setFixTags(new HashSet<Tag>());
             }
             g.getFixTags().add(tag2);
-
+            gg.getFixTags().add(tag2);
             TagGame tt = new TagGame();
             tt.getGameRef().setKey(g.getKey());
             tt.getTagRef().setModel(tag2);
             GlobalTransaction tx = Datastore.beginGlobalTransaction();
-            Datastore.put(tt);
+            tx.put(tt);
             tx.commit();
         }
 
-        // Tag tag = Datastore.query(Tag.class, g.getKey()).asSingle();
-        // System.out.println("tagu:" + tag.getKey());
-        // tag.setFixTag(fixTag);
-        // Datastore.put(tag);
-
-        Transaction tx = Datastore.beginTransaction();
-
-        Datastore.put(g);
+     
+       
+        
+        gg.setGameId("ug"+g.getKey().getId());
+        
+        
+        
+        GlobalTransaction tx = Datastore.beginGlobalTransaction();
+        tx.put(g);
+        tx.put(gg);
         tx.commit();
 
         return g;

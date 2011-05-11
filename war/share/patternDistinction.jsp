@@ -4,7 +4,7 @@
 <c:choose>
 	<c:when test="${empty g.thumbNailURL}">
 		<c:set var="thUrl"
-			value="/unitygames/thumbNail?thumbNailKey=${f:h(g.key)}" />
+			value="/unitygames/thumbNail?id=${f:h(g.key.id)}" />
 
 	</c:when>
 	<c:when test="${not empty g.thumbNailURL}">

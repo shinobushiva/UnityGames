@@ -22,6 +22,8 @@ public class GameData implements Serializable {
 
     private Key twitterUserKey;
 
+    private Key apiData;
+    
     @Attribute(lob = true)
     private String contents;
     @Attribute(lob = true)
@@ -58,7 +60,7 @@ public class GameData implements Serializable {
     private int assessment;
 
     private int point;
-
+    
     @Attribute(lob = true)
     private Set<Tag> fixTags = new HashSet<Tag>();
 
@@ -303,6 +305,14 @@ public class GameData implements Serializable {
 
     public Key getTwitterUserKey() {
         return twitterUserKey;
+    }
+
+    public void setApiData(Key apiData) {
+        this.apiData = apiData;
+    }
+
+    public Key getApiData() {
+        return apiData;
     }
 
 }
