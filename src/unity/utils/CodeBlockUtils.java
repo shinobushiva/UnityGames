@@ -12,11 +12,11 @@ public class CodeBlockUtils {
     public static String toCodeJson(String str) {
 
         try {
-            String[] split = str.split(">\\|[a-zA-Z]*\\|");
+            String[] split = str.split("<code>");
 
             List<String> al = new ArrayList<String>();
             for (String str2 : split) {
-                String[] split2 = str2.split("\\|\\|<");
+                String[] split2 = str2.split("</code>");
                 for (String string : split2) {
                     al.add(string.trim());
                 }
