@@ -2,6 +2,42 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="f" uri="http://www.slim3.org/functions"%>
+
+
+<%--ページング --%>
+<script type="text/javascript">
+	function pageselectCallback(page_index, jq) {
+		var new_content = jQuery(
+				'#hiddenresult div.result:eq(' + page_index + ')').clone();
+		$('#Searchresult').empty().append(new_content);
+		return false;
+	}
+	function initPagination() {
+		var num_entries = jQuery('#hiddenresult div.result').length;
+		$("#Pagination").pagination(num_entries, {
+			callback : pageselectCallback,
+			items_per_page : 1
+		});
+	}
+	function initButtons() {
+		var pg = $('#Pagination');
+		$('#btnPrev').click(function() {
+			pg.trigger('prevPage');
+		});
+		$('#btnNext').click(function() {
+			$('#Pagination').trigger('nextPage');
+		});
+		$('#btnSet').click(function() {
+			pg.trigger('setPage', [ 1 ]);
+		});
+	}
+
+	$(document).ready(function() {
+		initPagination();
+		initButtons();
+	});
+</script>
+
 <script type="text/javascript">
 	$(function() {
 		loadMyself();
@@ -61,7 +97,7 @@
 		$("#tweet").click(function() {
 			$("#tweetButton").show();
 			$("#tweet").css("height", "50px");
-			});
+		});
 
 		$("#tweetUpdate").click(function() {
 
@@ -74,11 +110,11 @@
 				url : "/action/tweet",
 				data : "tweet=" + a + "&" + "check=" + b,
 				success : function() {
-					 $.notifyBar({
-						    html: "	ツイートされました！",
-						    delay: 2000,
-						    animationSpeed: "normal"
-						  });  
+					$.notifyBar({
+						html : "	ツイートされました！",
+						delay : 2000,
+						animationSpeed : "normal"
+					});
 
 				}
 
@@ -137,6 +173,8 @@
 	});
 </script>
 
+
+
 <div>
 	<input type="hidden" name="userId" id="ud" value="${um.userId}" />
 	<div
@@ -147,7 +185,7 @@
 			<div>
 				<textarea style="width: 482px; height: 30px;" id="tweet"></textarea>
 				<div id="tweetButton"
-					style=" margin-left: 220px; display: inline-block;height: 25px;">
+					style="margin-left: 220px; display: inline-block; height: 25px;">
 					<input type="checkbox" id="noHashtag" value="noHash">#UnityGamesをつけない
 					<button style="" id="tweetUpdate">ついーと</button>
 
@@ -237,94 +275,126 @@
 		<hr />
 		<div style="">
 			ゲーム管理(未実装)<br>
-			<c:forEach var="g" items="${gameList}">
-				<script type="text/javascript">
-					$(function() {
+			<div id="hiddenresult" style="display: none;">
+				<div class="result">
+					<c:forEach var="g" items="${gameList}" varStatus="loop">
+						<script type="text/javascript">
+							$(function() {
 
-						var flag = "hide-${g.key.id}";
-						var mp = $('.panel-${g.key.id}').position();
-						$(".panel-${g.key.id}").css("visibility", "hidden");
-						$("#ug${g.key.id}")
-								.click(
-										function(event) {
-											var of = $("#twitter").position();
-											var ugpo = $("#ug${g.key.id}")
-													.position();
-											var position = $(
-													'.panel-${g.key.id}')
-													.position();
-											var view = of.left;
+								var flag = "hide-${g.key.id}";
+								var mp = $('.panel-${g.key.id}').position();
+								$(".panel-${g.key.id}").css("visibility",
+										"hidden");
+								$("#ug${g.key.id}")
+										.click(
+												function(event) {
+													var of = $("#twitter")
+															.position();
+													var ugpo = $(
+															"#ug${g.key.id}")
+															.position();
+													var position = $(
+															'.panel-${g.key.id}')
+															.position();
+													var view = of.left;
 
-											$(".panel-${g.key.id}").css("left",
-													ugpo.left);
+													$(".panel-${g.key.id}")
+															.css("left",
+																	ugpo.left);
 
-											$(".panel-${g.key.id}").css("top",
-													0);
+													$(".panel-${g.key.id}")
+															.css("top", 0);
 
-											//$(".panel-${g.key.id}").show();
-											$(".panel-${g.key.id}").css(
-													"visibility", "visible");
-											if (flag == "hide-${g.key.id}") {
+													//$(".panel-${g.key.id}").show();
+													$(".panel-${g.key.id}")
+															.css("visibility",
+																	"visible");
+													if (flag == "hide-${g.key.id}") {
 
-												$(".panel-${g.key.id}").css(
-														"z-index", "0");
-												//	$(".panel-${g.key.id}").animate({
-												//		left : "-500px"
-												//	});
-												$(".panel-${g.key.id}").css(
-														"z-index", "0");
+														$(".panel-${g.key.id}")
+																.css("z-index",
+																		"0");
+														//	$(".panel-${g.key.id}").animate({
+														//		left : "-500px"
+														//	});
+														$(".panel-${g.key.id}")
+																.css("z-index",
+																		"0");
 
-												$(".panel-${g.key.id}")
-														.animate({
-															left : view
+														$(".panel-${g.key.id}")
+																.animate({
+																	left : view
 
-														});
-												flag = "show-${g.key.id}";
+																});
+														flag = "show-${g.key.id}";
 
-												var parents = 'panel';
+														var parents = 'panel';
 
-												divObj = $("div");
-												matchObj = new RegExp(parents);
+														divObj = $("div");
+														matchObj = new RegExp(
+																parents);
 
-												for (i = 0; i < divObj.length; i++) {
-													//moreを含むものだけを取得
-													if (divObj[i].id
-															.match(matchObj)) {
+														for (i = 0; i < divObj.length; i++) {
+															//moreを含むものだけを取得
+															if (divObj[i].id
+																	.match(matchObj)) {
 
-														if ($("div")[i].id != "panel-${g.key.id}") {
-															//他が出てたら元に戻す
-															$("div")[i].style.left = mp.left;
-															$("div")[i].style.visibility = "hidden";
+																if ($("div")[i].id != "panel-${g.key.id}") {
+																	//他が出てたら元に戻す
+																	$("div")[i].style.left = mp.left;
+																	$("div")[i].style.visibility = "hidden";
+																}
+															}
 														}
+
+													} else {
+
+														$(".panel-${g.key.id}")
+																.animate(
+																		{
+																			left : mp.left
+																		})
+														flag = "hide-${g.key.id}";
+														$(".panel-${g.key.id}")
+																.css(
+																		"visibility",
+																		"hidden");
 													}
-												}
 
-											} else {
+												})
+							});
+						</script>
 
-												$(".panel-${g.key.id}")
-														.animate({
-															left : mp.left
-														})
-												flag = "hide-${g.key.id}";
-												$(".panel-${g.key.id}").css(
-														"visibility", "hidden");
-											}
 
-										})
-					});
-				</script>
-				<%@ include file="/share/patternDistinction.jsp"%>
-				<div
-					style="display: inline-block; text-align: center; z-index: 1; cursor: pointer;"
-					id="ug${g.key.id}">
-<a href="/unitygames/change?id=${g.key.id}">
-					<img src="${thUrl}" width="100" height="100" /><br>
-					<div class="bounded" style="width: 150px; text-align: center;">${g.gameName}</div>
-</a>
+						<%@ include file="/share/patternDistinction.jsp"%>
+						<div
+							style="display: inline-block; text-align: center; z-index: 1; cursor: pointer;"
+							id="ug${g.key.id}">
+							<a href="/unitygames/change?id=${g.key.id}"> <img
+								src="${thUrl}" width="100" height="100" /><br>
+								<div class="bounded" style="width: 150px; text-align: center;">${g.gameName}</div>
+							</a>
+						</div>
+						<c:if test="${loop.count mod 6 == 0 }">
 				</div>
+				<div class="result">
 
+					</c:if>
+				</c:forEach>
+			</div>
+		</div>
+		<div id="Pagination" align="center"></div>
+		<br style="clear: both;" />
+		<div id="Searchresult">This content will be replaced when
+			pagination inits.</div>
+		<div align="center" style="margin-top: 30px;">
+			<form method="get" action="#">
+				<button type="button" id="btnPrev"
+					style="width: 100px; height: 30px;">Previous</button>
 
-			</c:forEach>
+				<button type="button" id="btnNext"
+					style="margin-right: 50px; width: 100px; height: 30px;">Next</button>
+			</form>
 		</div>
 		<style type="text/css">
 #panel-frame {

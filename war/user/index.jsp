@@ -9,6 +9,8 @@
 <title>user Index</title>
 <%@ include file="/share/css.jsp"%>
 <%@ include file="/share/js.jsp"%>
+
+
 <c:if test="${name == 'myName' }">
 	<script type="text/javascript">
 		$(function() {

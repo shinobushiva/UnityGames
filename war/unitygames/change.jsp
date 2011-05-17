@@ -70,31 +70,18 @@ $( "div#tu" ).hide();
 		$( "#adminPass" ).val("");
 	});
 	$("#GameChange").click(function() {
-		var checked = $('#GameChange').attr('checked');
-      if(checked){
-		$( "#GameChange1" ).show();
-		$( "#GameChange2" ).show();
-      }
-      if(!checked){
-    	$( "#GameChange1" ).hide();
-  		$( "#GameChange2" ).hide();
-  		$( "#GameData" ).val("");
+		$( "#GameChange1" ).toggle();
+		$( "#GameChange2" ).toggle();
+    	$( "#GameData" ).val("");
 		$( "#GameURL" ).val("");
 		$( "#HpURL" ).val("");
-      }
       });
 	$("#ThumbNailChange").click(function() {
-		var checked = $('#ThumbNailChange').attr('checked');
-      if(checked){
-		$( "#ThumbNailChange1" ).show();
-		$( "#ThumbNailChange2" ).show();
-      }
-      if(!checked){
-    	$( "#ThumbNailChange1" ).hide();
-  		$( "#ThumbNailChange2" ).hide();
+		
+		$( "#ThumbNailChange1" ).toggle();
+		$( "#ThumbNailChange2" ).toggle();
   		$( "#ThumbNail" ).val("");
 		$( "#ThumbNailURL" ).val("");
-	  }
       });
 });
 function tagCheck(){
@@ -104,7 +91,7 @@ if(flag){window.alert('<fmt:message key="fixTag.notice" />'); // 入力漏れが
 return false; // 送信を中止
 }
 else{return true; // 送信を実行
-}}
+}};
 </script>
 	<%@ include file="/share/header.jsp"%>
 	<form action="${f:url('changeUp')}" method="post" class="cmxform"
@@ -112,7 +99,8 @@ else{return true; // 送信を実行
 		onSubmit="return tagCheck()" name="form1"">
 
 		<div style="word-break: break-all">
-			<table class="purchase-options" border="0"  width="859" style="margin-left: auto; margin-right: auto;margin-top: 25px;">
+			<table class="purchase-options" border="0" width="859"
+				style="margin-left: auto; margin-right: auto; margin-top: 25px;">
 				<tr class="top">
 					<td colspan="2">&nbsp;</td>
 				</tr>
@@ -155,8 +143,8 @@ else{return true; // 送信を実行
 					<td><h2>
 							<label for="ThumbNail"><fmt:message key="thumbNail" /> <c:if
 									test="${g.thumbNailType =='data' }">
-									<img src="/unitygames/thumbNail?id=${f:h(g.key.id)}"
-										width="50" height="50" align="right">
+									<img src="/unitygames/thumbNail?id=${f:h(g.key.id)}" width="50"
+										height="50" align="right">
 						</h2> </label><br> <fmt:message key="now" />： <label><font
 							color="red"><fmt:message key="thumbNail.pictureDataUp" />
 						</font> </label><br> </c:if> <c:if test="${g.thumbNailType =='url' }">
@@ -221,12 +209,12 @@ ${g.thumbNailURL}<br>
 					<br>
 					<div id="GameChange1">
 						<label><input type="radio" name="GameType" value="data"
-							id="data" checked="checked"> <fmt:message key="game.select.data" />
-						</label><br> <label><input type="radio" name="GameType"
-							value="url" id="url"> <fmt:message key="game.select.url" /><br>
-						</label> <label><input type="radio" name="GameType" value="hpurl"
-							id="hp"> <fmt:message key="game.select.url.outside" /><br>
-						</label>
+							id="data" checked="checked"> <fmt:message
+								key="game.select.data" /> </label><br> <label><input
+							type="radio" name="GameType" value="url" id="url"> <fmt:message
+								key="game.select.url" /><br> </label> <label><input
+							type="radio" name="GameType" value="hpurl" id="hp"> <fmt:message
+								key="game.select.url.outside" /><br> </label>
 						</td>
 					</div>
 				</tr>
@@ -249,74 +237,74 @@ ${g.thumbNailURL}<br>
 							</div>
 						</div>
 						<div>
-						
+
 							<h2>
 								<fmt:message key="fixTag" />
 								<input type="text" name="fixTag" value="${tag}" id="tag">
 							</h2>
-								<span class="warning"><fmt:message
+							<span class="warning"><fmt:message
 									key="fixTag.explanation" /> </span>
-						</div>
-						<%--ゲームの管理方法--%>
+						</div> <%--ゲームの管理方法--%>
 						<h2>ゲームの管理方法</h2> <c:if test="${not empty g.pass}">
-						<c:if test="${type == 'twitter' }">
-							<%--パス入れてる＆Twitterアカウント--%>
-							<script type="text/javascript">
+							<c:if test="${type == 'twitter' }">
+								<%--パス入れてる＆Twitterアカウント--%>
+								<script type="text/javascript">
 						$(function(){
 							$("#twitterKey").toggle();
 							$("#changeKey").toggle();
 						});
 							
 							</script>
-							<div>
-								<input type="radio" name="gameAdmin" id="ga1" />Twitterアカウント<input
-									type="radio" name="gameAdmin" id="ga2" checked="checked"/>パスワードを設定
-							</div>
-
-							<div id="twitterKey">
-								<div style="float: left;">
-									<img
-										src="${p}" />
+								<div>
+									<input type="radio" name="gameAdmin" id="ga1" />Twitterアカウント<input
+										type="radio" name="gameAdmin" id="ga2" checked="checked" />パスワードを設定
 								</div>
-								<a style="color: #1F98C7;"><div
-										style="text-align: left; font-weight: 900; font-size: 20px; margin-top: 10px; word-break: break-all;">
-										&nbsp;${userName}</div> </a>
 
-							</div>
+								<div id="twitterKey">
+									<div style="float: left;">
+										<img src="${p}" />
+									</div>
+									<a style="color: #1F98C7;"><div
+											style="text-align: left; font-weight: 900; font-size: 20px; margin-top: 10px; word-break: break-all;">
+											&nbsp;${userName}</div> </a>
 
-							<div id="changeKey">
-								<h2>
-									<fmt:message key="change.delete.key" />
-									<input type="password" name="pass" id="adminPass"
-										style="width: 117;" value="${g.pass}">
-								</h2>
-							</div>
-						</c:if>
-						<c:if test="${type == 'guest' }">
-							<%--パス入れてる＆Guest--%>
-							<script>
+								</div>
+
+								<div id="changeKey">
+									<h2>
+										<fmt:message key="change.delete.key" />
+										<input type="password" name="pass" id="adminPass"
+											style="width: 117;" value="${g.pass}">
+									</h2>
+								</div>
+							</c:if>
+							<c:if test="${type == 'guest' }">
+								<%--パス入れてる＆Guest--%>
+								<script>
 							$(function(){
 								$( "#changeKey" ).show();
 								
 							});
 							</script>
-							<div>
-						
-						<input type="radio" name="gameAdmin" id="ga2" checked="checked""/>パスワードを設定<input type="radio" id="ga1" name="gameAdmin" disabled/>Twitterアカウント<span style="color: red;">(ログイン後選択可)</span>
-							</div>
-							<div id="changeKey">
-								<h2>
-									<fmt:message key="change.delete.key" />
-									<input type="password" name="pass" id="adminPass"
-										style="width: 117;"value="${g.pass}">
-								</h2>
-							</div>
-						</c:if>
-						
-							
+								<div>
+
+									<input type="radio" name="gameAdmin" id="ga2" checked="checked" "/>パスワードを設定<input
+										type="radio" id="ga1" name="gameAdmin" disabled />Twitterアカウント<span
+										style="color: red;">(ログイン後選択可)</span>
+								</div>
+								<div id="changeKey">
+									<h2>
+										<fmt:message key="change.delete.key" />
+										<input type="password" name="pass" id="adminPass"
+											style="width: 117;" value="${g.pass}">
+									</h2>
+								</div>
+							</c:if>
+
+
 						</c:if> <c:if test="${empty g.pass }">
-					
-								<%--パス入れてない--%>
+
+							<%--パス入れてない--%>
 							<div>
 								<input type="radio" name="gameAdmin" id="ga1" checked="checked" />Twitterアカウント<input
 									type="radio" name="gameAdmin" id="ga2" />パスワードを設定
@@ -324,8 +312,7 @@ ${g.thumbNailURL}<br>
 
 							<div id="twitterKey">
 								<div style="float: left;">
-									<img
-										src="${p}" />
+									<img src="${p}" />
 								</div>
 								<a style="color: #1F98C7;"><div
 										style="text-align: left; font-weight: 900; font-size: 20px; margin-top: 10px; word-break: break-all;">
@@ -341,10 +328,9 @@ ${g.thumbNailURL}<br>
 								</h2>
 							</div>
 						</c:if>
-						
 					</td>
 				</tr>
-				<tr class="bottom"style="height: 30px;">
+				<tr class="bottom" style="height: 30px;">
 					<td colspan="2">&nbsp;</td>
 				</tr>
 			</table>

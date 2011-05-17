@@ -20,13 +20,15 @@ public class ChangeController extends Controller {
     @Override
     public Navigation run() throws Exception {
         Twitter twitter = (Twitter) sessionScope("twitter");
-
-        long id = asLong("id");
+        long id = 0;
+        if (asLong("id") != null) {
+            id = asLong("id");
+        }
         String k = requestScope("key");
         String pass = requestScope("Pass");
 
-        System.out.println("kkkk?:"+k);
-        
+        System.out.println("kkkk?:" + k);
+
         GameData g = null;
         if (k != null) {
 
@@ -76,22 +78,19 @@ public class ChangeController extends Controller {
 
                 requestScope("userName", u.getUserName());
                 requestScope("p", picture);
-            
-                if(id !=0){
-                    
-                    if(twitter.getId() !=u.getUserId()){
+
+                if (id != 0) {
+
+                    if (twitter.getId() != u.getUserId()) {
                         return null;
                     }
-                    
+
                 }
-            
+
             }
 
         }
 
-        
-        
-        
         if (twitter == null) {
 
             requestScope("userName", "Guest");

@@ -15,23 +15,24 @@ public class GameApiController extends JsonController {
 
     @Override
     protected Map<String, Object> handle() throws Exception {
-      
+
         Map<String, Object> data = new HashMap<String, Object>();
         String id = asString("id");
 
-        String text = "";
         if (!id.equals("all")) {
             Game list = as.find(id);
-            text = JSON.encode(list);
-        }
-        if (id.equals("all")) {
+            // text = JSON.encode(list);
+            data.put("gameData", list);
+
+        } else {
+
             List<Game> list = as.findAll();
-            text = JSON.encode(list);
+            // text = JSON.encode(list);
+            data.put("gameData", list);
+
         }
-
+        System.out.println(data.get("gameData"));
         // String text = JSON.encode(list);
-
-        data.put("gameData", text);
 
         return data;
     }
