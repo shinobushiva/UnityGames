@@ -126,6 +126,8 @@ function GetUnity() {
 		
 		updateTags();
 		loadComments();
+		
+		toCode(eval(${g.code}));
 	});
 
 	function commentToggle(){
@@ -319,10 +321,54 @@ function GetUnity() {
 					}
 				});
 	}
+	
+	function toCode(obj){
+		
+		var array = new Array();
+		var count = 0;
+		
+		var result = "";
+		for(var oIdx in obj){
+			var o = obj[oIdx];
+			if(o[0] == 'text'){
+				result += "<pre>"+o[1]+"</pre>";
+			}else{
+				result += "<div class='"+o[0]+"' style='display:none; margin : 5px'>"+
+				"<pre class='prettyprint'>"+o[1]+"</pre>"+
+				"</div>";
+				array[count++] = o[0];
+			}
+		}
+
+		console.log(array);
+		
+		var str = '<div style="text-align:right;"><select name="hoge">';
+		for(var oIdx2 in array){
+			str+='<option value="'+array[oIdx2]+'">'+array[oIdx2]+'</option>';
+		}
+		str+='</select></div>';
+		
+		
+		$("#code").html(str+result).ready(function(){
+			prettyPrint();
+			$("#code").find("select").change(function(){
+				$("select option").each(function () {
+					$("."+$(this).text()).hide();
+		      	});
+				$("select option:selected").each(function () {
+					$("."+$(this).text()).show();
+		      	});
+			});
+		});
+		
+		$("."+array[0]).show();
+		
+		
+	}
 </script>
 
 </head>
-<body onload="prettyPrint()">
+<body>
 
 	<input type="hidden" id="gameKey" name="gameKey" value="${f:h(g.key)}">
 
@@ -400,9 +446,9 @@ function GetUnity() {
 	</div>
 	<div style="float: right; padding-top: 15px;">
 		<%-- Social Buttons --%>
-		<ul >
-			<li style="height: 25px !important;display: inline;"><fb:like layout="button_count"></fb:like> <a id="fb-root"></a>
-				<script>
+		<ul>
+			<li style="height: 25px !important; display: inline;"><fb:like
+					layout="button_count"></fb:like> <a id="fb-root"></a> <script>
 			window.fbAsyncInit = function() {
 				FB.init({
 					appId : '214224191925233',
@@ -419,21 +465,26 @@ function GetUnity() {
 				e.async = true;
 				document.getElementById('fb-root').appendChild(e);
 			}());
-		</script></li>
-			<li style="display: inline;"><a href="http://mixi.jp/share.pl" class="mixi-check-button"
+		</script>
+			</li>
+			<li style="display: inline;"><a href="http://mixi.jp/share.pl"
+				class="mixi-check-button"
 				data-key="42bc93a615261cdd8e17e115918eb36ebf60a729"
 				data-button="button-1"></a> <script type="text/javascript"
-					src="http://static.mixi.jp/js/share.js"></script></li>
+					src="http://static.mixi.jp/js/share.js"></script>
+			</li>
 			<li style="display: inline;"><iframe
 					src="http://share.gree.jp/share?url=http%3A%2F%2Funity-games.appspot.com%2Funitygames%2Fgame%2Fug${g.key.id}&type=0&height=20"
 					scrolling="no" frameborder="0" marginwidth="0" marginheight="0"
 					style="border: none; overflow: hidden; width: 75px; height: 20px;"
-					allowTransparency="true"></iframe></li>
+					allowTransparency="true"></iframe>
+			</li>
 			<li style="display: inline;"><a href="http://twitter.com/share"
 				class="twitter-share-button" data-count="horizontal"
 				data-via="UGames" data-lang="<%=request.getLocale().getLanguage()%>"></a>
 				<script type="text/javascript"
-					src="http://platform.twitter.com/widgets.js"></script></li>
+					src="http://platform.twitter.com/widgets.js"></script>
+			</li>
 		</ul>
 
 	</div>
@@ -442,14 +493,11 @@ function GetUnity() {
 		<%-- Top Tabs --%>
 		<ul>
 			<li><a href="#tab1"><span><fmt:message
-							key="explanation" /> </span> </a>
-			</li>
+							key="explanation" /> </span> </a></li>
 			<li><a href="#tab2"><span><fmt:message
-							key="operation" /> </span> </a>
-			</li>
+							key="operation" /> </span> </a></li>
 			<li><a href="#tagg"><span><fmt:message
-							key="registTag" /> </span> </a>
-			</li>
+							key="registTag" /> </span> </a></li>
 			<span style="position: relative; top: -10px;">
 				<button id="commentToggle"
 					style="line-height: 2em; display: inline-block;">コメントクラウド表示/非表示</button>
@@ -488,8 +536,8 @@ function GetUnity() {
 			<div id="loaded">
 				<c:choose>
 					<c:when test="${empty g.thumbNailURL}">
-						<img src="/unitygames/thumbNail?id=${f:h(g.key.id)}"
-							width="600" height="450" style="opacity: 0.3; z-index: 0;" />
+						<img src="/unitygames/thumbNail?id=${f:h(g.key.id)}" width="600"
+							height="450" style="opacity: 0.3; z-index: 0;" />
 					</c:when>
 					<c:when test="${not empty g.thumbNailURL}">
 						<img src="${g.thumbNailURL}" border="1" width="600" height="450"
@@ -516,13 +564,10 @@ function GetUnity() {
 		<%-- Tabs --%>
 		<ul>
 			<li><a href="#comment"><span><fmt:message
-							key="comment" /> </span> </a>
-			</li>
+							key="comment" /> </span> </a></li>
 			<li><a href="#code"><span><fmt:message key="code" />
-				</span> </a>
-			</li>
-			<li><a href="#relation"><span>未実装 </span> </a>
-			</li>
+				</span> </a></li>
+			<li><a href="#relation"><span>未実装 </span> </a></li>
 
 
 		</ul>
@@ -544,11 +589,11 @@ function GetUnity() {
 			<div id="commentLoad"></div>
 		</div>
 
-		<div id="code">
-			<pre class="prettyprint">${g.code}</pre>
-		</div>
+		<div id="code"></div>
 		<div id="relation">
-			<pre class="prettyprint">${g.code}</pre>
+			<pre class="prettyprint">
+			${g.code}
+			</pre>
 		</div>
 
 	</div>

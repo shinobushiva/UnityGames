@@ -18,6 +18,7 @@ import unity.meta.GameDataMeta;
 import unity.model.Comment;
 import unity.model.GameData;
 import unity.service.GameDataService;
+import unity.utils.CodeBlockUtils;
 
 import com.google.appengine.api.datastore.KeyFactory;
 
@@ -40,7 +41,7 @@ public class GameController extends Controller {
         requestScope("key", g.getKey());
         if (!remoteAddr.equals(Memcache.get("lastIp-" + g.getGameName()))) {
             Memcache.put("lastIp-" + g.getGameName(), remoteAddr);
-             GlobalTransaction tx = Datastore.beginGlobalTransaction();
+            GlobalTransaction tx = Datastore.beginGlobalTransaction();
             g.setAccess(g.getAccess() + 1);
             tx.put(g);
             tx.commit();
@@ -95,6 +96,8 @@ public class GameController extends Controller {
         }
         g.setContents(ts);
 
+        g.setCode(CodeBlockUtils.toCodeJson(g.getCode()));
+
         requestScope("g", g);
         // コメント部分
         List<Comment> comment =
@@ -102,9 +105,7 @@ public class GameController extends Controller {
                 .query(Comment.class, g.getKey())
                 .sort(CommentMeta.get().date.asc)
                 .asList();
-        
-       
-        
+
         requestScope("c", comment);
 
         return forward("game.jsp");
