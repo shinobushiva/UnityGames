@@ -187,21 +187,20 @@ function tagCheck(){
 						<h2>ゲームの管理方法</h2> 
 						
 						<%--Twitterアカウントでログインしている場合--%>
-						<c:if test="${type == 'twitter' }">
 							<div>
 								<input type="radio" name="gameAdmin" id="ga1" checked="checked" />Twitterアカウント<input
 									type="radio" name="gameAdmin" id="ga2" />パスワードを設定
 							</div>
 
 							<div id="twitterKey">
-								<div style="float: left;">
+							<%--	<div style="float: left;">
 									<img
 										src="${p}" />
 								</div>
 								<a style="color: #1F98C7;"><div
 										style="text-align: left; font-weight: 900; font-size: 20px; margin-top: 10px; word-break: break-all;">
 										&nbsp;${userName}</div> </a>
-
+ --%><div style="color: blue;margin-top: 10px">登録ボタン押した後認証画面へ</div>
 							</div>
 
 							<div id="changeKey">
@@ -211,8 +210,8 @@ function tagCheck(){
 										style="width: 117;">
 								</h2>
 							</div>
-						</c:if>
 						<%--ゲストの場合 --%>
+						<%--
 						<c:if test="${type == 'guest' }">
 							<script>
 							$(function(){
@@ -230,7 +229,9 @@ function tagCheck(){
 										style="width: 117;">
 								</h2>
 							</div>
-						</c:if></td>
+						</c:if>
+						 --%>
+						 </td>
 
 				</tr>
 				<tr class="bottom">

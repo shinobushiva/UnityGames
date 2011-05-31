@@ -16,7 +16,6 @@ import unity.service.GameDataService;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
-import com.google.appengine.api.datastore.Transaction;
 
 public class CommentUpController extends Controller {
     private GameDataService gs = new GameDataService();

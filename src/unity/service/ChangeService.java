@@ -12,6 +12,10 @@ import org.slim3.datastore.Datastore;
 import org.slim3.datastore.GlobalTransaction;
 import org.slim3.util.ByteUtil;
 
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.conf.ConfigurationBuilder;
 import unity.meta.TagGameMeta;
 import unity.meta.UploadedDataFragmentMeta;
 import unity.meta.UserMeta;
@@ -47,20 +51,20 @@ public class ChangeService {
             g.setDate(new Date());
             key = Datastore.allocateId(GameData.class);
             g.setKey(key);
-      
+
             gg = new unity.model.api.Game();
             gg.setEntry(new Date());
-            Key key2 = Datastore.allocateId(key,unity.model.api.Game.class);
+            Key key2 = Datastore.allocateId(key, unity.model.api.Game.class);
             gg.setKey(key2);
             g.setApiData(key2);
         } else {
             g = Datastore.get(GameData.class, key);
-          if(g.getApiData() !=null){
-            gg= Datastore.get(unity.model.api.Game.class,g.getApiData());
-          }else{
-              gg = new unity.model.api.Game();
-          }
-          }
+            if (g.getApiData() != null) {
+                gg = Datastore.get(unity.model.api.Game.class, g.getApiData());
+            } else {
+                gg = new unity.model.api.Game();
+            }
+        }
 
         g.setGameName(gameName);
         gg.setGameName(gameName);
@@ -84,33 +88,33 @@ public class ChangeService {
         g.setOperations(operations);
         g.setCode(code);
         g.setLastDate(new Date());
-        
+
         gg.setExplanation(contents);
         gg.setOperations(operations);
         gg.setCode(code);
         gg.setLastDate(new Date());
-        
+
         if (gameChange != null) {
 
             if (gameURL.isEmpty() && hpURL.isEmpty() && gameFile == null) {
                 g.setGameURL("http://unity-games.appspot.com/"
                     + "DefaultSet/UnityGames.unity3d");
                 g.setGameType("url");
-        
+
                 gg.setGame("http://unity-games.appspot.com/"
                     + "DefaultSet/UnityGames.unity3d");
-                
+
             } else {
 
                 g.setGameType(gameType);
                 g.setHpURL(hpURL);
                 g.setGameURL(gameURL);
-                
-                if(hpURL.isEmpty()){
-                    gg.setGame(gameURL);     
+
+                if (hpURL.isEmpty()) {
+                    gg.setGame(gameURL);
                 }
-                if(gameURL.isEmpty()){
-                gg.setGame(hpURL);
+                if (gameURL.isEmpty()) {
+                    gg.setGame(hpURL);
                 }
 
                 UploadedDataFragment uf1 =
@@ -146,13 +150,15 @@ public class ChangeService {
                         Datastore.put(model);
                     }
                 }
-                
-                if(gameFile != null){
 
-                    gg.setGame("http://unity-games.appspot.com/unitygames/GameData?id="+g.getKey().getId());
-                    
+                if (gameFile != null) {
+
+                    gg
+                        .setGame("http://unity-games.appspot.com/unitygames/GameData?id="
+                            + g.getKey().getId());
+
                 }
-                
+
             }
         }
         if (thumbNailChange != null) {
@@ -161,20 +167,20 @@ public class ChangeService {
                 g.setThumbNailURL("http://unity-games.appspot.com/"
                     + "DefaultSet/UnityGames.png");
                 g.setThumbNailType("url");
- 
+
                 gg.setThumbNail("http://unity-games.appspot.com/"
                     + "DefaultSet/UnityGames.png");
-                
+
             } else {
                 g.setThumbNailURL(thumbNailURL);
                 g.setThumbNailType(thumbNailType);
-                
-                if(thumbNail == null){
-                gg.setThumbNail(thumbNailURL);
+
+                if (thumbNail == null) {
+                    gg.setThumbNail(thumbNailURL);
                 }
                 ThumbNailData t =
                     Datastore.query(ThumbNailData.class, g.getKey()).asSingle();
-               //更新時あったら削除
+                // 更新時あったら削除
                 if (t != null) {
                     UploadedDataFragment uf =
                         Datastore
@@ -186,61 +192,60 @@ public class ChangeService {
                     if (uf != null) {
                         Datastore.delete(uf.getKey());
                     }
-                
+
                 }
-                
+
                 // creating new
                 List<ThumbNailData> list = new ArrayList<ThumbNailData>();
-               Key keyss =
-                    Datastore
-                        .allocateId(g.getKey(), ThumbNailData.class);
-                        
-                    ThumbNailData child = new ThumbNailData();
-                    child.setKey(keyss);
-                    child.setGameName(gameName);
-                    child.setDate(new Date());
-                    if (thumbNail != null) {
-                        g.setThumbNailURL(null);
-                        if(t !=null){
+                Key keyss =
+                    Datastore.allocateId(g.getKey(), ThumbNailData.class);
+
+                ThumbNailData child = new ThumbNailData();
+                child.setKey(keyss);
+                child.setGameName(gameName);
+                child.setDate(new Date());
+                if (thumbNail != null) {
+                    g.setThumbNailURL(null);
+                    if (t != null) {
                         Datastore.delete(t.getKey());
-                        }
-                        child.setLength(thumbNail.getData().length);
-                        byte[] bytes2 = thumbNail.getData();
-                        byte[][] bytesArray2 =
-                            ByteUtil.split(bytes2, FRAGMENT_SIZE);
-                        Iterator<Key> keys2 =
-                            Datastore.allocateIds(
-                                g.getKey(),
-                                f,
-                                bytesArray2.length).iterator();
-                        for (int i = 0; i < bytesArray2.length; i++) {
-                            byte[] fragmentData2 = bytesArray2[i];
-                            UploadedDataFragment fragment2 =
-                                new UploadedDataFragment();
-                            models.add(fragment2);
-                            fragment2.setKey(keys2.next());
-                            fragment2.setBytes(fragmentData2);
-                            fragment2.setType("ThumbNail");
+                    }
+                    child.setLength(thumbNail.getData().length);
+                    byte[] bytes2 = thumbNail.getData();
+                    byte[][] bytesArray2 =
+                        ByteUtil.split(bytes2, FRAGMENT_SIZE);
+                    Iterator<Key> keys2 =
+                        Datastore
+                            .allocateIds(g.getKey(), f, bytesArray2.length)
+                            .iterator();
+                    for (int i = 0; i < bytesArray2.length; i++) {
+                        byte[] fragmentData2 = bytesArray2[i];
+                        UploadedDataFragment fragment2 =
+                            new UploadedDataFragment();
+                        models.add(fragment2);
+                        fragment2.setKey(keys2.next());
+                        fragment2.setBytes(fragmentData2);
+                        fragment2.setType("ThumbNail");
 
-                            fragment2.setIndex(i);
-                            fragment2.getUploadDataRef2().setModel(child);
-                        }
-
-                        list.add(child);
+                        fragment2.setIndex(i);
+                        fragment2.getUploadDataRef2().setModel(child);
                     }
 
-                    Datastore.put(list);
-                    for (Object model : models) {
-                        Datastore.put(model);
-                    }
-                    if(thumbNail != null){
-                        
-                        gg.setThumbNail("http://unity-games.appspot.com/unitygames/thumbNail?id="+g.getKey().getId());
-                        
-                    }
+                    list.add(child);
+                }
+
+                Datastore.put(list);
+                for (Object model : models) {
+                    Datastore.put(model);
+                }
+                if (thumbNail != null) {
+
+                    gg
+                        .setThumbNail("http://unity-games.appspot.com/unitygames/thumbNail?id="
+                            + g.getKey().getId());
+
                 }
             }
-        
+        }
 
         if (g.getFixTags() != null || gg.getFixTags() != null) {
             g.getFixTags().clear();
@@ -280,19 +285,42 @@ public class ChangeService {
             tx.commit();
         }
 
-     
-       
-        
-        gg.setGameId("ug"+g.getKey().getId());
-        
-        
-        
+        gg.setGameId("ug" + g.getKey().getId());
+
         GlobalTransaction tx = Datastore.beginGlobalTransaction();
         tx.put(g);
         tx.put(gg);
         tx.commit();
 
+        updateStatus(g.getGameName(), g.getKey().getId());
+
         return g;
     }
 
+    public Twitter updateStatus(String gameName, long id) {
+        ConfigurationBuilder cb = new ConfigurationBuilder();
+        cb
+            .setOAuthConsumerKey("ywEtN3tDuqZbOf2xlaQ3g")
+            .setOAuthConsumerSecret("ObTlOCI0TUyPJVFr9hOephUqHJscMgoVFaYu89zs")
+            .setOAuthAccessToken(
+                "276331612-QgLKDBDbiksTI6QnIgpod2ZfHGhhHYXYehqS22kk")
+            .setOAuthAccessTokenSecret(
+                "2yxeq3yMb8blyqvKSp0cIuj1lN9s4v2O9QAluK3QU");
+        TwitterFactory tf = new TwitterFactory(cb.build());
+        Twitter twitter = tf.getInstance();
+
+        try {
+            twitter.updateStatus(""
+                + gameName
+                + "が投稿されました。"
+                + "http://unity-games.appspot.com/unitygames/game/ug"
+                + id
+                + "　#UnityGames");
+        } catch (TwitterException e) {
+
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

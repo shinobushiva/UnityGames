@@ -41,13 +41,13 @@
 
 
 
-	<div style="display: inline-block;">
+	<div style="display: inline-block; margin-left: 150px;">
 		<div>
 			<div
-				style="margin-bottom: 20px; margin-left: 200px; display: inline-block;"
+				style="margin-bottom: 20px; margin-left: 120px; display: inline-block;"
 				id="search"><%@ include file="/share/search.jsp"%></div>
-<div style=" display: inline-block;">
-			<div
+			<div style="display: inline-block;">
+				<%--	<div
 				style="border: solid; width: 250; margin-left: 115px;">
 				<c:if test="${login == 'no' }">
 					<script type="text/javascript">
@@ -63,8 +63,9 @@
 					</div>
 				</c:if>
 				<c:if test="${login == 'yes' }">
-					<%--	普段ユーザー本人が見る情報	 --%>
-					<div style="height:73px;">
+				 --%>
+				<%--	普段ユーザー本人が見る情報	 --%>
+				<%--		<div style="height:73px;">
 						<div style="float: left;">
 							<img src="${p}" />
 						</div>
@@ -85,25 +86,14 @@
 					</div>
 				</c:if>
 			</div>
-</div>
-			<div
+			--%>
+			</div>
+			<%--	<div
 				style="border: solid; border-color: #e1e1e1; border-radius: 20px; float: right; width: 250px; height: 600px;">
 				<div style="text-align: center;">更新情報</div>
 			</div>
-			<div class="newGameLine">
-
-				ランキング<img src="/images/click.png"
-					style="position: relative; top: 2px;" />(ページ未実装)
-			</div>
-			<div>
-				<c:forEach var="g" items="${rankingGameList}">
-					<div style="display: inline-block; text-align: center;">
-						<%@ include file="/share/patternDistinction.jsp"%>
-						<a href="${url}"> <img src="${thUrl}" width="150" height="150" /><br>
-							<div class="bounded" style="width: 150px;">${g.gameName}</div> </a>
-					</div>
-				</c:forEach>
-			</div>
+			 --%>
+		
 			<a href="/unitygames/" style="text-decoration: none;"><div
 					class="newGameLine">
 					新着ゲーム<img src="/images/click.png"
@@ -116,6 +106,21 @@
 						<div class="bounded" style="width: 150px;">${g.gameName}</div> </a>
 				</div>
 			</c:forEach>
+
+	<div class="newGameLine">
+
+				ランキング
+			</div>
+			<div>
+				<c:forEach var="g" items="${rankingGameList}" varStatus="loop">
+					<div style="display: inline-block; text-align: center;">
+				<span style="font-size: 15;font-weight: 900;">${loop.count}</span>位<br>
+						<%@ include file="/share/patternDistinction.jsp"%>
+						<a href="${url}"> <img src="${thUrl}" width="150" height="150" /><br>
+							<div class="bounded" style="width: 150px;">${g.gameName}</div> </a>
+					</div>
+				</c:forEach>
+			</div>
 
 		</div>
 

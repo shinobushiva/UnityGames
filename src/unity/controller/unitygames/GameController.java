@@ -96,7 +96,7 @@ public class GameController extends Controller {
         }
         g.setContents(ts);
 
-        g.setCode(CodeBlockUtils.toCodeJson(g.getCode()));
+        g.setCode(gs.toCodeJson(g.getCode()));
 
         requestScope("g", g);
         // コメント部分

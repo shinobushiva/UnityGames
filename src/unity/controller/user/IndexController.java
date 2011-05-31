@@ -11,14 +11,15 @@ public class IndexController extends Controller {
     public Navigation run() throws Exception {
 
         String name = asString("name");
+        
 
         Twitter t = (Twitter) sessionScope("twitter");
-//        System.out.println("誰が見てる？"+t.getScreenName());
+        // System.out.println("誰が見てる？"+t.getScreenName());
         if (t.getScreenName().equals(name)) {
-        // ページを見ている人が本人か他人かを判別
-        //ローカルなのでこっちのifつかってる
-//        if (name.equals("kyusyukeigo")) {
-            
+            // ページを見ている人が本人か他人かを判別
+            // ローカルなのでこっちのifつかってる
+            // if (name.equals("kyusyukeigo")) {
+
             requestScope("name", "myName");
         } else {
             requestScope("name", "otherName");

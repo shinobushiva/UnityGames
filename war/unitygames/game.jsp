@@ -397,7 +397,8 @@ function GetUnity() {
 				<div style="float: left;">
 					<img src="${tp}" />
 				</div>
-				<a href="/user/${tn}" style="color: #1F98C7;" target="Twitter"><div
+				<a href="/login/oAuth?name=${tn}" style="color: #1F98C7;"
+					target="Twitter"><div
 						style="float: right; text-align: left; font-weight: 900; font-size: 20px; margin-top: 10px; word-break: break-all;">
 						&nbsp;${tn}</div> </a>
 
@@ -465,25 +466,22 @@ function GetUnity() {
 				e.async = true;
 				document.getElementById('fb-root').appendChild(e);
 			}());
-		</script>
-			</li>
+		</script></li>
 			<li style="display: inline;"><a href="http://mixi.jp/share.pl"
 				class="mixi-check-button"
 				data-key="42bc93a615261cdd8e17e115918eb36ebf60a729"
 				data-button="button-1"></a> <script type="text/javascript"
-					src="http://static.mixi.jp/js/share.js"></script>
-			</li>
+					src="http://static.mixi.jp/js/share.js"></script></li>
 			<li style="display: inline;"><iframe
 					src="http://share.gree.jp/share?url=http%3A%2F%2Funity-games.appspot.com%2Funitygames%2Fgame%2Fug${g.key.id}&type=0&height=20"
 					scrolling="no" frameborder="0" marginwidth="0" marginheight="0"
 					style="border: none; overflow: hidden; width: 75px; height: 20px;"
-					allowTransparency="true"></iframe>
-			</li>
+					allowTransparency="true"></iframe></li>
 			<li style="display: inline;"><a href="http://twitter.com/share"
 				class="twitter-share-button" data-count="horizontal"
-				data-via="UGames" data-lang="<%=request.getLocale().getLanguage()%>"></a>
-				<script type="text/javascript"
-					src="http://platform.twitter.com/widgets.js"></script>
+				data-via="UGames #UnityGames"
+				data-lang="<%=request.getLocale().getLanguage()%>"></a> <script
+					type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 			</li>
 		</ul>
 
@@ -493,20 +491,24 @@ function GetUnity() {
 		<%-- Top Tabs --%>
 		<ul>
 			<li><a href="#tab1"><span><fmt:message
-							key="explanation" /> </span> </a></li>
+							key="explanation" /> </span> </a>
+			</li>
 			<li><a href="#tab2"><span><fmt:message
-							key="operation" /> </span> </a></li>
+							key="operation" /> </span> </a>
+			</li>
 			<li><a href="#tagg"><span><fmt:message
-							key="registTag" /> </span> </a></li>
+							key="registTag" /> </span> </a>
+			</li>
 			<span style="position: relative; top: -10px;">
 				<button id="commentToggle"
 					style="line-height: 2em; display: inline-block;">コメントクラウド表示/非表示</button>
 			</span>
-			<span
-				style="text-align: right; display: inline-block; margin-left: 450px;"><fmt:message
-					key="entryDay" />：<fmt:formatDate value="${g.date}"
-					pattern="MM/dd" /> <br> <fmt:message key="LastEntryDay" />：<fmt:formatDate
-					value="${g.lastDate}" pattern="MM/dd" /> </span>
+
+			<span style="text-align: right; display: inline-block; float: right;">
+				<fmt:message key="entryDay" />：<fmt:formatDate value="${g.date}"
+					pattern="MM/dd" /> <fmt:message key="LastEntryDay" />：<fmt:formatDate
+					value="${g.lastDate}" pattern="MM/dd" /><br>アクセス数：${g.access}
+				コメント数:${g.comment}</span>
 
 		</ul>
 		<div id="tab1">
@@ -564,10 +566,13 @@ function GetUnity() {
 		<%-- Tabs --%>
 		<ul>
 			<li><a href="#comment"><span><fmt:message
-							key="comment" /> </span> </a></li>
+							key="comment" /> </span> </a>
+			</li>
 			<li><a href="#code"><span><fmt:message key="code" />
-				</span> </a></li>
-			<li><a href="#relation"><span>未実装 </span> </a></li>
+				</span> </a>
+			</li>
+			<li><a href="#relation"><span>未実装 </span> </a>
+			</li>
 
 
 		</ul>

@@ -13,6 +13,28 @@ public class UploadController extends Controller {
     @Override
     public Navigation run() throws Exception {
 
+        //Twitterで管理するなら
+        if (requestScope("pass").toString().isEmpty()){
+         
+            sessionScope("gameName",requestScope("GameName"));
+            sessionScope("thumbNailURL",requestScope("ThumbNailURL"));
+            sessionScope("thumbNail",requestScope("ThumbNail"));
+            sessionScope("gameFile",requestScope("GameFile"));
+            sessionScope("contents",requestScope("Contents"));
+            sessionScope("operations",requestScope("Operations"));
+            sessionScope("hpURL", requestScope("HpURL"));
+            sessionScope("gameURL", requestScope("GameURL"));
+            sessionScope("thumbNailType",requestScope("ThumbNailType"));
+            sessionScope("gameType", requestScope("GameType"));
+            sessionScope("fixTag", requestScope("fixTag"));
+            sessionScope("code", requestScope("Code"));
+            
+            //Callback用
+            sessionScope("loginType", "newGame");
+     
+            
+            return forward("/login/oAuth");
+        }
         String gameName = requestScope("GameName");
 
         String thumbNailURL = requestScope("ThumbNailURL");
@@ -37,7 +59,6 @@ public class UploadController extends Controller {
             System.out.println("pass:" + pass.isEmpty());
         }
 
-    
         service.change(
             null,
             gameName,

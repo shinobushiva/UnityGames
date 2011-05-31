@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import jp.co.topgate.controller.JsonController;
-import net.arnx.jsonic.JSON;
 import unity.model.api.Game;
 import unity.service.ApiService;
 
