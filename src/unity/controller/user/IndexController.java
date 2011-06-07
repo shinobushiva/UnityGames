@@ -11,9 +11,14 @@ public class IndexController extends Controller {
     public Navigation run() throws Exception {
 
         String name = asString("name");
-        
 
         Twitter t = (Twitter) sessionScope("twitter");
+        
+        if (t == null) {
+            return redirect("/login/oAuth?name=" + name);
+        }
+
+     
         // System.out.println("誰が見てる？"+t.getScreenName());
         if (t.getScreenName().equals(name)) {
             // ページを見ている人が本人か他人かを判別

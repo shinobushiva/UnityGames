@@ -51,7 +51,19 @@ td.comment {
 }
 -->
 </style>
+<script type="text/javascript">
 
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-22824102-2']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
 <script type="text/javascript">
 function GetUnity() {
 	if (typeof unityObject != "undefined") {
@@ -331,7 +343,7 @@ function GetUnity() {
 		for(var oIdx in obj){
 			var o = obj[oIdx];
 			if(o[0] == 'text'){
-				result += "<pre>"+o[1]+"</pre>";
+				result += "<pre style='margin:10px;'>"+o[1]+"</pre>";
 			}else{
 				result += "<div class='"+o[0]+"' style='display:none; margin : 5px'>"+
 				"<pre class='prettyprint'>"+o[1]+"</pre>"+
@@ -342,7 +354,7 @@ function GetUnity() {
 
 		console.log(array);
 		
-		var str = '<div style="text-align:right;"><select name="hoge">';
+		var str = '<div style="display:inline-block;margin-left:120px;margin-top:-20px;"><select name="hoge">';
 		for(var oIdx2 in array){
 			str+='<option value="'+array[oIdx2]+'">'+array[oIdx2]+'</option>';
 		}
@@ -390,16 +402,16 @@ function GetUnity() {
 	<%--	ゲーム投稿者情報	 --%>
 
 	<div style="float: right; margin-top: 10px;">
-		<div>投稿者</div>
+		<div>投稿者 (編集はここから↓)</div>
 		<%--	Twitterアカウント	--%>
 		<c:if test="${empty g.pass}">
 			<div>
-				<div style="float: left;">
-					<img src="${tp}" />
-				</div>
-				<a href="/login/oAuth?name=${tn}" style="color: #1F98C7;"
-					target="Twitter"><div
-						style="float: right; text-align: left; font-weight: 900; font-size: 20px; margin-top: 10px; word-break: break-all;">
+				<a href="/login/oAuth?name=${tn}" style="" target="Twitter">
+					<div style="float: left;">
+						<img src="${tp}" />
+					</div>
+					<div
+						style="float: right; text-align: left; font-weight: 900; font-size: 20px; margin-top: 10px; word-break: break-all; color: #1F98C7;">
 						&nbsp;${tn}</div> </a>
 
 			</div>
@@ -466,17 +478,20 @@ function GetUnity() {
 				e.async = true;
 				document.getElementById('fb-root').appendChild(e);
 			}());
-		</script></li>
+		</script>
+			</li>
 			<li style="display: inline;"><a href="http://mixi.jp/share.pl"
 				class="mixi-check-button"
 				data-key="42bc93a615261cdd8e17e115918eb36ebf60a729"
 				data-button="button-1"></a> <script type="text/javascript"
-					src="http://static.mixi.jp/js/share.js"></script></li>
+					src="http://static.mixi.jp/js/share.js"></script>
+			</li>
 			<li style="display: inline;"><iframe
 					src="http://share.gree.jp/share?url=http%3A%2F%2Funity-games.appspot.com%2Funitygames%2Fgame%2Fug${g.key.id}&type=0&height=20"
 					scrolling="no" frameborder="0" marginwidth="0" marginheight="0"
 					style="border: none; overflow: hidden; width: 75px; height: 20px;"
-					allowTransparency="true"></iframe></li>
+					allowTransparency="true"></iframe>
+			</li>
 			<li style="display: inline;"><a href="http://twitter.com/share"
 				class="twitter-share-button" data-count="horizontal"
 				data-via="UGames #UnityGames"
@@ -491,19 +506,17 @@ function GetUnity() {
 		<%-- Top Tabs --%>
 		<ul>
 			<li><a href="#tab1"><span><fmt:message
-							key="explanation" /> </span> </a>
-			</li>
+							key="explanation" /> </span> </a></li>
 			<li><a href="#tab2"><span><fmt:message
-							key="operation" /> </span> </a>
-			</li>
+							key="operation" /> </span> </a></li>
 			<li><a href="#tagg"><span><fmt:message
-							key="registTag" /> </span> </a>
-			</li>
-			<span style="position: relative; top: -10px;">
+							key="registTag" /> </span> </a></li>
+			<%--
+			<span>
 				<button id="commentToggle"
 					style="line-height: 2em; display: inline-block;">コメントクラウド表示/非表示</button>
 			</span>
-
+			--%>
 			<span style="text-align: right; display: inline-block; float: right;">
 				<fmt:message key="entryDay" />：<fmt:formatDate value="${g.date}"
 					pattern="MM/dd" /> <fmt:message key="LastEntryDay" />：<fmt:formatDate
@@ -527,14 +540,18 @@ function GetUnity() {
 	</div>
 	<%-- Game --%>
 	<div style="margin-top: 1em; margin-bottom: 1em;">
-
+		<%--
 		<div id="comments-top" style="width: 1000px; height: 200px;">&nbsp;</div>
+		 --%>
 		<%-- &nbsp;は無いとつぶれる --%>
+		<%--
 		<div style="float: left; width: 200px;">
 			&nbsp;
 			<div id="comments-left" style="width: 200px;">&nbsp;</div>
 		</div>
-		<div id="game-center" style="float: left; width: 600px;">
+	 --%>
+		<div id="game-center"
+			style="margin-left: auto; margin-right: auto; width: 600px;">
 			<div id="loaded">
 				<c:choose>
 					<c:when test="${empty g.thumbNailURL}">
@@ -550,56 +567,46 @@ function GetUnity() {
 					style="background-color: transparent; border: 0; z-index: 1; position: relative; left: 200px; top: -180px">
 					<img src="/images/Start.png">
 				</button>
-				<div>
-					<button id="reload"
-						style="position: relative; left: -512px; z-index: 1;">リロード</button>
-				</div>
+
 			</div>
 		</div>
-		<div id="comments-right" style="float: left; width: 200px;">&nbsp;</div>
+		<%--	<div id="comments-right" style="float: left; width: 200px;">&nbsp;</div> --%>
 		<%--	<div id="comments-bottom"
 			style="clear: both; width: 1000px; height: 200px;">&nbsp;</div>
 			--%>
 	</div>
 
-	<div id="contentTab" style="clear: both;">
+	<div style="clear: both;">
 		<%-- Tabs --%>
-		<ul>
-			<li><a href="#comment"><span><fmt:message
-							key="comment" /> </span> </a>
-			</li>
-			<li><a href="#code"><span><fmt:message key="code" />
-				</span> </a>
-			</li>
-			<li><a href="#relation"><span>未実装 </span> </a>
-			</li>
 
 
-		</ul>
-
-		<div id="comment" style="margin-left: auto; margin-right: auto;">
-			<div>
-				<div>
-					<input type="text" id="commentInput"
-						style="width: 150; height: 20;" name="comment" class="required"><br>
-				</div>
-				<div>
-					<button class="searchButton black" id="commentUp">
-						<fmt:message key="button.comment" />
-					</button>
-				</div>
-
-				<span class="success"><fmt:message key="commented" /> </span>
+		<div class="ui-widget-content ui-tabs-panel">
+			<div style="margin-top: 15px; font-size: 15;">
+				<fmt:message key="code" />
 			</div>
-			<div id="commentLoad"></div>
+			<div id="code" style="display: inline-block;"></div>
 		</div>
+		<%--
+		<div class="ui-widget-content" style="margin-top: 10px;">
+			<a href="#comment"><span><fmt:message key="comment" /> </span> </a>
+			<div id="comment" style="margin-left: auto; margin-right: auto;">
+				<div>
+					<div>
+						<input type="text" id="commentInput"
+							style="width: 150; height: 20;" name="comment" class="required"><br>
+					</div>
+					<div>
+						<button class="searchButton black" id="commentUp">
+							<fmt:message key="button.comment" />
+						</button>
+					</div>
 
-		<div id="code"></div>
-		<div id="relation">
-			<pre class="prettyprint">
-			${g.code}
-			</pre>
+					<span class="success"><fmt:message key="commented" /> </span>
+				</div>
+				<div id="commentLoad"></div>
+			</div>
 		</div>
+--%>
 
 	</div>
 </body>

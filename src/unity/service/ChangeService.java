@@ -40,7 +40,8 @@ public class ChangeService {
             FileItem gameFile, FileItem thumbNail, String thumbNailURL,
             String contents, String operations, String hpURL, String pass,
             String thumbNailType, String gameType, String thumbNailChange,
-            String gameChange, String fixTag, String code, long twitterId) {
+            String gameChange, String fixTag, String code, long twitterId,
+            String gameScreenSize) {
 
         List<Object> models = new ArrayList<Object>();
         unity.model.api.Game gg = null;
@@ -51,6 +52,8 @@ public class ChangeService {
             g.setDate(new Date());
             key = Datastore.allocateId(GameData.class);
             g.setKey(key);
+
+             updateStatus(gameName, key.getId());
 
             gg = new unity.model.api.Game();
             gg.setEntry(new Date());
@@ -93,7 +96,6 @@ public class ChangeService {
         gg.setOperations(operations);
         gg.setCode(code);
         gg.setLastDate(new Date());
-
         if (gameChange != null) {
 
             if (gameURL.isEmpty() && hpURL.isEmpty() && gameFile == null) {
@@ -261,7 +263,11 @@ public class ChangeService {
             Datastore.delete(key2);
             tx.commit();
         }
-        String[] tags = fixTag.split(",");
+        String[] tags = new String[0];
+        System.out.println("fixTag:" + fixTag);
+        if (fixTag != null) {
+            tags = fixTag.split(",");
+        }
         for (String t : tags) {
             t = t.trim();
             if (t.isEmpty()) {
@@ -287,12 +293,13 @@ public class ChangeService {
 
         gg.setGameId("ug" + g.getKey().getId());
 
+        g.setGameScreenSize(gameScreenSize);
+        gg.setGameScreenSize(gameScreenSize);
+
         GlobalTransaction tx = Datastore.beginGlobalTransaction();
         tx.put(g);
         tx.put(gg);
         tx.commit();
-
-        updateStatus(g.getGameName(), g.getKey().getId());
 
         return g;
     }
@@ -308,7 +315,6 @@ public class ChangeService {
                 "2yxeq3yMb8blyqvKSp0cIuj1lN9s4v2O9QAluK3QU");
         TwitterFactory tf = new TwitterFactory(cb.build());
         Twitter twitter = tf.getInstance();
-
         try {
             twitter.updateStatus(""
                 + gameName

@@ -32,14 +32,18 @@ public class GameLoadController extends JsonController {
                 "play",
                 "unityObject.embedUnity('unityPlayer','/unitygames/GameData?id="
                     + g.getKey().getId()
-                    + "', 600, 450);");
+                    + "',"
+                    + g.getGameScreenSize()
+                    + ");");
 
         } else {
             map.put(
                 "play",
                 "unityObject.embedUnity('unityPlayer','"
                     + g.getGameURL()
-                    + "', 600, 450);");
+                    + "',"
+                    + g.getGameScreenSize()
+                    + ");");
         }
 
         return map;

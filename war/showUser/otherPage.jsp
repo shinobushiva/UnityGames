@@ -35,144 +35,50 @@
 		initButtons();
 	});
 </script>
-<div style="float: left; width: 500px; height: 1000px; font-size: 15px;"
-	id="twitter">
+<div style="font-size: 15px;" id="twitter">
 	<div>
 		<div style="float: left; margin-left: 10px; margin-top: 10px;">
-			<img src="${tp}" />
+			<img src="${tp}" style="width: 50px; height: 50px;" />
 		</div>
-		<div style="display: inline-block;">${u.name}</div>
-		<div>@${u.screenName }${u.location }</div>
-		<div style="">${u.description}</div>
+		<div style="display: inline-block;"></div>
+		<div style="margin-top: 20px;">
+			<span style="font-size: xx-large;">@${u.screenName }</span><span
+				style="margin-left: 30px;">${u.name}</span>
+		</div>
+
 	</div>
-	<div style="clear: both;">
 
-		<c:forEach var="t" items="${tweet}">
-
-			<script type="text/javascript">
-				$(function() {
-					var url = "http://twitter.com/statuses/show/${t.tweetId}.json?callback={callback}";
-					$.getJSONP(url, function(obj) {
-						var s = "";
-
-						s += "<div>" + obj.text + "</div>";
-						s += "<div>" + jQuery.timeago(obj.created_at)
-								+ "</div>";
-						$("#${t.tweetId}").html(s);
-					});
-				});
-			</script>
-
-			<hr />
-			<div style="height: 50px; border: 1px;" id="${t.tweetId}"></div>
-
-		</c:forEach>
-		<hr />
-	</div>
+	<hr style="margin-top: 50px; width: 900px;clear: both;" />
 
 </div>
-<div
-	style="width: 500px; height: 1000px; border: solid; display: inline-block;">
-	その他
-	<div id="web" style="font-size: 30px;">Web: ${webUrl}</div>
-	<div style="margin-top: 580px;">
-		ゲーム投稿履歴<br>
+<div style="">
+	<div>
+		<div
+			style="font-size: 20px; margin-top: auto; margin-bottom: auto; display: inline-block;">紹介：</div>
+		<div style="margin-top: 10px; display: inline-block; width: 450px;">${u.description}</div>
+	</div>
+	<div>
+		<div style="display: inline-block; font-size: 20px; margin-top: 10px;">Web:</div>
+		<div id="web" style="display: inline-block;">${webUrl}</div>
+	</div>
+	<div style="width: 500px;">
+		<div style="font-size: 20px; margin-top: 50px;">ゲーム投稿履歴</div>
+			<hr style="width: 500px;">
 		<div id="hiddenresult" style="display: none;">
 			<div class="result">
 				<c:forEach var="g" items="${gameList}" varStatus="loop">
-					<script type="text/javascript">
-						$(function() {
-
-							var flag = "hide-${g.key.id}";
-							var mp = $('.panel-${g.key.id}').position();
-							$(".panel-${g.key.id}").css("visibility", "hidden");
-							$("#ug${g.key.id}")
-									.click(
-											function(event) {
-												var of = $("#twitter")
-														.position();
-												var ugpo = $("#ug${g.key.id}")
-														.position();
-												var position = $(
-														'.panel-${g.key.id}')
-														.position();
-												var view = of.left;
-
-												$(".panel-${g.key.id}").css(
-														"left", ugpo.left);
-
-												$(".panel-${g.key.id}").css(
-														"top", 0);
-
-												//$(".panel-${g.key.id}").show();
-												$(".panel-${g.key.id}")
-														.css("visibility",
-																"visible");
-												if (flag == "hide-${g.key.id}") {
-
-													$(".panel-${g.key.id}")
-															.css("z-index", "0");
-													//	$(".panel-${g.key.id}").animate({
-													//		left : "-500px"
-													//	});
-													$(".panel-${g.key.id}")
-															.css("z-index", "0");
-
-													$(".panel-${g.key.id}")
-															.animate({
-																left : view
-
-															});
-													flag = "show-${g.key.id}";
-
-													var parents = 'panel';
-
-													divObj = $("div");
-													matchObj = new RegExp(
-															parents);
-
-													for (i = 0; i < divObj.length; i++) {
-														//moreを含むものだけを取得
-														if (divObj[i].id
-																.match(matchObj)) {
-
-															if ($("div")[i].id != "panel-${g.key.id}") {
-																//他が出てたら元に戻す
-																$("div")[i].style.left = mp.left;
-																$("div")[i].style.visibility = "hidden";
-															}
-														}
-													}
-
-												} else {
-
-													$(".panel-${g.key.id}")
-															.animate({
-																left : mp.left
-															})
-													flag = "hide-${g.key.id}";
-													$(".panel-${g.key.id}")
-															.css("visibility",
-																	"hidden");
-												}
-
-											})
-						});
-					</script>
-
-
 					<%@ include file="/share/patternDistinction.jsp"%>
 					<div
 						style="display: inline-block; text-align: center; z-index: 1; cursor: pointer;"
 						id="ug${g.key.id}">
-						<img src="${thUrl}" width="100" height="100" /><br>
+						<a href="/unitygames/game?id=${g.key.id}"><img
+							src="${thUrl}" width="80" height="80" /><br>
 						<div class="bounded" style="width: 150px; text-align: center;">${g.gameName}</div>
-
+						</a>
 					</div>
-					<c:if test="${loop.count mod 6 == 0 }">
+					<c:if test="${loop.count mod 3 == 0 }">
 			</div>
 			<div class="result">
-
 				</c:if>
 				</c:forEach>
 			</div>
@@ -190,39 +96,33 @@
 					style="margin-right: 50px; width: 100px; height: 30px;">Next</button>
 			</form>
 		</div>
-		<style type="text/css">
-#panel-frame {
-	position: relative;
-	position: absolute;
-	margin-top: -1000px;
-	max-width: 500px;
-	position: fixed;
-	max-width: 500px;
-}
-</style>
-		<div id="panel-frame">
-			<c:forEach var="g" items="${gameList}" varStatus="loop">
-				<div class="panel-${g.key.id}" id="panel-${g.key.id}"
-					style="background-color: aqua; width: 500px; max-height: 500px; margin-top: 0px; position: relative; position: absolute; z-index: -1;">
 
-					<%@ include file="/share/patternDistinction.jsp"%>
 
-					<div id="more-${g.key.id}" style="width: 490px;">
-
-						<img src="${thUrl}" width="400" height="300"
-							style="margin-left: 50px; margin-right: 50px; margin-top: 5px;" />
-						<div style="text-align: center; font-size: 30px;">
-							${g.gameName}</div>
-						<div>アクセス数：${g.access} コメント数：${g.comment}</div>
-						<div>ゲーム説明</div>
-						<div>${g.contents}</div>
-						<div>操作内容</div>
-						<div>${g.operations}</div>
-					</div>
-				</div>
-			</c:forEach>
-		</div>
 
 	</div>
+<div style="float: right;margin-right: 200px;margin-top: -330px;">
+<div style="font-size: 20px;">つぶやき</div>
+		<c:forEach var="t" items="${tweet}">
 
+			<script type="text/javascript">
+				$(function() {
+					var url = "http://twitter.com/statuses/show/${t.tweetId}.json?callback={callback}";
+					$.getJSONP(url, function(obj) {
+						var s = "";
+
+						s += "<div　style='width: 250px;'>" + obj.text + "</div>";
+						s += "<div>" + jQuery.timeago(obj.created_at)
+								+ "</div>";
+						$("#${t.tweetId}").html(s);
+					});
+				});
+			</script>
+
+			<hr />
+			<div style="height: 50px; border: 1px;" id="${t.tweetId}"></div>
+
+		</c:forEach>
+		
+		
+	</div>
 </div>

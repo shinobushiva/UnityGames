@@ -66,11 +66,11 @@
 			page_id = page_id<0?0:(page_id<np?page_id:np-1); // Normalize page id to sane value
 			appendopts = $.extend({text:page_id+1, classes:""}, appendopts||{});
 			if(page_id == current_page){
-				lnk = $("<span class='current'>" + appendopts.text + "</span>");
+				lnk = $("<span class='current' style='margin-left:3px;margin-right:3px;'>" + appendopts.text + "</span>");
 			}
 			else
 			{
-				lnk = $("<a>" + appendopts.text + "</a>")
+				lnk = $("<a style='margin-left:3px;margin-right:3px;'>" + appendopts.text + "</a>")
 					.attr('href', this.opts.link_to.replace(/__id__/,page_id));
 			}
 			if(appendopts.classes){ lnk.addClass(appendopts.classes); }
@@ -136,8 +136,8 @@
 			current_page:0,
 			num_edge_entries:0,
 			link_to:"#",
-			prev_text:"Prev",
-			next_text:"Next",
+			prev_text:"前",
+			next_text:"次",
 			ellipse_text:"...",
 			prev_show_always:true,
 			next_show_always:true,

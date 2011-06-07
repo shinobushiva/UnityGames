@@ -8,8 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <%@ include file="/share/css.jsp"%>
 <%@ include file="/share/js.jsp"%>
-<title><fmt:message key="upload.title" />
-</title>
+<title><fmt:message key="upload.title" /></title>
 
 </head>
 <body>
@@ -86,15 +85,15 @@ function tagCheck(){
 		<form action="upload" method="post" class="cmxform" id="commentForm"
 			enctype="multipart/form-data" onSubmit="return tagCheck()"
 			name="form1">
-			<table class="purchase-options" border="0" style="margin-left: auto; margin-right: auto;margin-top: 25px;">
+			<table class="purchase-options" border="0"
+				style="margin-left: auto; margin-right: auto; margin-top: 25px;">
 				<tr class="top">
 					<td colspan="2">&nbsp;</td>
 				</tr>
 				<tr>
 					<td><h1>
 							<fmt:message key="upload.title" />
-						</h1>
-					</td>
+						</h1></td>
 
 					<td rowspan="6">
 
@@ -106,33 +105,59 @@ function tagCheck(){
 							<fmt:message key="operation" />
 						</h2> <textarea style="width: 440; height: 110;" name="Operations"
 							title="<fmt:message key="operation.title" />"></textarea>
-						<h2>
-							<fmt:message key="code" />
-						</h2> <textarea style="width: 440; height: 110;" name="Code"
-							title="<fmt:message key="code.title" />"></textarea>
-						<div id="wrapper" align="center">
+						<div>
+							<div style="display: inline-block;">
+								<h2>
+									<fmt:message key="code" />
+								</h2>
+							</div>
+							<div style="display: inline-block;">
+								(詳しくは<a href="/howto#code" target="_blank">ソースコードについて</a>をご覧ください)
+							</div>
+							<div>
+								<textarea style="width: 440; height: 110;" name="Code"
+									title="<fmt:message key="code.title" />"></textarea>
+							</div>
+						</div>
+						<div>
+							<div>
+								<div style="display: inline-block;">
+									<h2>スクリーンサイズ</h2>
+								</div>
+								<div style="display: inline-block;">(デフォルト値は600*450です)</div>
+							</div>
+							<div style="display: inline-block;">
+								Width:<input type="text" name="gameScreenWidth" value="600"
+									style="width: 50px;" />
+							</div>
+							<div style="display: inline-block;">
+								Height:<input type="text" name="gameScreenHeight" value="450"
+									style="width: 50px;" />
+							</div>
+						</div>
+						<div id="wrapper" style="float: right;">
 							<button id="regist" class="button"
 								style="width: 250px; height: 80px; font-size: xx-large;">
 								<fmt:message key="button.regist" />
 							</button>
-						</div></td>
+						</div>
+					</td>
 				</tr>
 				<tr>
 					<td><h2>
 							<label for="GameName"><fmt:message key="gameName" /> </label><input
 								type="text" name="GameName" id="GameName" class="required" />
-						</h2>
-					</td>
+						</h2></td>
 				</tr>
 				<tr>
 					<td><label for="ThumbNail"><h2>
 								<fmt:message key="thumbNail" />
 							</h2> </label><br> <fmt:message key="thumbNail.process" /><br> <label><input
-							type="radio" name="ThumbNailType" value="data" id="tdata" checked="checked">
-							<fmt:message key="thumbNail.pictureDataUp" /> </label><br> <label><input
+							type="radio" name="ThumbNailType" value="data" id="tdata"
+							checked="checked"> <fmt:message
+								key="thumbNail.pictureDataUp" /> </label><br> <label><input
 							type="radio" name="ThumbNailType" value="url" id="turl">
-							<fmt:message key="thumbNail.urlUp" /><br> </label>
-					</td>
+							<fmt:message key="thumbNail.urlUp" /><br> </label></td>
 
 				</tr>
 				<tr>
@@ -145,19 +170,20 @@ function tagCheck(){
 									key="thumbNail.url" /> </label><input type="text" name="ThumbNailURL"
 								id="ThumbNailURL" style="width: 260px"
 								title="<fmt:message key="thumbNail.url.title" />"><br>
-						</div></td>
+						</div>
+					</td>
 				</tr>
 				<tr>
 					<td><label for="d"><h2>
 								<fmt:message key="game.select" />
 							</h2> </label><br> <fmt:message key="gamedata.process" /><br> <label><input
-							type="radio" name="GameType" value="data" id="data" checked="checked">
-							<fmt:message key="game.select.data" /> </label><br> <label><input
-							type="radio" name="GameType" value="url" id="url"> <fmt:message
-								key="game.select.url" /><br> </label> <label><input
-							type="radio" name="GameType" value="hpurl" id="hp"> <fmt:message
-								key="game.select.url.outside" /><br> </label>
-					</td>
+							type="radio" name="GameType" value="data" id="data"
+							checked="checked"> <fmt:message key="game.select.data" />
+					</label><br> <label><input type="radio" name="GameType"
+							value="url" id="url"> <fmt:message key="game.select.url" /><br>
+					</label> <label><input type="radio" name="GameType" value="hpurl"
+							id="hp"> <fmt:message key="game.select.url.outside" /><br>
+					</label></td>
 				</tr>
 				<tr>
 					<td>
@@ -184,15 +210,13 @@ function tagCheck(){
 									key="fixTag.explanation" /> </span>
 
 						</div> <%--	ゲームの管理方法	--%>
-						<h2>ゲームの管理方法</h2> 
-						
-						<%--Twitterアカウントでログインしている場合--%>
-							<div>
-								<input type="radio" name="gameAdmin" id="ga1" checked="checked" />Twitterアカウント<input
-									type="radio" name="gameAdmin" id="ga2" />パスワードを設定
-							</div>
+						<h2>ゲームの管理方法</h2> <%--Twitterアカウントでログインしている場合--%>
+						<div>
+							<input type="radio" name="gameAdmin" id="ga1" checked="checked" />Twitterアカウント<input
+								type="radio" name="gameAdmin" id="ga2" />パスワードを設定
+						</div>
 
-							<div id="twitterKey">
+						<div id="twitterKey">
 							<%--	<div style="float: left;">
 									<img
 										src="${p}" />
@@ -200,18 +224,17 @@ function tagCheck(){
 								<a style="color: #1F98C7;"><div
 										style="text-align: left; font-weight: 900; font-size: 20px; margin-top: 10px; word-break: break-all;">
 										&nbsp;${userName}</div> </a>
- --%><div style="color: blue;margin-top: 10px">登録ボタン押した後認証画面へ</div>
-							</div>
+ --%>
+							<div style="color: blue; margin-top: 10px">登録ボタン押した後認証画面へ</div>
+						</div>
 
-							<div id="changeKey">
-								<h2>
-									<fmt:message key="change.delete.key" />
-									<input type="password" name="pass" id="adminPass"
-										style="width: 117;">
-								</h2>
-							</div>
-						<%--ゲストの場合 --%>
-						<%--
+						<div id="changeKey">
+							<h2>
+								<fmt:message key="change.delete.key" />
+								<input type="password" name="pass" id="adminPass"
+									style="width: 117;">
+							</h2>
+						</div> <%--ゲストの場合 --%> <%--
 						<c:if test="${type == 'guest' }">
 							<script>
 							$(function(){
@@ -230,13 +253,13 @@ function tagCheck(){
 								</h2>
 							</div>
 						</c:if>
-						 --%>
-						 </td>
+						 --%></td>
 
 				</tr>
 				<tr class="bottom">
 					<td colspan="2" style="padding: 15px;"><span class="warning"><fmt:message
-								key="url.explanation" /> </span></td>
+								key="url.explanation" /> </span>
+					</td>
 				</tr>
 
 			</table>

@@ -3,9 +3,6 @@ package unity.controller.unitygames.upload;
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 
-import twitter4j.ProfileImage;
-import twitter4j.Twitter;
-
 public class IndexController extends Controller {
 
     @Override
@@ -36,7 +33,7 @@ public class IndexController extends Controller {
         //
         //
         // }
-        
+
         return forward("index.jsp");
     }
 }

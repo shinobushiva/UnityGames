@@ -3,8 +3,11 @@ package unity.controller.unitygames;
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.controller.upload.FileItem;
+import org.slim3.datastore.Datastore;
+import org.slim3.datastore.GlobalTransaction;
+import org.slim3.util.BeanUtil;
 
-import twitter4j.Twitter;
+import unity.model.SessionGameData;
 import unity.service.ChangeService;
 
 import com.google.appengine.api.datastore.Key;
@@ -17,13 +20,12 @@ public class ChangeUpController extends Controller {
     @Override
     public Navigation run() throws Exception {
 
-        String k = requestScope("key");
+        String k = requestScope("gameKey");
+        System.out.println("gameKey" + k);
         Key key = KeyFactory.stringToKey(k);
         String gameName = requestScope("GameName");
-
         String thumbNailURL = requestScope("ThumbNailURL");
         FileItem thumbNail = requestScope("ThumbNail");
-
         FileItem gameFile = requestScope("GameFile");
         String contents = requestScope("Contents");
         String operations = requestScope("Operations");
@@ -32,19 +34,44 @@ public class ChangeUpController extends Controller {
         String pass = requestScope("pass");
         String thumbNailType = requestScope("ThumbNailType");
         String gameType = requestScope("GameType");
-
         String thumbNailChange = requestScope("ThumbNailChange");
         String gameChange = requestScope("GameChange");
-
         String fixTag = requestScope("fixTag");
         String code = requestScope("Code");
 
-        Twitter twitter = (Twitter) sessionScope("twitter");
-        long twitterId = 0;
-        if(twitter !=null){
-        
-        twitterId = twitter.getId();
+        System.out.println("namafix:"+fixTag);
+        String gameScreenSize =
+            requestScope("gameScreenWidth")
+                + ","
+                + requestScope("gameScreenHeight");
+
+        System.out.println("thumbNailChange:" + thumbNailChange);
+        if (pass.isEmpty()) {
+
+            SessionGameData sg = new SessionGameData();
+            BeanUtil.copy(request, sg);
+            sg.setKey(Datastore.allocateId(SessionGameData.class));
+            sg.setGameScreenSize(gameScreenSize);
+            sg.setFixTags(fixTag);
+            GlobalTransaction tx = Datastore.beginGlobalTransaction();
+            tx.put(sg);
+            tx.commit();
+
+            sessionScope("sessionKey", sg.getKey());
+            sessionScope("key", key);
+            if (thumbNail != null)
+                sessionScope("thumbNail", thumbNail.getData());
+            if (gameFile != null)
+                sessionScope("gameFile", gameFile.getData());
+
+            sessionScope("thumbNailChange", thumbNailChange);
+            sessionScope("gameChange", gameChange);
+
+            // Callback用
+            sessionScope("loginType", "changeGame");
+            return forward("/login/oAuth");
         }
+
         service.change(
             key,
             gameName,
@@ -62,8 +89,9 @@ public class ChangeUpController extends Controller {
             gameChange,
             fixTag,
             code,
-            twitterId);
+            0,
+            gameScreenSize);
 
-        return forward("changed.jsp");
+        return forward("changed");
     }
 }

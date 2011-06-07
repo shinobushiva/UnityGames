@@ -34,38 +34,41 @@ public class Game implements Serializable {
     // ８操作説明 openation
     // ９投稿者(名前のみ） user
     // １０ゲームデータURL gameUrl
-    // １１投稿日 entry
+    // １１推奨ゲームスクリーンサイズ
+    // １２投稿日 entry
 
     private String gameId;
     private String gameName;
-  
+
     private String thumbNail;
-    
+
     private String game;
-    
+
+    private String gameScreenSize;
+
     @Attribute(lob = true)
     private Set<Tag> fixTags = new HashSet<Tag>();
-    
+
     @Attribute(lob = true)
     private Set<Tag> tags = new HashSet<Tag>();
-    
+
     private Date entry;
-    
+
     private Date lastDate;
-    
+
     private int access;
-    
+
     private int comments;
 
     @Attribute(lob = true)
     private String explanation;
-    
+
     @Attribute(lob = true)
     private String operations;
-    
+
     @Attribute(lob = true)
     private String code;
-    
+
     private String user;
 
     /**
@@ -246,6 +249,14 @@ public class Game implements Serializable {
 
     public String getGameId() {
         return gameId;
+    }
+
+    public void setGameScreenSize(String gameScreenSize) {
+        this.gameScreenSize = gameScreenSize;
+    }
+
+    public String getGameScreenSize() {
+        return gameScreenSize;
     }
 
 }

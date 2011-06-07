@@ -111,7 +111,10 @@ public class ChangeController extends Controller {
             requestScope("type", "twitter");
 
         }
-
+        String[] size = g.getGameScreenSize().split(",");
+        requestScope("width", size[0]);
+        requestScope("height", size[1]);
+        
         return forward("change.jsp");
     }
 }

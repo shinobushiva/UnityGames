@@ -97,7 +97,7 @@ else{return true; // 送信を実行
 	<form action="${f:url('changeUp')}" method="post" class="cmxform"
 		id="commentForm" enctype="multipart/form-data"
 		onSubmit="return tagCheck()" name="form1"">
-
+		<input type="hidden" name="gameKey" value="${f:h(g.key)}">
 		<div style="word-break: break-all">
 			<table class="purchase-options" border="0" width="859"
 				style="margin-left: auto; margin-right: auto; margin-top: 25px;">
@@ -123,12 +123,27 @@ else{return true; // 送信を実行
 							<fmt:message key="code" />
 						</h2> <textarea style="width: 440; height: 110;" name="Code"
 							title="<fmt:message key="code.title" />">${g.code}</textarea>
-						<div id="wrapper" align="center">
+						<div>
+							<div>
+								<div style="display: inline-block;">
+									<h2>スクリーンサイズ</h2>
+								</div>
+								<div style="display: inline-block;">(デフォルト値は600*450です)</div>
+							</div>
+							<div style="display: inline-block;">
+								Width:<input type="text" name="gameScreenWidth" value="${width}"
+									style="width: 50px;" />
+							</div>
+							<div style="display: inline-block;">
+								Height:<input type="text" name="gameScreenHeight"
+									value="${height}" style="width: 50px;" />
+							</div>
+						</div>
+						<div id="wrapper" style="float: right;">
 							<button class="button"
-								style="width: 250px; height: 80px; font-size: xx-large;">
+								style="width: 200px; height: 64px; font-size: x-large;">
 								<fmt:message key="button.change" />
 							</button>
-							<input type="hidden" name="key" value="${f:h(g.key)}">
 						</div></td>
 				</tr>
 				<tr>
@@ -261,13 +276,8 @@ ${g.thumbNailURL}<br>
 								</div>
 
 								<div id="twitterKey">
-									<div style="float: left;">
-										<img src="${p}" />
-									</div>
-									<a style="color: #1F98C7;"><div
-											style="text-align: left; font-weight: 900; font-size: 20px; margin-top: 10px; word-break: break-all;">
-											&nbsp;${userName}</div> </a>
-
+									<div style="color: blue; margin-top: 10px">登録ボタン押した後認証画面へ</div>
+									<div style="height: 40px;"></div>
 								</div>
 
 								<div id="changeKey">
@@ -276,21 +286,22 @@ ${g.thumbNailURL}<br>
 										<input type="password" name="pass" id="adminPass"
 											style="width: 117;" value="${g.pass}">
 									</h2>
+									<div style="height: 30px;"></div>
 								</div>
 							</c:if>
 							<c:if test="${type == 'guest' }">
 								<%--パス入れてる＆Guest--%>
 								<script>
 							$(function(){
-								$( "#changeKey" ).show();
-								
+								$( "#changeKey" ).toggle();
+								$("#twitterKey").toggle();
 							});
 							</script>
 								<div>
 
-									<input type="radio" name="gameAdmin" id="ga2" checked="checked" "/>パスワードを設定<input
-										type="radio" id="ga1" name="gameAdmin" disabled />Twitterアカウント<span
-										style="color: red;">(ログイン後選択可)</span>
+									<input type="radio" name="gameAdmin" id="ga2" checked="checked" />パスワードを設定<input
+										type="radio" id="ga1" name="gameAdmin" />Twitterアカウント
+
 								</div>
 								<div id="changeKey">
 									<h2>
@@ -298,6 +309,11 @@ ${g.thumbNailURL}<br>
 										<input type="password" name="pass" id="adminPass"
 											style="width: 117;" value="${g.pass}">
 									</h2>
+									<div style="height: 30px;"></div>
+								</div>
+								<div id="twitterKey">
+									<div style="color: blue; margin-top: 10px">登録ボタン押した後認証画面へ</div>
+									<div style="height: 40px;"></div>
 								</div>
 							</c:if>
 
@@ -311,13 +327,8 @@ ${g.thumbNailURL}<br>
 							</div>
 
 							<div id="twitterKey">
-								<div style="float: left;">
-									<img src="${p}" />
-								</div>
-								<a style="color: #1F98C7;"><div
-										style="text-align: left; font-weight: 900; font-size: 20px; margin-top: 10px; word-break: break-all;">
-										&nbsp;${userName}</div> </a>
-
+								<div style="color: blue; margin-top: 10px">登録ボタン押した後認証画面へ</div>
+								<div style="height: 40px;"></div>
 							</div>
 
 							<div id="changeKey">
@@ -326,6 +337,7 @@ ${g.thumbNailURL}<br>
 									<input type="password" name="pass" id="adminPass"
 										style="width: 117;">
 								</h2>
+								<div style="height: 30px;"></div>
 							</div>
 						</c:if>
 					</td>
@@ -337,6 +349,7 @@ ${g.thumbNailURL}<br>
 		</div>
 	</form>
 	<form action="delete" method="post">
+		<input type="hidden" name="gameKey" value="${f:h(g.key)}">
 		<div id="wrapper" align="center">
 			<button class="button" name="delete"
 				style="position: relative; top: -30; width: 859px; font-size: xx-large;">
@@ -344,7 +357,7 @@ ${g.thumbNailURL}<br>
 			</button>
 		</div>
 
-		<input type="hidden" name="key" value="${f:h(g.key)}">
+
 	</form>
 
 

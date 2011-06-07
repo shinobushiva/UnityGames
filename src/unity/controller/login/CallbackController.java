@@ -1,19 +1,22 @@
 package unity.controller.login;
 
-import unity.service.ChangeService;
-import unity.service.UserService;
-
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
-import org.slim3.controller.upload.FileItem;
+import org.slim3.datastore.Datastore;
+import org.slim3.datastore.GlobalTransaction;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.auth.RequestToken;
+import unity.model.SessionGameData;
+import unity.service.UploadService;
+import unity.service.UserService;
+
+import com.google.appengine.api.datastore.Key;
 
 public class CallbackController extends Controller {
     private UserService us = new UserService();
-    private ChangeService service = new ChangeService();
+    private UploadService service = new UploadService();
 
     @Override
     public Navigation run() throws Exception {
@@ -39,51 +42,77 @@ public class CallbackController extends Controller {
             twitter.getId(),
             twitter.getScreenName(),
             twitter.showUser(twitter.getId()).getDescription());
-        // ユーザーのIDを設定しておく なんのため？忘れた
-        sessionScope("userId", twitter.getId());
 
-        if (sessionScope("loginType") != null)
+        if (sessionScope("loginType") != null) {
+            String uc = "";
+            Key sessionKey = sessionScope("sessionKey");
+            Key key = sessionScope("key");
+            System.out.println("sessionKey" + sessionKey);
+            System.out.println("key:" + key);
+            System.out.println("gfile:" + sessionScope("gameFile"));
+            System.out.println("gamechange:"
+                + (String) sessionScope("gameChange"));
+
+            System.out.println();
+            SessionGameData sg =
+                Datastore.get(SessionGameData.class, sessionKey);
+
+            System.out.println("size:" + sg.getGameScreenSize());
+
+            String gameChange = null;
+            String thumbNailChange = null;
+            if (sessionScope("loginType").equals("newGame")) {
+                gameChange = "";
+                thumbNailChange = "";
+            } else {
+
+                gameChange = sessionScope("gameChange");
+                thumbNailChange = sessionScope("thumbNailChange");
+            }
+System.out.println("sgfix:"+sg.getFixTags());
+            service.upload(
+                key,
+                sg.getGameName(),
+                sg.getGameURL(),
+                (byte[]) sessionScope("gameFile"),
+                (byte[]) sessionScope("thumbNail"),
+                sg.getThumbNailURL(),
+                sg.getContents(),
+                sg.getOperations(),
+                sg.getHpURL(),
+                "",
+                sg.getThumbNailType(),
+                sg.getGameType(),
+                thumbNailChange,
+                gameChange,
+                sg.getFixTags(),
+                sg.getCode(),
+                (long) twitter.getId(),
+                sg.getGameScreenSize());
+
             if (sessionScope("loginType").equals("newGame")) {
 
-                service.change(
-                    null,
-                    (String) sessionScope("gameName"),
-                    (String) sessionScope("gameURL"),
-                    (FileItem) sessionScope("gameFile"),
-                    (FileItem) sessionScope("thumbNail"),
-                    (String) sessionScope("thumbNailURL"),
-                    (String) sessionScope("contents"),
-                    (String) sessionScope("operations"),
-                    (String) sessionScope("hpURL"),
-                    "",
-                    (String) sessionScope("thumbNailType"),
-                    (String) sessionScope("gameType"),
-                    "",
-                    "",
-                    (String) sessionScope("fixTag"),
-                    (String) sessionScope("code"),
-                    (long) twitter.getId());
+                uc = "upload/uploaded";
 
-                removeSessionScope("gameName");
-                removeSessionScope("gameURL");
-                removeSessionScope("gameFile");
-                removeSessionScope("thumbNail");
-                removeSessionScope("thumbNailURL");
-                removeSessionScope("contents");
-                removeSessionScope("operations");
-                removeSessionScope("hpURL");
-                removeSessionScope("thumbNailType");
-                removeSessionScope("gameType");
-                removeSessionScope("fixTag");
-                removeSessionScope("code");
-                removeSessionScope("twitter");
-                removeSessionScope("loginType");
-                return forward("/unitygames/upload/uploaded.jsp");
+            } else {
+                removeSessionScope("key");
+                removeSessionScope("thumbNailChange");
+                removeSessionScope("gameChange");
 
+                uc = "changed";
             }
+            removeSessionScope("gameFile");
+            removeSessionScope("thumbNail");
+            removeSessionScope("loginType");
+            removeSessionScope("sessionKey");
+
+            GlobalTransaction tx = Datastore.beginGlobalTransaction();
+            tx.delete(sg.getKey());
+            tx.commit();
+            return redirect("/unitygames/" + uc);
+        }
 
         String userName = (String) sessionScope("userName");
-        removeSessionScope("loginType");
         removeSessionScope("userName");
         return redirect("/user/" + userName);
     }

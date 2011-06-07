@@ -3,43 +3,26 @@ package unity.controller.unitygames.upload;
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.controller.upload.FileItem;
+import org.slim3.controller.upload.FileItemStream;
+import org.slim3.datastore.Datastore;
+import org.slim3.datastore.GlobalTransaction;
+import org.slim3.util.BeanUtil;
 
-import twitter4j.Twitter;
+import unity.controller.login.OAuthController;
+import unity.model.SessionGameData;
 import unity.service.ChangeService;
 
 public class UploadController extends Controller {
     private ChangeService service = new ChangeService();
+    private OAuthController oauth = new OAuthController();
 
     @Override
     public Navigation run() throws Exception {
 
-        //Twitterで管理するなら
-        if (requestScope("pass").toString().isEmpty()){
-         
-            sessionScope("gameName",requestScope("GameName"));
-            sessionScope("thumbNailURL",requestScope("ThumbNailURL"));
-            sessionScope("thumbNail",requestScope("ThumbNail"));
-            sessionScope("gameFile",requestScope("GameFile"));
-            sessionScope("contents",requestScope("Contents"));
-            sessionScope("operations",requestScope("Operations"));
-            sessionScope("hpURL", requestScope("HpURL"));
-            sessionScope("gameURL", requestScope("GameURL"));
-            sessionScope("thumbNailType",requestScope("ThumbNailType"));
-            sessionScope("gameType", requestScope("GameType"));
-            sessionScope("fixTag", requestScope("fixTag"));
-            sessionScope("code", requestScope("Code"));
-            
-            //Callback用
-            sessionScope("loginType", "newGame");
-     
-            
-            return forward("/login/oAuth");
-        }
         String gameName = requestScope("GameName");
 
         String thumbNailURL = requestScope("ThumbNailURL");
         FileItem thumbNail = requestScope("ThumbNail");
-
         FileItem gameFile = requestScope("GameFile");
         String contents = requestScope("Contents");
         String operations = requestScope("Operations");
@@ -48,15 +31,37 @@ public class UploadController extends Controller {
         String pass = requestScope("pass");
         String thumbNailType = requestScope("ThumbNailType");
         String gameType = requestScope("GameType");
-
         String fixTag = requestScope("fixTag");
         String code = requestScope("Code");
 
-        Twitter twitter = (Twitter) sessionScope("twitter");
-        long twitterId = 0;
-        if (twitter != null) {
-            twitterId = twitter.getId();
-            System.out.println("pass:" + pass.isEmpty());
+        String gameScreenSize =
+            requestScope("gameScreenWidth")
+                + ","
+                + requestScope("gameScreenHeight");
+
+        // Twitterで管理するなら
+        if (pass.isEmpty()) {
+
+            SessionGameData sg = new SessionGameData();
+            BeanUtil.copy(request, sg);
+            sg.setKey(Datastore.allocateId(SessionGameData.class));
+            sg.setGameScreenSize(gameScreenSize);
+            sg.setFixTags(fixTag);
+            GlobalTransaction tx = Datastore.beginGlobalTransaction();
+            tx.put(sg);
+            tx.commit();
+
+            sessionScope("sessionKey", sg.getKey());
+            if (thumbNail != null)
+                sessionScope("thumbNail", thumbNail.getData());
+
+            if (gameFile != null)
+                sessionScope("gameFile", gameFile.getData());
+
+            // Callback用
+            sessionScope("loginType", "newGame");
+            // return null;
+            return forward("/login/oAuth");
         }
 
         service.change(
@@ -76,7 +81,8 @@ public class UploadController extends Controller {
             "",
             fixTag,
             code,
-            twitterId);
+            0,
+            gameScreenSize);
         return forward("uploaded.jsp");
     }
 }

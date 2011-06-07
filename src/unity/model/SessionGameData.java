@@ -13,7 +13,7 @@ import org.slim3.datastore.Sort;
 import com.google.appengine.api.datastore.Key;
 
 @Model(schemaVersion = 1)
-public class GameData implements Serializable {
+public class SessionGameData implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -63,15 +63,14 @@ public class GameData implements Serializable {
 
     private String gameScreenSize;
 
-    @Attribute(lob = true)
-    private Set<Tag> fixTags = new HashSet<Tag>();
 
-    @Attribute(lob = true)
-    private Set<Tag> tags = new HashSet<Tag>();
+    private String fixTags;
+
+   
 
     @Attribute(persistent = false)
-    private org.slim3.datastore.InverseModelListRef<unity.model.UploadedDataFragment, unity.model.GameData> fragmentListRef =
-        new org.slim3.datastore.InverseModelListRef<unity.model.UploadedDataFragment, unity.model.GameData>(
+    private org.slim3.datastore.InverseModelListRef<unity.model.UploadedDataFragment, unity.model.SessionGameData> fragmentListRef =
+        new org.slim3.datastore.InverseModelListRef<unity.model.UploadedDataFragment, unity.model.SessionGameData>(
             unity.model.UploadedDataFragment.class,
             "uploadDataRef",
             this,
@@ -134,7 +133,7 @@ public class GameData implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        GameData other = (GameData) obj;
+        SessionGameData other = (SessionGameData) obj;
         if (key == null) {
             if (other.key != null) {
                 return false;
@@ -145,7 +144,7 @@ public class GameData implements Serializable {
         return true;
     }
 
-    public InverseModelListRef<UploadedDataFragment, GameData> getFragmentListRef() {
+    public InverseModelListRef<UploadedDataFragment, SessionGameData> getFragmentListRef() {
         return fragmentListRef;
     }
 
@@ -277,21 +276,7 @@ public class GameData implements Serializable {
         return code;
     }
 
-    public void setFixTags(Set<Tag> fixTags) {
-        this.fixTags = fixTags;
-    }
 
-    public Set<Tag> getFixTags() {
-        return fixTags;
-    }
-
-    public void setTags(Set<Tag> tags) {
-        this.tags = tags;
-    }
-
-    public Set<Tag> getTags() {
-        return tags;
-    }
 
     public void setPoint(int point) {
         this.point = point;
@@ -323,6 +308,14 @@ public class GameData implements Serializable {
 
     public String getGameScreenSize() {
         return gameScreenSize;
+    }
+
+    public void setFixTags(String fixTags) {
+        this.fixTags = fixTags;
+    }
+
+    public String getFixTags() {
+        return fixTags;
     }
 
 }

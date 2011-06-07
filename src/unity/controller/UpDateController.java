@@ -8,26 +8,33 @@ import org.slim3.datastore.Datastore;
 import org.slim3.datastore.GlobalTransaction;
 
 import unity.model.GameData;
+import unity.model.api.Game;
 
 public class UpDateController extends Controller {
 
     @Override
     public Navigation run() throws Exception {
 
-     List<GameData> asList = Datastore.query(GameData.class).asList();
-     
-     for (GameData g : asList) {
-         int point = g.getAccess() + g.getComment() * 3;
-         g.setPoint(point);
-         g.setTwitterUserKey(null);
-        
-         GlobalTransaction tx = Datastore.beginGlobalTransaction();
-         tx.put(g);
-         tx.commit();
-         
-    }
-        
-        
+        List<GameData> asList = Datastore.query(GameData.class).asList();
+        List<Game> asList2 = Datastore.query(Game.class).asList();
+        // String size = "600,450";
+        for (GameData g : asList) {
+
+            // g.setGameScreenSize(size);
+            //
+            // GlobalTransaction tx = Datastore.beginGlobalTransaction();
+            // tx.put(g);
+            // tx.commit();
+
+        }
+
+        for (Game game : asList2) {
+            // game.setGameScreenSize(size);
+            //
+            // GlobalTransaction tx = Datastore.beginGlobalTransaction();
+            // tx.put(game);
+            // tx.commit();
+        }
 
         return null;
     }
