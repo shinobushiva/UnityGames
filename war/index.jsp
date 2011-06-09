@@ -15,26 +15,10 @@
 <%@ include file="/share/js.jsp"%>
 <title>UnityGames</title>
 <script type="text/javascript">
-var _gaq = _gaq || [];
-_gaq.push([ '_setAccount', 'UA-22824102-1' ]);
-_gaq.push([ '_trackPageview' ]);
-
-(function() {
-	var ga = document.createElement('script');
-	ga.type = 'text/javascript';
-	ga.async = true;
-	ga.src = ('https:' == document.location.protocol ? 'https://ssl'
-			: 'http://www')
-			+ '.google-analytics.com/ga.js';
-	var s = document.getElementsByTagName('script')[0];
-	s.parentNode.insertBefore(ga, s);
-})();
-
 	$(function() {
 		$("#campaign").css("visibility", "hidden");
 		$("#campaign").load("/campaignList", null, function() {
 			var tid; //timeoutID
-
 			initMovingBoxes(function() {
 				$("#campaign").css("visibility", "visible");
 			}, function() {
@@ -45,6 +29,20 @@ _gaq.push([ '_trackPageview' ]);
 			});
 		});
 	});
+	var _gaq = _gaq || [];
+	_gaq.push([ '_setAccount', 'UA-22824102-1' ]);
+	_gaq.push([ '_trackPageview' ]);
+
+	(function() {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+				: 'http://www')
+				+ '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
 </script>
 </head>
 <body style="">
@@ -108,7 +106,7 @@ _gaq.push([ '_trackPageview' ]);
 				<div style="text-align: center;">更新情報</div>
 			</div>
 			 --%>
-		
+
 			<a href="/unitygames/" style="text-decoration: none;"><div
 					class="newGameLine">
 					新着ゲーム<img src="/images/click.png"
@@ -122,14 +120,11 @@ _gaq.push([ '_trackPageview' ]);
 				</div>
 			</c:forEach>
 
-	<div class="newGameLine">
-
-				ランキング
-			</div>
+			<div class="newGameLine">ランキング</div>
 			<div>
 				<c:forEach var="g" items="${rankingGameList}" varStatus="loop">
 					<div style="display: inline-block; text-align: center;">
-				<span style="font-size: 15;font-weight: 900;">${loop.count}</span>位<br>
+						<span style="font-size: 15; font-weight: 900;">${loop.count}</span>位<br>
 						<%@ include file="/share/patternDistinction.jsp"%>
 						<a href="${url}"> <img src="${thUrl}" width="150" height="150" /><br>
 							<div class="bounded" style="width: 150px;">${g.gameName}</div> </a>

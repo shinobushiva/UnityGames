@@ -2,6 +2,13 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="f" uri="http://www.slim3.org/functions"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>user Index</title>
+<%@ include file="/share/css.jsp"%>
+<%@ include file="/share/js.jsp"%>
 
 
 <%--ページング --%>
@@ -40,6 +47,19 @@
 
 <script type="text/javascript">
 	$(function() {
+
+		$
+				.getJSONP(
+						"http://api.twitter.com/1/users/show.json?id=${twitterId}&callback={callback}",
+						function(e) {
+
+							$("#twitterImage").attr("src",
+									"" + e.profile_image_url);
+							$("#twitterScreenName").html("@" + e.screen_name);
+							$("#twitterName").html("" + e.name);
+
+						});
+
 		loadMyself();
 		$("#tweet").charCount();
 		$("#myselfEdit").hide();
@@ -172,52 +192,53 @@
 		}
 	});
 </script>
+</head>
+<body>
+	<%@ include file="/share/header.jsp"%>
+	<input type="hidden" name="userId" id="ud" value="${um.userId}" />
 
 
-<input type="hidden" name="userId" id="ud" value="${um.userId}" />
 
+	<div style="margin-left: 50px;">
+		<div>
+			<div style="float: left; margin-left: 10px; margin-top: 10px;">
+				<img id="twitterImage" style="width: 48px; height: 48px;" />
+			</div>
+			<div style="display: inline-block;"></div>
+			<div style="margin-top: 20px;">
+				<span style="font-size: xx-large;" id="twitterScreenName"></span><span
+					style="margin-left: 30px;" id="twitterName"></span>
+			</div>
 
-
-<div style="margin-left: 50px;">
-	<div>
-		<div style="float: left; margin-left: 10px; margin-top: 10px;">
-			<img src="${tp}" style="width: 50px; height: 50px;" />
 		</div>
-		<div style="display: inline-block;"></div>
-		<div style="margin-top: 20px;">
-			<span style="font-size: xx-large;">@${u.screenName }</span><span
-				style="margin-left: 30px;">${u.name}</span>
+		<hr style="margin-top: 50px; width: 900px;" />
+		<div style="margin-top: 10px;">
+			<div
+				style="font-size: 20px; margin-top: auto; margin-bottom: auto; display: inline-block;">紹介：</div>
+			<div id="loadMyself" style="display: inline-block; width: 450px;">
+				<span id="myself"></span><span id="myselfEdit"><textarea
+						style="width: 427px; height: 37px; font-size: 10px;"
+						id="myselfText"></textarea><br> <span id="myself-cancel"
+					style="float: right; margin-right: 10px; margin-top: 5px; cursor: pointer;">キャンセル</span>
+					<button id="myself-change" style="float: right; margin-right: 0px;">変更</button>
+				</span>
+			</div>
+		</div>
+		<div>
+			<div style="font-size: 20px; display: inline-block;">Web:</div>
+			<div id="web"
+				style="clear: both; margin-top: 20px; margin-bottom: 20px; display: inline-block;">
+
+				<sapn id="url"></sapn>
+				<span id="reg"><input type="text" name="webUrl" id="wu"
+					value="">
+					<button id="web-change">変更</button> <span id="web-cancel"
+					style="font-size: 10px;">キャンセル</span> </span>
+			</div>
 		</div>
 
-	</div>
-	<hr style="margin-top: 50px; width: 900px;" />
-	<div style="margin-top: 10px;">
-		<div
-			style="font-size: 20px; margin-top: auto; margin-bottom: auto; display: inline-block;">紹介：</div>
-		<div id="loadMyself" style="display: inline-block; width: 450px;">
-			<span id="myself"></span><span id="myselfEdit"><textarea
-					style="width: 427px; height: 37px; font-size: 10px;"
-					id="myselfText"></textarea><br> <span id="myself-cancel"
-				style="float: right; margin-right: 10px; margin-top: 5px; cursor: pointer;">キャンセル</span>
-				<button id="myself-change" style="float: right; margin-right: 0px;">変更</button>
-			</span>
-		</div>
-	</div>
-	<div>
-		<div style="font-size: 20px; display: inline-block;">Web:</div>
-		<div id="web"
-			style="clear: both; margin-top: 20px; margin-bottom: 20px; display: inline-block;">
-
-			<sapn id="url"></sapn>
-			<span id="reg"><input type="text" name="webUrl" id="wu"
-				value="">
-				<button id="web-change">変更</button> <span id="web-cancel"
-				style="font-size: 10px;">キャンセル</span> </span>
-		</div>
-	</div>
-
-	<div>
-		<%-- 
+		<div>
+			<%-- 
 		セーブデータ管理(未実装)
 		<div style="overflow: auto; height: 400px;">
 			<div>
@@ -239,91 +260,102 @@
 		</div>
 		<hr />
 		--%>
-		<div style="font-size: 20px;margin-top: 50px;">ゲーム管理</div>
-		<hr style="width: 500px;">
-		<div style="display: inline-block; width: 500px;">
-			
-			<div id="hiddenresult" style="display: none;">
-				<div class="result">
-					<c:forEach var="g" items="${gameList}" varStatus="loop">
-						<%@ include file="/share/patternDistinction.jsp"%>
-						<div
-							style="display: inline-block; text-align: center; z-index: 1; cursor: pointer;"
-							id="ug${g.key.id}">
-							<a href="/unitygames/change?id=${g.key.id}"> <img
-								src="${thUrl}" width="80" height="80" /><br>
-								<div class="bounded" style="width: 150px; text-align: center;">${g.gameName}</div>
-							</a>
+			<div style="font-size: 20px; margin-top: 50px;">ゲーム管理</div>
+			<hr style="width: 500px;">
+			<div style="display: inline-block; width: 500px;">
+
+				<div id="hiddenresult" style="display: none;">
+					<div class="result">
+						<c:forEach var="g" items="${gameList}" varStatus="loop">
+							<%@ include file="/share/patternDistinction.jsp"%>
+							<div
+								style="display: inline-block; text-align: center; z-index: 1; cursor: pointer;"
+								id="ug${g.key.id}">
+								<a href="/unitygames/change?id=${g.key.id}"> <img
+									src="${thUrl}" width="80" height="80" /><br>
+									<div class="bounded" style="width: 150px; text-align: center;">${g.gameName}</div>
+								</a>
+							</div>
+							<c:if test="${loop.count mod 3 == 0 }">
+					</div>
+					<div class="result">
+						</c:if>
+						</c:forEach>
+					</div>
+				</div>
+				<div id="Pagination" 　style="" align="center"></div>
+				<br style="clear: both;" />
+				<div id="Searchresult"></div>
+				<div align="center" style="margin-top: 30px;">
+					<form method="get" action="#">
+						<button type="button" id="btnPrev"
+							style="width: 100px; height: 30px;">前</button>
+
+						<button type="button" id="btnNext"
+							style="margin-right: 50px; width: 100px; height: 30px;">次</button>
+					</form>
+				</div>
+
+
+			</div>
+			<div style="float: right; margin-top: -150px; margin-right: 50px;">
+
+
+				<div style="float: right; margin-right: 80px;" id="twitter">
+					<div style="width: 250px;">
+						<div style="font-size: 15px;">つぶやく(Twitterと連携しています)</div>
+						<div>
+							<div style="display: inline;">
+								<textarea style="width: 250px; height: 30px;" id="tweet"></textarea>
+							</div>
+							<div id="tweetButton"
+								style="display: inline-block; height: 25px;">
+								<input type="checkbox" id="noHashtag" value="noHash">#UnityGamesをつけない
+								<button style="margin-left: 0px;" id="tweetUpdate">ついーと</button>
+
+							</div>
 						</div>
-						<c:if test="${loop.count mod 3 == 0 }">
+					</div>
+
+
+					<div style="clear: both;">
+
+						<c:forEach var="t" items="${tweet}">
+
+							<script type="text/javascript">
+								$(function() {
+									/* 例1 */
+									var url = "http://twitter.com/statuses/show/${t.tweetId}.json?callback={callback}";
+									$
+											.getJSONP(
+													url,
+													function(obj) {
+														var s = "";
+
+														s += "<div style='width: 250px;'>"
+																+ obj.text
+																+ "</div>";
+														s += "<div>"
+																+ jQuery
+																		.timeago(obj.created_at)
+																+ "</div>";
+														$("#${t.tweetId}")
+																.html(s);
+													});
+								});
+							</script>
+
+							<hr />
+							<div style="height: 50px; border: 1px;clear: both;" id="${t.tweetId}"></div>
+
+						</c:forEach>
+						<hr />
+					</div>
+
 				</div>
-				<div class="result">
-				</c:if>
-				</c:forEach>
+
 			</div>
 		</div>
-		<div id="Pagination"　style="" align="center"></div>
-		<br style="clear: both;" />
-		<div id="Searchresult"></div>
-		<div align="center" style="margin-top: 30px;">
-			<form method="get" action="#">
-				<button type="button" id="btnPrev"
-					style="width: 100px; height: 30px;">前</button>
-
-				<button type="button" id="btnNext"
-					style="margin-right: 50px; width: 100px; height: 30px;">次</button>
-			</form>
-		</div>
-
-
-	</div>
-<div style="float: right;margin-top: -150px;margin-right: 50px;">
-	
-	
-	<div
-		style="float: right;margin-right: 80px;"
-		id="twitter">
-		<div style="width: 250px;">
-			<div style="font-size: 15px;">つぶやく(Twitterと連携しています)</div>
-			<div>
-				<div style="display: inline;"><textarea style="width: 250px; height: 30px;" id="tweet"></textarea></div>
-				<div id="tweetButton"
-					style="display: inline-block; height: 25px;">
-					<input type="checkbox" id="noHashtag" value="noHash">#UnityGamesをつけない
-					<button style="margin-left: 0px;" id="tweetUpdate">ついーと</button>
-
-				</div>
-			</div>
-		</div>
-
-
-		<div style="clear: both;">
-
-			<c:forEach var="t" items="${tweet}">
-
-				<script type="text/javascript">
-					$(function() {
-						/* 例1 */
-						var url = "http://twitter.com/statuses/show/${t.tweetId}.json?callback={callback}";
-						$.getJSONP(url, function(obj) {
-							var s = "";
-
-							s += "<div style='width: 250px;'>" + obj.text + "</div>";
-							s += "<div>" + jQuery.timeago(obj.created_at)
-									+ "</div>";
-							$("#${t.tweetId}").html(s);
-						});
-					});
-				</script>
-
-				<hr />
-				<div style="height: 50px; border: 1px;" id="${t.tweetId}"></div>
-
-			</c:forEach>
-			<hr />
-		</div>
-
-	</div>
-	
-</div>
-</div>
+		<%@ include file="/share/footer.jsp"%>
+</body>
+</html>

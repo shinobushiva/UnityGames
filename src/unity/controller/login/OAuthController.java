@@ -12,13 +12,15 @@ public class OAuthController extends Controller {
     @Override
     public Navigation run() throws Exception {
 
+        if ("true".equals(requestScope("useReferer")))
+            sessionScope("referer", request.getHeader("REFERER"));
         // このファクトリインスタンスは再利用可能でスレッドセーフです
         // twitterオブジェクトをセッションに格納
         Twitter twitter = new TwitterFactory().getInstance();
         sessionScope("tw", twitter);
 
         sessionScope("userName", asString("name"));
-       
+
         // callback用のURLを生成して格納
         StringBuffer callbackURL = request.getRequestURL();
         int index = callbackURL.lastIndexOf("/");

@@ -26,17 +26,17 @@ public class TwitterSearchController extends Controller {
 
     private static final String SEARCH_QUERY =
         "http://202.16.132.23/unitygames/search.php"
-            + "?url=http://search.twitter.com/search.json&q=UnityGames&rpp=20&lang=ja&page=1";
+            + "?url=http://search.twitter.com/search.json&q=UnityGames&rpp=20&page=1";
 
     @SuppressWarnings("unchecked")
     @Override
     public Navigation run() throws Exception {
-        ConfigurationBuilder cb = new ConfigurationBuilder();
-        cb
-            .setOAuthAccessToken(
-                "276331612-GGKg4ShbCjuAcTnZT4nElDSS5nx1U9PPktAt8dmw")
-            .setOAuthAccessTokenSecret(
-                "Tl0qGUzkyA664GoQbOi3Uj5vgGMbBd92yL6RISSPNo");
+        // ConfigurationBuilder cb = new ConfigurationBuilder();
+        // cb
+        // .setOAuthAccessToken(
+        // "276331612-GGKg4ShbCjuAcTnZT4nElDSS5nx1U9PPktAt8dmw")
+        // .setOAuthAccessTokenSecret(
+        // "Tl0qGUzkyA664GoQbOi3Uj5vgGMbBd92yL6RISSPNo");
         // TwitterFactory tf = new TwitterFactory(cb.build());
         // Twitter twitter = tf.getInstance();
 
@@ -74,14 +74,15 @@ public class TwitterSearchController extends Controller {
                 String tweet = "" + map2.get("text"); // tweet内容
                 long tweetId = Long.valueOf(tweetIdString); // long型に変換
                 String createTime = "" + map2.get("created_at"); // tweet内容
-                
-                System.out.println("date:"+createTime);
-                
+
+                System.out.println("date:" + createTime);
+
                 // userNameからuser_idを拾ってくる（from_user_idは違う。本人idではない）
                 String idGet = null;
                 URL ur =
-                    new URL("http://twitter.com/users/show/"
-                        + userName
+                    new URL("http://202.16.132.23/unitygames/search.php"
+                        + "?url=http://api.twitter.com/1/statuses/show/"
+                        + tweetId
                         + ".json");
                 URLConnection co = ur.openConnection();
                 // co.setReadTimeout(30 * 1000);
@@ -100,14 +101,19 @@ public class TwitterSearchController extends Controller {
 
                 idGet = s.toString();
 
+                System.out.println("tweetid:" + tweetId);
+                System.out.println("idGet:" + idGet);
                 Map<String, Object> ma =
                     (Map<String, Object>) JSON.decode(idGet);
-
-                String userIdString = "" + ma.get("id"); // tweetId
+                
+                String userIdString = "" + ((Map<String,Object>)ma.get("user")).get("id_str"); // tweetId
+                System.out.println(userIdString);
                 long userId = Long.valueOf(userIdString); // long型に変換
-                System.out.println(tweet);
+              //  System.out.println(tweet);
                 // #UnityGamesが含まれていたら登録
                 if (tweet.contains("#UnityGames")) {
+                    
+                    System.out.println("tweet:"+tweet);
                     // TweetIdが既に保存されているかチェック
                     Tweet check =
                         Datastore

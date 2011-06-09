@@ -3,6 +3,7 @@ package unity.controller.showUser;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,7 +12,6 @@ import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
 
 import twitter4j.Twitter;
-import twitter4j.TwitterFactory;
 import unity.meta.GameDataMeta;
 import unity.model.GameData;
 import unity.model.Tweet;
@@ -30,24 +30,26 @@ public class MyPageController extends Controller {
         if (name.equals("me")) {
 
             Twitter t = (Twitter) sessionScope("twitter");
+            System.out.println("ScreenName:" + t.getScreenName());
             // ローカル時
-          //  uk = us.getName("kyusyukeigo");
-             uk = us.getName(t.getScreenName());
+            // uk = us.getName("kyusyukeigo");
+            uk = us.getName(t.getScreenName());
         } else {
 
             // アカウント名からモデルのuserIdを取り出す
             uk = us.getName(name);
         }
         System.out.println("uk:" + uk);
+        requestScope("twitterId", uk.getUserId());
         // userIdからイメージ画像を持ってくる
-        Twitter twitter = new TwitterFactory().getInstance();
-        twitter4j.User u = twitter.showUser(uk.getUserId());
-        System.out.println("u:" + u);
-
-        String imageURL = u.getProfileImageURL().toString();
-
-        String picture = imageURL.replace("normal", "reasonably_small");
-
+        // Twitter twitter = new TwitterFactory().getInstance();
+        // twitter4j.User u = twitter.showUser(uk.getUserId());
+        // System.out.println("u:" + u);
+        //
+        // String imageURL = u.getProfileImageURL().toString();
+        //
+        // String picture = imageURL.replace("normal", "reasonably_small");
+        //
         // TweetIdを取り出す
         Set<Tweet> tweets = uk.getTweets();
 
@@ -143,36 +145,9 @@ public class MyPageController extends Controller {
         // モデルのUser情報
         requestScope("um", uk);
         // Twitterアカウント
-        requestScope("u", u);
+        // requestScope("u", u);
         // TwitterProfilePicture
-        requestScope("tp", picture);
-
-        // Twitterアカウントでとれるもの
-        // System.out.println("CreatedAt:" + u.getCreatedAt());
-        // System.out.println("Description:" + u.getDescription());
-        // System.out.println("FavouritesCount:" + u.getFavouritesCount());
-        // System.out.println("FollowersCount:" + u.getFollowersCount());
-        // System.out.println("FriendsCount:" + u.getFriendsCount());
-        // System.out.println("Id:" + u.getId());
-        // System.out.println("Lang:" + u.getLang());
-        // System.out.println("ListedCount:" + u.getListedCount());
-        // System.out.println("ProfileBackgroundColor:"
-        // + u.getProfileBackgroundColor());
-        // System.out.println("ProfileBackgroundImageUr:"
-        // + u.getProfileBackgroundImageUrl());
-        // System.out.println("ProfileImageURL:" + u.getProfileImageURL());
-        // System.out.println("ProfileLinkColor:" + u.getProfileLinkColor());
-        // System.out.println("ProfileSidebarBorderColor:"
-        // + u.getProfileSidebarBorderColor());
-        // System.out.println("ProfileSidebarFillColor:"
-        // + u.getProfileSidebarFillColor());
-        // System.out.println("ProfileTextColor:" + u.getProfileTextColor());
-        System.out.println("RateLimitStatus:" + u.getRateLimitStatus());
-        // System.out.println("Status:" + u.getStatus());
-        // System.out.println("StatusesCount:" + u.getStatusesCount());
-        // System.out.println("TimeZone:" + u.getTimeZone());
-        // System.out.println("URL:" + u.getURL());
-        // System.out.println("UtcOffset:" + u.getUtcOffset());
+        // requestScope("tp", picture);
 
         // 表示だけが違うのでここでjspを判別する
         if (!name.equals("me")) {

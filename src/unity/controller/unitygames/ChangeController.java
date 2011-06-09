@@ -55,10 +55,11 @@ public class ChangeController extends Controller {
             StringBuilder buf = new StringBuilder();
             for (Tag t : g.getFixTags()) {
                 buf.insert(0, t.getName() + ",");
-                buf.deleteCharAt(buf.length() - 1);
-
-                requestScope("tag", buf.toString());
             }
+            if (buf.length() > 0) {
+                buf.deleteCharAt(buf.length() - 1);
+            }
+            requestScope("tag", buf.toString());
             // TwitterUserKeyからアカウントを取得
             if (g.getTwitterUserKey() != null) {
 
@@ -114,7 +115,7 @@ public class ChangeController extends Controller {
         String[] size = g.getGameScreenSize().split(",");
         requestScope("width", size[0]);
         requestScope("height", size[1]);
-        
+
         return forward("change.jsp");
     }
 }

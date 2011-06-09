@@ -1,7 +1,6 @@
 package unity.util;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,7 +11,7 @@ public class CodeBlockUtilsTest {
     public static void main(String[] args) {
 
         String nl = "\n";
-        String str =
+        String string =
             "" + "Hello"
                 + nl
                 + "<code>"
@@ -41,16 +40,6 @@ public class CodeBlockUtilsTest {
                 + nl
                 + "SogeHoge";
 
-        String[] split = str.split("<code>");
-
-        List<String> al = new ArrayList<String>();
-        for (String str2 : split) {
-            String[] split2 = str2.split("</code>");
-            for (String string : split2) {
-                al.add(string.trim());
-            }
-        }
-
         Pattern p =
             Pattern.compile(
                 "^>\\|([a-zA-Z#]*)\\|$([^\\|\\|<]*)^(\\|\\|<)$",
@@ -58,35 +47,38 @@ public class CodeBlockUtilsTest {
 
         ArrayList<String[]> result = new ArrayList<String[]>();
 
-        for (String string : al) {
-            Matcher matcher = p.matcher(string);
-            // byte[] bytes = string.getBytes();
-            // for (byte b : bytes) {
-            // System.out.print(" " + b);
-            // }
-            // System.out.println();
+        Matcher matcher = p.matcher(string);
+        int offset = 0;
 
-            if (matcher.find()) {
-                matcher.reset();
+        if (matcher.find()) {
+            matcher.reset();
 
-                while (matcher.find()) {
-                    int num = matcher.groupCount();
-                    // System.out.println("numGroup : " + num);
+            while (matcher.find()) {
+                // int num = matcher.groupCount();
+                // System.out.println("numGroup : " + num);
 
-                    for (int i = 0; i <= num; i++) {
-                        String group = matcher.group(i);
-                        // System.out.println("" + i + ":" + group);
-                    }
+                // for (int i = 0; i <= num; i++) {
+                // String group = matcher.group(i);
+                // // System.out.println("" + i + ":" + group);
+                // }
+                String group = matcher.group(0);
+                String text =
+                    string.substring(offset, string.indexOf(group)).trim();
+                offset = string.indexOf(group) + group.length();
 
-                    result.add(new String[] {
-                        matcher.group(1).trim(),
-                        matcher.group(2).trim() });
-                }
-            } else {
-                if (string.trim().length() > 0)
-                    result.add(new String[] { "text", string.trim() });
+                if (text.length() > 0)
+                    result.add(new String[] { "text", text });
+
+                result.add(new String[] {
+                    matcher.group(1).trim(),
+                    matcher.group(2).trim() });
             }
+
         }
+
+        String text = string.substring(offset, string.length()).trim();
+        if (text.length() > 0)
+            result.add(new String[] { "text", text });
 
         String encode = JSON.encode(result);
 

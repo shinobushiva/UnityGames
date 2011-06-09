@@ -14,6 +14,7 @@
 <meta name="mixi-check-robots" content="noimage" />
 <%@ include file="/share/css.jsp"%>
 <%@ include file="/share/js.jsp"%>
+<script type="text/javascript" src="/js/jquery.createvideo.js"></script>
 <style type="text/css">
 <!--
 div.content {
@@ -83,6 +84,7 @@ function GetUnity() {
 
 	<%-- Initialization --%>
 	$(function() {
+	
 		$(".success").hide();
 		$("#fo").validate();
 		$("#commentUp").click(function() {
@@ -140,6 +142,42 @@ function GetUnity() {
 		loadComments();
 		
 		toCode(eval(${g.code}));
+
+		$.getJSONP("http://api.twitter.com/1/users/show.json?id=${twitterId}&callback={callback}",function(e){
+			$("#twitterImage").attr("src",""+e.profile_image_url);
+			$("#twitterName").html(""+e.screen_name);
+			$("#userPage").attr("href","/user/"+e.screen_name);
+			
+		});
+		
+		$("pre").css("margin","0");
+		$("pre").css("margin-left","10px");
+		$("pre").css("margin-top","10px");
+		$("a[rel=video]").createVideo();
+		$("#edit").click(function() {
+			$.ajax({
+				type : "post",
+				url : "/ajax/codeEdit",
+				data : "id=${g.key.id}&type=edit",
+				success : function(e) {
+				$("#codeEditArea").val(e.code);
+				$(".codeEdit").toggle();
+				$(".edit").toggle();
+				}});
+		});
+		$("#save").click(function() {
+	var text = $("#codeEditArea").serialize();
+			$.ajax({
+				type : "post",
+				url : "/ajax/codeEdit",
+				data : "id=${g.key.id}&type=save&"+text,
+				success : function(e) {
+					$(".codeEdit").toggle();
+					$(".edit").toggle();
+					toCode(eval(e.code));
+					$("a[rel=video]").createVideo();
+				}});
+		});
 	});
 
 	function commentToggle(){
@@ -343,23 +381,32 @@ function GetUnity() {
 		for(var oIdx in obj){
 			var o = obj[oIdx];
 			if(o[0] == 'text'){
+				
+			var match =	o[1].match(".*(youtu(?:\.be|be\.com)/(?:.*v(?:/|=)|(?:.*/)?)([a-zA-Z0-9-_]+)).*");
+			if(match){
+			
+		o[1] = o[1].replace(""+match[0],"<a rel='video' href='http://www.youtube.com/watch?v="+match[2]+"'></a>");
+			}
 				result += "<pre style='margin:10px;'>"+o[1]+"</pre>";
 			}else{
 				result += "<div class='"+o[0]+"' style='display:none; margin : 5px'>"+
 				"<pre class='prettyprint'>"+o[1]+"</pre>"+
 				"</div>";
-				array[count++] = o[0];
+				if($.inArray(o[0], array))
+					array[count++] = o[0];
 			}
 		}
 
 		console.log(array);
 		
-		var str = '<div style="display:inline-block;margin-left:120px;margin-top:-20px;"><select name="hoge">';
+		var str = '';
+		if(array.length > 0){
+		str +='<div style="">使用言語：<select name="hoge">';
 		for(var oIdx2 in array){
 			str+='<option value="'+array[oIdx2]+'">'+array[oIdx2]+'</option>';
 		}
 		str+='</select></div>';
-		
+		}
 		
 		$("#code").html(str+result).ready(function(){
 			prettyPrint();
@@ -375,8 +422,8 @@ function GetUnity() {
 		
 		$("."+array[0]).show();
 		
-		
-	}
+		}
+	
 </script>
 
 </head>
@@ -406,13 +453,13 @@ function GetUnity() {
 		<%--	Twitterアカウント	--%>
 		<c:if test="${empty g.pass}">
 			<div>
-				<a href="/login/oAuth?name=${tn}" style="" target="Twitter">
+				<a id="userPage" style="" target="Twitter">
 					<div style="float: left;">
-						<img src="${tp}" />
+						<img id="twitterImage" />
 					</div>
-					<div
+					<div id="twitterName"
 						style="float: right; text-align: left; font-weight: 900; font-size: 20px; margin-top: 10px; word-break: break-all; color: #1F98C7;">
-						&nbsp;${tn}</div> </a>
+					</div> </a>
 
 			</div>
 		</c:if>
@@ -581,13 +628,20 @@ function GetUnity() {
 
 
 		<div class="ui-widget-content ui-tabs-panel">
-			<div style="margin-top: 15px; font-size: 15;">
-				<fmt:message key="code" />
+			<div>
+				<span style="margin-top: 15px; font-size: 15;"> <fmt:message
+						key="code" /> </span> <span style="float: right;" id="edit" class="edit">編集する</span><span
+					style="float: right; display: none;" id="save" class="edit">保存する</span>
 			</div>
-			<div id="code" style="display: inline-block;"></div>
+			<div id="code" style="display: inline-block;" class="codeEdit"></div>
+			<div>
+				<textarea id="codeEditArea"
+					style="width: 900; height: 500; display: none;" class="codeEdit"
+					name="codeEditArea"></textarea>
+			</div>
 		</div>
-		<%--
-		<div class="ui-widget-content" style="margin-top: 10px;">
+
+		<div class="ui-widget-content ui-tabs-panel" style="margin-top: 10px;">
 			<a href="#comment"><span><fmt:message key="comment" /> </span> </a>
 			<div id="comment" style="margin-left: auto; margin-right: auto;">
 				<div>
@@ -606,7 +660,7 @@ function GetUnity() {
 				<div id="commentLoad"></div>
 			</div>
 		</div>
---%>
+
 
 	</div>
 </body>

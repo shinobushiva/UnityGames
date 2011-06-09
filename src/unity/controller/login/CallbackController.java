@@ -38,6 +38,13 @@ public class CallbackController extends Controller {
             e.printStackTrace();
         }
 
+        sessionScope("loginUser", twitter.getScreenName());
+        String referer = sessionScope("referer");
+        if (referer != null) {
+            removeSessionScope("referer");
+            return redirect(referer);
+        }
+
         us.regist(
             twitter.getId(),
             twitter.getScreenName(),
@@ -69,7 +76,6 @@ public class CallbackController extends Controller {
                 gameChange = sessionScope("gameChange");
                 thumbNailChange = sessionScope("thumbNailChange");
             }
-System.out.println("sgfix:"+sg.getFixTags());
             service.upload(
                 key,
                 sg.getGameName(),
@@ -112,8 +118,6 @@ System.out.println("sgfix:"+sg.getFixTags());
             return redirect("/unitygames/" + uc);
         }
 
-        String userName = (String) sessionScope("userName");
-        removeSessionScope("userName");
-        return redirect("/user/" + userName);
+        return null;
     }
 }

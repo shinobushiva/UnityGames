@@ -130,7 +130,6 @@ public class ChangeService {
                     Datastore.delete(uf1.getKey());
                 }
                 if (gameFile != null) {
-                    g.setLength(gameFile.getData().length);
                     byte[] bytes = gameFile.getData();
                     byte[][] bytesArray1 = ByteUtil.split(bytes, FRAGMENT_SIZE);
                     Iterator<Key> keys =

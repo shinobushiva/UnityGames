@@ -51,12 +51,18 @@ public class GameController extends Controller {
         if (g.getTwitterUserKey() != null) {
             unity.model.User uk =
                 Datastore.get(unity.model.User.class, g.getTwitterUserKey());
-            Twitter twitter = new TwitterFactory().getInstance();
-            twitter4j.User u = twitter.showUser(uk.getUserId());
-            // TwitterProfilePicture
-            requestScope("tp", u.getProfileImageURL());
-            // TwitterScreenName
-            requestScope("tn", u.getScreenName());
+
+            requestScope("twitterId", uk.getUserId());
+            // try {
+            // Twitter twitter = new TwitterFactory().getInstance();
+            // twitter4j.User u = twitter.showUser(uk.getUserId());
+            // // TwitterProfilePicture
+            // requestScope("tp", u.getProfileImageURL());
+            // // TwitterScreenName
+            // requestScope("tn", u.getScreenName());
+            // } catch (Exception e) {
+            // e.printStackTrace();
+            // }
 
         }
 

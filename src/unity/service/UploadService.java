@@ -134,7 +134,6 @@ public class UploadService {
                 }
 
                 if (gameFile != null) {
-                    g.setLength(gameFile.length);
                     byte[] bytes = gameFile;
                     byte[][] bytesArray1 = ByteUtil.split(bytes, FRAGMENT_SIZE);
                     Iterator<Key> keys =
