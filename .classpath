@@ -5,6 +5,12 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/junit-4.7.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/jsonic-1.2.4.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/twitter4j-core-2.2.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/org.eclipse.mylyn.wikitext.confluence.core_1.4.0.I20110104-0100-e3x.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/org.eclipse.mylyn.wikitext.core_1.4.0.I20110104-0100-e3x.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/org.eclipse.mylyn.wikitext.mediawiki.core_1.4.0.I20110104-0100-e3x.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/org.eclipse.mylyn.wikitext.textile.core_1.4.0.I20110104-0100-e3x.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/org.eclipse.mylyn.wikitext.tracwiki.core_1.4.0.I20110104-0100-e3x.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/org.eclipse.mylyn.wikitext.twiki.core_1.4.0.I20110104-0100-e3x.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/slim3-1.0.10.jar" sourcepath="libsrc/slim3-1.0.10-sources.jar"/>
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>

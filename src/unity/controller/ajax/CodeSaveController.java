@@ -17,7 +17,7 @@ import unity.service.GameDataService;
 
 import com.google.appengine.api.datastore.KeyFactory;
 
-public class CodeEditController extends JsonController {
+public class CodeSaveController extends JsonController {
     private GameDataMeta dd = GameDataMeta.get();
     private GameDataService gs = new GameDataService();
 
@@ -27,23 +27,23 @@ public class CodeEditController extends JsonController {
         Map<String, Object> map = new HashMap<String, Object>();
 
         long id = asLong("id");
-        String type = asString("type");
+        String code = asString("codeEditArea");
         GameData g =
             Datastore.get(
                 GameData.class,
                 KeyFactory.createKey(dd.getKind(), id));
 
-        if (type.equals("edit")) {
-            map.put("code", g.getCode());
-        } else {
-            String code = asString("codeEditArea");
-            g.setCode(code);
-            GlobalTransaction tx = Datastore.beginGlobalTransaction();
-            tx.put(g);
-            tx.commit();
-
-            map.put("code", gs.toCodeJson(code));
+        if (g.isEditable()) {
+            return map;
         }
+
+        g.setCode(code);
+        GlobalTransaction tx = Datastore.beginGlobalTransaction();
+        tx.put(g);
+        tx.commit();
+
+        map.put("code", gs.toCodeJson(code));
+
         return map;
     }
 }

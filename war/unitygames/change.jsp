@@ -8,8 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <%@ include file="/share/css.jsp"%>
 <%@ include file="/share/js.jsp"%>
-<title><fmt:message key="change.home" />
-</title>
+<title><fmt:message key="change.home" /></title>
 
 </head>
 <body>
@@ -107,8 +106,7 @@ else{return true; // 送信を実行
 				<tr>
 					<td><h1>
 							<fmt:message key="change.delete" />
-						</h1>
-					</td>
+						</h1></td>
 
 					<td rowspan="7">
 						<h2>
@@ -119,40 +117,65 @@ else{return true; // 送信を実行
 							<fmt:message key="operation" />
 						</h2> <textarea style="width: 440; height: 110;" name="Operations"
 							title="<fmt:message key="operation.title" />">${g.operations}</textarea>
-						<h2>
-							<fmt:message key="code" />
-						</h2> <textarea style="width: 440; height: 110;" name="Code"
-							title="<fmt:message key="code.title" />">${g.code}</textarea>
 						<div>
+							<div style="display: inline-block;">
+								<h2>
+									<fmt:message key="code" />
+								</h2>
+							</div>
+							<div style="display: inline-block;">
+								<fmt:message key="upload.howto.code" />
+							</div>
 							<div>
-								<div style="display: inline-block;">
-									<h2>スクリーンサイズ</h2>
+								<textarea style="width: 440; height: 110;" name="Code"
+									title="<fmt:message key="code.title" />">${g.code}</textarea>
+							</div>
+							<div>
+								<div>
+									<div style="display: inline-block;">
+										<h2>
+											<fmt:message key="screenSize" />
+										</h2>
+									</div>
+									<div style="display: inline-block;">
+										<fmt:message key="screenSize.default" />
+									</div>
 								</div>
-								<div style="display: inline-block;">(デフォルト値は600*450です)</div>
+								<div style="display: inline-block;">
+									Width:<input type="text" name="gameScreenWidth"
+										value="${width}" style="width: 50px;" />
+								</div>
+								<div style="display: inline-block;">
+									Height:<input type="text" name="gameScreenHeight"
+										value="${height}" style="width: 50px;" />
+								</div>
+								<div>
+									<label> <c:if test="${g.editable}">
+											<input type="checkbox" name="editCode" value="true"
+												style="display: inline-block;" checked="checked" />
+										</c:if> <c:if test="${!g.editable}">
+											<input type="checkbox" name="editCode" value="true"
+												style="display: inline-block;" />
+										</c:if>
+										<h2 style="display: inline-block;">
+											<fmt:message key="dont.edit" />
+										</h2> </label>
+								</div>
 							</div>
-							<div style="display: inline-block;">
-								Width:<input type="text" name="gameScreenWidth" value="${width}"
-									style="width: 50px;" />
+							<div id="wrapper" style="float: right; margin-top: -20px;">
+								<button class="button"
+									style="width: 200px; height: 64px; font-size: x-large;">
+									<fmt:message key="button.change" />
+								</button>
 							</div>
-							<div style="display: inline-block;">
-								Height:<input type="text" name="gameScreenHeight"
-									value="${height}" style="width: 50px;" />
-							</div>
-						</div>
-						<div id="wrapper" style="float: right;">
-							<button class="button"
-								style="width: 200px; height: 64px; font-size: x-large;">
-								<fmt:message key="button.change" />
-							</button>
-						</div></td>
+					</td>
 				</tr>
 				<tr>
 					<td><h2>
 							<label for="GameName"><fmt:message key="gameName" /> </label><input
 								type="text" name="GameName" class="required" id="GameName"
 								value="${g.gameName }" />
-						</h2>
-					</td>
+						</h2></td>
 				</tr>
 				<tr>
 					<td><h2>
@@ -199,7 +222,8 @@ ${g.thumbNailURL}<br>
 									id="ThumbNailURL" style="width: 260px"
 									title="<fmt:message key="thumbNail.url.title" />"><br>
 							</div>
-						</div></td>
+						</div>
+					</td>
 				</tr>
 
 				<tr>
@@ -260,7 +284,9 @@ ${g.thumbNailURL}<br>
 							<span class="warning"><fmt:message
 									key="fixTag.explanation" /> </span>
 						</div> <%--ゲームの管理方法--%>
-						<h2>ゲームの管理方法</h2> <c:if test="${not empty g.pass}">
+						<h2>
+							<fmt:message key="management" />
+						</h2> <c:if test="${not empty g.pass}">
 							<c:if test="${type == 'twitter' }">
 								<%--パス入れてる＆Twitterアカウント--%>
 								<script type="text/javascript">
@@ -271,12 +297,16 @@ ${g.thumbNailURL}<br>
 							
 							</script>
 								<div>
-									<input type="radio" name="gameAdmin" id="ga1" />Twitterアカウント<input
-										type="radio" name="gameAdmin" id="ga2" checked="checked" />パスワードを設定
+									<input type="radio" name="gameAdmin" id="ga1" />
+									<fmt:message key="twitterAccount" />
+									<input type="radio" name="gameAdmin" id="ga2" checked="checked" />
+									<fmt:message key="password" />
 								</div>
 
 								<div id="twitterKey">
-									<div style="color: blue; margin-top: 10px">登録ボタン押した後認証画面へ</div>
+									<div style="color: blue; margin-top: 10px">
+										<fmt:message key="twitter.login" />
+									</div>
 									<div style="height: 40px;"></div>
 								</div>
 
@@ -299,8 +329,10 @@ ${g.thumbNailURL}<br>
 							</script>
 								<div>
 
-									<input type="radio" name="gameAdmin" id="ga2" checked="checked" />パスワードを設定<input
-										type="radio" id="ga1" name="gameAdmin" />Twitterアカウント
+									<input type="radio" name="gameAdmin" id="ga2" checked="checked" />
+									<fmt:message key="password" />
+									<input type="radio" id="ga1" name="gameAdmin" />
+									<fmt:message key="twitterAccount" />
 
 								</div>
 								<div id="changeKey">
@@ -312,7 +344,9 @@ ${g.thumbNailURL}<br>
 									<div style="height: 30px;"></div>
 								</div>
 								<div id="twitterKey">
-									<div style="color: blue; margin-top: 10px">登録ボタン押した後認証画面へ</div>
+									<div style="color: blue; margin-top: 10px">
+										<fmt:message key="twitter.login" />
+									</div>
 									<div style="height: 40px;"></div>
 								</div>
 							</c:if>
@@ -322,12 +356,16 @@ ${g.thumbNailURL}<br>
 
 							<%--パス入れてない--%>
 							<div>
-								<input type="radio" name="gameAdmin" id="ga1" checked="checked" />Twitterアカウント<input
-									type="radio" name="gameAdmin" id="ga2" />パスワードを設定
+								<input type="radio" name="gameAdmin" id="ga1" checked="checked" />
+								<fmt:message key="twitterAccount" />
+								<input type="radio" name="gameAdmin" id="ga2" />
+								<fmt:message key="password" />
 							</div>
 
 							<div id="twitterKey">
-								<div style="color: blue; margin-top: 10px">登録ボタン押した後認証画面へ</div>
+								<div style="color: blue; margin-top: 10px">
+									<fmt:message key="twitter.login" />
+								</div>
 								<div style="height: 40px;"></div>
 							</div>
 
@@ -339,11 +377,10 @@ ${g.thumbNailURL}<br>
 								</h2>
 								<div style="height: 30px;"></div>
 							</div>
-						</c:if>
-					</td>
+						</c:if></td>
 				</tr>
 				<tr class="bottom" style="height: 30px;">
-					<td colspan="2">&nbsp;</td>
+					<td colspan="2"><span class="warning"><fmt:message key="url.explanation" /></span></td>
 				</tr>
 			</table>
 		</div>
@@ -361,7 +398,7 @@ ${g.thumbNailURL}<br>
 	</form>
 
 
-	<fmt:message key="url.explanation" />
+	
 
 	<%@ include file="/share/footer.jsp"%>
 

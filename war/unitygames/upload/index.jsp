@@ -8,7 +8,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <%@ include file="/share/css.jsp"%>
 <%@ include file="/share/js.jsp"%>
-<title><fmt:message key="upload.title" /></title>
+<title><fmt:message key="upload.title" />
+</title>
 
 </head>
 <body>
@@ -93,7 +94,8 @@ function tagCheck(){
 				<tr>
 					<td><h1>
 							<fmt:message key="upload.title" />
-						</h1></td>
+						</h1>
+					</td>
 
 					<td rowspan="6">
 
@@ -112,7 +114,7 @@ function tagCheck(){
 								</h2>
 							</div>
 							<div style="display: inline-block;">
-								(詳しくは<a href="/howto#code" target="_blank">ソースコードについて</a>をご覧ください)
+								<fmt:message key="upload.howto.code" />
 							</div>
 							<div>
 								<textarea style="width: 440; height: 110;" name="Code"
@@ -122,9 +124,13 @@ function tagCheck(){
 						<div>
 							<div>
 								<div style="display: inline-block;">
-									<h2>スクリーンサイズ</h2>
+									<h2>
+										<fmt:message key="screenSize" />
+									</h2>
 								</div>
-								<div style="display: inline-block;">(デフォルト値は600*450です)</div>
+								<div style="display: inline-block;">
+									<fmt:message key="screenSize.default" />
+								</div>
 							</div>
 							<div style="display: inline-block;">
 								Width:<input type="text" name="gameScreenWidth" value="600"
@@ -134,20 +140,28 @@ function tagCheck(){
 								Height:<input type="text" name="gameScreenHeight" value="450"
 									style="width: 50px;" />
 							</div>
+							<div>
+								<label><input type="checkbox" name="editable"
+									value="true" style="display: inline-block;" />
+								<h2 style="display: inline-block;">
+										<fmt:message key="dont.edit" />
+									</h2>
+								</label>
+							</div>
 						</div>
 						<div id="wrapper" style="float: right;">
 							<button id="regist" class="button"
 								style="width: 250px; height: 80px; font-size: xx-large;">
 								<fmt:message key="button.regist" />
 							</button>
-						</div>
-					</td>
+						</div></td>
 				</tr>
 				<tr>
 					<td><h2>
 							<label for="GameName"><fmt:message key="gameName" /> </label><input
 								type="text" name="GameName" id="GameName" class="required" />
-						</h2></td>
+						</h2>
+					</td>
 				</tr>
 				<tr>
 					<td><label for="ThumbNail"><h2>
@@ -157,7 +171,8 @@ function tagCheck(){
 							checked="checked"> <fmt:message
 								key="thumbNail.pictureDataUp" /> </label><br> <label><input
 							type="radio" name="ThumbNailType" value="url" id="turl">
-							<fmt:message key="thumbNail.urlUp" /><br> </label></td>
+							<fmt:message key="thumbNail.urlUp" /><br> </label>
+					</td>
 
 				</tr>
 				<tr>
@@ -170,8 +185,7 @@ function tagCheck(){
 									key="thumbNail.url" /> </label><input type="text" name="ThumbNailURL"
 								id="ThumbNailURL" style="width: 260px"
 								title="<fmt:message key="thumbNail.url.title" />"><br>
-						</div>
-					</td>
+						</div></td>
 				</tr>
 				<tr>
 					<td><label for="d"><h2>
@@ -183,7 +197,8 @@ function tagCheck(){
 							value="url" id="url"> <fmt:message key="game.select.url" /><br>
 					</label> <label><input type="radio" name="GameType" value="hpurl"
 							id="hp"> <fmt:message key="game.select.url.outside" /><br>
-					</label></td>
+					</label>
+					</td>
 				</tr>
 				<tr>
 					<td>
@@ -210,10 +225,14 @@ function tagCheck(){
 									key="fixTag.explanation" /> </span>
 
 						</div> <%--	ゲームの管理方法	--%>
-						<h2>ゲームの管理方法</h2> <%--Twitterアカウントでログインしている場合--%>
+						<h2>
+							<fmt:message key="management" />
+						</h2> <%--Twitterアカウントでログインしている場合--%>
 						<div>
-							<input type="radio" name="gameAdmin" id="ga1" checked="checked" />Twitterアカウント<input
-								type="radio" name="gameAdmin" id="ga2" />パスワードを設定
+							<input type="radio" name="gameAdmin" id="ga1" checked="checked" />
+							<fmt:message key="twitterAccount" />
+							<input type="radio" name="gameAdmin" id="ga2" />
+							<fmt:message key="password" />
 						</div>
 
 						<div id="twitterKey">
@@ -225,7 +244,9 @@ function tagCheck(){
 										style="text-align: left; font-weight: 900; font-size: 20px; margin-top: 10px; word-break: break-all;">
 										&nbsp;${userName}</div> </a>
  --%>
-							<div style="color: blue; margin-top: 10px">登録ボタン押した後認証画面へ</div>
+							<div style="color: blue; margin-top: 10px">
+								<fmt:message key="twitter.login" />
+							</div>
 						</div>
 
 						<div id="changeKey">
@@ -234,32 +255,13 @@ function tagCheck(){
 								<input type="password" name="pass" id="adminPass"
 									style="width: 117;">
 							</h2>
-						</div> <%--ゲストの場合 --%> <%--
-						<c:if test="${type == 'guest' }">
-							<script>
-							$(function(){
-								$( "#changeKey" ).show();
-								
-							});
-							</script>
-							<div>
-						<input type="radio" name="gameAdmin" id="ga2" checked="checked"/>パスワードを設定<input type="radio" id="ga1" name="gameAdmin" disabled/>Twitterアカウント<span style="color: red;">(ログイン後選択可)</span>
-							</div>
-							<div id="changeKey">
-								<h2>
-									<fmt:message key="change.delete.key" />
-									<input type="password" name="pass" id="adminPass"
-										style="width: 117;">
-								</h2>
-							</div>
-						</c:if>
-						 --%></td>
+						</div>
+					</td>
 
 				</tr>
 				<tr class="bottom">
 					<td colspan="2" style="padding: 15px;"><span class="warning"><fmt:message
-								key="url.explanation" /> </span>
-					</td>
+								key="url.explanation" /> </span></td>
 				</tr>
 
 			</table>

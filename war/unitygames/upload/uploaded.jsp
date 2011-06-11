@@ -16,6 +16,6 @@
 	<p>Uploadしました</p>
 
 
-
+	<%@ include file="/share/footer.jsp"%>
 </body>
 </html>

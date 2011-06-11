@@ -54,17 +54,8 @@ public class CallbackController extends Controller {
             String uc = "";
             Key sessionKey = sessionScope("sessionKey");
             Key key = sessionScope("key");
-            System.out.println("sessionKey" + sessionKey);
-            System.out.println("key:" + key);
-            System.out.println("gfile:" + sessionScope("gameFile"));
-            System.out.println("gamechange:"
-                + (String) sessionScope("gameChange"));
-
-            System.out.println();
             SessionGameData sg =
                 Datastore.get(SessionGameData.class, sessionKey);
-
-            System.out.println("size:" + sg.getGameScreenSize());
 
             String gameChange = null;
             String thumbNailChange = null;
@@ -94,7 +85,8 @@ public class CallbackController extends Controller {
                 sg.getFixTags(),
                 sg.getCode(),
                 (long) twitter.getId(),
-                sg.getGameScreenSize());
+                sg.getGameScreenSize(),
+                sg.isEditCode());
 
             if (sessionScope("loginType").equals("newGame")) {
 

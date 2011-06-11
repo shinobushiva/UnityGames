@@ -73,7 +73,7 @@
 							$("#myself").css("cursor", "pointer");
 							$("#myself")
 									.append(
-											"<span id='edit'style='color:red;'>編集する(Click!!)</span>");
+											"<span id='edit'style='color:red;'><fmt:message key='edit'/>(Click!!)</span>");
 						})
 		$("#myself").mouseout(function(event) {
 			$("#myself").css("background-color", "white");
@@ -98,7 +98,7 @@
 							$("#url").css("cursor", "pointer");
 							$("#url")
 									.append(
-											"<span id='edit'style='color:red;font-size:10px;'>編集する(Click!!)</span>");
+											"<span id='edit'style='color:red;font-size:10px;'><fmt:message key='edit'/>(Click!!)</span>");
 						})
 		$("#url").mouseout(function(event) {
 			$("#url").css("background-color", "white");
@@ -131,7 +131,7 @@
 				data : "tweet=" + a + "&" + "check=" + b,
 				success : function() {
 					$.notifyBar({
-						html : "	ツイートされました！",
+						html : "	<fmt:message key='tweeted'/>",
 						delay : 2000,
 						animationSpeed : "normal"
 					});
@@ -214,13 +214,13 @@
 		<hr style="margin-top: 50px; width: 900px;" />
 		<div style="margin-top: 10px;">
 			<div
-				style="font-size: 20px; margin-top: auto; margin-bottom: auto; display: inline-block;">紹介：</div>
+				style="font-size: 20px; margin-top: auto; margin-bottom: auto; display: inline-block;"><fmt:message key="self.introduction"/></div>
 			<div id="loadMyself" style="display: inline-block; width: 450px;">
 				<span id="myself"></span><span id="myselfEdit"><textarea
 						style="width: 427px; height: 37px; font-size: 10px;"
 						id="myselfText"></textarea><br> <span id="myself-cancel"
-					style="float: right; margin-right: 10px; margin-top: 5px; cursor: pointer;">キャンセル</span>
-					<button id="myself-change" style="float: right; margin-right: 0px;">変更</button>
+					style="float: right; margin-right: 10px; margin-top: 5px; cursor: pointer;"><fmt:message key="cancellation"/></span>
+					<button id="myself-change" style="float: right; margin-right: 0px;"><fmt:message key="button.change"/></button>
 				</span>
 			</div>
 		</div>
@@ -232,8 +232,8 @@
 				<sapn id="url"></sapn>
 				<span id="reg"><input type="text" name="webUrl" id="wu"
 					value="">
-					<button id="web-change">変更</button> <span id="web-cancel"
-					style="font-size: 10px;">キャンセル</span> </span>
+					<button id="web-change"><fmt:message key="button.change"/></button> <span id="web-cancel"
+					style="font-size: 10px;"><fmt:message key="cancellation"/></span> </span>
 			</div>
 		</div>
 
@@ -260,7 +260,7 @@
 		</div>
 		<hr />
 		--%>
-			<div style="font-size: 20px; margin-top: 50px;">ゲーム管理</div>
+			<div style="font-size: 20px; margin-top: 50px;"><fmt:message key="user.management"/></div>
 			<hr style="width: 500px;">
 			<div style="display: inline-block; width: 500px;">
 
@@ -289,10 +289,10 @@
 				<div align="center" style="margin-top: 30px;">
 					<form method="get" action="#">
 						<button type="button" id="btnPrev"
-							style="width: 100px; height: 30px;">前</button>
+							style="width: 100px; height: 30px;">Prev</button>
 
 						<button type="button" id="btnNext"
-							style="margin-right: 50px; width: 100px; height: 30px;">次</button>
+							style="margin-right: 50px; width: 100px; height: 30px;">Next</button>
 					</form>
 				</div>
 
@@ -303,15 +303,15 @@
 
 				<div style="float: right; margin-right: 80px;" id="twitter">
 					<div style="width: 250px;">
-						<div style="font-size: 15px;">つぶやく(Twitterと連携しています)</div>
+						<div style="font-size: 15px;"><fmt:message key="tweet"/></div>
 						<div>
 							<div style="display: inline;">
 								<textarea style="width: 250px; height: 30px;" id="tweet"></textarea>
 							</div>
 							<div id="tweetButton"
 								style="display: inline-block; height: 25px;">
-								<input type="checkbox" id="noHashtag" value="noHash">#UnityGamesをつけない
-								<button style="margin-left: 0px;" id="tweetUpdate">ついーと</button>
+								<input type="checkbox" id="noHashtag" value="noHash"><fmt:message key="dont.tag"/>
+								<button style="margin-left: 0px;" id="tweetUpdate"><fmt:message key="button.tweet"/></button>
 
 							</div>
 						</div>

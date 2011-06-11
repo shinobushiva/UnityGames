@@ -15,5 +15,6 @@
 <%@ include file="/share/header.jsp"%>
 
 <p>変更されました！</p>
+	<%@ include file="/share/footer.jsp"%>
 </body>
 </html>

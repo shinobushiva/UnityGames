@@ -2,8 +2,6 @@ package unity.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.InverseModelListRef;
@@ -37,8 +35,6 @@ public class SessionGameData implements Serializable {
 
     private String gameURL;
 
-    private int length;
-
     private Date date;
 
     private Date lastDate;
@@ -63,10 +59,9 @@ public class SessionGameData implements Serializable {
 
     private String gameScreenSize;
 
+    private boolean editCode;
 
     private String fixTags;
-
-   
 
     @Attribute(persistent = false)
     private org.slim3.datastore.InverseModelListRef<unity.model.UploadedDataFragment, unity.model.SessionGameData> fragmentListRef =
@@ -154,14 +149,6 @@ public class SessionGameData implements Serializable {
 
     public Date getDate() {
         return date;
-    }
-
-    public void setLength(int length) {
-        this.length = length;
-    }
-
-    public int getLength() {
-        return length;
     }
 
     public String getGameName() {
@@ -276,8 +263,6 @@ public class SessionGameData implements Serializable {
         return code;
     }
 
-
-
     public void setPoint(int point) {
         this.point = point;
     }
@@ -316,6 +301,14 @@ public class SessionGameData implements Serializable {
 
     public String getFixTags() {
         return fixTags;
+    }
+
+    public void setEditCode(boolean editCode) {
+        this.editCode = editCode;
+    }
+
+    public boolean isEditCode() {
+        return editCode;
     }
 
 }

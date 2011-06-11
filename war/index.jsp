@@ -109,7 +109,7 @@
 
 			<a href="/unitygames/" style="text-decoration: none;"><div
 					class="newGameLine">
-					新着ゲーム<img src="/images/click.png"
+					<fmt:message key="newGame"/><img src="/images/click.png"
 						style="position: relative; top: 2px;" />
 				</div> </a>
 			<c:forEach var="g" items="${newGameList}">
@@ -120,11 +120,11 @@
 				</div>
 			</c:forEach>
 
-			<div class="newGameLine">ランキング</div>
+			<div class="newGameLine"><fmt:message key="ranking"/></div>
 			<div>
 				<c:forEach var="g" items="${rankingGameList}" varStatus="loop">
 					<div style="display: inline-block; text-align: center;">
-						<span style="font-size: 15; font-weight: 900;">${loop.count}</span>位<br>
+						<span style="font-size: 15; font-weight: 900;"><fmt:message key="best1"/>${loop.count}<fmt:message key="best2"/></span><br>
 						<%@ include file="/share/patternDistinction.jsp"%>
 						<a href="${url}"> <img src="${thUrl}" width="150" height="150" /><br>
 							<div class="bounded" style="width: 150px;">${g.gameName}</div> </a>
@@ -135,5 +135,6 @@
 		</div>
 
 	</div>
+	<%@ include file="/share/footer.jsp"%>
 </body>
 </html>

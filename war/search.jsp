@@ -9,7 +9,7 @@
 <%@ include file="/share/css.jsp"%>
 <link href="/css/view.css" rel="StyleSheet" type="text/css" />
 <%@ include file="/share/js.jsp"%>
-<title>${type}<fmt:message key="Result" />：${word}</title>
+<title>Search</title>
 </head>
 <body>
 	<%@ include file="/share/header.jsp"%>
@@ -67,7 +67,7 @@
 							<div style="clear: both;"></div>
 						</div>
 						<div style="margin-top: 0.5em;" class="bounded">
-							<span style="color: red;">登録タグ</span>
+							<span style="color: red;"><fmt:message key="registerTag"/></span>
 							<c:forEach var="ft" items="${g.fixTags}">
 								<a href="/search?tag=${ft.name}"
 									style="font-size: 18px; font-weight: 900;">${ft.name}</a>

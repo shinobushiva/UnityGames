@@ -14,89 +14,137 @@
 </head>
 <body>
 	<%@ include file="/share/header.jsp"%>
-	<h1>
-		<fmt:message key="what.unitygames1" />
-	</h1>
-	<fmt:message key="what.unitygames2" />
-	<br>
-	<h1>
-		<fmt:message key="what.unity1" />
-	</h1>
-	<fmt:message key="what.unity2" />
+	<pre style="font-size: 15px;">
+<h1><fmt:message key="what.unitygames"/></h1>
+<fmt:message key="what.unitygames1"/>
 
-	<h1>使い方</h1>
-	メニュー画面からゲームの登録を選択します
-	<br>
-	<img alt="" src="/images/howto/menu.png">
-	<pre>
-ゲーム名(必須)、サムネイル画像、ゲームデータ、固定タグ、パスワード(必須)、各説明文を記入します。
-</pre>
-	<img alt="" src="/images/howto/upload.png">
-	<pre>
-サムネイル画像について…サムネイル画像の登録には2種類用意しています。
-①	画像をアップロード登録する
-②	画像URLを登録する
-の2種類です。
+<h1><fmt:message key="use.unitygames"/></h1>
 
-ゲームデータについて…ゲームデータの登録には3種類用意しています。
-①	ゲームデータをアップロード登録する(10MBまで。unity3d形式のみ。例→sample.unity3d)
-②	ゲームデータURLを登録する(unity3d形式のみ)
-③	ゲームが出来るURLを登録する(外部サイト)
-の3種類です。
-本サイトでゲームデータをアップロードするときの容量は10MBまでとなっております。
-それ以上の容量のゲームデータを登録する場合は、オンラインストレージサービスを利用しデータURLを保存するようにしてください。
+<h1><fmt:message key="view.menu"/></h1>
+<img src="/images/howto/menu.png" />
+<fmt:message key="view.menu1"/>
+<fmt:message key="view.menu2"/>
+<fmt:message key="view.menu3"/>
+<fmt:message key="view.menu4"/>
 
-固定タグについて…本サイトではタグ機能を実装しています
-ゲーム登録者のみ変更が可能な固定タグ、利用者関係なく変更可能なタグと2種類に分かれています。
-固定タグで複数登録をする場合「,」で区切り3つまで登録できます。
- </pre>
-	<h1 id="code">ソースコードについて</h1>
-<pre>
-記入例 
-	説明文などが書けますコードは下のコードタグを使います
+
+<h1><fmt:message key="how.search"/></h1>
+<fmt:message key="how.search1"/>
+<img src="/images/howto/search.png" />
+
+<h1><fmt:message key="how.play"/></h1>
+<h2><fmt:message key="game.select"/></h2>
+<fmt:message key="game.select1"/>
+<img src="/images/howto/gameSelect1.png" style="margin-bottom: 20px;" /><img
+			src="/images/howto/gameSelect2.png" style="margin-left: 30px;" />
+<h2><fmt:message key="view.game"/></h2>
+<table>
+			<tr>
+				<td>
+<img src="/images/howto/game.png" style="width: 450;" />
+				</td>
+				<td><pre>
+<fmt:message key="view.game1"/>
+
+<fmt:message key="view.game2"/>
+
+<fmt:message key="view.game3"/>
+
+<fmt:message key="view.game4"/>
+
+<fmt:message key="view.game5"/>
+
+<fmt:message key="view.game6"/>
+
+<fmt:message key="view.game7"/>
+
+<fmt:message key="view.game8"/>
+
+<h2><fmt:message key="ugLink"/></h2>
+	<fmt:message key="ugLink1"/>
+	<fmt:message key="ugLink2"/>
+
+<h2 id="code"><fmt:message key="commentary"/></h2>
+	<fmt:message key="commentary1"/>
+<h3>Youtube</h3>
+	<fmt:message key="youtube"/>
+<h3><fmt:message key="script"/></h3>
+	<fmt:message key="script2"/>
 	
-	&lt;code&gt;
+		<fmt:message key="script1"/>
+	
+	||<
+
+<fmt:message key="script3"/>
+<h3><fmt:message key="script4"/></h3>
+<fmt:message key="script5"/>
+
+http://www.youtube.com/watch?v=○○○
+
+exampleScript1
+	
 	>|js|
-	
-	function ...
-	
+		function ...
 	||<
 	
 	>|cs|
+		public void ...
+	||< 
 	
-	using ...
+exampleScript2
 	
+	>|js|
+		function ...
 	||<
 	
-	&lt;/code&gt;
-	コードタグは複数回使えます
-	&lt;code&gt;
+	>|cs|
+		public void …
+	||<
+	</pre>
+	</td>
+			</tr>
+	</table>
+	<div style="clear: both;"></div>
+<h1 id="user"><fmt:message key="user.page"/></h1>
+<img src="/images/howto/user.png" />
+<h2><fmt:message key="account"/></h2>
+	<fmt:message key="account1"/>
 	
-	　	...
-	
-	&lt;/code&gt;
-</pre>
+	<fmt:message key="account2"/>
 
-	<pre>
+<h2><fmt:message key="game.history"/></h2>
+	<fmt:message key="game.history1"/>
+
+<h2><fmt:message key="howto.tweet"/></h2>
+	<fmt:message key="howto.tweet1"/>
+
+<h2><fmt:message key="howto.edit"/></h2>
+	<fmt:message key="howto.edit1"/>
+
+<h1 id="gameRegist"><fmt:message key="howto.game.regist"/></h1>
+<img src="/images/howto/register.png" />
+	<fmt:message key="howto.game.regist1"/>
 	
+	<fmt:message key="howto.game.regist2"/>
 	
+	<fmt:message key="howto.game.regist3"/>
 	
+	<fmt:message key="howto.game.regist4"/>
 	
-チュートリアルについて…
-本サイトでは初心者でもUnity3Dに触れてもらえるようにチュートリアルを用意しております。簡単なチュートリアルから本格的なものまで随時更新していく予定です。
-もちろん貴方自身がチュートリアルを作成することも出来ます。
-</pre>
-	<h1>ゲーム選択画面</h1>
-	<img alt="" src="/images/howto/game.png">
-	<pre>
-ゲーム名、投稿日、アクセス数、コメント数、サムネイル画像、固定タグ、ゲーム説明、操作説明、変更削除パスワード入力が表示されます
-ゲーム名、またはサムネイル画像をクリックするとゲーム画面へ移動します。
-</pre>
-	<h1>ゲーム画面</h1>
-	<img alt="" src="/images/howto/gamePage.png">
-	<pre>
-ゲーム名、投稿日、最終更新日、各説明文、コメント、タグ登録/削除が表示・行うことが出来ます。
-真ん中の再生ボタンを押すとロードされゲームを開始することが出来ます。
+	<fmt:message key="howto.game.regist5"/>
+	
+	<fmt:message key="howto.game.regist6"/>
+	
+	<fmt:message key="howto.game.regist7"/>
+	
+	<fmt:message key="howto.game.regist8"/>
+	
+	<fmt:message key="howto.game.regist9"/>
+	
+	<fmt:message key="howto.game.regist10"/>
+
+<h1><fmt:message key="howto.game.change"/></h1>
+<fmt:message key="howto.game.change1"/>
 </pre>
 	<%@ include file="/share/footer.jsp"%>
 

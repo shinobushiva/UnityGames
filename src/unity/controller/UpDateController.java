@@ -8,7 +8,6 @@ import org.slim3.datastore.Datastore;
 import org.slim3.datastore.GlobalTransaction;
 
 import unity.model.GameData;
-import unity.model.Note;
 import unity.model.api.Game;
 
 public class UpDateController extends Controller {
@@ -18,27 +17,13 @@ public class UpDateController extends Controller {
 
         List<GameData> asList = Datastore.query(GameData.class).asList();
         List<Game> asList2 = Datastore.query(Game.class).asList();
-        // String size = "600,450";
         for (GameData g : asList) {
 
-            Note n = new Note();
-            n.setKey(Datastore.allocateId(Note.class));
-            n.setGameDataKey(g.getKey());
-            n.setCode(g.getCode());
-            n.setContents(g.getContents());
-            n.setOperations(g.getOperations());
-            
-            GlobalTransaction ts = Datastore.beginGlobalTransaction();
-            ts.put(n);
-            ts.commit();
-            
-           
-            
-            // g.setGameScreenSize(size);
-            //
-            // GlobalTransaction tx = Datastore.beginGlobalTransaction();
-            // tx.put(g);
-            // tx.commit();
+//            g.setEditCode(false);
+//
+//            GlobalTransaction tx = Datastore.beginGlobalTransaction();
+//            tx.put(g);
+//            tx.commit();
 
         }
 

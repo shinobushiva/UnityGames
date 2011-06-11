@@ -141,7 +141,7 @@ function GetUnity() {
 		updateTags();
 		loadComments();
 		
-		toCode(eval(${g.code}));
+		toCode(eval(${jscode}));
 
 		$.getJSONP("http://api.twitter.com/1/users/show.json?id=${twitterId}&callback={callback}",function(e){
 			$("#twitterImage").attr("src",""+e.profile_image_url);
@@ -154,23 +154,20 @@ function GetUnity() {
 		$("pre").css("margin-left","10px");
 		$("pre").css("margin-top","10px");
 		$("a[rel=video]").createVideo();
-		$("#edit").click(function() {
-			$.ajax({
-				type : "post",
-				url : "/ajax/codeEdit",
-				data : "id=${g.key.id}&type=edit",
-				success : function(e) {
-				$("#codeEditArea").val(e.code);
-				$(".codeEdit").toggle();
-				$(".edit").toggle();
-				}});
+		$("#edit,#cancel").click(function() {
+			
+			$(".codeEdit").toggle();
+			$(".edit").toggle();
+			
 		});
+		
+		
 		$("#save").click(function() {
 	var text = $("#codeEditArea").serialize();
 			$.ajax({
 				type : "post",
-				url : "/ajax/codeEdit",
-				data : "id=${g.key.id}&type=save&"+text,
+				url : "/ajax/codeSave",
+				data : "id=${g.key.id}&"+text,
 				success : function(e) {
 					$(".codeEdit").toggle();
 					$(".edit").toggle();
@@ -401,7 +398,7 @@ function GetUnity() {
 		
 		var str = '';
 		if(array.length > 0){
-		str +='<div style="">使用言語：<select name="hoge">';
+		str +='<div style=""><fmt:message key="lang" /><select name="hoge">';
 		for(var oIdx2 in array){
 			str+='<option value="'+array[oIdx2]+'">'+array[oIdx2]+'</option>';
 		}
@@ -449,7 +446,9 @@ function GetUnity() {
 	<%--	ゲーム投稿者情報	 --%>
 
 	<div style="float: right; margin-top: 10px;">
-		<div>投稿者 (編集はここから↓)</div>
+		<div>
+			<fmt:message key="contributor" />
+		</div>
 		<%--	Twitterアカウント	--%>
 		<c:if test="${empty g.pass}">
 			<div>
@@ -525,20 +524,17 @@ function GetUnity() {
 				e.async = true;
 				document.getElementById('fb-root').appendChild(e);
 			}());
-		</script>
-			</li>
+		</script></li>
 			<li style="display: inline;"><a href="http://mixi.jp/share.pl"
 				class="mixi-check-button"
 				data-key="42bc93a615261cdd8e17e115918eb36ebf60a729"
 				data-button="button-1"></a> <script type="text/javascript"
-					src="http://static.mixi.jp/js/share.js"></script>
-			</li>
+					src="http://static.mixi.jp/js/share.js"></script></li>
 			<li style="display: inline;"><iframe
 					src="http://share.gree.jp/share?url=http%3A%2F%2Funity-games.appspot.com%2Funitygames%2Fgame%2Fug${g.key.id}&type=0&height=20"
 					scrolling="no" frameborder="0" marginwidth="0" marginheight="0"
 					style="border: none; overflow: hidden; width: 75px; height: 20px;"
-					allowTransparency="true"></iframe>
-			</li>
+					allowTransparency="true"></iframe></li>
 			<li style="display: inline;"><a href="http://twitter.com/share"
 				class="twitter-share-button" data-count="horizontal"
 				data-via="UGames #UnityGames"
@@ -553,11 +549,14 @@ function GetUnity() {
 		<%-- Top Tabs --%>
 		<ul>
 			<li><a href="#tab1"><span><fmt:message
-							key="explanation" /> </span> </a></li>
+							key="explanation" /> </span> </a>
+			</li>
 			<li><a href="#tab2"><span><fmt:message
-							key="operation" /> </span> </a></li>
+							key="operation" /> </span> </a>
+			</li>
 			<li><a href="#tagg"><span><fmt:message
-							key="registTag" /> </span> </a></li>
+							key="registTag" /> </span> </a>
+			</li>
 			<%--
 			<span>
 				<button id="commentToggle"
@@ -567,15 +566,15 @@ function GetUnity() {
 			<span style="text-align: right; display: inline-block; float: right;">
 				<fmt:message key="entryDay" />：<fmt:formatDate value="${g.date}"
 					pattern="MM/dd" /> <fmt:message key="LastEntryDay" />：<fmt:formatDate
-					value="${g.lastDate}" pattern="MM/dd" /><br>アクセス数：${g.access}
-				コメント数:${g.comment}</span>
+					value="${g.lastDate}" pattern="MM/dd" /><br>
+			<fmt:message key="access" />：${g.access} <fmt:message key="comment" />:${g.comment}</span>
 
 		</ul>
 		<div id="tab1">
-			<span>${g.contents}</span>
+			<pre>${g.contents}</pre>
 		</div>
 		<div id="tab2">
-			<span>${f:h(g.operations)}</span>
+			<pre>${g.operations}</pre>
 		</div>
 		<div id="tagg">
 			<input type="text" name="tag" style="width: 200;" id="tagReg">
@@ -628,16 +627,30 @@ function GetUnity() {
 
 
 		<div class="ui-widget-content ui-tabs-panel">
+
 			<div>
 				<span style="margin-top: 15px; font-size: 15;"> <fmt:message
-						key="code" /> </span> <span style="float: right;" id="edit" class="edit">編集する</span><span
-					style="float: right; display: none;" id="save" class="edit">保存する</span>
+						key="code" /> </span>
+				<c:if test="${!g.editable}">
+					<button style="float: right;" id="edit" class="edit">
+						<fmt:message key="edit" />
+					</button>
+				</c:if>
 			</div>
-			<div id="code" style="display: inline-block;" class="codeEdit"></div>
+
 			<div>
 				<textarea id="codeEditArea"
 					style="width: 900; height: 500; display: none;" class="codeEdit"
-					name="codeEditArea"></textarea>
+					name="codeEditArea">${g.code}</textarea>
+			</div>
+			<div id="code" style="display: inline-block;" class="codeEdit"></div>
+			<div id="saveCancelButtons" style="margin: 10px;">
+				<button style="display: none;" id="save" class="edit">
+					<fmt:message key="save" />
+				</button>
+				<button style="display: none;" id="cancel" class="edit">
+					<fmt:message key="cancel" />
+				</button>
 			</div>
 		</div>
 
@@ -663,5 +676,6 @@ function GetUnity() {
 
 
 	</div>
+	<%@ include file="/share/footer.jsp"%>
 </body>
 </html>

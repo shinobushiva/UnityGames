@@ -102,7 +102,7 @@ public class GameController extends Controller {
         }
         g.setContents(ts);
 
-        g.setCode(gs.toCodeJson(g.getCode()));
+        requestScope("jscode", gs.toCodeJson(g.getCode()));
 
         requestScope("g", g);
         // コメント部分

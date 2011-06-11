@@ -33,6 +33,8 @@ public class UploadController extends Controller {
         String gameType = requestScope("GameType");
         String fixTag = requestScope("fixTag");
         String code = requestScope("Code");
+        boolean editCode = Boolean.valueOf((String)requestScope("editCode"));
+       
 
         String gameScreenSize =
             requestScope("gameScreenWidth")
@@ -82,7 +84,8 @@ public class UploadController extends Controller {
             fixTag,
             code,
             0,
-            gameScreenSize);
+            gameScreenSize,
+            editCode);
         return forward("uploaded.jsp");
     }
 }

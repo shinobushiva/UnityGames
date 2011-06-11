@@ -60,6 +60,8 @@ public class GameData implements Serializable {
     private int point;
 
     private String gameScreenSize;
+    
+    private boolean editable;
 
     @Attribute(lob = true)
     private Set<Tag> fixTags = new HashSet<Tag>();
@@ -154,7 +156,6 @@ public class GameData implements Serializable {
     public Date getDate() {
         return date;
     }
-
 
     public String getGameName() {
         return gameName;
@@ -314,6 +315,14 @@ public class GameData implements Serializable {
 
     public String getGameScreenSize() {
         return gameScreenSize;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+
+    public boolean isEditable() {
+        return editable;
     }
 
 }

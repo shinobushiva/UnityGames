@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="f" uri="http://www.slim3.org/functions"%>
-
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -10,10 +10,10 @@
 </head>
 <body>
 <div align="center">
-<h1>ツイッターアカウント</h1>
+<h1><fmt:message key="twitterAccount" /></h1>
 <a href="http://twitter.com/#!/UGames">@UGames</a>
-<h1>メール送信</h1>
-<h2>メールアドレス：unitygamesug@gmail.com</h2>
+<h1><fmt:message key="mail" /></h1>
+<h2><fmt:message key="mailaddress" />unitygamesug@gmail.com</h2>
 
 <br>
 

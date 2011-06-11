@@ -38,14 +38,15 @@ public class ChangeUpController extends Controller {
         String gameChange = requestScope("GameChange");
         String fixTag = requestScope("fixTag");
         String code = requestScope("Code");
+        boolean editCode = Boolean.valueOf((String) requestScope("editCode"));
 
-        System.out.println("namafix:"+fixTag);
+        System.out.println(editCode);
+        
         String gameScreenSize =
             requestScope("gameScreenWidth")
                 + ","
                 + requestScope("gameScreenHeight");
 
-        System.out.println("thumbNailChange:" + thumbNailChange);
         if (pass.isEmpty()) {
 
             SessionGameData sg = new SessionGameData();
@@ -90,7 +91,8 @@ public class ChangeUpController extends Controller {
             fixTag,
             code,
             0,
-            gameScreenSize);
+            gameScreenSize,
+            editCode);
 
         return forward("changed");
     }

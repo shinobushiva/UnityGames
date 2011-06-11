@@ -69,7 +69,8 @@
 								<div style="clear: both;"></div>
 							</div>
 							<div style="margin-top: 0.5em;" class="bounded">
-								<span style="color: red;">登録タグ</span>
+								<span style="color: red;"><fmt:message key="registerTag" />
+								</span>
 								<c:forEach var="ft" items="${g.fixTags}">
 									<a href="/search?tag=${ft.name}"
 										style="font-size: 18px; font-weight: 900;">${ft.name}</a>
@@ -89,9 +90,11 @@
 								<div id="tabs-${g.key.id}" style="height: 170px;">
 									<ul>
 										<li style=""><a href="#tab1-${g.key.id}"><span><fmt:message
-														key="explanation" /> </span> </a></li>
+														key="explanation" /> </span> </a>
+										</li>
 										<li style=""><a href="#tab2-${g.key.id}"><span><fmt:message
-														key="operation" /> </span> </a></li>
+														key="operation" /> </span> </a>
+										</li>
 
 									</ul>
 
@@ -123,7 +126,8 @@
 							</div>
 						</div>
 
-					</div></td>
+					</div>
+				</td>
 				<c:if test="${loop.count mod 2 == 0}">
 		</tr>
 		<tr>

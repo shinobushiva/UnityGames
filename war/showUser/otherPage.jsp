@@ -69,7 +69,7 @@
 			<div style="margin-top: 20px;">
 				<span style="font-size: xx-large;" id="twitterScreenName"></span><span
 					style="margin-left: 30px;" id="twitterName"></span><span> <a
-					href="/login/oAuth?useReferer=true">編集する</a>
+					href="/login/oAuth?useReferer=true"><fmt:message key="edit"/></a>
 				</span>
 			</div>
 
@@ -81,7 +81,7 @@
 	<div style="float: left;">
 		<div>
 			<div
-				style="font-size: 20px; margin-top: auto; margin-bottom: auto; display: inline-block;">紹介：</div>
+				style="font-size: 20px; margin-top: auto; margin-bottom: auto; display: inline-block;"><fmt:message key="self.introduction"/></div>
 			<div style="margin-top: 10px; display: inline-block; width: 450px;"id="twitterDescription">${um.myself}</div>
 		</div>
 		<div>
@@ -90,7 +90,7 @@
 			<div id="web" style="display: inline-block;">${um.webUrl}</div>
 		</div>
 		<div style="width: 500px;">
-			<div style="font-size: 20px; margin-top: 50px;">ゲーム投稿履歴</div>
+			<div style="font-size: 20px; margin-top: 50px;"><fmt:message key="game.history"/></div>
 			<hr style="width: 500px;">
 			<div id="hiddenresult" style="display: none;">
 				<div class="result">
@@ -118,10 +118,10 @@
 			<div align="center" style="margin-top: 30px;">
 				<form method="get" action="#">
 					<button type="button" id="btnPrev"
-						style="width: 100px; height: 30px;">前</button>
+						style="width: 100px; height: 30px;">Prev</button>
 
 					<button type="button" id="btnNext"
-						style="margin-right: 50px; width: 100px; height: 30px;">次</button>
+						style="margin-right: 50px; width: 100px; height: 30px;">Next</button>
 				</form>
 			</div>
 		</div>
@@ -129,7 +129,7 @@
 	</div>
 	<div style="float: left;">
 		<div style="margin-left: 40px;">
-			<div style="font-size: 20px;">つぶやき</div>
+			<div style="font-size: 20px;"><fmt:message key="tweet.other"/></div>
 			<c:forEach var="t" items="${tweet}">
 
 				<script type="text/javascript">

@@ -54,12 +54,12 @@
 	<div id="PageLoad">
 
 		<select name="view" id="selectView">
-			<option value="NewEntry" selected="selected">投稿日時が新しい順</option>
-			<option value="OldEntry">投稿日時が古い順</option>
-			<option value="MostAccess">アクセス数が多い順</option>
-			<option value="LeastAccess">アクセス数が少ない順</option>
-			<option value="MostComment">コメントが多い順</option>
-			<option value="LeastComment">コメントが少ない順</option>
+			<option value="NewEntry" selected="selected"><fmt:message key="NewEntry"/></option>
+			<option value="OldEntry"><fmt:message key="OldEntry"/></option>
+			<option value="MostAccess"><fmt:message key="MostAccess"/></option>
+			<option value="LeastAccess"><fmt:message key="LeastAccess"/></option>
+			<option value="MostComment"><fmt:message key="MostComment"/></option>
+			<option value="LeastComment"><fmt:message key="LeastComment"/></option>
 		</select>
 		<div id="View"></div>
 	</div>

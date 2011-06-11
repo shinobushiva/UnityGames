@@ -41,7 +41,7 @@ public class ChangeService {
             String contents, String operations, String hpURL, String pass,
             String thumbNailType, String gameType, String thumbNailChange,
             String gameChange, String fixTag, String code, long twitterId,
-            String gameScreenSize) {
+            String gameScreenSize,boolean editCode) {
 
         List<Object> models = new ArrayList<Object>();
         unity.model.api.Game gg = null;
@@ -53,6 +53,7 @@ public class ChangeService {
             key = Datastore.allocateId(GameData.class);
             g.setKey(key);
 
+            if(hpURL.isEmpty())
              updateStatus(gameName, key.getId());
 
             gg = new unity.model.api.Game();
@@ -71,6 +72,9 @@ public class ChangeService {
 
         g.setGameName(gameName);
         gg.setGameName(gameName);
+        
+        g.setEditable(editCode);
+        
         // passが空ならTwittterアカウントで管理
         if (pass.isEmpty()) {
             // ここでTwitterアカウントを登録
