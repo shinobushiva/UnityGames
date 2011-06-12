@@ -1,17 +1,16 @@
 package unity.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import net.arnx.jsonic.JSON;
+import java.util.Date;
 
 import org.slim3.datastore.Datastore;
 import org.slim3.datastore.GlobalTransaction;
 
+import unity.model.CommentaryLog;
 import unity.model.GameData;
+import unity.model.api.Game;
 import unity.utils.CodeBlockUtils;
+
+import com.google.appengine.api.datastore.Key;
 
 public class GameDataService {
 
@@ -46,6 +45,26 @@ public class GameDataService {
     public String toCodeJson(String str) {
         return CodeBlockUtils.toCodeJson(str);
 
+    }
+
+    public CommentaryLog commentaryLog(Key gameKey, String commentary) {
+
+        CommentaryLog cl = new CommentaryLog();
+        cl.setKey(Datastore.allocateId(CommentaryLog.class));
+        cl.setGameKey(gameKey);
+        cl.setCommentary(commentary);
+        cl.setDate(new Date());
+
+        GlobalTransaction tx = Datastore.beginGlobalTransaction();
+        tx.put(cl);
+        tx.commit();
+
+        return null;
+    }
+
+    public Game getGameApi(Key key) {
+
+        return Datastore.get(Game.class, key);
     }
 
 }

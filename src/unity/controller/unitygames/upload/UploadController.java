@@ -9,6 +9,7 @@ import org.slim3.datastore.GlobalTransaction;
 import org.slim3.util.BeanUtil;
 
 import unity.controller.login.OAuthController;
+import unity.model.GameData;
 import unity.model.SessionGameData;
 import unity.service.ChangeService;
 
@@ -66,7 +67,7 @@ public class UploadController extends Controller {
             return forward("/login/oAuth");
         }
 
-        service.change(
+        GameData g = service.change(
             null,
             gameName,
             gameURL,
@@ -86,6 +87,6 @@ public class UploadController extends Controller {
             0,
             gameScreenSize,
             editCode);
-        return forward("uploaded.jsp");
+        return redirect("/unitygames/game/ug"+g.getKey().getId());
     }
 }

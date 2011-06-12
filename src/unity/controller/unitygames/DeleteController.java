@@ -21,7 +21,8 @@ public class DeleteController extends Controller {
         System.out.println("dedede:" + key);
 
         service.delete(key);
+        service.deleteApi(key);
 
-        return forward(basePath);
+        return redirect("/");
     }
 }

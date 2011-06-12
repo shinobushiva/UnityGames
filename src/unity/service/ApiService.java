@@ -21,7 +21,13 @@ public class ApiService {
 
     public List<Game> findAll() {
 
-        return Datastore.query(Game.class).asList();
+        return Datastore.query(Game.class).sort(GameMeta.get().entry.desc).asList();
+
+    }
+    
+    public List<Game> rss() {
+
+        return Datastore.query(Game.class).sort(GameMeta.get().entry.asc).asList();
 
     }
 

@@ -8,6 +8,7 @@ import org.slim3.datastore.GlobalTransaction;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.auth.RequestToken;
+import unity.model.GameData;
 import unity.model.SessionGameData;
 import unity.service.UploadService;
 import unity.service.UserService;
@@ -67,7 +68,7 @@ public class CallbackController extends Controller {
                 gameChange = sessionScope("gameChange");
                 thumbNailChange = sessionScope("thumbNailChange");
             }
-            service.upload(
+            GameData g = service.upload(
                 key,
                 sg.getGameName(),
                 sg.getGameURL(),
@@ -88,16 +89,11 @@ public class CallbackController extends Controller {
                 sg.getGameScreenSize(),
                 sg.isEditCode());
 
-            if (sessionScope("loginType").equals("newGame")) {
-
-                uc = "upload/uploaded";
-
-            } else {
+            if (!sessionScope("loginType").equals("newGame")) {
                 removeSessionScope("key");
                 removeSessionScope("thumbNailChange");
                 removeSessionScope("gameChange");
 
-                uc = "changed";
             }
             removeSessionScope("gameFile");
             removeSessionScope("thumbNail");
@@ -107,7 +103,7 @@ public class CallbackController extends Controller {
             GlobalTransaction tx = Datastore.beginGlobalTransaction();
             tx.delete(sg.getKey());
             tx.commit();
-            return redirect("/unitygames/" + uc);
+         return  redirect("/unitygames/game/ug"+g.getKey().getId());
         }
 
         return null;

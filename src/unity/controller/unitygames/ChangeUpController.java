@@ -7,8 +7,10 @@ import org.slim3.datastore.Datastore;
 import org.slim3.datastore.GlobalTransaction;
 import org.slim3.util.BeanUtil;
 
+import unity.model.GameData;
 import unity.model.SessionGameData;
 import unity.service.ChangeService;
+import unity.service.GameDataService;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
@@ -16,6 +18,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 public class ChangeUpController extends Controller {
 
     private ChangeService service = new ChangeService();
+    private GameDataService gs = new GameDataService();
 
     @Override
     public Navigation run() throws Exception {
@@ -46,6 +49,10 @@ public class ChangeUpController extends Controller {
             requestScope("gameScreenWidth")
                 + ","
                 + requestScope("gameScreenHeight");
+        
+        
+        
+        
 
         if (pass.isEmpty()) {
 
@@ -73,7 +80,7 @@ public class ChangeUpController extends Controller {
             return forward("/login/oAuth");
         }
 
-        service.change(
+        GameData g = service.change(
             key,
             gameName,
             gameURL,
@@ -93,7 +100,6 @@ public class ChangeUpController extends Controller {
             0,
             gameScreenSize,
             editCode);
-
-        return forward("changed");
+        return redirect("/unitygames/game/ug"+g.getKey().getId());
     }
 }

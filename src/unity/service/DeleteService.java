@@ -5,8 +5,10 @@ import java.util.List;
 import org.slim3.datastore.Datastore;
 
 import unity.meta.TagGameMeta;
+import unity.meta.api.GameMeta;
 import unity.model.GameData;
 import unity.model.TagGame;
+import unity.model.api.Game;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.Transaction;
@@ -30,7 +32,22 @@ public class DeleteService {
         Datastore.deleteAll(g.getKey());
         tx.commit();
 
-        return g;
+        return null;
     }
 
+    public Game deleteApi(Key key) {
+        String id = String.valueOf(key.getId());
+        Game g =
+            Datastore
+                .query(Game.class)
+                .filter(GameMeta.get().gameId.equal(id))
+                .asSingle();
+
+        Transaction tx = Datastore.beginTransaction();
+        Datastore.deleteAll(g.getKey());
+        tx.commit();
+
+        return null;
+
+    }
 }

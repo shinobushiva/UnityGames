@@ -35,26 +35,28 @@ public class ChangeService {
     private static final Logger log = Logger.getLogger(ChangeService.class
         .getName());
     private TagService ts = new TagService();
+    private GameDataService gs = new GameDataService();
 
     public GameData change(Key key, String gameName, String gameURL,
             FileItem gameFile, FileItem thumbNail, String thumbNailURL,
             String contents, String operations, String hpURL, String pass,
             String thumbNailType, String gameType, String thumbNailChange,
             String gameChange, String fixTag, String code, long twitterId,
-            String gameScreenSize,boolean editCode) {
+            String gameScreenSize, boolean editCode) {
 
         List<Object> models = new ArrayList<Object>();
         unity.model.api.Game gg = null;
         GameData g = null;
 
         if (key == null) {
+            // newGame
             g = new GameData();
             g.setDate(new Date());
             key = Datastore.allocateId(GameData.class);
             g.setKey(key);
 
-            if(hpURL.isEmpty())
-             updateStatus(gameName, key.getId());
+            if (hpURL.isEmpty())
+                updateStatus(gameName, key.getId());
 
             gg = new unity.model.api.Game();
             gg.setEntry(new Date());
@@ -62,19 +64,23 @@ public class ChangeService {
             gg.setKey(key2);
             g.setApiData(key2);
         } else {
+            // updateGame
             g = Datastore.get(GameData.class, key);
             if (g.getApiData() != null) {
                 gg = Datastore.get(unity.model.api.Game.class, g.getApiData());
             } else {
                 gg = new unity.model.api.Game();
             }
+            if (!g.getCode().equals(code)) {
+                gs.commentaryLog(g.getKey(), code);
+            }
         }
 
         g.setGameName(gameName);
         gg.setGameName(gameName);
-        
+
         g.setEditable(editCode);
-        
+
         // passが空ならTwittterアカウントで管理
         if (pass.isEmpty()) {
             // ここでTwitterアカウントを登録
@@ -267,7 +273,6 @@ public class ChangeService {
             tx.commit();
         }
         String[] tags = new String[0];
-        System.out.println("fixTag:" + fixTag);
         if (fixTag != null) {
             tags = fixTag.split(",");
         }

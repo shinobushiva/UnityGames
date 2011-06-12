@@ -35,16 +35,14 @@ public class UploadService {
     private static final Logger log = Logger.getLogger(ChangeService.class
         .getName());
     private TagService ts = new TagService();
+    private GameDataService gs = new GameDataService();
 
     public GameData upload(Key key, String gameName, String gameURL,
             byte[] gameFile, byte[] thumbNail, String thumbNailURL,
             String contents, String operations, String hpURL, String pass,
             String thumbNailType, String gameType, String thumbNailChange,
             String gameChange, String fixTag, String code, long twitterId,
-            String gameScreenSize,boolean editCode) {
-        System.out.println("a");
-        System.out.println("tc:" + thumbNailChange);
-        System.err.println("th:" + thumbNail);
+            String gameScreenSize, boolean editCode) {
 
         List<Object> models = new ArrayList<Object>();
         unity.model.api.Game gg = null;
@@ -56,8 +54,8 @@ public class UploadService {
             key = Datastore.allocateId(GameData.class);
             g.setKey(key);
 
-            if(hpURL.isEmpty())
-            updateStatus(gameName, key.getId());
+            if (hpURL.isEmpty())
+                updateStatus(gameName, key.getId());
 
             gg = new unity.model.api.Game();
             gg.setEntry(new Date());
@@ -71,13 +69,17 @@ public class UploadService {
             } else {
                 gg = new unity.model.api.Game();
             }
+
+            if (!g.getCode().equals(code)) {
+                gs.commentaryLog(g.getKey(), code);
+            }
         }
 
         g.setGameName(gameName);
         gg.setGameName(gameName);
-        
+
         g.setEditable(editCode);
-        
+
         // passが空ならTwittterアカウントで管理
         if (pass.isEmpty()) {
             // ここでTwitterアカウントを登録

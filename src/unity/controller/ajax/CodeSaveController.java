@@ -1,7 +1,6 @@
 package unity.controller.ajax;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import jp.co.topgate.controller.JsonController;
@@ -9,9 +8,7 @@ import jp.co.topgate.controller.JsonController;
 import org.slim3.datastore.Datastore;
 import org.slim3.datastore.GlobalTransaction;
 
-import unity.meta.CommentMeta;
 import unity.meta.GameDataMeta;
-import unity.model.Comment;
 import unity.model.GameData;
 import unity.service.GameDataService;
 
@@ -27,7 +24,7 @@ public class CodeSaveController extends JsonController {
         Map<String, Object> map = new HashMap<String, Object>();
 
         long id = asLong("id");
-        String code = asString("codeEditArea");
+        String commentary = asString("codeEditArea");
         GameData g =
             Datastore.get(
                 GameData.class,
@@ -37,12 +34,17 @@ public class CodeSaveController extends JsonController {
             return map;
         }
 
-        g.setCode(code);
+        // ログとして残す
+        if (!g.getCode().equals(commentary))
+            gs.commentaryLog(g.getKey(), commentary);
+
+        g.setCode(commentary);
         GlobalTransaction tx = Datastore.beginGlobalTransaction();
         tx.put(g);
         tx.commit();
 
-        map.put("code", gs.toCodeJson(code));
+
+        map.put("code", gs.toCodeJson(commentary));
 
         return map;
     }
