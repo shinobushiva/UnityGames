@@ -12,12 +12,12 @@ public class OAuthController extends Controller {
     @Override
     public Navigation run() throws Exception {
 
-        if ("true".equals(requestScope("useReferer")))
-            sessionScope("referer", request.getHeader("REFERER"));
+        // if ("true".equals(requestScope("useReferer")))
+        sessionScope("referer", request.getHeader("REFERER"));
         // このファクトリインスタンスは再利用可能でスレッドセーフです
         // twitterオブジェクトをセッションに格納
         Twitter twitter = new TwitterFactory().getInstance();
-        sessionScope("tw", twitter);
+        sessionScope("twitter", twitter);
 
         sessionScope("userName", asString("name"));
 
@@ -32,7 +32,6 @@ public class OAuthController extends Controller {
         RequestToken requestToken =
             twitter.getOAuthRequestToken(callbackURL.toString());
         request.getSession().setAttribute("requestToken", requestToken);
-
         return redirect(requestToken.getAuthenticationURL());
     }
 }
