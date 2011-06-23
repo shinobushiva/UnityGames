@@ -34,11 +34,11 @@ public class ClickLogFilter implements Filter {
 
         HttpServletRequest hsr = (HttpServletRequest) req;
 
-        @SuppressWarnings("unused")
-        StringBuffer requestURL = hsr.getRequestURL();
+        if (hsr.getServletPath().startsWith("/admin/")) {
+            fc.doFilter(req, res);
+            return;
+        }
         Date date = new Date();
-        @SuppressWarnings("unused")
-        String remoteHost = hsr.getRemoteHost();
 
         Map<String, String> headerMap = new HashMap<String, String>();
         @SuppressWarnings("rawtypes")
@@ -49,13 +49,21 @@ public class ClickLogFilter implements Filter {
             headerMap.put(hn, header);
         }
 
-        System.out.println(headerMap);
+        headerMap.put("servletPath", hsr.getServletPath());
+        headerMap.put("RemoteAddr", hsr.getRemoteAddr());
+        headerMap.put("RemoteHost", hsr.getRemoteHost());
+        headerMap.put("RemotePort", "" + hsr.getRemotePort());
+        headerMap.put("RemoteUser", hsr.getRemoteUser());
+        headerMap.put("RequestURI", hsr.getRequestURI());
+        headerMap.put("RequestURL", "" + hsr.getRequestURL());
+
+//        System.out.println(headerMap);
 
         Log l = new Log();
         l.setDate(date);
         l.setHeaderMap(headerMap);
-        l.setUserId((String) hsr.getSession().getAttribute("loginUser"));
-        
+        l.setUserId("" + hsr.getSession().getAttribute("loginUser"));
+
         GlobalTransaction tx = Datastore.beginGlobalTransaction();
         tx.put(l);
         tx.commit();

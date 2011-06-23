@@ -146,7 +146,7 @@ function GetUnity() {
 		$.getJSONP("http://api.twitter.com/1/users/show.json?id=${twitterId}&callback={callback}",function(e){
 			$("#twitterImage").attr("src",""+e.profile_image_url);
 			$("#twitterName").html(""+e.screen_name);
-			$("#userPage").attr("href","/user/"+e.screen_name);
+			$(".userPage").attr("href","/user/"+e.screen_name);
 			
 		});
 		
@@ -452,14 +452,13 @@ function GetUnity() {
 		<%--	Twitterアカウント	--%>
 		<c:if test="${empty g.pass}">
 			<div>
-				<a id="userPage" style="" target="Twitter">
+				<a class="userPage" target="Twitter">
 					<div style="float: left;">
 						<img id="twitterImage" />
 					</div>
 					<div id="twitterName"
 						style="float: right; text-align: left; font-weight: 900; font-size: 20px; margin-top: 10px; word-break: break-all; color: #1F98C7;">
 					</div> </a>
-
 			</div>
 		</c:if>
 		<%--	変更パスワード入力	--%>
@@ -524,17 +523,20 @@ function GetUnity() {
 				e.async = true;
 				document.getElementById('fb-root').appendChild(e);
 			}());
-		</script></li>
+		</script>
+			</li>
 			<li style="display: inline;"><a href="http://mixi.jp/share.pl"
 				class="mixi-check-button"
 				data-key="42bc93a615261cdd8e17e115918eb36ebf60a729"
 				data-button="button-1"></a> <script type="text/javascript"
-					src="http://static.mixi.jp/js/share.js"></script></li>
+					src="http://static.mixi.jp/js/share.js"></script>
+			</li>
 			<li style="display: inline;"><iframe
 					src="http://share.gree.jp/share?url=http%3A%2F%2Funity-games.appspot.com%2Funitygames%2Fgame%2Fug${g.key.id}&type=0&height=20"
 					scrolling="no" frameborder="0" marginwidth="0" marginheight="0"
 					style="border: none; overflow: hidden; width: 75px; height: 20px;"
-					allowTransparency="true"></iframe></li>
+					allowTransparency="true"></iframe>
+			</li>
 			<li style="display: inline;"><a href="http://twitter.com/share"
 				class="twitter-share-button" data-count="horizontal"
 				data-via="UGames #UnityGames"
@@ -549,14 +551,11 @@ function GetUnity() {
 		<%-- Top Tabs --%>
 		<ul>
 			<li><a href="#tab1"><span><fmt:message
-							key="explanation" /> </span> </a>
-			</li>
+							key="explanation" /> </span> </a></li>
 			<li><a href="#tab2"><span><fmt:message
-							key="operation" /> </span> </a>
-			</li>
+							key="operation" /> </span> </a></li>
 			<li><a href="#tagg"><span><fmt:message
-							key="registTag" /> </span> </a>
-			</li>
+							key="registTag" /> </span> </a></li>
 			<%--
 			<span>
 				<button id="commentToggle"
@@ -566,8 +565,8 @@ function GetUnity() {
 			<span style="text-align: right; display: inline-block; float: right;">
 				<fmt:message key="entryDay" />：<fmt:formatDate value="${g.date}"
 					pattern="MM/dd" /> <fmt:message key="LastEntryDay" />：<fmt:formatDate
-					value="${g.lastDate}" pattern="MM/dd" /><br>
-			<fmt:message key="access" />：${g.access} <fmt:message key="comment" />:${g.comment}</span>
+					value="${g.lastDate}" pattern="MM/dd" /><br> <fmt:message
+					key="access" />：${g.access} <fmt:message key="comment" />:${g.comment}</span>
 
 		</ul>
 		<div id="tab1">
@@ -620,18 +619,31 @@ function GetUnity() {
 		<%--	<div id="comments-bottom"
 			style="clear: both; width: 1000px; height: 200px;">&nbsp;</div>
 			--%>
+		<div class="ui-widget-content ui-tabs-panel"
+			style="width: 600px; height: 60px; margin: auto;">
+			<c:forEach var="r" items="${relation}" end="3">
+				<%@ include file="/share/patternDistinction.jsp"%>
+				<div style="display: inline-block;">
+					<a href="${url}">
+						<div>
+							<img src="${thUrl}" width="50" height="50" />
+						</div>
+						<div class="bounded" style="text-align: center;">${r.gameName}</div>
+					</a>
+				</div>
+			</c:forEach>
+
+		</div>
 	</div>
 
 	<div style="clear: both;">
-		<%-- Tabs --%>
-
 
 		<div class="ui-widget-content ui-tabs-panel">
 
 			<div>
 				<span style="margin-top: 15px; font-size: 15;"> <fmt:message
 						key="code" /> </span>
-				<c:if test="${!g.editable}">
+				<c:if test="${g.editable}">
 					<button style="float: right;" id="edit" class="edit">
 						<fmt:message key="edit" />
 					</button>

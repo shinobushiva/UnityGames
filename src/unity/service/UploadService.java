@@ -307,7 +307,7 @@ public class UploadService {
         return g;
     }
 
-    public Twitter updateStatus(String gameName, long id) {
+    public void updateStatus(String gameName, long id) {
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb
             .setOAuthConsumerKey("ywEtN3tDuqZbOf2xlaQ3g")
@@ -329,8 +329,6 @@ public class UploadService {
 
             e.printStackTrace();
         }
-
-        return null;
     }
 
     public byte[] getBytes(GameData uploadedData) {

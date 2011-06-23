@@ -8,9 +8,9 @@ public class LogOutController extends Controller {
     @Override
     public Navigation run() throws Exception {
 
-        removeSessionScope("twitter");
-        removeSessionScope("userId");
+        removeSessionScope("isLogin");
+        removeSessionScope("loginUser");
         
-        return forward("/");
+        return redirect(request.getHeader("REFERER"));
     }
 }

@@ -3,19 +3,18 @@ package unity.controller.unitygames.upload;
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.controller.upload.FileItem;
-import org.slim3.controller.upload.FileItemStream;
 import org.slim3.datastore.Datastore;
 import org.slim3.datastore.GlobalTransaction;
 import org.slim3.util.BeanUtil;
 
-import unity.controller.login.OAuthController;
 import unity.model.GameData;
 import unity.model.SessionGameData;
 import unity.service.ChangeService;
+import unity.service.TagService;
 
 public class UploadController extends Controller {
     private ChangeService service = new ChangeService();
-    private OAuthController oauth = new OAuthController();
+    private TagService ts = new TagService();
 
     @Override
     public Navigation run() throws Exception {
@@ -34,8 +33,7 @@ public class UploadController extends Controller {
         String gameType = requestScope("GameType");
         String fixTag = requestScope("fixTag");
         String code = requestScope("Code");
-        boolean editCode = Boolean.valueOf((String)requestScope("editCode"));
-       
+        boolean editCode = Boolean.valueOf((String) requestScope("editCode"));
 
         String gameScreenSize =
             requestScope("gameScreenWidth")
@@ -63,30 +61,38 @@ public class UploadController extends Controller {
 
             // Callback用
             sessionScope("loginType", "newGame");
+
             // return null;
             return forward("/login/oAuth");
         }
 
-        GameData g = service.change(
-            null,
-            gameName,
-            gameURL,
-            gameFile,
-            thumbNail,
-            thumbNailURL,
-            contents,
-            operations,
-            hpURL,
-            pass,
-            thumbNailType,
-            gameType,
-            "",
-            "",
-            fixTag,
-            code,
-            0,
-            gameScreenSize,
-            editCode);
-        return redirect("/unitygames/game/ug"+g.getKey().getId());
+        GameData g =
+            service.change(
+                null,
+                gameName,
+                gameURL,
+                gameFile,
+                thumbNail,
+                thumbNailURL,
+                contents,
+                operations,
+                hpURL,
+                pass,
+                thumbNailType,
+                gameType,
+                "",
+                "",
+                fixTag,
+                code,
+                0,
+                gameScreenSize,
+                editCode);
+
+        // 二度手間してるけど力尽きたので放置・・・6/14
+        ts.conflictTag(g.getKey());
+        ts.setRelation(g.getKey());
+        ts.deleteRelationTag(g.getKey());
+
+        return redirect("/unitygames/game/ug" + g.getKey().getId());
     }
 }

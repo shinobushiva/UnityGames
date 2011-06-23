@@ -105,6 +105,9 @@ public class SearchController extends Controller {
             requestScope("GameList", gds);
 
         }
+      //ログイン
+        requestScope("isLogin", (Boolean) sessionScope("isLogin"));
+        requestScope("twitter", sessionScope("twitter"));
         return forward("search.jsp");
 
     }

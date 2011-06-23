@@ -11,6 +11,8 @@
 	content="Unity,Unity3D,UnityGames,Game,tutorial,チュートリアル">
 <meta name="description"
 	content="Unity3Dゲーム投稿サイトです。ゲームを触って学ぶそんなサイト。チュートリアルも充実してます。日本のUnityゲーム投稿サイトならここ！">
+<link rel="alternate" type="application/rss+xml" title="RSS"
+	href="http://unity-games.appspot.com/api/rss" />
 <%@ include file="/share/css.jsp"%>
 <%@ include file="/share/js.jsp"%>
 <title>UnityGames</title>
@@ -107,11 +109,13 @@
 			</div>
 			 --%>
 
-			<a href="/unitygames/" style="text-decoration: none;"><div
-					class="newGameLine">
-					<fmt:message key="newGame"/><img src="/images/click.png"
-						style="position: relative; top: 2px;" />
-				</div> </a>
+			<div class="newGameLine">
+				<a href="/unitygames/" style="text-decoration: none;"> <fmt:message
+						key="newGame" /><img src="/images/click.png"
+					style="position: relative; top: 2px;" /> </a> <span><a
+					href="/api/rss"><img alt="rss" src="/images/rss.png" width="32">
+				</a> </span>
+			</div>
 			<c:forEach var="g" items="${newGameList}">
 				<div style="display: inline-block; text-align: center;">
 					<%@ include file="/share/patternDistinction.jsp"%>
@@ -120,11 +124,14 @@
 				</div>
 			</c:forEach>
 
-			<div class="newGameLine"><fmt:message key="ranking"/></div>
+			<div class="newGameLine">
+				<fmt:message key="ranking" />
+			</div>
 			<div>
 				<c:forEach var="g" items="${rankingGameList}" varStatus="loop">
 					<div style="display: inline-block; text-align: center;">
-						<span style="font-size: 15; font-weight: 900;"><fmt:message key="best1"/>${loop.count}<fmt:message key="best2"/></span><br>
+						<span style="font-size: 15; font-weight: 900;"><fmt:message
+								key="best1" />${loop.count}<fmt:message key="best2" /> </span><br>
 						<%@ include file="/share/patternDistinction.jsp"%>
 						<a href="${url}"> <img src="${thUrl}" width="150" height="150" /><br>
 							<div class="bounded" style="width: 150px;">${g.gameName}</div> </a>

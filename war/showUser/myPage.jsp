@@ -208,6 +208,7 @@
 			<div style="margin-top: 20px;">
 				<span style="font-size: xx-large;" id="twitterScreenName"></span><span
 					style="margin-left: 30px;" id="twitterName"></span>
+					<span><a href="/user/${twitter.screenName}"><fmt:message key="edit.end" /></a></span>
 			</div>
 
 		</div>

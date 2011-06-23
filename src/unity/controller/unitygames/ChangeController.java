@@ -4,9 +4,7 @@ import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
 
-import twitter4j.ProfileImage;
 import twitter4j.Twitter;
-import twitter4j.TwitterFactory;
 import unity.meta.UserMeta;
 import unity.model.GameData;
 import unity.model.Tag;
@@ -19,7 +17,7 @@ public class ChangeController extends Controller {
 
     @Override
     public Navigation run() throws Exception {
-        Twitter twitter = (Twitter) sessionScope("twitter");
+        // Twitter twitter = (Twitter) sessionScope("twitter");
         long id = 0;
         if (asLong("id") != null) {
             id = asLong("id");
@@ -69,53 +67,64 @@ public class ChangeController extends Controller {
                         .filter(UserMeta.get().key.equal(g.getTwitterUserKey()))
                         .asSingle();
 
-                Twitter twitt = new TwitterFactory().getInstance();
+                // Twitter twitt = new TwitterFactory().getInstance();
+                //
+                // twitter4j.User showUser = twitt.showUser(u.getUserId());
+                //
+                // String url = showUser.getProfileImageURL().toString();
+                //
+                // String picture = url.replace("normal", "mini");
+                //
+                // requestScope("userName", u.getUserName());
+                // requestScope("p", picture);
 
-                twitter4j.User showUser = twitt.showUser(u.getUserId());
-
-                String url = showUser.getProfileImageURL().toString();
-
-                String picture = url.replace("normal", "mini");
-
-                requestScope("userName", u.getUserName());
-                requestScope("p", picture);
-
-                if (id != 0) {
-
-                    if (twitter.getId() != u.getUserId()) {
-                        return null;
-                    }
-
-                }
+                // if (id != 0) {
+                //
+                // if (twitter.getId() != u.getUserId()) {
+                // return null;
+                // }
+                //
+                // }
 
             }
 
         }
 
-        if (twitter == null) {
-
-            requestScope("userName", "Guest");
-            requestScope("type", "guest");
-            // requestScope(
-            // "p",
-            // "/images/face.png");
-
-        } else {
-            ProfileImage profileimage = null;
-            // Twitter画像URL取得
-            requestScope("userName", twitter.getScreenName());
-            requestScope(
-                "p",
-                twitter.getProfileImage(
-                    twitter.getScreenName(),
-                    profileimage.MINI).getURL());
-            requestScope("type", "twitter");
-
-        }
+        // if (twitter == null) {
+        //
+        // requestScope("userName", "Guest");
+        //
+        // // requestScope(
+        // // "p",
+        // // "/images/face.png");
+        //
+        // } else {
+        // ProfileImage profileimage = null;
+        // // Twitter画像URL取得
+        // requestScope("userName", twitter.getScreenName());
+        // requestScope(
+        // "p",
+        // twitter.getProfileImage(
+        // twitter.getScreenName(),
+        // profileimage.MINI).getURL());
+        // requestScope("type", "twitter");
+        //
+        // }
         String[] size = g.getGameScreenSize().split(",");
         requestScope("width", size[0]);
         requestScope("height", size[1]);
+        // ログイン
+        requestScope("isLogin", (Boolean) sessionScope("isLogin"));
+        Twitter twitter = sessionScope("twitter");
+        requestScope("twitter", twitter);
+        String type = "";
+        if (twitter == null)
+            type = "guest";
+        else
+            type = "twitter";
 
+        requestScope("type", type);
+        
         return forward("change.jsp");
     }
 }

@@ -11,6 +11,7 @@ import unity.model.GameData;
 import unity.model.SessionGameData;
 import unity.service.ChangeService;
 import unity.service.GameDataService;
+import unity.service.TagService;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
@@ -19,6 +20,7 @@ public class ChangeUpController extends Controller {
 
     private ChangeService service = new ChangeService();
     private GameDataService gs = new GameDataService();
+    private TagService ts = new TagService();
 
     @Override
     public Navigation run() throws Exception {
@@ -100,6 +102,12 @@ public class ChangeUpController extends Controller {
             0,
             gameScreenSize,
             editCode);
+        
+        // 二度手間してるけど力尽きたので放置・・・6/14
+        ts.conflictTag(g.getKey());
+        ts.setRelation(g.getKey());
+        ts.deleteRelationTag(g.getKey());
+        
         return redirect("/unitygames/game/ug"+g.getKey().getId());
     }
 }

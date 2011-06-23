@@ -35,6 +35,9 @@ public class IndexController extends Controller {
             }
 
         }
+      //ログイン
+        requestScope("isLogin", (Boolean) sessionScope("isLogin"));
+        requestScope("twitter", sessionScope("twitter"));
 
         return forward("index.jsp");
     }

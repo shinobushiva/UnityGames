@@ -16,7 +16,6 @@ import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
 import org.slim3.datastore.GlobalTransaction;
 
-import twitter4j.conf.ConfigurationBuilder;
 import unity.meta.TweetMeta;
 import unity.meta.UserMeta;
 import unity.model.Tweet;
@@ -70,7 +69,7 @@ public class TwitterSearchController extends Controller {
             for (Map<String, ?> map2 : list) {
                 String tweetIdString = "" + map2.get("id_str"); // tweetId
                 // String lang = "" + map2.get("iso_language_code"); // 言語
-                String userName = "" + map2.get("from_user"); // 誰が呟いたか
+                // String userName = "" + map2.get("from_user"); // 誰が呟いたか
                 String tweet = "" + map2.get("text"); // tweet内容
                 long tweetId = Long.valueOf(tweetIdString); // long型に変換
                 String createTime = "" + map2.get("created_at"); // tweet内容
@@ -105,15 +104,16 @@ public class TwitterSearchController extends Controller {
                 System.out.println("idGet:" + idGet);
                 Map<String, Object> ma =
                     (Map<String, Object>) JSON.decode(idGet);
-                
-                String userIdString = "" + ((Map<String,Object>)ma.get("user")).get("id_str"); // tweetId
+
+                String userIdString =
+                    "" + ((Map<String, Object>) ma.get("user")).get("id_str"); // tweetId
                 System.out.println(userIdString);
                 long userId = Long.valueOf(userIdString); // long型に変換
-              //  System.out.println(tweet);
+                // System.out.println(tweet);
                 // #UnityGamesが含まれていたら登録
                 if (tweet.contains("#UnityGames")) {
-                    
-                    System.out.println("tweet:"+tweet);
+
+                    System.out.println("tweet:" + tweet);
                     // TweetIdが既に保存されているかチェック
                     Tweet check =
                         Datastore

@@ -7,6 +7,9 @@ public class HowtoController extends Controller {
 
     @Override
     public Navigation run() throws Exception {
+      //ログイン
+        requestScope("isLogin", (Boolean) sessionScope("isLogin"));
+        requestScope("twitter", sessionScope("twitter"));
         return forward("howto.jsp");
     }
 }

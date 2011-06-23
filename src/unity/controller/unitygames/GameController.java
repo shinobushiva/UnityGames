@@ -11,34 +11,27 @@ import org.slim3.datastore.Datastore;
 import org.slim3.datastore.GlobalTransaction;
 import org.slim3.memcache.Memcache;
 
-import twitter4j.Twitter;
-import twitter4j.TwitterFactory;
 import unity.meta.CommentMeta;
-import unity.meta.GameDataMeta;
 import unity.model.Comment;
 import unity.model.GameData;
 import unity.service.GameDataService;
-import unity.utils.CodeBlockUtils;
-
-import com.google.appengine.api.datastore.KeyFactory;
 
 public class GameController extends Controller {
 
-    private GameDataMeta dd = GameDataMeta.get();
     private GameDataService gs = new GameDataService();
 
     @Override
     public Navigation run() throws Exception {
-
         String remoteAddr = request.getRemoteAddr();
         // gameIdからgameを持ってくる
         long id = asLong("id");
 
-        GameData g =
-            Datastore.get(
-                GameData.class,
-                KeyFactory.createKey(dd.getKind(), id));
+        GameData g = gs.load(id);
+
+        // ds.depthFirstSearch(g.getKey());
+
         requestScope("key", g.getKey());
+
         if (!remoteAddr.equals(Memcache.get("lastIp-" + g.getGameName()))) {
             Memcache.put("lastIp-" + g.getGameName(), remoteAddr);
             GlobalTransaction tx = Datastore.beginGlobalTransaction();
@@ -53,16 +46,6 @@ public class GameController extends Controller {
                 Datastore.get(unity.model.User.class, g.getTwitterUserKey());
 
             requestScope("twitterId", uk.getUserId());
-            // try {
-            // Twitter twitter = new TwitterFactory().getInstance();
-            // twitter4j.User u = twitter.showUser(uk.getUserId());
-            // // TwitterProfilePicture
-            // requestScope("tp", u.getProfileImageURL());
-            // // TwitterScreenName
-            // requestScope("tn", u.getScreenName());
-            // } catch (Exception e) {
-            // e.printStackTrace();
-            // }
 
         }
 
@@ -114,6 +97,17 @@ public class GameController extends Controller {
 
         requestScope("c", comment);
 
+        // 関連ゲーム部分
+        // List<Key> asKeyList =
+        // Datastore.query(RelationTag.class).filter(RelationTagMeta.get().games.equal(g.getKey())).asKeyList();
+
+        // Set<GameData> gameList = gs.relationGame(g.getKey());
+
+        // requestScope("relation", gameList);
+
+        // ログイン
+        requestScope("isLogin", (Boolean) sessionScope("isLogin"));
+        requestScope("twitter", sessionScope("twitter"));
         return forward("game.jsp");
     }
 }

@@ -8,31 +8,9 @@ public class IndexController extends Controller {
     @Override
     public Navigation run() throws Exception {
 
-        // Twitter twitter = (Twitter) sessionScope("twitter");
-        //
-        //
-        // if(twitter == null){
-        //
-        //
-        // requestScope("userName", "Guest");
-        // requestScope("type", "guest");
-        // // requestScope(
-        // // "p",
-        // // "/images/face.png");
-        //
-        // }else{
-        // ProfileImage profileimage = null;
-        // // Twitter画像URL取得
-        // requestScope("userName", twitter.getScreenName());
-        // requestScope(
-        // "p",
-        // twitter.getProfileImage(
-        // twitter.getScreenName(),
-        // profileimage.MINI).getURL());
-        // requestScope("type", "twitter");
-        //
-        //
-        // }
+      //ログイン
+        requestScope("isLogin", (Boolean) sessionScope("isLogin"));
+        requestScope("twitter", sessionScope("twitter"));
 
         return forward("index.jsp");
     }

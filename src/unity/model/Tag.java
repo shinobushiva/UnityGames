@@ -18,8 +18,6 @@ public class Tag implements Serializable {
     @Attribute(version = true)
     private Long version;
 
-    private String fixTag;
-    private String tag;
     private String name;
 
     /**
@@ -88,22 +86,6 @@ public class Tag implements Serializable {
             return false;
         }
         return true;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
-
-    public String getTag() {
-        return tag;
-    }
-
-    public void setFixTag(String fixTag) {
-        this.fixTag = fixTag;
-    }
-
-    public String getFixTag() {
-        return fixTag;
     }
 
     public void setName(String name) {

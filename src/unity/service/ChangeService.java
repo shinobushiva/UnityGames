@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Logger;
 
 import org.slim3.controller.upload.FileItem;
 import org.slim3.datastore.Datastore;
@@ -32,8 +31,6 @@ import com.google.appengine.api.datastore.Transaction;
 public class ChangeService {
     private static final int FRAGMENT_SIZE = 900000;
     private UploadedDataFragmentMeta f = UploadedDataFragmentMeta.get();
-    private static final Logger log = Logger.getLogger(ChangeService.class
-        .getName());
     private TagService ts = new TagService();
     private GameDataService gs = new GameDataService();
 
@@ -282,7 +279,6 @@ public class ChangeService {
                 continue;
             }
             Tag tag2 = ts.getTag(t);
-            log.info("1234:" + t);
 
             if (g.getFixTags() == null || gg.getFixTags() == null) {
 
@@ -312,7 +308,7 @@ public class ChangeService {
         return g;
     }
 
-    public Twitter updateStatus(String gameName, long id) {
+    public void updateStatus(String gameName, long id) {
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb
             .setOAuthConsumerKey("ywEtN3tDuqZbOf2xlaQ3g")
@@ -335,6 +331,5 @@ public class ChangeService {
             e.printStackTrace();
         }
 
-        return null;
     }
 }

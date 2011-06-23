@@ -11,7 +11,7 @@ import unity.model.User;
 
 public class UserService {
 
-    public User regist(long userId, String userName, String myself) {
+    public void regist(long userId, String userName, String myself) {
 
         User check =
             Datastore
@@ -34,7 +34,6 @@ public class UserService {
             tx.commit();
 
         }
-        return null;
     }
 
     public User getUser(long userId) {

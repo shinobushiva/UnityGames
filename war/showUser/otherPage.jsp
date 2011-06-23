@@ -54,13 +54,13 @@
 											$("#twitterScreenName").html(
 													"@" + e.screen_name);
 											$("#twitterName").html("" + e.name);
-											
+
 										});
 					});
 </script>
 </head>
 <body>
-<%@ include file="/share/header.jsp"%>
+	<%@ include file="/share/header.jsp"%>
 	<div style="font-size: 15px;" id="twitter">
 		<div>
 			<div style="float: left; margin-left: 10px; margin-top: 10px;">
@@ -68,9 +68,12 @@
 			</div>
 			<div style="margin-top: 20px;">
 				<span style="font-size: xx-large;" id="twitterScreenName"></span><span
-					style="margin-left: 30px;" id="twitterName"></span><span> <a
-					href="/login/oAuth?useReferer=true"><fmt:message key="edit"/></a>
-				</span>
+					style="margin-left: 30px;" id="twitterName"></span>
+				<c:if test="${showUser}">
+					<span> <a href="/user/${twitter.screenName}?edit=edit"><fmt:message
+								key="edit" />
+					</a></span>
+				</c:if>
 			</div>
 
 		</div>
@@ -81,8 +84,11 @@
 	<div style="float: left;">
 		<div>
 			<div
-				style="font-size: 20px; margin-top: auto; margin-bottom: auto; display: inline-block;"><fmt:message key="self.introduction"/></div>
-			<div style="margin-top: 10px; display: inline-block; width: 450px;"id="twitterDescription">${um.myself}</div>
+				style="font-size: 20px; margin-top: auto; margin-bottom: auto; display: inline-block;">
+				<fmt:message key="self.introduction" />
+			</div>
+			<div style="margin-top: 10px; display: inline-block; width: 450px;"
+				id="twitterDescription">${um.myself}</div>
 		</div>
 		<div>
 			<div
@@ -90,7 +96,9 @@
 			<div id="web" style="display: inline-block;">${um.webUrl}</div>
 		</div>
 		<div style="width: 500px;">
-			<div style="font-size: 20px; margin-top: 50px;"><fmt:message key="game.history"/></div>
+			<div style="font-size: 20px; margin-top: 50px;">
+				<fmt:message key="game.history" />
+			</div>
 			<hr style="width: 500px;">
 			<div id="hiddenresult" style="display: none;">
 				<div class="result">
@@ -129,7 +137,9 @@
 	</div>
 	<div style="float: left;">
 		<div style="margin-left: 40px;">
-			<div style="font-size: 20px;"><fmt:message key="tweet.other"/></div>
+			<div style="font-size: 20px;">
+				<fmt:message key="tweet.other" />
+			</div>
 			<c:forEach var="t" items="${tweet}">
 
 				<script type="text/javascript">

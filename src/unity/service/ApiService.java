@@ -11,7 +11,6 @@ public class ApiService {
 
     public Game find(String ids) {
 
-        System.out.println(ids);
         return Datastore
             .query(Game.class)
             .filter(GameMeta.get().gameId.equal(ids))
@@ -21,13 +20,20 @@ public class ApiService {
 
     public List<Game> findAll() {
 
-        return Datastore.query(Game.class).sort(GameMeta.get().entry.desc).asList();
+        return Datastore
+            .query(Game.class)
+            .sort(GameMeta.get().entry.desc)
+            .asList();
 
     }
-    
+
     public List<Game> rss() {
 
-        return Datastore.query(Game.class).sort(GameMeta.get().entry.asc).asList();
+        return Datastore
+            .query(Game.class)
+            .sort(GameMeta.get().entry.asc)
+            .limit(100)
+            .asList();
 
     }
 

@@ -57,6 +57,9 @@ public class TutorialController extends Controller {
             // System.out.println("ttt:"+t);
 
         }
+      //ログイン
+        requestScope("isLogin", (Boolean) sessionScope("isLogin"));
+        requestScope("twitter", sessionScope("twitter"));
         return forward("tutorial.jsp");
     }
 }

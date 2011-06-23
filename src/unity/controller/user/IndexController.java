@@ -28,26 +28,28 @@ public class IndexController extends Controller {
 
         String name = asString("name");
 
-        // ログイン
-        // Twitter t = (Twitter) sessionScope("twitter");
-        // if (t == null) {
-        // return redirect("/login/oAuth?name=" + name);
-        // }
-
         boolean isMe = false;
-        // System.out.println("誰が見てる？"+t.getScreenName());
+
         if (ls.isLogin(request)) {
             String userName = ls.getLoginUserName(request);
             if (name.equals(userName)) {
-                isMe = true;
+                requestScope("showUser", true);
+
+                System.out.println("edit:" + asString("edit"));
+                if (asString("edit") != null) {
+                    if (asString("edit").equals("edit"))
+                        isMe = true;
+                } else {
+                    isMe = false;
+                }
             }
+
             // ページを見ている人が本人か他人かを判別
             // ローカルなのでこっちのifつかってる
             // if (name.equals("kyusyukeigo")) {
 
             // requestScope("name", "myName");
         }
-        System.out.println(ls.isLogin(request));
 
         // アカウント名からモデルのuserIdを取り出す
         unity.model.User uk = us.getName(name);
@@ -76,10 +78,10 @@ public class IndexController extends Controller {
         requestScope("tweet", tweets);
         // モデルのUser情報
         requestScope("um", uk);
-        // Twitterアカウント
-        // requestScope("u", u);
-        // TwitterProfilePicture
-        // requestScope("tp", picture);
+
+        // ログイン
+        requestScope("isLogin", (Boolean) sessionScope("isLogin"));
+        requestScope("twitter", sessionScope("twitter"));
 
         // 表示だけが違うのでここでjspを判別する
         if (!isMe) {

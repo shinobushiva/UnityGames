@@ -67,4 +67,26 @@ public class GameDataService {
         return Datastore.get(Game.class, key);
     }
 
+    // public Set<GameData> relationGame(Key gameKey) {
+    //
+    // List<RelationTag> rt =
+    // Datastore
+    // .query(RelationTag.class)
+    // .filter(RelationTagMeta.get().games.equal(gameKey))
+    // .sort(RelationTagMeta.get().relationCount.desc)
+    // .asList();
+    //
+    // Set<GameData> gameList = new HashSet<GameData>();
+    //
+    // for (RelationTag relationTag : rt) {
+    // for (Key key : relationTag.getGames()) {
+    // GameData gg = Datastore.get(GameData.class, key);
+    // if (!gg.getKey().equals(gameKey)) {
+    // gameList.add(gg);
+    // }
+    // }
+    // }
+    // return gameList;
+    // }
+
 }
