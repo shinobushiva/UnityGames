@@ -23,14 +23,12 @@ public class ClickLogFilter implements Filter {
 
     @Override
     public void destroy() {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain fc)
             throws IOException, ServletException {
-        // TODO Auto-generated method stub
 
         HttpServletRequest hsr = (HttpServletRequest) req;
 
@@ -38,7 +36,6 @@ public class ClickLogFilter implements Filter {
             fc.doFilter(req, res);
             return;
         }
-        Date date = new Date();
 
         Map<String, String> headerMap = new HashMap<String, String>();
         @SuppressWarnings("rawtypes")
@@ -57,10 +54,8 @@ public class ClickLogFilter implements Filter {
         headerMap.put("RequestURI", hsr.getRequestURI());
         headerMap.put("RequestURL", "" + hsr.getRequestURL());
 
-//        System.out.println(headerMap);
-
         Log l = new Log();
-        l.setDate(date);
+        l.setDate(new Date());
         l.setHeaderMap(headerMap);
         l.setUserId("" + hsr.getSession().getAttribute("loginUser"));
 
@@ -74,7 +69,6 @@ public class ClickLogFilter implements Filter {
 
     @Override
     public void init(FilterConfig arg0) throws ServletException {
-        // TODO Auto-generated method stub
 
     }
 

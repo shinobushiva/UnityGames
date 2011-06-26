@@ -37,7 +37,7 @@
 		</li>
 		<li><a href="/tutorial"><fmt:message key="tutorial" /> </a>
 		</li>
-		<li><a href="/unitygames/upload"><fmt:message key="upload" />
+		<li><a href="/unitygames/upload/newGame"><fmt:message key="upload" />
 		</a>
 		</li>
 	</ul>

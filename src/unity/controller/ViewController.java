@@ -15,34 +15,33 @@ public class ViewController extends Controller {
     @Override
     public Navigation run() throws Exception {
 
-        String data = asString("view");
-        // 投稿日時が古い順
+        if (!asString("view").isEmpty())
+            sessionScope("viewType", asString("view"));
+
+        String data = "Default";
+        if (sessionScope("viewType") != null) {
+            data = sessionScope("viewType");
+        }
 
         List<GameData> Game = null;
-
-        if (data.equals("OldEntry")) {
+        // 投稿日時が古い順
+        if (data.equals("OldEntry"))
             Game = Datastore.query(g).sort(g.date.asc).asList();
-        }
         // アクセス数が多い順
-        else if (data.equals("MostAccess")) {
+        else if (data.equals("MostAccess"))
             Game = Datastore.query(g).sort(g.access.desc).asList();
-        }
         // アクセス数が少ない順
-        else if (data.equals("LeastAccess")) {
+        else if (data.equals("LeastAccess"))
             Game = Datastore.query(g).sort(g.access.asc).asList();
-        }
         // コメントが多い順
-        else if (data.equals("MostComment")) {
+        else if (data.equals("MostComment"))
             Game = Datastore.query(g).sort(g.comment.desc).asList();
-        }
         // コメントが少ない順
-        else if (data.equals("LeastComment")) {
+        else if (data.equals("LeastComment"))
             Game = Datastore.query(g).sort(g.comment.asc).asList();
-        }
         // 投稿日時が新しい順&デフォルト
-        else {
+        else if (data.equals("Default"))
             Game = Datastore.query(g).sort(g.date.desc).asList();
-        }
 
         requestScope("GameList", Game);
         for (GameData game : Game) {
@@ -59,7 +58,7 @@ public class ViewController extends Controller {
             }
 
         }
-      //ログイン
+        // ログイン
         requestScope("isLogin", (Boolean) sessionScope("isLogin"));
         requestScope("twitter", sessionScope("twitter"));
         return forward("view.jsp");

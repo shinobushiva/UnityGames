@@ -3,6 +3,8 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="f" uri="http://www.slim3.org/functions"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html xmlns:og="http://ogp.me/ns#"
 	xmlns:mixi="http://mixi-platform.com/ns#"
 	xmlns:fb="http://www.facebook.com/2008/fbml"
@@ -365,8 +367,10 @@ function GetUnity() {
 						html += '</div>';
 						$("#loaded").html(html);
 						eval(e.play);
+						$("#game-center").css("margin-left","0px");
 					}
 				});
+		
 	}
 	
 	function toCode(obj){
@@ -487,7 +491,8 @@ function GetUnity() {
 									});
 						});
 					</script>
-					<form action="/unitygames/change" method="post">
+					<form action="/unitygames/upload/change/guest${g.key.id}"
+						method="post">
 						<a id="change-${g.key.id}" style="font-size: x-small;"><fmt:message
 								key="change.delete" /> </a><a id="out-${g.key.id}"
 							style="position: relative; top: -5px;"><input type="password"
@@ -523,20 +528,17 @@ function GetUnity() {
 				e.async = true;
 				document.getElementById('fb-root').appendChild(e);
 			}());
-		</script>
-			</li>
+		</script></li>
 			<li style="display: inline;"><a href="http://mixi.jp/share.pl"
 				class="mixi-check-button"
 				data-key="42bc93a615261cdd8e17e115918eb36ebf60a729"
 				data-button="button-1"></a> <script type="text/javascript"
-					src="http://static.mixi.jp/js/share.js"></script>
-			</li>
+					src="http://static.mixi.jp/js/share.js"></script></li>
 			<li style="display: inline;"><iframe
 					src="http://share.gree.jp/share?url=http%3A%2F%2Funity-games.appspot.com%2Funitygames%2Fgame%2Fug${g.key.id}&type=0&height=20"
 					scrolling="no" frameborder="0" marginwidth="0" marginheight="0"
 					style="border: none; overflow: hidden; width: 75px; height: 20px;"
-					allowTransparency="true"></iframe>
-			</li>
+					allowTransparency="true"></iframe></li>
 			<li style="display: inline;"><a href="http://twitter.com/share"
 				class="twitter-share-button" data-count="horizontal"
 				data-via="UGames #UnityGames"
@@ -551,11 +553,14 @@ function GetUnity() {
 		<%-- Top Tabs --%>
 		<ul>
 			<li><a href="#tab1"><span><fmt:message
-							key="explanation" /> </span> </a></li>
+							key="explanation" /> </span> </a>
+			</li>
 			<li><a href="#tab2"><span><fmt:message
-							key="operation" /> </span> </a></li>
+							key="operation" /> </span> </a>
+			</li>
 			<li><a href="#tagg"><span><fmt:message
-							key="registTag" /> </span> </a></li>
+							key="registTag" /> </span> </a>
+			</li>
 			<%--
 			<span>
 				<button id="commentToggle"
@@ -595,21 +600,23 @@ function GetUnity() {
 			<div id="comments-left" style="width: 200px;">&nbsp;</div>
 		</div>
 	 --%>
-		<div id="game-center"
-			style="margin-left: auto; margin-right: auto; width: 600px;">
-			<div id="loaded">
+		<div id="game-center" style="width: ${width}; margin-left:200px;"
+			align="center">
+			<div id="loaded" style="margin-left: auto; margin-right: auto;">
 				<c:choose>
 					<c:when test="${empty g.thumbNailURL}">
-						<img src="/unitygames/thumbNail?id=${f:h(g.key.id)}" width="600"
-							height="450" style="opacity: 0.3; z-index: 0;" />
+						<img src="/unitygames/thumbNail?id=${f:h(g.key.id)}"
+							width="${width}" height="${height}"
+							style="opacity: 0.3; z-index: 0;" />
 					</c:when>
 					<c:when test="${not empty g.thumbNailURL}">
-						<img src="${g.thumbNailURL}" border="1" width="600" height="450"
-							style="opacity: 0.3; z-index: 0;" />
+						<img src="${g.thumbNailURL}" border="1" width="${width}"
+							height="${height}
+							style=" opacity: 0.3; z-index: 0;" />
 					</c:when>
 				</c:choose>
 				<button id="load"
-					style="background-color: transparent; border: 0; z-index: 1; position: relative; left: 200px; top: -180px">
+					style="background-color: transparent; border: 0; z-index: 1; position: relative; right: ${width/2 +100}px; top: -${height/3 }px">
 					<img src="/images/Start.png">
 				</button>
 
@@ -619,6 +626,7 @@ function GetUnity() {
 		<%--	<div id="comments-bottom"
 			style="clear: both; width: 1000px; height: 200px;">&nbsp;</div>
 			--%>
+		<%--関連動画
 		<div class="ui-widget-content ui-tabs-panel"
 			style="width: 600px; height: 60px; margin: auto;">
 			<c:forEach var="r" items="${relation}" end="3">
@@ -634,6 +642,7 @@ function GetUnity() {
 			</c:forEach>
 
 		</div>
+		--%>
 	</div>
 
 	<div style="clear: both;">

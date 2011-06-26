@@ -87,6 +87,10 @@ public class GameController extends Controller {
 
         requestScope("jscode", gs.toCodeJson(g.getCode()));
 
+        String[] split = g.getGameScreenSize().split(",");
+        requestScope("width", split[0]);
+        requestScope("height", split[1]);
+
         requestScope("g", g);
         // コメント部分
         List<Comment> comment =

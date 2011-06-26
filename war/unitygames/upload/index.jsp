@@ -3,17 +3,17 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="f" uri="http://www.slim3.org/functions"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <%@ include file="/share/css.jsp"%>
 <%@ include file="/share/js.jsp"%>
-<title><fmt:message key="upload.title" />
-</title>
+<title><fmt:message key="upload.title" /></title>
 
 </head>
 <body>
-
 	<script type="text/javascript">
 jQuery(document).ready(function($) {  
 	   
@@ -80,10 +80,9 @@ function tagCheck(){
 		return true; // 送信を実行
 	}}
 </script>
-
 	<%@ include file="/share/header.jsp"%>
 	<div style="padding-top: 30px;">
-		<form action="upload" method="post" class="cmxform" id="commentForm"
+		<form action="/action/upload" method="post" class="cmxform" id="commentForm"
 			enctype="multipart/form-data" onSubmit="return tagCheck()"
 			name="form1">
 			<table class="purchase-options" border="0"
@@ -94,18 +93,17 @@ function tagCheck(){
 				<tr>
 					<td><h1>
 							<fmt:message key="upload.title" />
-						</h1>
-					</td>
+						</h1></td>
 
 					<td rowspan="6">
 
 						<h2>
 							<fmt:message key="explanation" />
-						</h2> <textarea style="width: 440; height: 90;" name="Contents"
+						</h2> <textarea style="width: 440px; height: 90px;" name="Contents"
 							title="<fmt:message key="contents.title" />"></textarea><br>
 						<h2>
 							<fmt:message key="operation" />
-						</h2> <textarea style="width: 440; height: 110;" name="Operations"
+						</h2> <textarea style="width: 440px; height: 110px;" name="Operations"
 							title="<fmt:message key="operation.title" />"></textarea>
 						<div>
 							<div style="display: inline-block;">
@@ -117,7 +115,7 @@ function tagCheck(){
 								<fmt:message key="upload.howto.code" />
 							</div>
 							<div>
-								<textarea style="width: 440; height: 110;" name="Code"
+								<textarea style="width: 440px; height: 110px;" name="Code"
 									title="<fmt:message key="code.title" />"></textarea>
 							</div>
 						</div>
@@ -143,10 +141,9 @@ function tagCheck(){
 							<div>
 								<label><input type="checkbox" name="editable"
 									value="true" style="display: inline-block;" />
-								<h2 style="display: inline-block;">
+									<h2 style="display: inline-block;">
 										<fmt:message key="dont.edit" />
-									</h2>
-								</label>
+									</h2> </label>
 							</div>
 						</div>
 						<div id="wrapper" style="float: right;">
@@ -154,14 +151,14 @@ function tagCheck(){
 								style="width: 250px; height: 80px; font-size: xx-large;">
 								<fmt:message key="button.regist" />
 							</button>
-						</div></td>
+						</div>
+					</td>
 				</tr>
 				<tr>
 					<td><h2>
 							<label for="GameName"><fmt:message key="gameName" /> </label><input
 								type="text" name="GameName" id="GameName" class="required" />
-						</h2>
-					</td>
+						</h2></td>
 				</tr>
 				<tr>
 					<td><label for="ThumbNail"><h2>
@@ -171,8 +168,7 @@ function tagCheck(){
 							checked="checked"> <fmt:message
 								key="thumbNail.pictureDataUp" /> </label><br> <label><input
 							type="radio" name="ThumbNailType" value="url" id="turl">
-							<fmt:message key="thumbNail.urlUp" /><br> </label>
-					</td>
+							<fmt:message key="thumbNail.urlUp" /><br> </label></td>
 
 				</tr>
 				<tr>
@@ -185,7 +181,8 @@ function tagCheck(){
 									key="thumbNail.url" /> </label><input type="text" name="ThumbNailURL"
 								id="ThumbNailURL" style="width: 260px"
 								title="<fmt:message key="thumbNail.url.title" />"><br>
-						</div></td>
+						</div>
+					</td>
 				</tr>
 				<tr>
 					<td><label for="d"><h2>
@@ -197,8 +194,7 @@ function tagCheck(){
 							value="url" id="url"> <fmt:message key="game.select.url" /><br>
 					</label> <label><input type="radio" name="GameType" value="hpurl"
 							id="hp"> <fmt:message key="game.select.url.outside" /><br>
-					</label>
-					</td>
+					</label></td>
 				</tr>
 				<tr>
 					<td>
@@ -227,16 +223,17 @@ function tagCheck(){
 						</div> <%--	ゲームの管理方法	--%>
 						<h2>
 							<fmt:message key="management" />
-						</h2> <%--Twitterアカウントでログインしている場合--%>
-						<div>
-							<input type="radio" name="gameAdmin" id="ga1" checked="checked" />
-							<fmt:message key="twitterAccount" />
-							<input type="radio" name="gameAdmin" id="ga2" />
-							<fmt:message key="password" />
-						</div>
+						</h2> <%--Twitterアカウントでログインしている場合--%> <c:if
+							test="${loginType == 'twitter' }">
+							<div>
+								<input type="radio" name="gameAdmin" id="ga1" checked="checked" />
+								<fmt:message key="twitterAccount" />
+								<input type="radio" name="gameAdmin" id="ga2" />
+								<fmt:message key="password" />
+							</div>
 
-						<div id="twitterKey">
-							<%--	<div style="float: left;">
+							<div id="twitterKey">
+								<%--	<div style="float: left;">
 									<img
 										src="${p}" />
 								</div>
@@ -244,24 +241,42 @@ function tagCheck(){
 										style="text-align: left; font-weight: 900; font-size: 20px; margin-top: 10px; word-break: break-all;">
 										&nbsp;${userName}</div> </a>
  --%>
-							<div style="color: blue; margin-top: 10px">
-								<fmt:message key="twitter.login" />
+								<div style="color: blue; margin-top: 10px"></div>
 							</div>
-						</div>
 
-						<div id="changeKey">
-							<h2>
-								<fmt:message key="change.delete.key" />
-								<input type="password" name="pass" id="adminPass"
-									style="width: 117;">
-							</h2>
-						</div>
+							<div id="changeKey">
+								<h2>
+									<fmt:message key="change.delete.key" />
+									<input type="password" name="pass" id="adminPass"
+										style="width: 117px;">
+								</h2>
+							</div>
+						</c:if> <c:if test="${loginType == 'guest' }">
+							<script type="text/javascript">
+						$(function(){
+							$("#changeKey").toggle();
+						});
+						</script>
+							<div>
+								<input type="radio" name="gameAdmin" id="ga2" checked="checked" />
+								<fmt:message key="password" />
+							</div>
+
+							<div id="changeKey">
+								<h2>
+									<fmt:message key="change.delete.key" />
+									<input type="password" name="pass" id="adminPass"
+										style="width: 117px;">
+								</h2>
+							</div>
+						</c:if>
 					</td>
 
 				</tr>
 				<tr class="bottom">
-					<td colspan="2" style="padding: 15px;"><span class="warning"><fmt:message
-								key="url.explanation" /> </span></td>
+					<td colspan="2" style="padding-left:5px;padding-bottom: 15px;"><span class="warning"><fmt:message
+								key="url.explanation" /> </span>
+					</td>
 				</tr>
 
 			</table>
@@ -271,6 +286,5 @@ function tagCheck(){
 
 	</div>
 	<%@ include file="/share/footer.jsp"%>
-
 </body>
 </html>

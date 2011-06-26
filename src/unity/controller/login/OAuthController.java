@@ -19,7 +19,11 @@ public class OAuthController extends Controller {
         Twitter twitter = new TwitterFactory().getInstance();
         sessionScope("twitter", twitter);
 
+        sessionScope("loginType", asString("loginType"));
+
         sessionScope("userName", asString("name"));
+        
+        
 
         // callback用のURLを生成して格納
         StringBuffer callbackURL = request.getRequestURL();

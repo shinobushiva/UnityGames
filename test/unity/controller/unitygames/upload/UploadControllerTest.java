@@ -2,6 +2,8 @@ package unity.controller.unitygames.upload;
 
 import org.slim3.tester.ControllerTestCase;
 import org.junit.Test;
+
+import unity.controller.action.UploadController;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 

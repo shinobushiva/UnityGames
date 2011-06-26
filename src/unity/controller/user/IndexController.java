@@ -10,9 +10,6 @@ import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
-
-import twitter4j.Twitter;
 import unity.meta.GameDataMeta;
 import unity.model.GameData;
 import unity.model.Tweet;
@@ -78,7 +75,7 @@ public class IndexController extends Controller {
         requestScope("tweet", tweets);
         // モデルのUser情報
         requestScope("um", uk);
-
+        requestScope("user", name);
         // ログイン
         requestScope("isLogin", (Boolean) sessionScope("isLogin"));
         requestScope("twitter", sessionScope("twitter"));

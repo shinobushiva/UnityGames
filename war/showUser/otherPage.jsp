@@ -3,6 +3,8 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="f" uri="http://www.slim3.org/functions"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -63,19 +65,19 @@
 	<%@ include file="/share/header.jsp"%>
 	<div style="font-size: 15px;" id="twitter">
 		<div>
-			<div style="float: left; margin-left: 10px; margin-top: 10px;">
-				<img id="twitterImage" style="width: 48px; height: 48px;" />
-			</div>
-			<div style="margin-top: 20px;">
-				<span style="font-size: xx-large;" id="twitterScreenName"></span><span
-					style="margin-left: 30px;" id="twitterName"></span>
-				<c:if test="${showUser}">
-					<span> <a href="/user/${twitter.screenName}?edit=edit"><fmt:message
-								key="edit" />
-					</a></span>
-				</c:if>
-			</div>
-
+			<a href="http://twitter.com/#!/${user}">
+				<div style="float: left; margin-left: 10px; margin-top: 10px;">
+					<img id="twitterImage" style="width: 48px; height: 48px;" />
+				</div>
+				<div style="margin-top: 20px;">
+					<span style="font-size: xx-large;" id="twitterScreenName"></span><span
+						style="margin-left: 30px;" id="twitterName"></span>
+					<c:if test="${showUser}">
+						<span> <a href="/user/${twitter.screenName}?edit=edit"><fmt:message
+									key="edit" /> </a>
+						</span>
+					</c:if>
+				</div> </a>
 		</div>
 
 		<hr style="margin-top: 50px; width: 900px; clear: both;" />
@@ -107,7 +109,7 @@
 						<div
 							style="display: inline-block; text-align: center; z-index: 1; cursor: pointer;"
 							id="ug${g.key.id}">
-							<a href="/unitygames/game?id=${g.key.id}"><img src="${thUrl}"
+							<a href="/unitygames/game/ug${g.key.id}"><img src="${thUrl}"
 								width="80" height="80" /><br>
 								<div class="bounded" style="width: 150px; text-align: center;">${g.gameName}</div>
 							</a>
@@ -148,17 +150,18 @@
 						$.getJSONP(url, function(obj) {
 							var s = "";
 
-							s += "<div　style='width: 250px;'>" + obj.text
+							s += "<div><div　style='width: 250px;'>" + obj.text
 									+ "</div>";
 							s += "<div>" + jQuery.timeago(obj.created_at)
-									+ "</div>";
+									+ "</div></div>";
 							$("#${t.tweetId}").html(s);
 						});
 					});
 				</script>
 
 				<hr />
-				<div style="height: 50px; border: 1px;" id="${t.tweetId}"></div>
+				<div style="width: 300px; height: 50px; border: 1px;"
+					id="${t.tweetId}"></div>
 
 			</c:forEach>
 		</div>

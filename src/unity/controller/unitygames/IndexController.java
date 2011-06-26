@@ -17,7 +17,7 @@ public class IndexController extends Controller {
 
     @Override
     public Navigation run() throws Exception {
-//ゲーム新着順
+        // ゲーム新着順
         List<GameData> games = Datastore.query(g).sort(g.access.desc).asList();
 
         requestScope("GameList", games);
@@ -35,7 +35,12 @@ public class IndexController extends Controller {
             }
 
         }
-      //ログイン
+        String data = "Default";
+        if (sessionScope("viewType") != null)
+            data = (String) sessionScope("viewType");
+        requestScope("viewType", data);
+System.out.println(data);
+        // ログイン
         requestScope("isLogin", (Boolean) sessionScope("isLogin"));
         requestScope("twitter", sessionScope("twitter"));
 

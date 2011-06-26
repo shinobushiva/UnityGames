@@ -5,16 +5,11 @@ import org.slim3.controller.router.RouterImpl;
 public class AppRouter extends RouterImpl {
 
     public AppRouter() {
-       // addRouting("/_ah/mail/{address}", "/mail/receive?address={address}");
         addRouting("/user/{name}", "/user/?name={name}");
         addRouting("/unitygames/game/ug{id}", "/unitygames/game?id={id}");
         addRouting("/api/game/{gameId}", "/api/gameApi?id={gameId}");
-        /*
-         * addRouting( "/{app}/edit/{key}/{version}",
-         * "/{app}/edit?key={key}&version={version}"); addRouting(
-         * "/{app}/delete/{key}/{version}",
-         * "/{app}/delete?key={key}&version={version}");
-         * addRouting("/{app}/find/*path", "/{app}/find?path={path}");
-         */
+        addRouting("/unitygames/upload/{newGame}", "/unitygames/upload/?g={newGame}");
+        addRouting("/unitygames/upload/{newGame}/{guest}", "/unitygames/upload/?g={newGame}&t={guest}");
+        addRouting("/unitygames/upload/{newGame}/{guest}{id}", "/unitygames/upload/?g={newGame}&t={guest}&id={id}");
     }
 }

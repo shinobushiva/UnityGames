@@ -10,6 +10,8 @@ public class LogOutController extends Controller {
 
         removeSessionScope("isLogin");
         removeSessionScope("loginUser");
+        removeSessionScope("loginType");
+        removeSessionScope("twitter");
         
         return redirect(request.getHeader("REFERER"));
     }

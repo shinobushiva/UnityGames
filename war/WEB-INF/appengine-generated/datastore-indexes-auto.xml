@@ -1,4 +1,27 @@
-<!-- Indices written at Thu, 23 Jun 2011 13:08:34 UTC -->
+<!-- Indices written at Sun, 26 Jun 2011 16:06:11 UTC -->
 
-<datastore-indexes/>
+<datastore-indexes>
 
+    <!-- Used 17 times in query history -->
+    <datastore-index kind="UploadedDataFragment" ancestor="false" source="auto">
+        <property name="uploadDataRef2" direction="asc"/>
+        <property name="index" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 15 times in query history -->
+    <datastore-index kind="Comment" ancestor="true" source="auto">
+        <property name="date" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 15 times in query history -->
+    <datastore-index kind="Comment" ancestor="true" source="auto">
+        <property name="date" direction="desc"/>
+    </datastore-index>
+
+    <!-- Used 102 times in query history -->
+    <datastore-index kind="UploadedDataFragment" ancestor="false" source="auto">
+        <property name="uploadDataRef" direction="asc"/>
+        <property name="index" direction="asc"/>
+    </datastore-index>
+
+</datastore-indexes>

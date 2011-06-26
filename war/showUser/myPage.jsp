@@ -3,6 +3,8 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="f" uri="http://www.slim3.org/functions"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -272,7 +274,7 @@
 							<div
 								style="display: inline-block; text-align: center; z-index: 1; cursor: pointer;"
 								id="ug${g.key.id}">
-								<a href="/unitygames/change?id=${g.key.id}"> <img
+								<a href="/unitygames/upload/change/ug${g.key.id}"> <img
 									src="${thUrl}" width="80" height="80" /><br>
 									<div class="bounded" style="width: 150px; text-align: center;">${g.gameName}</div>
 								</a>
@@ -333,13 +335,13 @@
 													function(obj) {
 														var s = "";
 
-														s += "<div style='width: 250px;'>"
+														s += "<div><div style='width: 250px;'>"
 																+ obj.text
 																+ "</div>";
 														s += "<div>"
 																+ jQuery
 																		.timeago(obj.created_at)
-																+ "</div>";
+																+ "</div></div>";
 														$("#${t.tweetId}")
 																.html(s);
 													});
@@ -347,7 +349,7 @@
 							</script>
 
 							<hr />
-							<div style="height: 50px; border: 1px;clear: both;" id="${t.tweetId}"></div>
+							<div style="width:300px;   height: 50px; border: 1px;clear: both;" id="${t.tweetId}"></div>
 
 						</c:forEach>
 						<hr />

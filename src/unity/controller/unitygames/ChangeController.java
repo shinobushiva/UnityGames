@@ -9,11 +9,14 @@ import unity.meta.UserMeta;
 import unity.model.GameData;
 import unity.model.Tag;
 import unity.model.User;
+import unity.service.GameDataService;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
 public class ChangeController extends Controller {
+
+    private GameDataService gs = new GameDataService();
 
     @Override
     public Navigation run() throws Exception {
@@ -25,8 +28,6 @@ public class ChangeController extends Controller {
         String k = requestScope("key");
         String pass = requestScope("Pass");
 
-        System.out.println("kkkk?:" + k);
-
         GameData g = null;
         if (k != null) {
 
@@ -34,14 +35,10 @@ public class ChangeController extends Controller {
             g = Datastore.get(GameData.class, key);
         }
         if (id != 0) {
-            g =
-                Datastore.get(
-                    GameData.class,
-                    Datastore.createKey(GameData.class, id));
+            g = gs.load(id);
         }
         // Passが違ったら変更画面へいかせない
         if (k != null) {
-
             if (!g.getPass().equals(pass) && id == 0) {
                 return null;
             }
@@ -61,55 +58,9 @@ public class ChangeController extends Controller {
             // TwitterUserKeyからアカウントを取得
             if (g.getTwitterUserKey() != null) {
 
-                User u =
-                    Datastore
-                        .query(User.class)
-                        .filter(UserMeta.get().key.equal(g.getTwitterUserKey()))
-                        .asSingle();
-
-                // Twitter twitt = new TwitterFactory().getInstance();
-                //
-                // twitter4j.User showUser = twitt.showUser(u.getUserId());
-                //
-                // String url = showUser.getProfileImageURL().toString();
-                //
-                // String picture = url.replace("normal", "mini");
-                //
-                // requestScope("userName", u.getUserName());
-                // requestScope("p", picture);
-
-                // if (id != 0) {
-                //
-                // if (twitter.getId() != u.getUserId()) {
-                // return null;
-                // }
-                //
-                // }
-
             }
 
         }
-
-        // if (twitter == null) {
-        //
-        // requestScope("userName", "Guest");
-        //
-        // // requestScope(
-        // // "p",
-        // // "/images/face.png");
-        //
-        // } else {
-        // ProfileImage profileimage = null;
-        // // Twitter画像URL取得
-        // requestScope("userName", twitter.getScreenName());
-        // requestScope(
-        // "p",
-        // twitter.getProfileImage(
-        // twitter.getScreenName(),
-        // profileimage.MINI).getURL());
-        // requestScope("type", "twitter");
-        //
-        // }
         String[] size = g.getGameScreenSize().split(",");
         requestScope("width", size[0]);
         requestScope("height", size[1]);
@@ -124,7 +75,7 @@ public class ChangeController extends Controller {
             type = "twitter";
 
         requestScope("type", type);
-        
+
         return forward("change.jsp");
     }
 }
