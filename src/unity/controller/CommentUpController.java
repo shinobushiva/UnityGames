@@ -9,6 +9,7 @@ import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
 import org.slim3.datastore.GlobalTransaction;
 
+import twitter4j.Twitter;
 import unity.meta.CommentMeta;
 import unity.model.Comment;
 import unity.model.GameData;
@@ -26,6 +27,10 @@ public class CommentUpController extends Controller {
         String com = asString("comment");
         com = URLDecoder.decode(com, "UTF-8");
         String gameKey = asString("gameKey");
+        Twitter twitter = (Twitter) sessionScope("twitter");
+        String twitterId = "";
+        if (twitter != null)
+            twitterId = "" + twitter.getId();
 
         Key key = KeyFactory.stringToKey(gameKey);
 
@@ -39,10 +44,11 @@ public class CommentUpController extends Controller {
             comment.setKey(commentKey);
             comment.setComment(com);
             comment.setDate(new Date());
+            comment.setTwitterId("" + twitterId);
             GameData g = Datastore.get(GameData.class, key);
             g.setComment(g.getComment() + 1);
             Datastore.put(g);
-          GlobalTransaction tx = Datastore.beginGlobalTransaction();
+            GlobalTransaction tx = Datastore.beginGlobalTransaction();
             tx.put(comment);
             tx.commit();
             gs.addPoint(g);

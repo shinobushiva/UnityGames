@@ -9,7 +9,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <%@ include file="/share/css.jsp"%>
-<link href="/css/view.css" rel="StyleSheet" type="text/css" />
+<link href="/css/common/view.css" rel="StyleSheet" type="text/css" />
+<link href="/css/views.css" rel="stylesheet" type="text/css"/>
 <%@ include file="/share/js.jsp"%>
 <title><fmt:message key="unitygames.top" /></title>
 <script type="text/javascript">

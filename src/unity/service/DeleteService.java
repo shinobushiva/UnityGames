@@ -36,14 +36,15 @@ public class DeleteService {
 
     public void deleteApi(Key key) {
         String id = "ug" + String.valueOf(key.getId());
-        Game g =
+
+        List<Key> keys =
             Datastore
                 .query(Game.class)
                 .filter(GameMeta.get().gameId.equal(id))
-                .asSingle();
+                .asKeyList();
 
         GlobalTransaction tx = Datastore.beginGlobalTransaction();
-        tx.delete(g.getKey());
+        tx.delete(keys);
         tx.commit();
 
     }

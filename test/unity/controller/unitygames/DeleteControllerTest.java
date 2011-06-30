@@ -2,6 +2,8 @@ package unity.controller.unitygames;
 
 import org.slim3.tester.ControllerTestCase;
 import org.junit.Test;
+
+import unity.controller.action.DeleteController;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 

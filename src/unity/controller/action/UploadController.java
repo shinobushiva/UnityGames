@@ -1,5 +1,8 @@
 package unity.controller.action;
 
+import net.sf.jmimemagic.Magic;
+import net.sf.jmimemagic.MagicMatch;
+
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.controller.upload.FileItem;
@@ -16,6 +19,7 @@ public class UploadController extends Controller {
     private UploadService service = new UploadService();
     private TagService ts = new TagService();
 
+    @SuppressWarnings("static-access")
     @Override
     public Navigation run() throws Exception {
 
@@ -32,16 +36,15 @@ public class UploadController extends Controller {
         String gameURL = requestScope("GameURL");
         String pass = requestScope("pass");
         String thumbNailType = requestScope("ThumbNailType");
-        String thumbNailChange = "";
-        if (requestScope("ThumbNailChange") != null)
-            thumbNailChange = requestScope("ThumbNailChange");
-        String gameChange = "";
-        if (requestScope("GameChange") != null)
-            gameChange = requestScope("GameChange");
+        boolean thumbNailChange =
+            Boolean.parseBoolean((String) requestScope("ThumbNailChange"));
+        boolean gameChange =
+            Boolean.parseBoolean((String) requestScope("GameChange"));
         String gameType = requestScope("GameType");
         String fixTag = requestScope("fixTag");
         String code = requestScope("Code");
-        boolean editCode = Boolean.valueOf((String) requestScope("editCode"));
+        boolean editCode =
+            Boolean.parseBoolean((String) requestScope("editCode"));
 
         String gameScreenSize =
             requestScope("gameScreenWidth")
@@ -53,6 +56,13 @@ public class UploadController extends Controller {
         Twitter twitter = (Twitter) sessionScope("twitter");
         if (twitter != null)
             twitterId = twitter.getId();
+
+//        // 画像拡張子チェック
+//        Magic parser = new Magic();
+//        // getMagicMatch accepts Files or byte[],
+//        // which is nice if you want to test streams
+//        MagicMatch match = parser.getMagicMatch((byte[])thumbNail.getData());
+//        System.out.println(""+match.getType());
 
         GameData g =
             service.upload(

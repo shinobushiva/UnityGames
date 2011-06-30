@@ -10,6 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>user Index</title>
 <%@ include file="/share/css.jsp"%>
+<link href="/css/userPage.css" rel="stylesheet" type="text/css"/>
 <%@ include file="/share/js.jsp"%>
 
 
@@ -201,42 +202,44 @@
 
 
 
-	<div style="margin-left: 50px;">
+	<div class="marginLeftFifty">
 		<div>
-			<div style="float: left; margin-left: 10px; margin-top: 10px;">
-				<img id="twitterImage" style="width: 48px; height: 48px;" />
+			<div class="twitterImageFrame">
+				<img id="twitterImage" />
 			</div>
-			<div style="display: inline-block;"></div>
-			<div style="margin-top: 20px;">
-				<span style="font-size: xx-large;" id="twitterScreenName"></span><span
-					style="margin-left: 30px;" id="twitterName"></span>
-					<span><a href="/user/${twitter.screenName}"><fmt:message key="edit.end" /></a></span>
+			<div class="inlineBlock"></div>
+			<div class="marginTopTwenty">
+				<span id="twitterScreenName"></span><span id="twitterName"></span> <span><a
+					href="/user/${twitter.screenName}"><fmt:message key="edit.end" />
+				</a> </span>
 			</div>
 
 		</div>
-		<hr style="margin-top: 50px; width: 900px;" />
-		<div style="margin-top: 10px;">
-			<div
-				style="font-size: 20px; margin-top: auto; margin-bottom: auto; display: inline-block;"><fmt:message key="self.introduction"/></div>
-			<div id="loadMyself" style="display: inline-block; width: 450px;">
+		<hr class="hrOne" />
+		<div class="marginTopTen">
+			<div class="Introduction">
+				<fmt:message key="self.introduction" />
+			</div>
+			<div id="loadMyself">
 				<span id="myself"></span><span id="myselfEdit"><textarea
-						style="width: 427px; height: 37px; font-size: 10px;"
-						id="myselfText"></textarea><br> <span id="myself-cancel"
-					style="float: right; margin-right: 10px; margin-top: 5px; cursor: pointer;"><fmt:message key="cancellation"/></span>
-					<button id="myself-change" style="float: right; margin-right: 0px;"><fmt:message key="button.change"/></button>
-				</span>
+						id="myselfText"></textarea><br> <span id="myself-cancel"><fmt:message
+							key="cancellation" /> </span>
+					<button id="myself-change">
+						<fmt:message key="button.change" />
+					</button> </span>
 			</div>
 		</div>
 		<div>
-			<div style="font-size: 20px; display: inline-block;">Web:</div>
-			<div id="web"
-				style="clear: both; margin-top: 20px; margin-bottom: 20px; display: inline-block;">
+			<div class="webFont">Web:</div>
+			<div id="web">
 
 				<sapn id="url"></sapn>
 				<span id="reg"><input type="text" name="webUrl" id="wu"
 					value="">
-					<button id="web-change"><fmt:message key="button.change"/></button> <span id="web-cancel"
-					style="font-size: 10px;"><fmt:message key="cancellation"/></span> </span>
+					<button id="web-change">
+						<fmt:message key="button.change" />
+					</button> <span id="web-cancel"><fmt:message key="cancellation" />
+				</span> </span>
 			</div>
 		</div>
 
@@ -263,21 +266,20 @@
 		</div>
 		<hr />
 		--%>
-			<div style="font-size: 20px; margin-top: 50px;"><fmt:message key="user.management"/></div>
-			<hr style="width: 500px;">
-			<div style="display: inline-block; width: 500px;">
+			<div class="management">
+				<fmt:message key="user.management" />
+			</div>
+			<hr class="hrTwe">
+			<div class="gameListFrame">
 
-				<div id="hiddenresult" style="display: none;">
+				<div id="hiddenresult">
 					<div class="result">
 						<c:forEach var="g" items="${gameList}" varStatus="loop">
 							<%@ include file="/share/patternDistinction.jsp"%>
-							<div
-								style="display: inline-block; text-align: center; z-index: 1; cursor: pointer;"
-								id="ug${g.key.id}">
+							<div id="ug${g.key.id}" class="games">
 								<a href="/unitygames/upload/change/ug${g.key.id}"> <img
-									src="${thUrl}" width="80" height="80" /><br>
-									<div class="bounded" style="width: 150px; text-align: center;">${g.gameName}</div>
-								</a>
+									src="${thUrl}" width="80px" height="80px" /><br>
+									<div class="bounded gameName">${g.gameName}</div> </a>
 							</div>
 							<c:if test="${loop.count mod 3 == 0 }">
 					</div>
@@ -286,42 +288,44 @@
 						</c:forEach>
 					</div>
 				</div>
-				<div id="Pagination" 　style="" align="center"></div>
-				<br style="clear: both;" />
+				<div id="Pagination" align="center"></div>
+				<br class="clear" />
 				<div id="Searchresult"></div>
-				<div align="center" style="margin-top: 30px;">
+				<div align="center" class="marginTopThirty">
 					<form method="get" action="#">
-						<button type="button" id="btnPrev"
-							style="width: 100px; height: 30px;">Prev</button>
+						<button type="button" id="btnPrev">Prev</button>
 
-						<button type="button" id="btnNext"
-							style="margin-right: 50px; width: 100px; height: 30px;">Next</button>
+						<button type="button" id="btnNext">Next</button>
 					</form>
 				</div>
 
 
 			</div>
-			<div style="float: right; margin-top: -150px; margin-right: 50px;">
+			<div class="twitterFrame">
 
 
-				<div style="float: right; margin-right: 80px;" id="twitter">
-					<div style="width: 250px;">
-						<div style="font-size: 15px;"><fmt:message key="tweet"/></div>
+				<div id="twitter">
+					<div class="tweetFrame">
+						<div class="tweetFont">
+							<fmt:message key="tweet" />
+						</div>
 						<div>
-							<div style="display: inline;">
-								<textarea style="width: 250px; height: 30px;" id="tweet"></textarea>
+							<div class="inline">
+								<textarea id="tweet"></textarea>
 							</div>
-							<div id="tweetButton"
-								style="display: inline-block; height: 25px;">
-								<input type="checkbox" id="noHashtag" value="noHash"><fmt:message key="dont.tag"/>
-								<button style="margin-left: 0px;" id="tweetUpdate"><fmt:message key="button.tweet"/></button>
+							<div id="tweetButton">
+								<input type="checkbox" id="noHashtag" value="noHash">
+								<fmt:message key="dont.tag" />
+								<button id="tweetUpdate">
+									<fmt:message key="button.tweet" />
+								</button>
 
 							</div>
 						</div>
 					</div>
 
 
-					<div style="clear: both;">
+					<div class="clear">
 
 						<c:forEach var="t" items="${tweet}">
 
@@ -349,7 +353,7 @@
 							</script>
 
 							<hr />
-							<div style="width:300px;   height: 50px; border: 1px;clear: both;" id="${t.tweetId}"></div>
+							<div id="${t.tweetId}" class="twitterIds"></div>
 
 						</c:forEach>
 						<hr />

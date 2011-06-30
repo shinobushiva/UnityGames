@@ -14,8 +14,8 @@ public class CodeBlockUtils {
 
             Pattern p =
                 Pattern.compile(
-                    "^>\\|([a-zA-Z#]*)\\|$([^\\|\\|<]*)^(\\|\\|<)$",
-                    Pattern.MULTILINE);
+                    "^>\\|([^\\|<>]*)\\|$(((?!^\\|\\|<).)*?)^(\\|\\|<)$",
+                    Pattern.MULTILINE | Pattern.DOTALL);
 
             ArrayList<String[]> result = new ArrayList<String[]>();
 
@@ -26,13 +26,7 @@ public class CodeBlockUtils {
                 matcher.reset();
 
                 while (matcher.find()) {
-                    // int num = matcher.groupCount();
-                    // System.out.println("numGroup : " + num);
 
-                    // for (int i = 0; i <= num; i++) {
-                    // String group = matcher.group(i);
-                    // // System.out.println("" + i + ":" + group);
-                    // }
                     String group = matcher.group(0);
                     String text =
                         string.substring(offset, string.indexOf(group)).trim();

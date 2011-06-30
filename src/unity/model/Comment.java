@@ -3,10 +3,10 @@ package unity.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.google.appengine.api.datastore.Key;
-
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.Model;
+
+import com.google.appengine.api.datastore.Key;
 
 @Model(schemaVersion = 1)
 public class Comment implements Serializable {
@@ -21,6 +21,7 @@ public class Comment implements Serializable {
     private Long version;
     private String comment;
     private Date date;
+    private String twitterId;
 
     /**
      * Returns the key.
@@ -112,5 +113,13 @@ public class Comment implements Serializable {
 
     public Key getGameKey() {
         return gameKey;
+    }
+
+    public String getTwitterId() {
+        return twitterId;
+    }
+
+    public void setTwitterId(String twitterId) {
+        this.twitterId = twitterId;
     }
 }

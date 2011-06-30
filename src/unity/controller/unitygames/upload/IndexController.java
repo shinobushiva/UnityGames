@@ -18,10 +18,11 @@ public class IndexController extends Controller {
     @Override
     public Navigation run() throws Exception {
 
+        String loginType = "guest";
         if (sessionScope("loginType") != null)
-            requestScope("loginType", (String) sessionScope("loginType"));
-        else
-            requestScope("loginType", "guest");
+            loginType = (String) sessionScope("loginType");
+
+        requestScope("loginType", loginType);
 
         requestScope("isLogin", (Boolean) sessionScope("isLogin"));
         Twitter twitter = sessionScope("twitter");

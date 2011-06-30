@@ -15,45 +15,10 @@
 <title>${g.gameName}</title>
 <meta name="mixi-check-robots" content="noimage" />
 <%@ include file="/share/css.jsp"%>
+<link href="/css/game.css" rel="stylesheet" type="text/css"/>
 <%@ include file="/share/js.jsp"%>
 <script type="text/javascript" src="/js/jquery.createvideo.js"></script>
-<style type="text/css">
-<!--
-div.content {
-	margin: auto;
-	width: 600px;
-}
 
-div.missing {
-	margin: auto;
-	position: relative;
-	top: 50%;
-	width: 193px;
-}
-
-div.missing a {
-	height: 63px;
-	position: relative;
-	top: -31px;
-}
-
-div.missing img {
-	border-width: 0px;
-}
-
-div#unityPlayer {
-	cursor: default;
-	height: 450px;
-	width: 600px;
-}
-
-td.comment {
-	margin-right: 100px;
-	position: relative;
-	width: 300px;
-}
--->
-</style>
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -205,8 +170,8 @@ function GetUnity() {
 					var c = cms[i];
 					var com = c.comment;
 				
-					html += "<div>";
-					html += "" + c.comment + " " +dateFormat.format(new Date(c.date));
+					html += "<div style='margin:5px;font-size:15px;'>";
+					html += "" + c.comment + " " +dateFormat.format(new Date(c.date))+" "+c.twitterId;
 					html += "</div>";
 					if(showComments){
 					
@@ -402,7 +367,7 @@ function GetUnity() {
 		
 		var str = '';
 		if(array.length > 0){
-		str +='<div style=""><fmt:message key="lang" /><select name="hoge">';
+		str +='<div ><fmt:message key="lang" /><select name="hoge">';
 		for(var oIdx2 in array){
 			str+='<option value="'+array[oIdx2]+'">'+array[oIdx2]+'</option>';
 		}
@@ -435,21 +400,20 @@ function GetUnity() {
 	<%@ include file="/share/header.jsp"%>
 	<%@ include file="/share/search.jsp"%>
 	<div>
-		<div style="margin-top: 20px;">
+		<div class="marginTopTwenty">
 			<%--  Tags --%>
-			<b style="font-size: x-small; color: red;"><fmt:message
-					key="registerTag" /> </b> <span id="tagUpload"></span>
+			<b class="registerTag"><fmt:message key="registerTag" /> </b> <span
+				id="tagUpload"></span>
 		</div>
-		<div
-			style="padding-top: 1em; width: 720px; line-height: 2.5em; float: left; word-break: break-all;">
+		<div class="gameName">
 			<%-- Game Name --%>
-			<span style="font-size: 2.5em;">${g.gameName} </span>
+			<span class="gameNameName">${g.gameName} </span>
 		</div>
 	</div>
 
 	<%--	ゲーム投稿者情報	 --%>
 
-	<div style="float: right; margin-top: 10px;">
+	<div class="user">
 		<div>
 			<fmt:message key="contributor" />
 		</div>
@@ -457,25 +421,21 @@ function GetUnity() {
 		<c:if test="${empty g.pass}">
 			<div>
 				<a class="userPage" target="Twitter">
-					<div style="float: left;">
+					<div class="floatLeft">
 						<img id="twitterImage" />
 					</div>
-					<div id="twitterName"
-						style="float: right; text-align: left; font-weight: 900; font-size: 20px; margin-top: 10px; word-break: break-all; color: #1F98C7;">
-					</div> </a>
+					<div id="twitterName"></div> </a>
 			</div>
 		</c:if>
 		<%--	変更パスワード入力	--%>
 		<c:if test="${not empty g.pass}">
-			<div style="width: 150px;">
-				<div style="float: left; display: inline-block;">
+			<div class="guestFrame">
+				<div class="faceImage">
 					<img src="/images/face.png" />
 				</div>
 
-				<div
-					style="font-weight: 900; font-size: 20px; display: inline-block;">
-					&nbsp;Guest</div>
-				<div style="display: inline-block; float: right;">
+				<div class="guestName">&nbsp;Guest</div>
+				<div class="passFrame">
 					<script type="text/javascript">
 						$(function() {
 
@@ -493,11 +453,10 @@ function GetUnity() {
 					</script>
 					<form action="/unitygames/upload/change/guest${g.key.id}"
 						method="post">
-						<a id="change-${g.key.id}" style="font-size: x-small;"><fmt:message
-								key="change.delete" /> </a><a id="out-${g.key.id}"
-							style="position: relative; top: -5px;"><input type="password"
-							name="Pass" style="width: 40px;"><input type="hidden"
-							name="key" value="${f:h(g.key)}">
+						<a id="change-${g.key.id}" class="fontXsmall"><fmt:message
+								key="change.delete" /> </a><a id="out-${g.key.id}" class="out"><input
+							type="password" name="Pass" class="passwordBox"><input
+							type="hidden" name="key" value="${f:h(g.key)}">
 							<button type="submit">
 								<img id="sub" src="/images/red.gif" />
 							</button> </a>
@@ -507,11 +466,14 @@ function GetUnity() {
 
 		</c:if>
 	</div>
-	<div style="float: right; padding-top: 15px;">
+	<div class="SocialButtons">
 		<%-- Social Buttons --%>
 		<ul>
-			<li style="height: 25px !important; display: inline;"><fb:like
-					layout="button_count"></fb:like> <a id="fb-root"></a> <script>
+			<li class="SocialInline"><script type="text/javascript"
+					src="http://apis.google.com/js/plusone.js"> {lang: 'ja'} </script>
+				<g:plusone size="medium"></g:plusone></li>
+			<li class="SocialInlineFaceBook"><fb:like layout="button_count"></fb:like>
+				<a id="fb-root"></a> <script>
 			window.fbAsyncInit = function() {
 				FB.init({
 					appId : '214224191925233',
@@ -528,18 +490,22 @@ function GetUnity() {
 				e.async = true;
 				document.getElementById('fb-root').appendChild(e);
 			}());
-		</script></li>
-			<li style="display: inline;"><a href="http://mixi.jp/share.pl"
+		</script>
+			</li>
+			<%--<li class="SocialInline"><a href="http://mixi.jp/share.pl"
 				class="mixi-check-button"
 				data-key="42bc93a615261cdd8e17e115918eb36ebf60a729"
 				data-button="button-1"></a> <script type="text/javascript"
-					src="http://static.mixi.jp/js/share.js"></script></li>
-			<li style="display: inline;"><iframe
+					src="http://static.mixi.jp/js/share.js"></script>
+			</li>
+			<li class="SocialInline"><iframe
 					src="http://share.gree.jp/share?url=http%3A%2F%2Funity-games.appspot.com%2Funitygames%2Fgame%2Fug${g.key.id}&type=0&height=20"
 					scrolling="no" frameborder="0" marginwidth="0" marginheight="0"
 					style="border: none; overflow: hidden; width: 75px; height: 20px;"
-					allowTransparency="true"></iframe></li>
-			<li style="display: inline;"><a href="http://twitter.com/share"
+					allowTransparency="true"></iframe>
+			</li>
+			--%>
+			<li class="SocialInline"><a href="http://twitter.com/share"
 				class="twitter-share-button" data-count="horizontal"
 				data-via="UGames #UnityGames"
 				data-lang="<%=request.getLocale().getLanguage()%>"></a> <script
@@ -549,29 +515,26 @@ function GetUnity() {
 
 	</div>
 
-	<div id="tabs" style="clear: both;">
+	<div id="tabs" class="clear">
 		<%-- Top Tabs --%>
 		<ul>
 			<li><a href="#tab1"><span><fmt:message
-							key="explanation" /> </span> </a>
-			</li>
+							key="explanation" /> </span> </a></li>
 			<li><a href="#tab2"><span><fmt:message
-							key="operation" /> </span> </a>
-			</li>
+							key="operation" /> </span> </a></li>
 			<li><a href="#tagg"><span><fmt:message
-							key="registTag" /> </span> </a>
-			</li>
+							key="registTag" /> </span> </a></li>
 			<%--
 			<span>
 				<button id="commentToggle"
 					style="line-height: 2em; display: inline-block;">コメントクラウド表示/非表示</button>
 			</span>
 			--%>
-			<span style="text-align: right; display: inline-block; float: right;">
-				<fmt:message key="entryDay" />：<fmt:formatDate value="${g.date}"
-					pattern="MM/dd" /> <fmt:message key="LastEntryDay" />：<fmt:formatDate
-					value="${g.lastDate}" pattern="MM/dd" /><br> <fmt:message
-					key="access" />：${g.access} <fmt:message key="comment" />:${g.comment}</span>
+			<span class="detail"> <fmt:message key="entryDay" />：<fmt:formatDate
+					value="${g.date}" pattern="MM/dd" /> <fmt:message
+					key="LastEntryDay" />：<fmt:formatDate value="${g.lastDate}"
+					pattern="MM/dd" /><br> <fmt:message key="access" />：${g.access}
+				<fmt:message key="comment" />:${g.comment}</span>
 
 		</ul>
 		<div id="tab1">
@@ -581,7 +544,7 @@ function GetUnity() {
 			<pre>${g.operations}</pre>
 		</div>
 		<div id="tagg">
-			<input type="text" name="tag" style="width: 200;" id="tagReg">
+			<input type="text" name="tag" id="tagReg">
 			<button class="searchButton black" id="tagButton">
 				<fmt:message key="button.regist" />
 			</button>
@@ -589,43 +552,27 @@ function GetUnity() {
 		</div>
 	</div>
 	<%-- Game --%>
-	<div style="margin-top: 1em; margin-bottom: 1em;">
-		<%--
-		<div id="comments-top" style="width: 1000px; height: 200px;">&nbsp;</div>
-		 --%>
-		<%-- &nbsp;は無いとつぶれる --%>
-		<%--
-		<div style="float: left; width: 200px;">
-			&nbsp;
-			<div id="comments-left" style="width: 200px;">&nbsp;</div>
-		</div>
-	 --%>
-		<div id="game-center" style="width: ${width}; margin-left:200px;"
-			align="center">
-			<div id="loaded" style="margin-left: auto; margin-right: auto;">
+	<div class="gameMargin">
+		<div id="game-center" style="width: ${width}; " align="center">
+			<div id="loaded">
 				<c:choose>
 					<c:when test="${empty g.thumbNailURL}">
 						<img src="/unitygames/thumbNail?id=${f:h(g.key.id)}"
-							width="${width}" height="${height}"
-							style="opacity: 0.3; z-index: 0;" />
+							width="${width}" height="${height}" class="opacity" />
 					</c:when>
 					<c:when test="${not empty g.thumbNailURL}">
 						<img src="${g.thumbNailURL}" border="1" width="${width}"
-							height="${height}
-							style=" opacity: 0.3; z-index: 0;" />
+							height="${height}" class="opacity" />
 					</c:when>
 				</c:choose>
 				<button id="load"
-					style="background-color: transparent; border: 0; z-index: 1; position: relative; right: ${width/2 +100}px; top: -${height/3 }px">
+					style=" right: ${width/2 +100}px; top: -${height/3 }px">
 					<img src="/images/Start.png">
 				</button>
 
 			</div>
 		</div>
-		<%--	<div id="comments-right" style="float: left; width: 200px;">&nbsp;</div> --%>
-		<%--	<div id="comments-bottom"
-			style="clear: both; width: 1000px; height: 200px;">&nbsp;</div>
-			--%>
+
 		<%--関連動画
 		<div class="ui-widget-content ui-tabs-panel"
 			style="width: 600px; height: 60px; margin: auto;">
@@ -645,45 +592,42 @@ function GetUnity() {
 		--%>
 	</div>
 
-	<div style="clear: both;">
+	<div class="clear">
 
 		<div class="ui-widget-content ui-tabs-panel">
 
 			<div>
-				<span style="margin-top: 15px; font-size: 15;"> <fmt:message
-						key="code" /> </span>
+				<span class="commentary"> <fmt:message key="code" /> </span>
 				<c:if test="${g.editable}">
-					<button style="float: right;" id="edit" class="edit">
-						<fmt:message key="edit" />
-					</button>
+					<c:if test="${twitter != null}">
+						<button id="edit" class="edit">
+							<fmt:message key="edit" />
+						</button>
+					</c:if>
 				</c:if>
 			</div>
 
 			<div>
-				<textarea id="codeEditArea"
-					style="width: 900; height: 500; display: none;" class="codeEdit"
-					name="codeEditArea">${g.code}</textarea>
+				<textarea id="codeEditArea" class="codeEdit" name="codeEditArea">${g.code}</textarea>
 			</div>
-			<div id="code" style="display: inline-block;" class="codeEdit"></div>
-			<div id="saveCancelButtons" style="margin: 10px;">
-				<button style="display: none;" id="save" class="edit">
+			<div id="code" class="codeEdit"></div>
+			<div id="saveCancelButtons">
+				<button id="save" class="edit">
 					<fmt:message key="save" />
 				</button>
-				<button style="display: none;" id="cancel" class="edit">
+				<button id="cancel" class="edit">
 					<fmt:message key="cancel" />
 				</button>
 			</div>
 		</div>
 
-		<div class="ui-widget-content ui-tabs-panel" style="margin-top: 10px;">
+		<div class="ui-widget-content ui-tabs-panel commentFrame marginTopTen">
 			<a href="#comment"><span><fmt:message key="comment" /> </span> </a>
-			<div id="comment" style="margin-left: auto; margin-right: auto;">
+			<div id="comment">
 				<div>
 					<div>
-						<input type="text" id="commentInput"
-							style="width: 150; height: 20;" name="comment" class="required"><br>
-					</div>
-					<div>
+						<input type="text" id="commentInput" name="comment"
+							class="required">
 						<button class="searchButton black" id="commentUp">
 							<fmt:message key="button.comment" />
 						</button>

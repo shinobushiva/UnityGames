@@ -14,11 +14,9 @@ public class CodeBlockUtilsTest {
         String string =
             "" + "Hello"
                 + nl
-                + "<code>"
+                + ">|Japanese|"
                 + nl
-                + ">|js|"
-                + nl
-                + "//javascript code"
+                + "//javascript code<"
                 + nl
                 + "//javascript code"
                 + nl
@@ -36,14 +34,12 @@ public class CodeBlockUtilsTest {
                 + nl
                 + "||<"
                 + nl
-                + "</code>"
-                + nl
                 + "SogeHoge";
 
         Pattern p =
             Pattern.compile(
-                "^>\\|([a-zA-Z#]*)\\|$([^\\|\\|<]*)^(\\|\\|<)$",
-                Pattern.MULTILINE);
+                "^>\\|([^\\|<>]*)\\|$(((?!^\\|\\|<).)*?)^(\\|\\|<)$",
+                Pattern.MULTILINE | Pattern.DOTALL);
 
         ArrayList<String[]> result = new ArrayList<String[]>();
 
@@ -54,13 +50,7 @@ public class CodeBlockUtilsTest {
             matcher.reset();
 
             while (matcher.find()) {
-                // int num = matcher.groupCount();
-                // System.out.println("numGroup : " + num);
 
-                // for (int i = 0; i <= num; i++) {
-                // String group = matcher.group(i);
-                // // System.out.println("" + i + ":" + group);
-                // }
                 String group = matcher.group(0);
                 String text =
                     string.substring(offset, string.indexOf(group)).trim();
@@ -81,10 +71,12 @@ public class CodeBlockUtilsTest {
             result.add(new String[] { "text", text });
 
         String encode = JSON.encode(result);
-
+        // for (String[] strings : result) {
+        // for (String string2 : strings) {
+        // System.out.println(string2);
+        // }
+        // }
         System.out.println(encode);
-
-        // System.out.println(al);
 
     }
 }

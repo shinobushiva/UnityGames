@@ -9,8 +9,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <%@ include file="/share/css.jsp"%>
+<link href="/css/registGame.css" rel="stylesheet" type="text/css"/>
 <%@ include file="/share/js.jsp"%>
-<title><fmt:message key="upload.title" /></title>
+<title><fmt:message key="upload.title" />
+</title>
 
 </head>
 <body>
@@ -81,84 +83,88 @@ function tagCheck(){
 	}}
 </script>
 	<%@ include file="/share/header.jsp"%>
-	<div style="padding-top: 30px;">
-		<form action="/action/upload" method="post" class="cmxform" id="commentForm"
-			enctype="multipart/form-data" onSubmit="return tagCheck()"
-			name="form1">
-			<table class="purchase-options" border="0"
-				style="margin-left: auto; margin-right: auto; margin-top: 25px;">
+	<div class="paddingTopThiry">
+		<form action="/action/upload" method="post" class="cmxform"
+			id="commentForm" enctype="multipart/form-data"
+			onSubmit="return tagCheck()" name="form1">
+			<input type="hidden" name="ThumbNailChange" value="true" /> <input
+				type="hidden" name="GameChange" value="true" />
+
+			<table class="purchase-options" border="0">
 				<tr class="top">
 					<td colspan="2">&nbsp;</td>
 				</tr>
 				<tr>
 					<td><h1>
 							<fmt:message key="upload.title" />
-						</h1></td>
+						</h1>
+					</td>
 
 					<td rowspan="6">
 
 						<h2>
 							<fmt:message key="explanation" />
-						</h2> <textarea style="width: 440px; height: 90px;" name="Contents"
-							title="<fmt:message key="contents.title" />"></textarea><br>
+						</h2> <textarea name="Contents"
+							title="<fmt:message key="contents.title" />"
+							class="contentsFrame"></textarea><br>
 						<h2>
 							<fmt:message key="operation" />
-						</h2> <textarea style="width: 440px; height: 110px;" name="Operations"
-							title="<fmt:message key="operation.title" />"></textarea>
+						</h2> <textarea name="Operations"
+							title="<fmt:message key="operation.title" />"
+							class="operationFrame"></textarea>
 						<div>
-							<div style="display: inline-block;">
+							<div class="inlineBlock">
 								<h2>
 									<fmt:message key="code" />
 								</h2>
 							</div>
-							<div style="display: inline-block;">
+							<div class="inlineBlock">
 								<fmt:message key="upload.howto.code" />
 							</div>
 							<div>
-								<textarea style="width: 440px; height: 110px;" name="Code"
-									title="<fmt:message key="code.title" />"></textarea>
+								<textarea name="Code" title="<fmt:message key="code.title" />"
+									class="codeFrame"></textarea>
 							</div>
 						</div>
 						<div>
 							<div>
-								<div style="display: inline-block;">
+								<div class="inlineBlock">
 									<h2>
 										<fmt:message key="screenSize" />
 									</h2>
 								</div>
-								<div style="display: inline-block;">
+								<div class="inlineBlock">
 									<fmt:message key="screenSize.default" />
 								</div>
 							</div>
-							<div style="display: inline-block;">
+							<div class="inlineBlock">
 								Width:<input type="text" name="gameScreenWidth" value="600"
-									style="width: 50px;" />
+									class="screenSize" />
 							</div>
-							<div style="display: inline-block;">
+							<div class="inlineBlock">
 								Height:<input type="text" name="gameScreenHeight" value="450"
-									style="width: 50px;" />
+									class="screenSize" />
 							</div>
 							<div>
-								<label><input type="checkbox" name="editable"
-									value="true" style="display: inline-block;" />
-									<h2 style="display: inline-block;">
+								<label><input type="checkbox" name="editCode"
+									value="true" class="inlineBlock" />
+									<h2 class="inlineBlock">
 										<fmt:message key="dont.edit" />
 									</h2> </label>
 							</div>
 						</div>
-						<div id="wrapper" style="float: right;">
-							<button id="regist" class="button"
-								style="width: 250px; height: 80px; font-size: xx-large;">
+						<div id="wrapper" class="floatRight">
+							<button id="regist" class="button registButton">
 								<fmt:message key="button.regist" />
 							</button>
-						</div>
-					</td>
+						</div></td>
 				</tr>
 				<tr>
 					<td><h2>
 							<label for="GameName"><fmt:message key="gameName" /> </label><input
 								type="text" name="GameName" id="GameName" class="required" />
-						</h2></td>
+						</h2>
+					</td>
 				</tr>
 				<tr>
 					<td><label for="ThumbNail"><h2>
@@ -168,7 +174,8 @@ function tagCheck(){
 							checked="checked"> <fmt:message
 								key="thumbNail.pictureDataUp" /> </label><br> <label><input
 							type="radio" name="ThumbNailType" value="url" id="turl">
-							<fmt:message key="thumbNail.urlUp" /><br> </label></td>
+							<fmt:message key="thumbNail.urlUp" /><br> </label>
+					</td>
 
 				</tr>
 				<tr>
@@ -179,10 +186,9 @@ function tagCheck(){
 						<div id="tu">
 							<label for="ThumbNailURL"><fmt:message
 									key="thumbNail.url" /> </label><input type="text" name="ThumbNailURL"
-								id="ThumbNailURL" style="width: 260px"
+								id="ThumbNailURL"
 								title="<fmt:message key="thumbNail.url.title" />"><br>
-						</div>
-					</td>
+						</div></td>
 				</tr>
 				<tr>
 					<td><label for="d"><h2>
@@ -194,7 +200,8 @@ function tagCheck(){
 							value="url" id="url"> <fmt:message key="game.select.url" /><br>
 					</label> <label><input type="radio" name="GameType" value="hpurl"
 							id="hp"> <fmt:message key="game.select.url.outside" /><br>
-					</label></td>
+					</label>
+					</td>
 				</tr>
 				<tr>
 					<td>
@@ -204,12 +211,12 @@ function tagCheck(){
 						</div>
 						<div id="G2">
 							<label for="GameURL"><fmt:message key="game.url" /> </label> <input
-								type="text" name="GameURL" id="GameURL" style="width: 260px"
+								type="text" name="GameURL" id="GameURL"
 								title="<fmt:message key="game.url.title" />" /><br>
 						</div>
 						<div id="G3">
 							<label for="HpURL"><fmt:message key="game.url.outside" />
-							</label> <input type="text" name="HpURL" id="HpURL" style="width: 260px"
+							</label> <input type="text" name="HpURL" id="HpURL"
 								title="<fmt:message key="game.url.outside.title" />" /><br>
 						</div>
 						<div>
@@ -241,14 +248,12 @@ function tagCheck(){
 										style="text-align: left; font-weight: 900; font-size: 20px; margin-top: 10px; word-break: break-all;">
 										&nbsp;${userName}</div> </a>
  --%>
-								<div style="color: blue; margin-top: 10px"></div>
 							</div>
 
 							<div id="changeKey">
 								<h2>
 									<fmt:message key="change.delete.key" />
-									<input type="password" name="pass" id="adminPass"
-										style="width: 117px;">
+									<input type="password" name="pass" id="adminPass">
 								</h2>
 							</div>
 						</c:if> <c:if test="${loginType == 'guest' }">
@@ -265,18 +270,15 @@ function tagCheck(){
 							<div id="changeKey">
 								<h2>
 									<fmt:message key="change.delete.key" />
-									<input type="password" name="pass" id="adminPass"
-										style="width: 117px;">
+									<input type="password" name="pass" id="adminPass">
 								</h2>
 							</div>
-						</c:if>
-					</td>
+						</c:if></td>
 
 				</tr>
 				<tr class="bottom">
-					<td colspan="2" style="padding-left:5px;padding-bottom: 15px;"><span class="warning"><fmt:message
-								key="url.explanation" /> </span>
-					</td>
+					<td colspan="2"><span class="warning urlExplanation"><fmt:message
+								key="url.explanation" /> </span></td>
 				</tr>
 
 			</table>

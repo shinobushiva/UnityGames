@@ -38,8 +38,8 @@ public class UploadService {
     public GameData upload(Key key, String gameName, String gameURL,
             FileItem gameFile, FileItem thumbNail, String thumbNailURL,
             String contents, String operations, String hpURL, String pass,
-            String thumbNailType, String gameType, String thumbNailChange,
-            String gameChange, String fixTag, String code, long twitterId,
+            String thumbNailType, String gameType, boolean thumbNailChange,
+            boolean gameChange, String fixTag, String code, long twitterId,
             String gameScreenSize, boolean editCode) {
 
         List<Object> models = new ArrayList<Object>();
@@ -64,22 +64,24 @@ public class UploadService {
 
         setUser(pass, twitterId, g, gg);
 
-        if (!gameChange.isEmpty()) {
+        checkGameUrl(
+            gameFile,
+            gameURL,
+            gameType,
+            hpURL,
+            g,
+            gg,
+            models,
+            gameChange);
 
-            checkGameUrl(gameFile, gameURL, gameType, hpURL, g, gg, models);
-
-        }
-        if (!thumbNailChange.isEmpty()) {
-
-            checkThumbNailUrl(
-                thumbNail,
-                thumbNailURL,
-                thumbNailType,
-                g,
-                gg,
-                models);
-
-        }
+        checkThumbNailUrl(
+            thumbNail,
+            thumbNailURL,
+            thumbNailType,
+            g,
+            gg,
+            models,
+            thumbNailChange);
 
         setTags(fixTag, g, gg);
 
@@ -108,7 +110,7 @@ public class UploadService {
         return t;
     }
 
-    public void updateStatus(String gameName, long id) {
+    public void updateStatus(String gameName, long id, String hpURL) {
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb
             .setOAuthConsumerKey("ywEtN3tDuqZbOf2xlaQ3g")
@@ -120,12 +122,20 @@ public class UploadService {
         TwitterFactory tf = new TwitterFactory(cb.build());
         Twitter twitter = tf.getInstance();
         try {
-            twitter.updateStatus(""
-                + gameName
-                + "が投稿されました。"
-                + "http://unity-games.appspot.com/unitygames/game/ug"
-                + id
-                + "　#UnityGames");
+            if (hpURL.isEmpty()) {
+                twitter.updateStatus(""
+                    + gameName
+                    + "が投稿されました。"
+                    + "http://unity-games.appspot.com/unitygames/game/ug"
+                    + id
+                    + "　#UnityGames");
+            } else {
+                twitter.updateStatus(""
+                    + gameName
+                    + "が投稿されました。"
+                    + hpURL
+                    + "　#UnityGames");
+            }
         } catch (TwitterException e) {
 
             e.printStackTrace();
@@ -178,48 +188,48 @@ public class UploadService {
 
     public void checkGameUrl(FileItem gameFile, String gameURL,
             String gameType, String hpURL, GameData g, Game gg,
-            List<Object> models) {
+            List<Object> models, boolean gameChange) {
+        if (gameChange) {
+            if (gameURL.isEmpty() && hpURL.isEmpty() && gameFile == null) {
+                g.setGameURL("http://unity-games.appspot.com/"
+                    + "DefaultSet/UnityGames.unity3d");
+                g.setGameType("url");
 
-        if (gameURL.isEmpty() && hpURL.isEmpty() && gameFile == null) {
-            g.setGameURL("http://unity-games.appspot.com/"
-                + "DefaultSet/UnityGames.unity3d");
-            g.setGameType("url");
+                gg.setGame("http://unity-games.appspot.com/"
+                    + "DefaultSet/UnityGames.unity3d");
 
-            gg.setGame("http://unity-games.appspot.com/"
-                + "DefaultSet/UnityGames.unity3d");
+            } else {
 
-        } else {
+                g.setGameType(gameType);
+                g.setHpURL(hpURL);
+                g.setGameURL(gameURL);
 
-            g.setGameType(gameType);
-            g.setHpURL(hpURL);
-            g.setGameURL(gameURL);
+                if (hpURL.isEmpty()) {
+                    gg.setGame(gameURL);
+                }
+                if (gameURL.isEmpty()) {
+                    gg.setGame(hpURL);
+                }
 
-            if (hpURL.isEmpty()) {
-                gg.setGame(gameURL);
+                UploadedDataFragment uf1 =
+                    Datastore
+                        .query(UploadedDataFragment.class)
+                        .filter(
+                            UploadedDataFragmentMeta.get().uploadDataRef
+                                .equal(g.getKey()))
+                        .asSingle();
+                if (uf1 != null) {
+                    Datastore.delete(uf1.getKey());
+                }
+
+                setGameDataFragment(gameFile, g, gg, models);
             }
-            if (gameURL.isEmpty()) {
-                gg.setGame(hpURL);
-            }
-
-            UploadedDataFragment uf1 =
-                Datastore
-                    .query(UploadedDataFragment.class)
-                    .filter(
-                        UploadedDataFragmentMeta.get().uploadDataRef.equal(g
-                            .getKey()))
-                    .asSingle();
-            if (uf1 != null) {
-                Datastore.delete(uf1.getKey());
-            }
-
-            setGameDataFragment(gameFile, g, gg, models);
-
         }
     }
 
     public void setGameDataFragment(FileItem gameFile, GameData g, Game gg,
             List<Object> models) {
-
+        System.out.println(gameFile.getFileName());
         if (gameFile != null) {
             byte[] bytes = gameFile.getData();
             byte[][] bytesArray1 = ByteUtil.split(bytes, FRAGMENT_SIZE);
@@ -248,30 +258,33 @@ public class UploadService {
     }
 
     public void checkThumbNailUrl(FileItem thumbNail, String thumbNailURL,
-            String thumbNailType, GameData g, Game gg, List<Object> models) {
-        if (thumbNailURL.isEmpty() && thumbNail == null) {
-            g.setThumbNailURL("http://unity-games.appspot.com/"
-                + "DefaultSet/UnityGames.png");
-            g.setThumbNailType("url");
-            gg.setThumbNail("http://unity-games.appspot.com/"
-                + "DefaultSet/UnityGames.png");
+            String thumbNailType, GameData g, Game gg, List<Object> models,
+            boolean thumbNailChange) {
 
-        } else {
-            g.setThumbNailURL(thumbNailURL);
-            g.setThumbNailType(thumbNailType);
+        if (thumbNailChange) {
+            if (thumbNailURL.isEmpty() && thumbNail == null) {
+                g.setThumbNailURL("http://unity-games.appspot.com/"
+                    + "DefaultSet/UnityGames.png");
+                g.setThumbNailType("url");
+                gg.setThumbNail("http://unity-games.appspot.com/"
+                    + "DefaultSet/UnityGames.png");
 
-            if (thumbNail == null) {
-                gg.setThumbNail(thumbNailURL);
+            } else {
+                g.setThumbNailURL(thumbNailURL);
+                g.setThumbNailType(thumbNailType);
+
+                if (thumbNail == null) {
+                    gg.setThumbNail(thumbNailURL);
+                }
+
+                // 更新時あったら削除
+                ThumbNailData t = thumbNailDelete(g.getKey());
+
+                // creating new
+                createThumbNail(thumbNail, g.getGameName(), t, g, gg, models);
+
             }
-
-            // 更新時あったら削除
-            ThumbNailData t = thumbNailDelete(g.getKey());
-
-            // creating new
-            createThumbNail(thumbNail, g.getGameName(), t, g, gg, models);
-
         }
-
     }
 
     public void createThumbNail(FileItem thumbNail, String gameName,
@@ -283,6 +296,7 @@ public class UploadService {
         child.setKey(keyss);
         child.setGameName(gameName);
         child.setDate(new Date());
+        System.out.println("nam:" + thumbNail.getFileName());
         if (thumbNail != null) {
             g.setThumbNailURL(null);
             if (t != null) {
@@ -372,9 +386,10 @@ public class UploadService {
             g.setDate(new Date());
             Key gamekey = Datastore.allocateId(GameData.class);
             g.setKey(gamekey);
-            if (hpURL.isEmpty()) {
-                // updateStatus(gameName, gamekey.getId());
-            }
+         
+            // つぶやき
+             updateStatus(gameName, gamekey.getId(), hpURL);
+
         } else {
             // updateGame
             g = Datastore.get(GameData.class, key);
@@ -394,7 +409,7 @@ public class UploadService {
             gg.setKey(gameKey);
         } else {
             // updateGame
-            gg = Datastore.get(unity.model.api.Game.class, g.getApiData());
+            gg = Datastore.get(Game.class, g.getApiData());
         }
 
         return gg;

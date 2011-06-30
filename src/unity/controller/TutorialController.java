@@ -37,8 +37,6 @@ public class TutorialController extends Controller {
             gds.add(gameData.getGameRef().getModel());
 
         }
-        System.out.println("gds:" + gds);
-
         requestScope("GameList", gds);
         for (GameData game : gds) {
             long l = game.getDate().getTime() + 1000 * 60 * 60 * 9;
@@ -53,8 +51,6 @@ public class TutorialController extends Controller {
                 game.setOperations(o + "...");
             }
 
-            // Tag t = Datastore.query(Tag.class,game.get).asSingle();
-            // System.out.println("ttt:"+t);
 
         }
       //ログイン

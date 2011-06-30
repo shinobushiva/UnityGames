@@ -1,6 +1,5 @@
 <%@page pageEncoding="UTF-8" isELIgnored="false" session="false"%>
-<div
-	style="clear: both; width: 440px; margin-top: 20px; margin-left: auto; margin-right: auto;">
+<div class="searchBox">
 
 	<script type="text/javascript">
 		$(function() {
@@ -40,25 +39,19 @@
 								key="tag" /> </span> </a></li>
 			</ul>
 
-			<div id="tab11" style="height: 34px;">
-				<div style="height: 100%">
-					<input type="text" name="word" style="font-size: 20; width: 80%; height: 100%;"
-						id="k">
-					<button
-						style="background-color: transparent; border: 0; color: white; font-size: 30;width: 15%; height: 100%;"
-						class="searchButton black">
+			<div id="tab11" class="tabsStyle">
+				<div class="textBox">
+					<input type="text" name="word" id="k">
+					<button class="searchButton black">
 						<fmt:message key="button.search" />
 					</button>
 				</div>
 				<br>
 			</div>
-			<div id="tab22" style="height: 34px;">
-				<div style="height: 100%">
-					<input type="text" name="tag" style="font-size: 20; width: 80%; height: 100%;"
-						id="t">
-					<button
-						style="background-color: transparent; border: 0; color: white; font-size: 30;width: 15%; height: 100%;"
-						class="searchButton black">
+			<div id="tab22" class="tabsStyle">
+				<div class="textBox">
+					<input type="text" name="tag" id="t">
+					<button class="searchButton black">
 						<fmt:message key="button.search"></fmt:message>
 					</button>
 				</div>

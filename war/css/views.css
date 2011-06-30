@@ -1,0 +1,67 @@
+.viewCenter {
+	margin: 10px;
+}
+
+.gameBox {
+	width: 450px;
+	padding-left: 10px;
+	padding-right: 10px;
+	display: inline-block;
+}
+
+.outside {
+	font-size: x-small;
+	color: red;
+}
+
+.gameName {
+	width: 350px;
+	float: left;
+	text-align: left;
+}
+
+
+
+.tags {
+	margin-top: 0.5em;
+	text-align: left;
+}
+
+.fontRed {
+	color: red;
+}
+
+.tagsName {
+	font-size: 18px;
+	font-weight: 900;
+}
+
+.gameURL {
+	float: left;
+	width: 150px;
+	height: 170px;
+	padding-left: 3px;
+	padding-right: 3px;
+	margin-top: 1em;
+}
+
+.detail {
+	float: right;
+	width: 280px;
+	height: 170px;
+	padding-left: 5px;
+}
+
+.tabsHeight {
+	height: 170px;
+}
+
+.contents {
+	font-size: 15px;
+	font: bold;
+}
+
+.operations {
+	font-size: 15px;
+	font: bold;
+}

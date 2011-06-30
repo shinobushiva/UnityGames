@@ -116,7 +116,6 @@ public class FeedCreator {
     public String createFeed() {
         SyndFeed feed = (SyndFeed) new SyndFeedImpl();
         feed.setFeedType(feedType);
-
         feed.setTitle(title);
         feed.setLink(link);
         feed.setDescription(description);

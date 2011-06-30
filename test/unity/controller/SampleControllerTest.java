@@ -2,6 +2,8 @@ package unity.controller;
 
 import org.slim3.tester.ControllerTestCase;
 import org.junit.Test;
+
+import unity.controller.admin.UpDateController;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 

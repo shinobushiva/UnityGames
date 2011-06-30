@@ -1,0 +1,29 @@
+.table {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 1em;
+}
+
+.twitterFrame {
+	border: solid;
+	margin: 10px;
+	margin-top: 0px;
+	width: 300px;
+	height: 250px;
+}
+
+.marginTopHundred {
+	margin-top: 100px;
+}
+
+.space {
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.guestFrame {
+	border: solid;
+	margin: 10px;
+	width: 300px;
+	height: 250px;
+}

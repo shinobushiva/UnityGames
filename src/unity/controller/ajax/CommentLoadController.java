@@ -10,8 +10,10 @@ import org.slim3.datastore.Datastore;
 
 import unity.meta.CommentMeta;
 import unity.meta.GameDataMeta;
+import unity.meta.UserMeta;
 import unity.model.Comment;
 import unity.model.GameData;
+import unity.model.User;
 
 import com.google.appengine.api.datastore.KeyFactory;
 
@@ -36,14 +38,22 @@ public class CommentLoadController extends JsonController {
                 .query(Comment.class, g.getKey())
                 .sort(CommentMeta.get().date.desc)
                 .asList();
-        // 日本時間に修正
-//        for (Comment co : comments) {
-//            long l = co.getDate().getTime() + 1000 * 60 * 60 * 9;
-//            co.getDate().setTime(l);
-//        }
+
+        for (Comment comment : comments) {
+            String userName = "Guest";
+            if (!comment.getTwitterId().isEmpty()) {
+                Long userId = Long.valueOf((comment.getTwitterId()));
+                User user =
+                    Datastore
+                        .query(User.class)
+                        .filter(UserMeta.get().userId.equal(userId))
+                        .asSingle();
+                userName = user.getUserName();
+            }
+            comment.setTwitterId(userName);
+        }
 
         map.put("comments", comments);
         return map;
     }
-
 }

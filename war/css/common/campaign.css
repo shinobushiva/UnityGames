@@ -1,0 +1,202 @@
+/* Moving Boxes demo CSS */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font: 11px Helvetica, Arial, sans-serif;
+}
+
+#wrapper {}
+
+/* Moving Boxes title image wrapper */
+#title {
+  text-align: center;
+}
+#title img {
+  border: 0;
+}
+
+/* Add/remove panels buttons */
+.buttons {
+  padding: 5px 10px;
+  text-align: center;
+}
+
+/* direct link styling */
+.dlinks {
+  text-align: center;
+  font-size: 20px;
+}
+/* This css requires Moving Boxes v2.02+ */
+
+/* Inside slider shadow */
+.mb-left-shadow, .mb-right-shadow {
+  background: repeat-y scroll 0 0;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 10px;
+}
+
+.mb-left-shadow {
+  background-image: url("../images/leftshadow.png");
+  left: 0;
+}
+
+.mb-right-shadow {
+  background-image: url("../images/rightshadow.png");
+  right: 0;
+}
+
+/*** Left & Right Navigation Arrows ***/
+a.mb-scrollButtons {
+  background: url(../images/arrows.gif) no-repeat;
+  margin: 0;
+  top: 40%;
+/*  the margin-top below may be causing problems, so adjust the % above... */
+/*  margin-top: -29px; if you change the arrow images, you may have to adjust this (1/2 height of arrow image) */
+  zoom: 1;
+}
+/*** Overall MovingBoxes Slider ***/
+.mb-wrapper {
+  width: 900px; /* default, this is overridden by script settings */
+  border: 5px solid black;
+  margin: 0 auto;
+  position: relative;
+  left: 0;
+  top: 0;
+  border-radius: 1em;
+  -moz-border-radius: 1em;
+  -webkit-border-radius: 1em;
+  box-shadow: inset 0 0 10px #888;
+  -moz-box-shadow: inset 0 0 10px #888;
+  -webkit-box-shadow: inset 0 0 10px #888;
+}
+
+/* Panel Wrapper */
+.mb-slider, .mb-scroll {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  margin: 0 auto;
+  padding: 0;
+  position: relative;
+  left: 0;
+  top: 0;
+
+  /***(>'-')> Control Panel Font size here <('-'<)***/
+  font-size: 18px;
+}
+
+/* active slider border highlight */
+.mb-active-slider {
+  border-color: black;
+}
+
+/*** Slider panel ***/
+.mb-slider .mb-panel {
+  width: 350px;  /* default, this is overridden by script settings */
+  margin: 5px 0;
+  padding: 5px;
+  cursor: pointer;
+  float: left;
+  list-style: none;
+}
+
+/* Cursor to arrow over current panel, pointer for all others,
+  change .current class name using plugin option, currentPanel : 'current' */
+.mb-slider .mb-panel.current {
+ cursor: auto;
+}
+
+/*** Inside the panel ***/
+.mb-inside {
+  padding: 10px;
+  border: 0px solid #999;
+}
+
+.mb-inside img {
+  display: block;
+  border: 0px solid #666;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.mb-inside h2 {
+  font-weight: normal;
+  color: #000;
+  font-size: 140%; /* Adjust panel header font size using em or % */
+  margin: 0 0 8px 0;
+}
+
+.mb-inside p {
+  font-size: 100%; /* Adjust panel text font size using em or % */
+  color: #444;
+}
+
+.mb-inside a {
+  color: #333;
+  text-decoration: none;
+  border-bottom: 1px dotted black;
+}
+
+.mb-inside a:hover {
+  border-bottom: 1px solid #999;
+}
+
+/*** Left & Right Navigation Arrows ***/
+a.mb-scrollButtons {
+  display: block;
+  width: 45px;
+  height: 58px;
+  background: transparent url(../images/arrows.png) no-repeat;
+  position: absolute;
+  top: 50%;
+  margin-top: -29px; /* if you change the arrow images, you may have to adjust this (1/2 height of arrow image) */
+  cursor: pointer;
+  text-decoration: none;
+  outline: 0;
+  border: 0;
+}
+a.mb-scrollButtons.mb-left {
+  background-position: left top;
+  left: -45px;
+}
+a.mb-scrollButtons.mb-right {
+  background-position: right top;
+  right: -45px;
+}
+a.mb-scrollButtons.mb-left:hover {
+  background-position: left bottom;
+}
+a.mb-scrollButtons.mb-right:hover {
+  background-position: right bottom;
+}
+
+/*** Controls added below the panels ***/
+.mb-controls {
+  margin: 0 auto;
+  text-align: center;
+  background: black;
+  position: relative;
+  z-index: 100;
+}
+.mb-controls a {
+  color: #444;
+  font: 12px Georgia, Serif;
+  display: inline-block;
+  text-decoration: none;
+  padding: 2px;
+  height: 18px;
+  margin: 0 5px 0 0;
+  text-align: center;
+  outline: 0;
+}
+.mb-controls a.current, .mb-controls a:hover {
+  color: #fff;
+}
+.mb-active-slider .mb-controls {
+  background-color: black;
+}

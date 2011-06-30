@@ -1,0 +1,89 @@
+.purchase-options {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 25px;
+}
+
+.contentsFrame {
+	width: 440px;
+	height: 90px;
+}
+
+.operationFrame {
+	width: 440px;
+	height: 110px;
+}
+.codeFrame {
+	width: 440px;
+	height: 110px;
+}
+
+.screenSize {
+	width: 50px;
+}
+
+.floatRight {
+	float: right;
+}
+
+.registButton {
+	width: 250px;
+	height: 80px;
+	font-size: xx-large;
+}
+
+#ThumbNailURL {
+	width: 260px
+}
+
+#GameURL {
+	width: 260px
+}
+
+#HpURL {
+	width: 260px
+}
+
+#adminPass {
+	width: 117px;
+}
+
+.urlExplanation {
+	padding-left: 5px;
+	padding-bottom: 15px;
+}
+
+.breakAll {
+	word-break: break-all
+}
+
+.changeButonPosition {
+	float: right;
+	margin-top: -20px;
+}
+
+.changeButton {
+	width: 200px;
+	height: 64px;
+	font-size: x-large;
+}
+
+.heightForty {
+	height: 40px;
+}
+
+.heightThirty {
+	height: 30px;
+}
+
+.twitterLogin {
+	color: blue;
+	margin-top: 10px
+}
+
+.deleteButton {
+	position: relative;
+	top: -30;
+	width: 859px;
+	font-size: xx-large;
+}

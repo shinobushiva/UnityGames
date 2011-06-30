@@ -1,0 +1,188 @@
+.marginLeftFifty {
+	margin-left: 50px;
+}
+
+.twitterImageFrame {
+	float: left;
+	margin-left: 10px;
+	margin-top: 10px;
+}
+
+#twitterImage {
+	width: 48px;
+	height: 48px;
+}
+
+.inlineBlock {
+	display: inline-block;
+}
+
+.marginTopTwenty {
+	margin-top: 20px;
+}
+
+#twitterScreenName {
+	font-size: xx-large;
+}
+
+#twitterName {
+	margin-left: 30px;
+}
+
+.hrOne {
+	margin-top: 50px;
+	width: 900px;
+}
+
+.marginTopTen {
+	margin-top: 10px;
+}
+
+.Introduction {
+	font-size: 20px;
+	margin-top: auto;
+	margin-bottom: auto;
+	display: inline-block;
+}
+
+#loadMyself {
+	display: inline-block;
+	width: 450px;
+}
+
+#myselfText {
+	width: 427px;
+	height: 37px;
+	font-size: 10px;
+}
+
+#myself-cancel {
+	float: right;
+	margin-right: 10px;
+	margin-top: 5px;
+	cursor: pointer;
+}
+
+#myself-change {
+	float: right;
+	margin-right: 0px;
+}
+
+.webFont {
+	font-size: 20px;
+	display: inline-block;
+}
+
+#web {
+	clear: both;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	display: inline-block;
+}
+
+#web-cancel {
+	font-size: 10px;
+}
+
+.management {
+	font-size: 20px;
+	margin-top: 50px;
+}
+
+.hrTwe {
+	width: 500px;
+}
+
+.gameListFrame {
+	display: inline-block;
+	width: 500px;
+}
+
+#hiddenresult {
+	display: none;
+}
+
+.games {
+	display: inline-block;
+	text-align: center;
+	z-index: 1;
+	cursor: pointer;
+}
+
+.gameName {
+	width: 150px;
+	text-align: center;
+}
+
+.marginTopThirty {
+	margin-top: 30px;
+}
+
+#btnPrev {
+	width: 100px;
+	height: 30px;
+}
+
+#btnNext {
+	margin-right: 50px;
+	width: 100px;
+	height: 30px;
+}
+
+.twitterFrame {
+	float: right;
+	margin-top: -150px;
+	margin-right: 50px;
+}
+
+#twitter {
+	float: right;
+	margin-right: 80px;
+}
+
+.tweetFrame {
+	width: 250px;
+}
+
+.tweetFont {
+	font-size: 15px;
+}
+
+.inline {
+	display: inline;
+}
+
+#tweet {
+	width: 250px;
+	height: 30px;
+}
+
+#tweetButton {
+	display: inline-block;
+	height: 25px;
+}
+
+.twitterIds {
+	width: 300px;
+	height: 50px;
+	border: 1px;
+	clear: both;
+}
+
+.floatLeft {
+	float: left;
+}
+
+#twitterDescription {
+	margin-top: 10px;
+	display: inline-block;
+	width: 450px;
+}
+
+.gameFrame {
+	width: 500px;
+}
+
+.marginLeftForty {
+	margin-left: 40px;
+}

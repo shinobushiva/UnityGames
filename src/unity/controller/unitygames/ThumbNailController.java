@@ -20,14 +20,16 @@ public class ThumbNailController extends Controller {
         long id = asLong("id");
         Key key = Datastore.createKey(GameData.class, id);
 
-        //親のキーから探してきている
+        // 親のキーから探してきている
         ThumbNailData u = Datastore.query(ThumbNailData.class, key).asSingle();
-        Key upk = u.getKey();
+        if (u != null) {
+            Key upk = u.getKey();
 
-        ThumbNailData data = Datastore.get(ThumbNailData.class, upk);
+            ThumbNailData data = Datastore.get(ThumbNailData.class, upk);
 
-        byte[] bytes = service.getBytes2(data);
-        show(data.getGameName(), bytes);
+            byte[] bytes = service.getBytes2(data);
+            show(data.getGameName(), bytes);
+        }
         requestScope("ThumbNailURL", null);
         return null;
     }

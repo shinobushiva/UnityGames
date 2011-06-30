@@ -58,7 +58,9 @@ public class TagService {
         GameData g = Datastore.get(GameData.class, gameKey);
         Set<Tag> fixTags = g.getFixTags();
         Set<Tag> tags = g.getTags();
-
+        if (tags == null) {
+            tags = new TreeSet<Tag>();
+        }
         Object[] array = tags.toArray();
         for (Object s : array) {
 
@@ -170,6 +172,7 @@ public class TagService {
         // まずtagを1つにする
         Set<Tag> fixTags = g.getFixTags();
         Set<Tag> tags = g.getTags();
+        
         fixTags.addAll(tags);
         Set<String> set = new TreeSet<String>();
         for (Tag tag : fixTags) {

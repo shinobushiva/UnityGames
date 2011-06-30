@@ -8,9 +8,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <%@ include file="/share/css.jsp"%>
+<link href="/css/registGame.css" rel="stylesheet" type="text/css" />
 <%@ include file="/share/js.jsp"%>
-<title><fmt:message key="change.home" />
-</title>
+<title><fmt:message key="change.home" /></title>
 </head>
 <body>
 	<script type="text/javascript">
@@ -94,78 +94,79 @@ else{return true; // 送信を実行
 }};
 </script>
 	<%@ include file="/share/header.jsp"%>
-	<form action="/action/upload" method="post" class="cmxform" id="commentForm"
-		enctype="multipart/form-data" onSubmit="return tagCheck()"
-		name="form1"">
+	<form action="/action/upload" method="post" class="cmxform"
+		id="commentForm" enctype="multipart/form-data"
+		onSubmit="return tagCheck()" name="form1"">
 		<input type="hidden" name="gameKey" value="${f:h(g.key)}">
-		<div style="word-break: break-all">
-			<table class="purchase-options" border="0" width="859"
-				style="margin-left: auto; margin-right: auto; margin-top: 25px;">
+		<div class="breakAll">
+			<table class="purchase-options" border="0" width="859px">
 				<tr class="top">
 					<td colspan="2">&nbsp;</td>
 				</tr>
 				<tr>
 					<td><h1>
 							<fmt:message key="change.delete" />
-						</h1></td>
+						</h1>
+					</td>
 
 					<td rowspan="7">
 						<h2>
 							<fmt:message key="explanation" />
-						</h2> <textarea style="width: 440px; height: 90px;" name="Contents"
-							title="<fmt:message key="contents.title" />">${g.contents }</textarea><br>
+						</h2> <textarea name="Contents"
+							title="<fmt:message key="contents.title" />"
+							class="contentsFrame">${g.contents }</textarea><br>
 						<h2>
 							<fmt:message key="operation" />
-						</h2> <textarea style="width: 440px; height: 110px;" name="Operations"
-							title="<fmt:message key="operation.title" />">${g.operations}</textarea>
+						</h2> <textarea name="Operations"
+							title="<fmt:message key="operation.title" />"
+							class="operationFrame">${g.operations}</textarea>
 						<div>
-							<div style="display: inline-block;">
+							<div class="inlineBlock">
 								<h2>
 									<fmt:message key="code" />
 								</h2>
 							</div>
-							<div style="display: inline-block;">
+							<div class="inlineBlock">
 								<fmt:message key="upload.howto.code" />
 							</div>
 							<div>
-								<textarea style="width: 440px; height: 110px;" name="Code"
+								<textarea class="codeFrame" name="Code"
 									title="<fmt:message key="code.title" />">${g.code}</textarea>
 							</div>
 							<div>
 								<div>
-									<div style="display: inline-block;">
+									<div class="inlineBlock">
 										<h2>
 											<fmt:message key="screenSize" />
 										</h2>
 									</div>
-									<div style="display: inline-block;">
+									<div class="inlineBlock">
 										<fmt:message key="screenSize.default" />
 									</div>
 								</div>
-								<div style="display: inline-block;">
+								<div class="inlineBlock">
 									Width:<input type="text" name="gameScreenWidth"
-										value="${width}" style="width: 50px;" />
+										value="${width}" class="screenSize" />
 								</div>
-								<div style="display: inline-block;">
+								<div class="inlineBlock">
 									Height:<input type="text" name="gameScreenHeight"
-										value="${height}" style="width: 50px;" />
+										value="${height}" class="screenSize" />
 								</div>
 								<div>
 									<label> <c:if test="${g.editable}">
 											<input type="checkbox" name="editCode" value="true"
-												style="display: inline-block;" checked="checked" />
+												class="inlineBlock" checked="checked" />
 										</c:if> <c:if test="${!g.editable}">
 											<input type="checkbox" name="editCode" value="true"
-												style="display: inline-block;" />
+												class="inlineBlock" />
 										</c:if>
-										<h2 style="display: inline-block;">
+										<h2 class="inlineBlock">
 											<fmt:message key="dont.edit" />
 										</h2> </label>
 								</div>
 							</div>
-							<div id="wrapper" style="float: right; margin-top: -20px;">
-								<button class="button"
-									style="width: 200px; height: 64px; font-size: x-large;">
+							<div id="wrapper" class="changeButonPosition">
+								<button class="button" class="changeButton">
 									<fmt:message key="button.change" />
 								</button>
 							</div>
@@ -176,18 +177,20 @@ else{return true; // 送信を実行
 							<label for="GameName"><fmt:message key="gameName" /> </label><input
 								type="text" name="GameName" class="required" id="GameName"
 								value="${g.gameName }" />
-						</h2></td>
+						</h2>
+					</td>
 				</tr>
 				<tr>
 					<td><h2>
 							<label for="ThumbNail"><fmt:message key="thumbNail" /> <c:if
 									test="${g.thumbNailType =='data' }">
-									<img src="/unitygames/thumbNail?id=${f:h(g.key.id)}" width="50px"
-										height="50px" align="right">
+									<img src="/unitygames/thumbNail?id=${f:h(g.key.id)}"
+										width="50px" height="50px" align="right">
 						</h2> </label><br> <fmt:message key="now" />： <label><font
 							color="red"><fmt:message key="thumbNail.pictureDataUp" />
 						</font> </label><br> </c:if> <c:if test="${g.thumbNailType =='url' }">
-							<img src="${g.thumbNailURL}" width="50px" height="50px" align="right">
+							<img src="${g.thumbNailURL}" width="50px" height="50px"
+								align="right">
 							</h2>
 							<label><fmt:message key="now" />：<font color="red"><fmt:message
 										key="thumbNail.urlUp" /> </font> </label>
@@ -199,7 +202,7 @@ else{return true; // 送信を実行
 
 ${g.thumbNailURL}<br>
 						</c:if> <input type="checkbox" name="ThumbNailChange"
-						id="ThumbNailChange" value="ThumbNailChange"> <fmt:message
+						id="ThumbNailChange" value="true"> <fmt:message
 							key="change" /><br>
 						<div id="ThumbNailChange1">
 							<label><input type="radio" name="ThumbNailType"
@@ -220,11 +223,10 @@ ${g.thumbNailURL}<br>
 							<div id="tu">
 								<label for="ThumbNailURL"><fmt:message
 										key="thumbNail.url" /> </label><input type="text" name="ThumbNailURL"
-									id="ThumbNailURL" style="width: 260px"
+									id="ThumbNailURL"
 									title="<fmt:message key="thumbNail.url.title" />"><br>
 							</div>
-						</div>
-					</td>
+						</div></td>
 				</tr>
 
 				<tr>
@@ -244,7 +246,7 @@ ${g.thumbNailURL}<br>
 					<br>
 					</c:if>
 					<input type="checkbox" name="GameChange" id="GameChange"
-						value="GameChange">
+						value="true">
 					<fmt:message key="change" />
 					<br>
 					<div id="GameChange1">
@@ -267,12 +269,12 @@ ${g.thumbNailURL}<br>
 							</div>
 							<div id="G2">
 								<label for="GameURL"><fmt:message key="game.url" /> </label> <input
-									type="text" name="GameURL" id="GameURL" style="width: 260px"
+									type="text" name="GameURL" id="GameURL"
 									title="<fmt:message key="game.url.title" />" /><br>
 							</div>
 							<div id="G3">
 								<label for="HpURL"><fmt:message key="game.url.outside" />
-								</label> <input type="text" name="HpURL" id="HpURL" style="width: 260px"
+								</label> <input type="text" name="HpURL" id="HpURL"
 									title="<fmt:message key="game.url.outside.title" />" /><br>
 							</div>
 						</div>
@@ -305,19 +307,19 @@ ${g.thumbNailURL}<br>
 								</div>
 
 								<div id="twitterKey">
-									<div style="color: blue; margin-top: 10px">
+									<div class="twitterLogin">
 										<fmt:message key="twitter.login" />
 									</div>
-									<div style="height: 40px;"></div>
+									<div class="heightForty"></div>
 								</div>
 
 								<div id="changeKey">
 									<h2>
 										<fmt:message key="change.delete.key" />
 										<input type="password" name="pass" id="adminPass"
-											style="width: 117px;" value="${g.pass}">
+											value="${g.pass}">
 									</h2>
-									<div style="height: 30px;"></div>
+									<div class="heightThirty"></div>
 								</div>
 							</c:if>
 							<c:if test="${loginType == 'guest' }">
@@ -340,15 +342,15 @@ ${g.thumbNailURL}<br>
 									<h2>
 										<fmt:message key="change.delete.key" />
 										<input type="password" name="pass" id="adminPass"
-											style="width: 117px;" value="${g.pass}">
+											value="${g.pass}">
 									</h2>
-									<div style="height: 30px;"></div>
+									<div class="heightThirty"></div>
 								</div>
 								<div id="twitterKey">
-									<div style="color: blue; margin-top: 10px">
+									<div class="twitterLogin">
 										<fmt:message key="twitter.login" />
 									</div>
-									<div style="height: 40px;"></div>
+									<div class="heightForty"></div>
 								</div>
 							</c:if>
 
@@ -364,34 +366,34 @@ ${g.thumbNailURL}<br>
 							</div>
 
 							<div id="twitterKey">
-								<div style="color: blue; margin-top: 10px">
+								<div class="twitterLogin">
 									<fmt:message key="twitter.login" />
 								</div>
-								<div style="height: 40px;"></div>
+								<div class="heightForty"></div>
 							</div>
 
 							<div id="changeKey">
 								<h2>
 									<fmt:message key="change.delete.key" />
-									<input type="password" name="pass" id="adminPass"
-										style="width: 117px;">
+									<input type="password" name="pass" id="adminPass">
 								</h2>
-								<div style="height: 30px;"></div>
+								<div class="heightThirty"></div>
 							</div>
-						</c:if></td>
+						</c:if>
+					</td>
 				</tr>
-				<tr class="bottom" style="height: 30px;">
+				<tr class="bottom" class="heightThirty">
 					<td colspan="2"><span class="warning"><fmt:message
-								key="url.explanation" /> </span></td>
+								key="url.explanation" /> </span>
+					</td>
 				</tr>
 			</table>
 		</div>
 	</form>
-	<form action="delete" method="post">
+	<form action="/action/delete" method="post">
 		<input type="hidden" name="gameKey" value="${f:h(g.key)}">
 		<div id="wrapper" align="center">
-			<button class="button" name="delete"
-				style="position: relative; top: -30; width: 859px; font-size: xx-large;">
+			<button class="button deleteButton" name="delete">
 				<fmt:message key="button.delete" />
 			</button>
 		</div>
