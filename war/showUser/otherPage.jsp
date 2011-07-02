@@ -8,58 +8,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>user Index</title>
+<title>${user}のページ</title>
 <%@ include file="/share/css.jsp"%>
-<link href="/css/userPage.css" rel="stylesheet" type="text/css"/>
+<link href="/css/userPage.css" rel="stylesheet" type="text/css" />
 <%@ include file="/share/js.jsp"%>
-
+<script type="text/javascript" src="/js/newJS/otherPage.js"></script>
 <%--ページング --%>
 <script type="text/javascript">
-	function pageselectCallback(page_index, jq) {
-		var new_content = jQuery(
-				'#hiddenresult div.result:eq(' + page_index + ')').clone();
-		$('#Searchresult').empty().append(new_content);
-		return false;
-	}
-	function initPagination() {
-		var num_entries = jQuery('#hiddenresult div.result').length;
-		$("#Pagination").pagination(num_entries, {
-			callback : pageselectCallback,
-			items_per_page : 1
-		});
-	}
-	function initButtons() {
-		var pg = $('#Pagination');
-		$('#btnPrev').click(function() {
-			pg.trigger('prevPage');
-		});
-		$('#btnNext').click(function() {
-			$('#Pagination').trigger('nextPage');
-		});
-		$('#btnSet').click(function() {
-			pg.trigger('setPage', [ 1 ]);
-		});
-	}
-
-	$(document)
-			.ready(
-					function() {
-						initPagination();
-						initButtons();
-
-						$
-								.getJSONP(
-										"http://api.twitter.com/1/users/show.json?id=${twitterId}&callback={callback}",
-										function(e) {
-
-											$("#twitterImage").attr("src",
-													"" + e.profile_image_url);
-											$("#twitterScreenName").html(
-													"@" + e.screen_name);
-											$("#twitterName").html("" + e.name);
-
-										});
-					});
+	$(function() {
+		otherPageInfo(${twitterId});
+	});
 </script>
 </head>
 <body>
@@ -137,16 +95,7 @@
 
 				<script type="text/javascript">
 					$(function() {
-						var url = "http://twitter.com/statuses/show/${t.tweetId}.json?callback={callback}";
-						$.getJSONP(url, function(obj) {
-							var s = "";
-
-							s += "<div><div　style='width: 250px;'>" + obj.text
-									+ "</div>";
-							s += "<div>" + jQuery.timeago(obj.created_at)
-									+ "</div></div>";
-							$("#${t.tweetId}").html(s);
-						});
+						tweet(${t.tweetId});
 					});
 				</script>
 

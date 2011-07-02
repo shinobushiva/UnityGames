@@ -1,13 +1,9 @@
 package unity.controller.admin;
 
-import java.util.List;
-
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
 import org.slim3.datastore.GlobalTransaction;
-
-import unity.model.Comment;
 
 public class UpDateController extends Controller {
 
@@ -16,15 +12,14 @@ public class UpDateController extends Controller {
     @Override
     public Navigation run() throws Exception {
 
-        List<Comment> asList = Datastore.query(Comment.class).asList();
-        for (Comment comment : asList) {
-
-            comment.setTwitterId("");
-            GlobalTransaction tx = Datastore.beginGlobalTransaction();
-            tx.put(comment);
-            tx.commit();
-        }
-
         return null;
     }
+
+    public void save(Object model) {
+
+        GlobalTransaction tx = Datastore.beginGlobalTransaction();
+        tx.put(model);
+        tx.commit();
+    }
+
 }

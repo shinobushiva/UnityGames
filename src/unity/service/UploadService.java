@@ -388,7 +388,7 @@ public class UploadService {
             g.setKey(gamekey);
          
             // つぶやき
-             updateStatus(gameName, gamekey.getId(), hpURL);
+//             updateStatus(gameName, gamekey.getId(), hpURL);
 
         } else {
             // updateGame

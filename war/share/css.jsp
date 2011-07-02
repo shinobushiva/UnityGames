@@ -10,19 +10,3 @@
 <link href="/css/common/common.css" rel="stylesheet" type="text/css"/>
 <link href="/css/header.css" rel="stylesheet" type="text/css"/>
 <link href="/css/searchBox.css" rel="stylesheet" type="text/css"/>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

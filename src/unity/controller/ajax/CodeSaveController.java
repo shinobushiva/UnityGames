@@ -30,7 +30,7 @@ public class CodeSaveController extends JsonController {
                 GameData.class,
                 KeyFactory.createKey(dd.getKind(), id));
 
-        if (g.isEditable()) {
+        if (!g.isEditable()) {
             return map;
         }
 
@@ -42,7 +42,6 @@ public class CodeSaveController extends JsonController {
         GlobalTransaction tx = Datastore.beginGlobalTransaction();
         tx.put(g);
         tx.commit();
-
 
         map.put("code", gs.toCodeJson(commentary));
 

@@ -1,6 +1,5 @@
 div.content {
 	margin: auto;
-	width: 600px;
 }
 
 div.missing {
@@ -31,8 +30,6 @@ td.comment {
 	position: relative;
 	width: 300px;
 }
-
-
 
 .registerTag {
 	font-size: x-small;
@@ -129,7 +126,7 @@ td.comment {
 }
 
 #game-center {
-	margin-left: 200px;
+	margin: 0 auto;
 }
 
 #loaded {
@@ -179,8 +176,6 @@ td.comment {
 #cancel {
 	display: none;
 }
-
-
 
 #comment {
 	margin-left: auto;
