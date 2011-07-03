@@ -19,8 +19,8 @@ tfb.showbadge();
 		<script type="text/javascript">
 	$(function(){
 		$.getJSONP("http://api.twitter.com/1/users/show.json?id=${twitter.id}&callback={callback}",function(e){
-			$("#loginTwitterImage").attr("src",""+e.profile_image_url);
-			$("#loginTwitterName").html(""+e.screen_name);
+			$(".loginTwitterImage").attr("src",""+e.profile_image_url);
+			$(".loginTwitterName").html(""+e.screen_name);
 			$("#userPage").attr("href","/user/"+e.screen_name);
 			
 		});
@@ -30,10 +30,10 @@ tfb.showbadge();
 		<div>
 			<a id="userPage">
 				<div class="inline">
-					<img id="loginTwitterImage" width="20px">
+					<img id="loginTwitterImage" class="loginTwitterImage" width="20px">
 				</div>
 				<div class="inline">
-					<span id="loginTwitterName"></span>
+					<span id="loginTwitterName" class="loginTwitterName"></span>
 				</div> </a>
 			<div class="inline">
 				<a href="/login/logOut" class="clear">ログアウト</a>
@@ -47,11 +47,15 @@ tfb.showbadge();
 		width="250px" class="logo"> </a>
 
 	<ul id="nav1">
-		<li id="selected"><a href="/"><fmt:message key="home" /> </a></li>
-		<li><a href="/howto"><fmt:message key="howto" /> </a></li>
-		<li><a href="/tutorial"><fmt:message key="tutorial" /> </a></li>
+		<li id="selected"><a href="/"><fmt:message key="home" /> </a>
+		</li>
+		<li><a href="/howto"><fmt:message key="howto" /> </a>
+		</li>
+		<li><a href="/tutorial"><fmt:message key="tutorial" /> </a>
+		</li>
 		<li><a href="/unitygames/upload/newGame"><fmt:message
-					key="upload" /> </a></li>
+					key="upload" /> </a>
+		</li>
 	</ul>
 
 	<script type="text/javascript">

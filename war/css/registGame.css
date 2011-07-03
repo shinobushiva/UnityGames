@@ -27,7 +27,7 @@
 }
 
 .registButton {
-	width: 250px;
+	width: 150px;
 	height: 80px;
 	font-size: xx-large;
 }
@@ -48,10 +48,6 @@
 	width: 117px;
 }
 
-.urlExplanation {
-	padding-left: 5px;
-	padding-bottom: 15px;
-}
 
 .breakAll {
 	word-break: break-all
@@ -59,7 +55,6 @@
 
 .changeButonPosition {
 	float: right;
-	margin-top: -20px;
 }
 
 .changeButton {

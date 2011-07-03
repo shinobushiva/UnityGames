@@ -29,14 +29,14 @@ public class LoginCheckFilter implements Filter {
         Twitter twitter = (Twitter) hsr.getSession().getAttribute("twitter");
         if (req.toString().contains("/unitygames/upload/newGame/guest")
             || req.toString().contains("/unitygames/upload/change/guest")) {
-            hsr.getSession().setAttribute("loginType", "guest");
             fc.doFilter(req, res);
             return;
         }
         if (twitter == null)
             hres.sendRedirect("/login/loginCheck");
-
-       hsr.getSession().setAttribute("loginType", "twitter");
+        else
+            hsr.getSession().setAttribute("loginType", "twitter");
+        
         fc.doFilter(req, res);
 
     }

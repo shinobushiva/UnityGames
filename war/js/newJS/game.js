@@ -30,6 +30,24 @@ function gameInfo(keyId,jscode){
 
 }
 
+function startInfo(keyId) {
+    $(".success").hide();
+    $("#fo").validate();
+    $('#tabs').tabs();
+    $('#contentTab').tabs();
+    $("#reload").hide();
+    $("#ttt").hide();
+    GetUnity();
+	updateTags(keyId);
+}
+
+function middleInfo(keyId,jscode){
+
+	loadComments(keyId);
+	toCode(eval(jscode));
+	preCode();
+
+}
 
 
 
@@ -70,75 +88,6 @@ function commentUp(keyId) {
     $("#commentInput").val("");
 }
 
-function lcs(e) {
-
-    var dateFormat = new DateFormat("yyyy/MM/dd HH:mm:ss");
-    var html = "";
-    var cms = e.comments;
-
-
-    $("div").remove(".comment_floating");
-    for (i in cms) {
-        // funct(com,$("#comments-bottom"),i*500, 1000, 200);
-        var c = cms[i];
-        var com = c.comment;
-
-        html += "<div style='margin:5px;font-size:15px;'>";
-        html += "" + c.comment + " " + dateFormat.format(new Date(c.date)) + " " + c.twitterId;
-        html += "</div>";
-    }
-    $('#commentLoad').html(html);
-
-}
-
-function udt(e, keyId) {
-    var html = "";
-    var html2 = "";
-
-    var i;
-    var t;
-
-    var tags = e.gameData.fixTags;
-    for (i in tags) {
-        t = tags[i]
-
-        html += '<a href="/search?tag=' + t.name + '"style="font-size: 2em; padding:3px;" >' + t.name + '</a>';
-    }
-
-    tags = e.gameData.tags;
-    for (i in tags) {
-        t = tags[i]
-
-        html += '<a href="/search?tag=' + t.name + '"style="font-size: 1em; padding:3px;" >' + t.name + '</a>';
-
-        html2 += '<span style="padding:10px;">';
-        html2 += '<span style="font-size: 20px;">' + t.name + '</span>';
-        //	console.log(t.key);
-        html2 += '<a onclick="deleteTag(\'' + t.key.id + '\',\'' + keyId + '\');">' + '<img src="/images/delete.png">' + '</a>'
-        html2 += '</span>';
-    }
-
-    $('#tagUpload').html(html);
-    $('#tagUpload2').html(html2);
-
-
-
-}
-
-function lkd(e) {
-    var html = "";
-    html += '<div class="content">';
-    html += '<div id="unityPlayer">';
-    html += '<div class="missing">';
-    html += '<a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now!">';
-    html += '<img alt="Unity Web Player. Install now!" src="http://webplayer.unity3d.com/installation/getunity.png" width="193" height="63" />';
-    html += '</a>';
-    html += '</div>';
-    html += '</div>';
-    html += '</div>';
-    $("#loaded").html(html);
-    eval(e.play);
-}
 
 function registTag(keyId) {
 
@@ -159,7 +108,7 @@ function registTag(keyId) {
 
 }
 
-function deleteTag(tagId, keyId) {
+function deleteTag(tagId,keyId) {
 
     var a = "tagId=" + tagId;
     var b = $("#gameKey").serialize();
@@ -228,24 +177,6 @@ function preCode() {
     $("a[rel=video]").createVideo();
 }
 
-function startInfo(keyId) {
-    $(".success").hide();
-    $("#fo").validate();
-    $('#tabs').tabs();
-    $('#contentTab').tabs();
-    $("#reload").hide();
-    $("#ttt").hide();
-    GetUnity();
-	updateTags(keyId);
-}
-
-function middleInfo(keyId,jscode){
-
-	loadComments(keyId);
-	toCode(eval(jscode));
-	preCode();
-
-}
 
 function editToggle(){
 
@@ -313,4 +244,68 @@ function changePass(keyId) {
     $("#change-"+keyId).css("top", "-5px");
     $("#out-"+keyId).show();
 
+}
+function lcs(e) {
+
+    var dateFormat = new DateFormat("yyyy/MM/dd HH:mm:ss");
+    var html = "";
+    var cms = e.comments;
+
+    for (i in cms) {
+        var c = cms[i];
+        var com = c.comment;
+
+        html += "<div style='margin:5px;font-size:15px;'>";
+        html += "" + c.comment + " " + dateFormat.format(new Date(c.date)) + " " + c.twitterId;
+        html += "</div>";
+    }
+    $('#commentLoad').html(html);
+}
+
+function udt(e,keyId) {
+    var html = "";
+    var html2 = "";
+
+    var i;
+    var t;
+
+    var fixTags = e.fixTags;
+    for (i in fixTags) {
+        t = fixTags[i];
+
+        html += '<a href="/search?tag=' + t.name + '"style="font-size: 2em; padding:3px;" >' + t.name + '</a>';
+    }
+
+   var tags = e.tags;
+    for (i in tags) {
+        t = tags[i];
+        html += '<a href="/search?tag=' + t.name + '"style="font-size: 1em; padding:3px;" >' + t.name + '</a>';
+
+        html2 += '<span style="padding:10px;">';
+        html2 += '<span style="font-size: 20px;">' + t.name + '</span>';
+        //	console.log(t.key);
+        html2 += '<a onclick="deleteTag(\'' + t.key.id + '\',\'' + keyId + '\');">' + '<img src="/images/delete.png">' + '</a>'
+        html2 += '</span>';
+    }
+
+    $("#tagUpload").html(html);
+    $("#tagUpload2").html(html2);
+
+
+
+}
+
+function lkd(e) {
+    var html = "";
+    html += '<div class="content">';
+    html += '<div id="unityPlayer">';
+    html += '<div class="missing">';
+    html += '<a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now!">';
+    html += '<img alt="Unity Web Player. Install now!" src="http://webplayer.unity3d.com/installation/getunity.png" width="193" height="63" />';
+    html += '</a>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+    $("#loaded").html(html);
+    eval(e.play);
 }

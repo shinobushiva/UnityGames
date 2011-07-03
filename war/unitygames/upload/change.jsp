@@ -134,41 +134,43 @@ else{return true; // 送信を実行
 									title="<fmt:message key="code.title" />">${g.code}</textarea>
 							</div>
 							<div>
-								<div>
-									<div class="inlineBlock">
-										<h2>
-											<fmt:message key="screenSize" />
-										</h2>
+								<div class="inlineBlock">
+									<div>
+										<div class="inlineBlock">
+											<h2>
+												<fmt:message key="screenSize" />
+											</h2>
+										</div>
+										<div class="inlineBlock">
+											<fmt:message key="screenSize.default" />
+										</div>
 									</div>
 									<div class="inlineBlock">
-										<fmt:message key="screenSize.default" />
+										Width:<input type="text" name="gameScreenWidth"
+											value="${width}" class="screenSize" />
+									</div>
+									<div class="inlineBlock">
+										Height:<input type="text" name="gameScreenHeight"
+											value="${height}" class="screenSize" />
+									</div>
+									<div>
+										<label> <c:if test="${g.editable}">
+												<input type="checkbox" name="editCode" value="true"
+													class="inlineBlock" checked="checked" />
+											</c:if> <c:if test="${!g.editable}">
+												<input type="checkbox" name="editCode" value="true"
+													class="inlineBlock" />
+											</c:if>
+											<h2 class="inlineBlock">
+												<fmt:message key="dont.edit" />
+											</h2> </label>
 									</div>
 								</div>
-								<div class="inlineBlock">
-									Width:<input type="text" name="gameScreenWidth"
-										value="${width}" class="screenSize" />
+								<div id="wrapper" class="changeButonPosition inlineBlock">
+									<button class="button" class="changeButton">
+										<fmt:message key="button.change" />
+									</button>
 								</div>
-								<div class="inlineBlock">
-									Height:<input type="text" name="gameScreenHeight"
-										value="${height}" class="screenSize" />
-								</div>
-								<div>
-									<label> <c:if test="${g.editable}">
-											<input type="checkbox" name="editCode" value="true"
-												class="inlineBlock" checked="checked" />
-										</c:if> <c:if test="${!g.editable}">
-											<input type="checkbox" name="editCode" value="true"
-												class="inlineBlock" />
-										</c:if>
-										<h2 class="inlineBlock">
-											<fmt:message key="dont.edit" />
-										</h2> </label>
-								</div>
-							</div>
-							<div id="wrapper" class="changeButonPosition">
-								<button class="button" class="changeButton">
-									<fmt:message key="button.change" />
-								</button>
 							</div>
 					</td>
 				</tr>
@@ -308,7 +310,13 @@ ${g.thumbNailURL}<br>
 
 								<div id="twitterKey">
 									<div class="twitterLogin">
-										<fmt:message key="twitter.login" />
+										<div class="inline">
+											<img id="loginTwitterImage" class="loginTwitterImage"
+												width="40px">
+										</div>
+										<div class="inline">
+											<span id="loginTwitterName" class="loginTwitterName"></span>
+										</div>
 									</div>
 									<div class="heightForty"></div>
 								</div>
@@ -367,7 +375,13 @@ ${g.thumbNailURL}<br>
 
 							<div id="twitterKey">
 								<div class="twitterLogin">
-									<fmt:message key="twitter.login" />
+									<div class="inline">
+										<img id="loginTwitterImage" class="loginTwitterImage"
+											width="40px">
+									</div>
+									<div class="inline">
+										<span id="loginTwitterName" class="loginTwitterName"></span>
+									</div>
 								</div>
 								<div class="heightForty"></div>
 							</div>

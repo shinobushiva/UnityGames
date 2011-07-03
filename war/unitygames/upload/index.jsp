@@ -9,10 +9,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <%@ include file="/share/css.jsp"%>
-<link href="/css/registGame.css" rel="stylesheet" type="text/css"/>
+<link href="/css/registGame.css" rel="stylesheet" type="text/css" />
 <%@ include file="/share/js.jsp"%>
-<title><fmt:message key="upload.title" />
-</title>
+<title><fmt:message key="upload.title" /></title>
 
 </head>
 <body>
@@ -97,8 +96,7 @@ function tagCheck(){
 				<tr>
 					<td><h1>
 							<fmt:message key="upload.title" />
-						</h1>
-					</td>
+						</h1></td>
 
 					<td rowspan="6">
 
@@ -127,44 +125,46 @@ function tagCheck(){
 							</div>
 						</div>
 						<div>
-							<div>
-								<div class="inlineBlock">
-									<h2>
-										<fmt:message key="screenSize" />
-									</h2>
+							<div class="inlineBlock">
+								<div>
+									<div class="inlineBlock">
+										<h2>
+											<fmt:message key="screenSize" />
+										</h2>
+									</div>
+									<div class="inlineBlock">
+										<fmt:message key="screenSize.default" />
+									</div>
 								</div>
 								<div class="inlineBlock">
-									<fmt:message key="screenSize.default" />
+									Width:<input type="text" name="gameScreenWidth" value="600"
+										class="screenSize" />
+								</div>
+								<div class="inlineBlock">
+									Height:<input type="text" name="gameScreenHeight" value="450"
+										class="screenSize" />
+								</div>
+								<div>
+									<label><input type="checkbox" name="editCode"
+										value="true" class="inlineBlock" />
+										<h2 class="inlineBlock">
+											<fmt:message key="dont.edit" />
+										</h2> </label>
 								</div>
 							</div>
-							<div class="inlineBlock">
-								Width:<input type="text" name="gameScreenWidth" value="600"
-									class="screenSize" />
-							</div>
-							<div class="inlineBlock">
-								Height:<input type="text" name="gameScreenHeight" value="450"
-									class="screenSize" />
-							</div>
-							<div>
-								<label><input type="checkbox" name="editCode"
-									value="true" class="inlineBlock" />
-									<h2 class="inlineBlock">
-										<fmt:message key="dont.edit" />
-									</h2> </label>
+							<div id="wrapper" class="floatRight inlineBlock">
+								<button id="regist" class="button registButton">
+									<fmt:message key="button.regist" />
+								</button>
 							</div>
 						</div>
-						<div id="wrapper" class="floatRight">
-							<button id="regist" class="button registButton">
-								<fmt:message key="button.regist" />
-							</button>
-						</div></td>
+					</td>
 				</tr>
 				<tr>
 					<td><h2>
 							<label for="GameName"><fmt:message key="gameName" /> </label><input
 								type="text" name="GameName" id="GameName" class="required" />
-						</h2>
-					</td>
+						</h2></td>
 				</tr>
 				<tr>
 					<td><label for="ThumbNail"><h2>
@@ -174,8 +174,7 @@ function tagCheck(){
 							checked="checked"> <fmt:message
 								key="thumbNail.pictureDataUp" /> </label><br> <label><input
 							type="radio" name="ThumbNailType" value="url" id="turl">
-							<fmt:message key="thumbNail.urlUp" /><br> </label>
-					</td>
+							<fmt:message key="thumbNail.urlUp" /><br> </label></td>
 
 				</tr>
 				<tr>
@@ -188,7 +187,8 @@ function tagCheck(){
 									key="thumbNail.url" /> </label><input type="text" name="ThumbNailURL"
 								id="ThumbNailURL"
 								title="<fmt:message key="thumbNail.url.title" />"><br>
-						</div></td>
+						</div>
+					</td>
 				</tr>
 				<tr>
 					<td><label for="d"><h2>
@@ -200,8 +200,7 @@ function tagCheck(){
 							value="url" id="url"> <fmt:message key="game.select.url" /><br>
 					</label> <label><input type="radio" name="GameType" value="hpurl"
 							id="hp"> <fmt:message key="game.select.url.outside" /><br>
-					</label>
-					</td>
+					</label></td>
 				</tr>
 				<tr>
 					<td>
@@ -240,14 +239,15 @@ function tagCheck(){
 							</div>
 
 							<div id="twitterKey">
-								<%--	<div style="float: left;">
-									<img
-										src="${p}" />
+								<div class="twitterLogin">
+									<div class="inline">
+										<img id="loginTwitterImage" class="loginTwitterImage"
+											width="40px">
+									</div>
+									<div class="inline">
+										<span id="loginTwitterName" class="loginTwitterName"></span>
+									</div>
 								</div>
-								<a style="color: #1F98C7;"><div
-										style="text-align: left; font-weight: 900; font-size: 20px; margin-top: 10px; word-break: break-all;">
-										&nbsp;${userName}</div> </a>
- --%>
 							</div>
 
 							<div id="changeKey">
@@ -273,12 +273,14 @@ function tagCheck(){
 									<input type="password" name="pass" id="adminPass">
 								</h2>
 							</div>
-						</c:if></td>
+						</c:if>
+					</td>
 
 				</tr>
 				<tr class="bottom">
-					<td colspan="2"><span class="warning urlExplanation"><fmt:message
-								key="url.explanation" /> </span></td>
+					<td colspan="2"><span class="warning"><fmt:message
+								key="url.explanation" />
+					</td>
 				</tr>
 
 			</table>

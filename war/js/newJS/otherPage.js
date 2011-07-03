@@ -50,7 +50,7 @@ function tweet(tweetId) {
 
         s += "<div><div　style='width: 250px;'>" + obj.text + "</div>";
         s += "<div>" + jQuery.timeago(obj.created_at) + "</div></div>";
-        $("#"+tweetId+"").html(s);
+        $("#"+tweetId).html(s);
     });
 
 }

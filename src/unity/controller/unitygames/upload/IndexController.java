@@ -1,5 +1,7 @@
 package unity.controller.unitygames.upload;
 
+import java.io.Console;
+
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
@@ -21,9 +23,8 @@ public class IndexController extends Controller {
         String loginType = "guest";
         if (sessionScope("loginType") != null)
             loginType = (String) sessionScope("loginType");
-
+        removeSessionScope("loginType");
         requestScope("loginType", loginType);
-
         requestScope("isLogin", (Boolean) sessionScope("isLogin"));
         Twitter twitter = sessionScope("twitter");
         requestScope("twitter", twitter);

@@ -43,63 +43,6 @@ public class CallbackController extends Controller {
             twitter.getScreenName(),
             twitter.showUser(twitter.getId()).getDescription());
 
-        // if (sessionScope("loginType") != null) {
-        // Key sessionKey = sessionScope("sessionKey");
-        // Key key = sessionScope("key");
-        // SessionGameData sg =
-        // Datastore.get(SessionGameData.class, sessionKey);
-        //
-        // String gameChange = null;
-        // String thumbNailChange = null;
-        // if (sessionScope("loginType").equals("newGame")) {
-        // gameChange = "";
-        // thumbNailChange = "";
-        // } else {
-        //
-        // gameChange = sessionScope("gameChange");
-        // thumbNailChange = sessionScope("thumbNailChange");
-        // }
-        // GameData g =
-        // service.upload(
-        // key,
-        // sg.getGameName(),
-        // sg.getGameURL(),
-        // (byte[]) sessionScope("gameFile"),
-        // (byte[]) sessionScope("thumbNail"),
-        // sg.getThumbNailURL(),
-        // sg.getContents(),
-        // sg.getOperations(),
-        // sg.getHpURL(),
-        // "",
-        // sg.getThumbNailType(),
-        // sg.getGameType(),
-        // thumbNailChange,
-        // gameChange,
-        // sg.getFixTags(),
-        // sg.getCode(),
-        // (long) twitter.getId(),
-        // sg.getGameScreenSize(),
-        // sg.isEditCode());
-        // // 二度手間してるけど力尽きたので放置・・・6/14
-        // ts.conflictTag(g.getKey());
-        // ts.setRelation(g.getKey());
-        // ts.deleteRelationTag(g.getKey());
-        // if (!sessionScope("loginType").equals("newGame")) {
-        // removeSessionScope("key");
-        // removeSessionScope("thumbNailChange");
-        // removeSessionScope("gameChange");
-        //
-        // }
-        // removeSessionScope("gameFile");
-        // removeSessionScope("thumbNail");
-        // removeSessionScope("loginType");
-        // removeSessionScope("sessionKey");
-        //
-        // GlobalTransaction tx = Datastore.beginGlobalTransaction();
-        // tx.delete(sg.getKey());
-        // tx.commit();
-        // return redirect("/unitygames/game/ug" + g.getKey().getId());
-        // }
 
         if (sessionScope("loginType") != null) {
             return redirect("/unitygames/upload/newGame");
@@ -111,6 +54,5 @@ public class CallbackController extends Controller {
         System.out.println("isLogin:" + isLogin);
         requestScope("isLogin", isLogin);
         return redirect(referer);
-        // return null;
     }
 }

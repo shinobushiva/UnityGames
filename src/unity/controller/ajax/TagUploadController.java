@@ -26,7 +26,8 @@ public class TagUploadController extends JsonController {
             Datastore.get(
                 GameData.class,
                 KeyFactory.createKey(dd.getKind(), id));
-        map.put("gameData", g);
+        map.put("fixTags", g.getFixTags());
+        map.put("tags", g.getTags());
         return map;
     }
 }

@@ -17,7 +17,8 @@
 <%@ include file="/share/css.jsp"%>
 <link href="/css/game.css" rel="stylesheet" type="text/css" />
 <%@ include file="/share/js.jsp"%>
-<script type="text/javascript" src="/js/jquery.createvideo.js"></script>
+<script
+	src="http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject.js"></script>
 <script type="text/javascript" src="/js/newJS/game.js"></script>
 <script type="text/javascript">
 <%--　Analytics　--%>
@@ -39,7 +40,7 @@ jQuery.extend(jQuery.validator.messages, {
 
 <%-- Initialization --%> 
 $(function () {
-      gameInfo(${g.key.id}, ${jscode});
+	      gameInfo(${g.key.id}, ${jscode});
 });
 </script>
 
@@ -71,7 +72,7 @@ $(function () {
 		<%--	Twitterアカウント	--%>
 		<c:if test="${empty g.pass}">
 			<script type="text/javascript">
-		function(){getTwitterInfo(${twitterId});}
+		$(function(){getTwitterInfo(${twitterId});});
 		</script>
 			<div>
 				<a class="userPage" target="Twitter">
@@ -120,8 +121,7 @@ $(function () {
 		<ul>
 			<li class="SocialInline"><script type="text/javascript"
 					src="http://apis.google.com/js/plusone.js"> {lang: 'ja'} </script>
-				<g:plusone size="medium"></g:plusone>
-			</li>
+				<g:plusone size="medium"></g:plusone></li>
 			<li class="SocialInlineFaceBook"><fb:like layout="button_count"></fb:like>
 				<a id="fb-root"></a> <script>
 			window.fbAsyncInit = function() {
@@ -140,7 +140,8 @@ $(function () {
 				e.async = true;
 				document.getElementById('fb-root').appendChild(e);
 			}());
-		</script></li>
+		</script>
+			</li>
 			<%--<li class="SocialInline"><a href="http://mixi.jp/share.pl"
 				class="mixi-check-button"
 				data-key="42bc93a615261cdd8e17e115918eb36ebf60a729"
@@ -168,14 +169,11 @@ $(function () {
 		<%-- Top Tabs --%>
 		<ul>
 			<li><a href="#tab1"><span><fmt:message
-							key="explanation" /> </span> </a>
-			</li>
+							key="explanation" /> </span> </a></li>
 			<li><a href="#tab2"><span><fmt:message
-							key="operation" /> </span> </a>
-			</li>
+							key="operation" /> </span> </a></li>
 			<li><a href="#tagg"><span><fmt:message
-							key="registTag" /> </span> </a>
-			</li>
+							key="registTag" /> </span> </a></li>
 			<%--
 			<span>
 				<button id="commentToggle"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
 	<application>unity-games</application>
-	<version>20110629</version>
+	<version>20110703</version>
 	
 	<precompilation-enabled>true</precompilation-enabled>
 	
