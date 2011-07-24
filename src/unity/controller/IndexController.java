@@ -1,47 +1,47 @@
 package unity.controller;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
-import org.slim3.datastore.Datastore;
 
-import unity.meta.GameDataMeta;
 import unity.model.GameData;
 import unity.model.vo.CampaignVo;
 import unity.service.CampaignService;
+import unity.service.GameDataService;
+import unity.service.RankingService;
+import unity.service.SearchService;
 
 public class IndexController extends Controller {
-    private GameDataMeta g = GameDataMeta.get();
     private CampaignService cs = new CampaignService();
-
-    // private UserService us = new UserService();
+    private SearchService ss = new SearchService();
+    private GameDataService gs = new GameDataService();
+    private RankingService rs = new RankingService();
 
     @Override
     public Navigation run() throws Exception {
-
-        Logger Log = Logger.getLogger(request.getRemoteAddr());
-
-        Log.info("RemoteAddr" + request.getRemoteAddr());
+        List<CampaignVo> loadCampaigns = cs.loadCampaigns();
+        for (CampaignVo campaignVo : loadCampaigns) {
+            List<GameData> contentCut = gs.contentCut(campaignVo.getGames());
+            campaignVo.setGames(contentCut);
+        }
 
         // キャンペーン
-        List<CampaignVo> cvos = cs.loadCampaigns();
-        requestScope("campaigns", cvos);
+        requestScope("campaigns", loadCampaigns);
 
         // ランキング
-        List<GameData> rankingGame = Datastore.query(g).sort(g.point.desc)
-        // .sort(g.date.desc)
-            .limit(5)
-            .asList();
-
-        requestScope("rankingGameList", rankingGame);
+        requestScope("rankingGameList", gs.rankingGame());
 
         // 新着ゲーム
-        List<GameData> newGame =
-            Datastore.query(g).sort(g.date.desc).limit(5).asList();
-        requestScope("newGameList", newGame);
-        //ログイン
+        requestScope("newGameList", gs.newGame());
+
+        // 補完ワード
+        requestScope("words", ss.suggestionWords());
+        requestScope("tags", ss.suggestionTags());
+
+        // 動画ランキング
+        requestScope("movie", rs.movieRanking());
+        // ログイン
         requestScope("isLogin", (Boolean) sessionScope("isLogin"));
         requestScope("twitter", sessionScope("twitter"));
         return forward("index.jsp");

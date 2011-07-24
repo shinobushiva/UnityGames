@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import org.slim3.controller.upload.FileItem;
 import org.slim3.datastore.Datastore;
@@ -25,13 +26,17 @@ import unity.model.ThumbNailData;
 import unity.model.UploadedDataFragment;
 import unity.model.User;
 import unity.model.api.Game;
+import unity.model.api.SaveLoadId;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.Transaction;
+import com.google.appengine.api.images.Image;
+import com.google.appengine.api.images.ImagesService;
+import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.Transform;
 
 public class UploadService {
     private static final int FRAGMENT_SIZE = 900000;
-    private UploadedDataFragmentMeta f = UploadedDataFragmentMeta.get();
     private TagService ts = new TagService();
     private GameDataService gs = new GameDataService();
 
@@ -40,7 +45,7 @@ public class UploadService {
             String contents, String operations, String hpURL, String pass,
             String thumbNailType, String gameType, boolean thumbNailChange,
             boolean gameChange, String fixTag, String code, long twitterId,
-            String gameScreenSize, boolean editCode) {
+            String gameScreenSize, boolean editCode, String imageType) {
 
         List<Object> models = new ArrayList<Object>();
 
@@ -81,7 +86,8 @@ public class UploadService {
             g,
             gg,
             models,
-            thumbNailChange);
+            thumbNailChange,
+            imageType);
 
         setTags(fixTag, g, gg);
 
@@ -211,15 +217,17 @@ public class UploadService {
                     gg.setGame(hpURL);
                 }
 
-                UploadedDataFragment uf1 =
+                List<UploadedDataFragment> uf1 =
                     Datastore
                         .query(UploadedDataFragment.class)
                         .filter(
                             UploadedDataFragmentMeta.get().uploadDataRef
                                 .equal(g.getKey()))
-                        .asSingle();
+                        .asList();
                 if (uf1 != null) {
-                    Datastore.delete(uf1.getKey());
+                    for (UploadedDataFragment udf : uf1) {
+                        Datastore.delete(udf.getKey());
+                    }
                 }
 
                 setGameDataFragment(gameFile, g, gg, models);
@@ -229,14 +237,14 @@ public class UploadService {
 
     public void setGameDataFragment(FileItem gameFile, GameData g, Game gg,
             List<Object> models) {
-        System.out.println(gameFile.getFileName());
         if (gameFile != null) {
             byte[] bytes = gameFile.getData();
             byte[][] bytesArray1 = ByteUtil.split(bytes, FRAGMENT_SIZE);
             Iterator<Key> keys =
-                Datastore
-                    .allocateIds(g.getKey(), f, bytesArray1.length)
-                    .iterator();
+                Datastore.allocateIds(
+                    g.getKey(),
+                    UploadedDataFragmentMeta.get(),
+                    bytesArray1.length).iterator();
             for (int i = 0; i < bytesArray1.length; i++) {
                 byte[] fragmentData = bytesArray1[i];
                 UploadedDataFragment fragment = new UploadedDataFragment();
@@ -259,7 +267,7 @@ public class UploadService {
 
     public void checkThumbNailUrl(FileItem thumbNail, String thumbNailURL,
             String thumbNailType, GameData g, Game gg, List<Object> models,
-            boolean thumbNailChange) {
+            boolean thumbNailChange, String imageType) {
 
         if (thumbNailChange) {
             if (thumbNailURL.isEmpty() && thumbNail == null) {
@@ -281,14 +289,22 @@ public class UploadService {
                 ThumbNailData t = thumbNailDelete(g.getKey());
 
                 // creating new
-                createThumbNail(thumbNail, g.getGameName(), t, g, gg, models);
+                createThumbNail(
+                    thumbNail,
+                    g.getGameName(),
+                    t,
+                    g,
+                    gg,
+                    models,
+                    imageType);
 
             }
         }
     }
 
     public void createThumbNail(FileItem thumbNail, String gameName,
-            ThumbNailData t, GameData g, Game gg, List<Object> models) {
+            ThumbNailData t, GameData g, Game gg, List<Object> models,
+            String imageType) {
         List<ThumbNailData> list = new ArrayList<ThumbNailData>();
         Key keyss = Datastore.allocateId(g.getKey(), ThumbNailData.class);
 
@@ -296,19 +312,40 @@ public class UploadService {
         child.setKey(keyss);
         child.setGameName(gameName);
         child.setDate(new Date());
-        System.out.println("nam:" + thumbNail.getFileName());
         if (thumbNail != null) {
             g.setThumbNailURL(null);
             if (t != null) {
                 Datastore.delete(t.getKey());
             }
             child.setLength(thumbNail.getData().length);
-            byte[] bytes2 = thumbNail.getData();
+
+            ImagesService imagesService =
+                ImagesServiceFactory.getImagesService();
+
+            Image oldImage =
+                ImagesServiceFactory.makeImage(thumbNail.getData());
+            byte[] bytes2 = null;
+            if (oldImage.getWidth() > 500 || oldImage.getHeight() > 500) {
+                if (!imageType.equals("image/gif")) {
+                    Transform resize =
+                        ImagesServiceFactory.makeResize(500, 500);
+
+                    Image newImage =
+                        imagesService.applyTransform(resize, oldImage);
+
+                    bytes2 = newImage.getImageData();
+                } else {
+                    bytes2 = thumbNail.getData();
+                }
+            } else {
+                bytes2 = thumbNail.getData();
+            }
             byte[][] bytesArray2 = ByteUtil.split(bytes2, FRAGMENT_SIZE);
             Iterator<Key> keys2 =
-                Datastore
-                    .allocateIds(g.getKey(), f, bytesArray2.length)
-                    .iterator();
+                Datastore.allocateIds(
+                    g.getKey(),
+                    UploadedDataFragmentMeta.get(),
+                    bytesArray2.length).iterator();
             for (int i = 0; i < bytesArray2.length; i++) {
                 byte[] fragmentData2 = bytesArray2[i];
                 UploadedDataFragment fragment2 = new UploadedDataFragment();
@@ -386,9 +423,10 @@ public class UploadService {
             g.setDate(new Date());
             Key gamekey = Datastore.allocateId(GameData.class);
             g.setKey(gamekey);
-         
+
+            saveLoadId(gamekey);
             // つぶやき
-             updateStatus(gameName, gamekey.getId(), hpURL);
+//            updateStatus(gameName, gamekey.getId(), hpURL);
 
         } else {
             // updateGame
@@ -457,4 +495,16 @@ public class UploadService {
         return g;
     }
 
+    public void saveLoadId(Key gameKey) {
+
+        SaveLoadId sl = new SaveLoadId();
+        sl.setKey(Datastore.allocateId(gameKey, SaveLoadId.class));
+        sl.setSaveId(UUID.randomUUID().toString());
+        sl.setLoadId(UUID.randomUUID().toString());
+
+        GlobalTransaction tx = Datastore.beginGlobalTransaction();
+        Datastore.put(sl);
+        tx.commit();
+
+    }
 }

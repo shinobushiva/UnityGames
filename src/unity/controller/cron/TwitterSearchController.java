@@ -30,17 +30,7 @@ public class TwitterSearchController extends Controller {
     @SuppressWarnings("unchecked")
     @Override
     public Navigation run() throws Exception {
-        // ConfigurationBuilder cb = new ConfigurationBuilder();
-        // cb
-        // .setOAuthAccessToken(
-        // "276331612-GGKg4ShbCjuAcTnZT4nElDSS5nx1U9PPktAt8dmw")
-        // .setOAuthAccessTokenSecret(
-        // "Tl0qGUzkyA664GoQbOi3Uj5vgGMbBd92yL6RISSPNo");
-        // TwitterFactory tf = new TwitterFactory(cb.build());
-        // Twitter twitter = tf.getInstance();
-
         String searchedResult = null;
-        // InputStream is = null;
 
         try {
             URL url = new URL(SEARCH_QUERY);
@@ -60,7 +50,6 @@ public class TwitterSearchController extends Controller {
             reader.close();
 
             searchedResult = sb.toString();
-            // System.out.println(searchedResult);
 
             Map<String, Object> map =
                 (Map<String, Object>) JSON.decode(searchedResult);
@@ -68,13 +57,8 @@ public class TwitterSearchController extends Controller {
                 (List<Map<String, ?>>) map.get("results");
             for (Map<String, ?> map2 : list) {
                 String tweetIdString = "" + map2.get("id_str"); // tweetId
-                // String lang = "" + map2.get("iso_language_code"); // 言語
-                // String userName = "" + map2.get("from_user"); // 誰が呟いたか
                 String tweet = "" + map2.get("text"); // tweet内容
                 long tweetId = Long.valueOf(tweetIdString); // long型に変換
-                String createTime = "" + map2.get("created_at"); // tweet内容
-
-                System.out.println("date:" + createTime);
 
                 // userNameからuser_idを拾ってくる（from_user_idは違う。本人idではない）
                 String idGet = null;
@@ -84,8 +68,6 @@ public class TwitterSearchController extends Controller {
                         + tweetId
                         + ".json");
                 URLConnection co = ur.openConnection();
-                // co.setReadTimeout(30 * 1000);
-                // co.setConnectTimeout(30 * 1000);
                 BufferedReader reade =
                     new BufferedReader(new InputStreamReader(
                         co.getInputStream(),
@@ -100,20 +82,15 @@ public class TwitterSearchController extends Controller {
 
                 idGet = s.toString();
 
-                System.out.println("tweetid:" + tweetId);
-                System.out.println("idGet:" + idGet);
                 Map<String, Object> ma =
                     (Map<String, Object>) JSON.decode(idGet);
 
                 String userIdString =
                     "" + ((Map<String, Object>) ma.get("user")).get("id_str"); // tweetId
-                System.out.println(userIdString);
                 long userId = Long.valueOf(userIdString); // long型に変換
-                // System.out.println(tweet);
                 // #UnityGamesが含まれていたら登録
                 if (tweet.contains("#UnityGames")) {
 
-                    System.out.println("tweet:" + tweet);
                     // TweetIdが既に保存されているかチェック
                     Tweet check =
                         Datastore

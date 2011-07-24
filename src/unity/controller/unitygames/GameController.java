@@ -1,89 +1,50 @@
 package unity.controller.unitygames;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
-import org.slim3.datastore.Datastore;
-import org.slim3.datastore.GlobalTransaction;
 import org.slim3.memcache.Memcache;
 
-import unity.meta.CommentMeta;
-import unity.model.Comment;
+import twitter4j.Twitter;
 import unity.model.GameData;
+import unity.model.User;
+import unity.service.CommentService;
 import unity.service.GameDataService;
+import unity.service.SearchService;
+import unity.service.UserService;
 
 public class GameController extends Controller {
 
     private GameDataService gs = new GameDataService();
+    private SearchService ss = new SearchService();
+    private UserService us = new UserService();
+    private CommentService cms = new CommentService();
 
     @Override
     public Navigation run() throws Exception {
+        Twitter twitter = (Twitter) sessionScope("twitter");
         String remoteAddr = request.getRemoteAddr();
+        Boolean isMe = false;
         // gameIdからgameを持ってくる
-        long id = asLong("id");
-
-        GameData g = gs.load(id);
-
-        // ds.depthFirstSearch(g.getKey());
+        GameData g = gs.load(asLong("id"));
 
         requestScope("key", g.getKey());
 
         if (!remoteAddr.equals(Memcache.get("lastIp-" + g.getGameName()))) {
             Memcache.put("lastIp-" + g.getGameName(), remoteAddr);
-            GlobalTransaction tx = Datastore.beginGlobalTransaction();
-            g.setAccess(g.getAccess() + 1);
-            tx.put(g);
-            tx.commit();
+            gs.addAccessPoint(g);
             gs.addPoint(g);
         }
         // 投稿者 Twitterアカウント表示
         if (g.getTwitterUserKey() != null) {
-            unity.model.User uk =
-                Datastore.get(unity.model.User.class, g.getTwitterUserKey());
-
+            User uk = us.getUser(g.getTwitterUserKey());
             requestScope("twitterId", uk.getUserId());
-
-        }
-
-        // ug形式の短縮リンク変換
-        String t = g.getContents();
-        String regex = "ug[0-9]*";
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(t);
-        List<String> list = new ArrayList<String>();
-        while (m.find()) {
-            list.add(m.group());
-            System.out.println("m:" + m.group());
-        }
-        String ts = t;
-        for (String st : list) {
-
-            // ugの後が数字でないものはリンク化行わない
-            if (!st.matches("ug[^0-9]*")) {
-
-                // ugを無くしてidだけを抽出 例）ug1234 → 1234
-                String ug = st.replaceAll("ug", "");
-
-                String s =
-
-                    ts.replaceAll(
-                        st,
-                        "<a href='http://unity-games.appspot.com/"
-                            + "unitygames/game/ug"
-                            + ug
-                            + "'class='ugLink'>"
-                            + st
-                            + "</a>");
-                // 繰り返し置換していく
-                ts = s;
+            if(twitter!=null){
+            if (uk.getUserId() == twitter.getId())
+                isMe = true;
             }
-
         }
-        g.setContents(ts);
+
+        gs.setUgLink(g);
 
         requestScope("jscode", gs.toCodeJson(g.getCode()));
 
@@ -93,25 +54,21 @@ public class GameController extends Controller {
 
         requestScope("g", g);
         // コメント部分
-        List<Comment> comment =
-            Datastore
-                .query(Comment.class, g.getKey())
-                .sort(CommentMeta.get().date.asc)
-                .asList();
 
-        requestScope("c", comment);
-
-        // 関連ゲーム部分
-        // List<Key> asKeyList =
-        // Datastore.query(RelationTag.class).filter(RelationTagMeta.get().games.equal(g.getKey())).asKeyList();
-
-        // Set<GameData> gameList = gs.relationGame(g.getKey());
-
-        // requestScope("relation", gameList);
+        requestScope("c", cms.getCommentsAsc(g.getKey()));
 
         // ログイン
         requestScope("isLogin", (Boolean) sessionScope("isLogin"));
-        requestScope("twitter", sessionScope("twitter"));
+        requestScope("twitter", twitter);
+        if (twitter != null) {
+            requestScope("user", us.getUser(twitter.getId()));
+        }
+        // 補完ワード
+        requestScope("words", ss.suggestionWords());
+        requestScope("tags", ss.suggestionTags());
+
+        // 編集ボタン
+        requestScope("isMe", isMe);
         return forward("game.jsp");
     }
 }

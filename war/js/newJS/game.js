@@ -83,7 +83,6 @@ function commentUp(keyId) {
         success: function () {
             loadComments(keyId);
         }
-
     });
     $("#commentInput").val("");
 }
@@ -273,13 +272,13 @@ function udt(e,keyId) {
     for (i in fixTags) {
         t = fixTags[i];
 
-        html += '<a href="/search?tag=' + t.name + '"style="font-size: 2em; padding:3px;" >' + t.name + '</a>';
+        html += '<a href="/search?type=tag&q=' + t.name + '"style="font-size: 2em; padding:3px;" >' + t.name + '</a>';
     }
 
    var tags = e.tags;
     for (i in tags) {
         t = tags[i];
-        html += '<a href="/search?tag=' + t.name + '"style="font-size: 1em; padding:3px;" >' + t.name + '</a>';
+        html += '<a href="/search?type=tag&q=' + t.name + '"style="font-size: 1em; padding:3px;" >' + t.name + '</a>';
 
         html2 += '<span style="padding:10px;">';
         html2 += '<span style="font-size: 20px;">' + t.name + '</span>';

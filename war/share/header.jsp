@@ -47,15 +47,11 @@ tfb.showbadge();
 		width="250px" class="logo"> </a>
 
 	<ul id="nav1">
-		<li id="selected"><a href="/"><fmt:message key="home" /> </a>
-		</li>
-		<li><a href="/howto"><fmt:message key="howto" /> </a>
-		</li>
-		<li><a href="/tutorial"><fmt:message key="tutorial" /> </a>
-		</li>
+		<li id="selected"><a href="/howto"><fmt:message key="howto" /> </a></li>
+		<li><a href="/function"> 機能紹介</a></li>
+		<li><a href="/tutorial"><fmt:message key="tutorial" /> </a></li>
 		<li><a href="/unitygames/upload/newGame"><fmt:message
-					key="upload" /> </a>
-		</li>
+					key="upload" /> </a></li>
 	</ul>
 
 	<script type="text/javascript">

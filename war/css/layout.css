@@ -1,0 +1,25 @@
+#container {
+	width: 980px;
+	margin: 0px auto 0px;
+	background: #FFFFFF;
+	padding: 10px;
+	font-size: 12px;
+	margin-top: 50px;
+}
+
+#campainGameName {
+	text-transform: none;
+	color: white;
+	font-size: 20px;
+}
+
+#footer {
+	background: #F0F0F0;
+	padding: 10px;
+	border: #999 dotted 1px;
+}
+
+#contents {
+	color: white;
+	height: 120px;
+}

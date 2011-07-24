@@ -28,8 +28,6 @@ public class CampaignService {
         .query(Campaign.class)
         .filter(CampaignMeta.get().state.equal(Campaign.STATE_NOW))
         .asList();
-        // System.out.println(loadCampaigns);
-
         for (Campaign c : loadCampaigns) {
 
             CampaignVo cvo = new CampaignVo();
@@ -47,7 +45,6 @@ public class CampaignService {
                     .asList();
             for (CampaignGame g : cgs) {
                 cvo.getGames().add(g.getGameRef().getModel());
-
             }
             break;
         }

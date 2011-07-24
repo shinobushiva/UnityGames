@@ -15,10 +15,7 @@ public class DeleteController extends Controller {
     @Override
     public Navigation run() throws Exception {
 
-        String k = requestScope("gameKey");
-        Key key = KeyFactory.stringToKey(k);
-
-        System.out.println("dedede:" + key);
+        Key key = KeyFactory.stringToKey((String) requestScope("gameKey"));
 
         service.delete(key);
         service.deleteApi(key);

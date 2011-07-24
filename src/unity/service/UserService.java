@@ -9,7 +9,15 @@ import unity.meta.UserMeta;
 import unity.model.Tweet;
 import unity.model.User;
 
+import com.google.appengine.api.datastore.Key;
+
 public class UserService {
+
+    public void save(User u) {
+        GlobalTransaction tx = Datastore.beginGlobalTransaction();
+        tx.put(u);
+        tx.commit();
+    }
 
     public void regist(long userId, String userName, String myself) {
 
@@ -51,5 +59,23 @@ public class UserService {
             .query(User.class)
             .filter(UserMeta.get().userName.equal(name))
             .asSingle();
+    }
+
+    public User getUser(Key userkey) {
+        return Datastore.get(User.class, userkey);
+    }
+
+    public void setWebUrl(Long id, String webUrl) {
+
+        User user = getUser(id);
+        user.setWebUrl(webUrl);
+        save(user);
+    }
+
+    public void setMyself(Long id, String webUrl) {
+
+        User user = getUser(id);
+        user.setMyself(webUrl);
+        save(user);
     }
 }

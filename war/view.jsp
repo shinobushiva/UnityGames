@@ -75,11 +75,11 @@
 						</ul>
 
 						<div id="tab1-${g.key.id}">
-							<a class="contents">${g.contents}</a>
+							<div class="contents">${g.contents}</div>
 
 						</div>
 						<div id="tab2-${g.key.id}">
-							<a class="operations">${g.operations}</a>
+							<div class="operations">${g.operations}</div>
 						</div>
 					</div>
 				</div>

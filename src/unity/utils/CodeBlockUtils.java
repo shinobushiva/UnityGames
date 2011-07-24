@@ -48,8 +48,6 @@ public class CodeBlockUtils {
 
             String encode = JSON.encode(result);
 
-            System.out.println(encode);
-
             return encode;
         } catch (Exception e) {
             e.printStackTrace();

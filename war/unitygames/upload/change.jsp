@@ -94,6 +94,7 @@ else{return true; // 送信を実行
 }};
 </script>
 	<%@ include file="/share/header.jsp"%>
+
 	<form action="/action/upload" method="post" class="cmxform"
 		id="commentForm" enctype="multipart/form-data"
 		onSubmit="return tagCheck()" name="form1"">
@@ -165,6 +166,7 @@ else{return true; // 送信を実行
 												<fmt:message key="dont.edit" />
 											</h2> </label>
 									</div>
+
 								</div>
 								<div id="wrapper" class="changeButonPosition inlineBlock">
 									<button class="button" class="changeButton">
@@ -383,7 +385,6 @@ ${g.thumbNailURL}<br>
 										<span id="loginTwitterName" class="loginTwitterName"></span>
 									</div>
 								</div>
-								<div class="heightForty"></div>
 							</div>
 
 							<div id="changeKey">
@@ -397,13 +398,16 @@ ${g.thumbNailURL}<br>
 					</td>
 				</tr>
 				<tr class="bottom" class="heightThirty">
-					<td colspan="2"><span class="warning"><fmt:message
-								key="url.explanation" /> </span>
+					<td colspan="2"><div style="margin: 10px;">
+							<div style="margin: 10px;">SaveID : ${sl.saveId}</div>
+							<div style="margin: 10px;">LoadID : ${sl.loadId}</div>
+						</div>
 					</td>
 				</tr>
 			</table>
 		</div>
 	</form>
+	<span class="warning"><fmt:message key="url.explanation" /> </span>
 	<form action="/action/delete" method="post">
 		<input type="hidden" name="gameKey" value="${f:h(g.key)}">
 		<div id="wrapper" align="center">

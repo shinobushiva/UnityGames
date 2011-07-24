@@ -1,9 +1,7 @@
 .searchBox {
 	clear: both;
 	width: 440px;
-	margin-top: 20px;
-	margin-left: auto;
-	margin-right: auto;
+	margin: 20px auto;
 }
 
 .tabsStyle {
@@ -15,6 +13,7 @@
 }
 
 #k {
+	margin-top: -35px;
 	font-size: 20;
 	width: 80%;
 	height: 100%;
@@ -30,7 +29,28 @@
 }
 
 #t {
+	margin-top: -35px;
 	font-size: 20;
 	width: 80%;
 	height: 100%;
+}
+
+.tagResults {
+	position: absolute;
+	top: 100px;
+	left: 5px;
+}
+
+.tagResults div:HOVER {
+	text-decoration: underline;
+}
+
+.tagResults div {
+	padding: 2px;
+	background: white;
+	color: black;
+	cursor: pointer;
+	padding: 2px;
+	font-size: 20px;
+	min-width: 410px;
 }

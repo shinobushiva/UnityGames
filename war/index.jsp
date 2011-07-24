@@ -14,21 +14,41 @@
 <link rel="alternate" type="application/rss+xml" title="RSS"
 	href="http://unity-games.appspot.com/api/rss" />
 <%@ include file="/share/css.jsp"%>
-<link href="/css/topPage.css" rel="stylesheet" type="text/css"/>
+<link href="/css/topPage.css" rel="stylesheet" type="text/css" />
+<link href="/css/layout.css" rel="stylesheet" type="text/css" />
+<link href="/css/style1.css" rel="stylesheet" type="text/css" />
 <%@ include file="/share/js.jsp"%>
+<script language="javascript" type="text/javascript"
+	src="/js/jquery.easing.min.js"></script>
+<script language="javascript" type="text/javascript"
+	src="/js/jSiderNews.js"></script>
 <title>UnityGames</title>
 <script type="text/javascript">
 	$(function() {
+		$("a[rel=video]").createVideo({
+			width : 150,
+			height : 150
+		});
 		$("#campaign").css("visibility", "hidden");
 		$("#campaign").load("/campaignList", null, function() {
-			var tid; //timeoutID
-			initMovingBoxes(function() {
-				$("#campaign").css("visibility", "visible");
-			}, function() {
-				clearTimeout(tid);
-				tid = setTimeout(function() {
-					forwardFunc();
-				}, 2500);
+			$("#campaign").css("visibility", "visible");
+			var buttons = {
+				previous : $('#lofslidecontent45 .lof-next'),
+				next : $('#lofslidecontent45 .lof-previous')
+			};
+
+			$obj = $('#lofslidecontent45').lofJSidernews({
+				interval : 4000,
+				direction : 'opacitys',
+				easing : 'easeInOutExpo',
+				duration : 1200,
+				auto : true,
+				maxItemDisplay : 4,
+				navPosition : 'horizontal', // horizontal
+				navigatorHeight : 50,
+				navigatorWidth : 50,
+				mainWidth : 980,
+				buttons : buttons
 			});
 		});
 	});
@@ -90,7 +110,19 @@
 						</div>
 					</c:forEach>
 				</div>
-
+				<div class="newGameLine">動画ランキング</div>
+				<div>
+					<c:forEach var="g" items="${movie}" end="4" varStatus="loop">
+						<div class="game">
+							<span class="gameFont"><fmt:message key="best1" />${loop.count}<fmt:message
+									key="best2" /> </span><br>
+							<div>${g.movieUrl}</div>
+							<div class="bounded">
+								<a href="/unitygames/game/ug${g.gameRef.model.key.id}">${g.gameRef.model.gameName}</a>
+							</div>
+						</div>
+					</c:forEach>
+				</div>
 			</div>
 
 		</div>

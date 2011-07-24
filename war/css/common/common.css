@@ -1632,12 +1632,12 @@ body {
 }
 
 .mb-left-shadow {
-	background-image: url("../images/leftshadow.png");
+	background-image: url("/images/leftshadow.png");
 	left: 0;
 }
 
 .mb-right-shadow {
-	background-image: url("../images/rightshadow.png");
+	background-image: url("/images/rightshadow.png");
 	right: 0;
 }
 
@@ -1741,7 +1741,7 @@ a.mb-scrollButtons {
 	display: block;
 	width: 45px;
 	height: 58px;
-	background: transparent url(../images/arrows.png) no-repeat;
+	background: transparent url(/images/arrows.png) no-repeat;
 	position: absolute;
 	top: 50%;
 	margin-top: -29px;

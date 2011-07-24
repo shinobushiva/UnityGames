@@ -1,12 +1,23 @@
 package unity.service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.slim3.datastore.Datastore;
 import org.slim3.datastore.GlobalTransaction;
 
+import unity.meta.EveryDayGameRankingMeta;
+import unity.meta.GameDataMeta;
 import unity.model.CommentaryLog;
+import unity.model.EveryDayGameRanking;
 import unity.model.GameData;
+import unity.model.Tag;
+import unity.model.TagGame;
+import unity.model.User;
 import unity.model.api.Game;
 import unity.utils.CodeBlockUtils;
 
@@ -29,17 +40,25 @@ public class GameDataService {
 
     }
 
-    public GameData addPoint(GameData g) {
+    public GameData getGameData(Long id) {
+        return Datastore.get(
+            GameData.class,
+            Datastore.createKey(GameData.class, id));
+    }
 
+    public List<GameData> getAll() {
+        return Datastore.query(GameData.class).asList();
+    }
+
+    public void addPoint(GameData g) {
         int point = g.getAccess() + g.getComment() * 3;
-
         g.setPoint(point);
+        save(g);
+    }
 
-        GlobalTransaction tx = Datastore.beginGlobalTransaction();
-        tx.put(g);
-        tx.commit();
-
-        return null;
+    public void addAccessPoint(GameData g) {
+        g.setAccess(g.getAccess() + 1);
+        save(g);
     }
 
     public String toCodeJson(String str) {
@@ -67,26 +86,175 @@ public class GameDataService {
         return Datastore.get(Game.class, key);
     }
 
-    // public Set<GameData> relationGame(Key gameKey) {
-    //
-    // List<RelationTag> rt =
-    // Datastore
-    // .query(RelationTag.class)
-    // .filter(RelationTagMeta.get().games.equal(gameKey))
-    // .sort(RelationTagMeta.get().relationCount.desc)
-    // .asList();
-    //
-    // Set<GameData> gameList = new HashSet<GameData>();
-    //
-    // for (RelationTag relationTag : rt) {
-    // for (Key key : relationTag.getGames()) {
-    // GameData gg = Datastore.get(GameData.class, key);
-    // if (!gg.getKey().equals(gameKey)) {
-    // gameList.add(gg);
-    // }
-    // }
-    // }
-    // return gameList;
-    // }
+    public List<GameData> newGame() {
+        return Datastore
+            .query(GameData.class)
+            .sort(GameDataMeta.get().date.desc)
+            .limit(5)
+            .asList();
+    }
+
+    public List<GameData> rankingGame() {
+
+        List<Key> asKeyList =
+            Datastore
+                .query(EveryDayGameRanking.class)
+                .sort(EveryDayGameRankingMeta.get().deltaPoint.desc)
+                .limit(5)
+                .asKeyList();
+        List<GameData> g = new ArrayList<GameData>();
+        for (Key key : asKeyList) {
+            GameData gameData = Datastore.get(GameData.class, key.getParent());
+            g.add(gameData);
+        }
+        return g;
+    }
+
+    public List<GameData> contentCut(List<GameData> gameList) {
+        for (GameData game : gameList) {
+            if (game.getContents().length() >= 80) {
+                String s = game.getContents().substring(0, 80);
+                game.setContents(s + "...");
+            }
+            if (game.getOperations().length() >= 80) {
+                String o = game.getOperations().substring(0, 80);
+                game.setOperations(o + "...");
+            }
+        }
+        return gameList;
+    }
+
+    public void deleteTagGame(GameData g, Tag t) {
+        g.getTags().remove(t);
+        save(g);
+    }
+
+    public void createTags(GameData g) {
+        g.setTags(new HashSet<Tag>());
+        save(g);
+    }
+
+    public void addTag(GameData g, Tag t) {
+        g.getTags().add(t);
+        save(g);
+    }
+
+    public List<GameData> getTutorialGame(List<TagGame> tgl) {
+
+        List<GameData> gds = new ArrayList<GameData>();
+        for (TagGame gameData : tgl) {
+            gds.add(gameData.getGameRef().getModel());
+        }
+
+        return gds;
+
+    }
+
+    public List<GameData> getViewPattern(String data) {
+        List<GameData> game = null;
+        // 投稿日時が古い順
+        if (data.equals("OldEntry"))
+            game =
+                Datastore
+                    .query(GameData.class)
+                    .sort(GameDataMeta.get().date.asc)
+                    .asList();
+        // アクセス数が多い順
+        else if (data.equals("MostAccess"))
+            game =
+                Datastore
+                    .query(GameData.class)
+                    .sort(GameDataMeta.get().access.desc)
+                    .asList();
+        // アクセス数が少ない順
+        else if (data.equals("LeastAccess"))
+            game =
+                Datastore
+                    .query(GameData.class)
+                    .sort(GameDataMeta.get().access.asc)
+                    .asList();
+        // コメントが多い順
+        else if (data.equals("MostComment"))
+            game =
+                Datastore
+                    .query(GameData.class)
+                    .sort(GameDataMeta.get().comment.desc)
+                    .asList();
+        // コメントが少ない順
+        else if (data.equals("LeastComment"))
+            game =
+                Datastore
+                    .query(GameData.class)
+                    .sort(GameDataMeta.get().comment.asc)
+                    .asList();
+        // 投稿日時が新しい順&デフォルト
+        else if (data.equals("Default"))
+            game =
+                Datastore
+                    .query(GameData.class)
+                    .sort(GameDataMeta.get().date.desc)
+                    .asList();
+        return game;
+    }
+
+    public void setCode(GameData g, String commentary) {
+        g.setCode(commentary);
+        save(g);
+    }
+
+    public void setUgLink(GameData g) {
+        // ug形式の短縮リンク変換
+        String t = g.getContents();
+        String regex = "ug[0-9]*";
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(t);
+        List<String> list = new ArrayList<String>();
+        while (m.find()) {
+            list.add(m.group());
+        }
+
+        for (String st : list) {
+
+            // ugの後が数字でないものはリンク化行わない
+            if (!st.matches("ug[^0-9]*")) {
+
+                // ugを無くしてidだけを抽出 例）ug1234 → 1234
+                String ug = st.replaceAll("ug", "");
+
+                String s =
+                    t.replaceAll(st, "<a href='http://unity-games.appspot.com/"
+                        + "unitygames/game/ug"
+                        + ug
+                        + "'class='ugLink'>"
+                        + st
+                        + "</a>");
+                // 繰り返し置換していく
+                t = s;
+            }
+
+        }
+
+        g.setContents(t);
+    }
+
+    public String connectFixTags(GameData g) {
+        StringBuilder buf = new StringBuilder();
+        for (Tag t : g.getFixTags()) {
+            buf.insert(0, t.getName() + ",");
+        }
+        if (buf.length() > 0) {
+            buf.deleteCharAt(buf.length() - 1);
+        }
+        return buf.toString();
+    }
+
+    public List<GameData> myGameList(User uk) {
+        return Datastore
+            .query(GameData.class)
+            .filter(GameDataMeta.get().twitterUserKey.equal(uk.getKey()))
+            .sort(GameDataMeta.get().date.desc)
+            .asList();
+
+    }
 
 }

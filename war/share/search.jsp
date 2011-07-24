@@ -12,8 +12,23 @@
 			$("#kik").click(function() {
 				$("#t").val("");
 			});
-
-		});
+			
+			
+			
+			$('.tags').tagSuggest({  
+			    tags: ${tags}
+			    	});
+		
+		$('.words').tagSuggest({  
+		    tags: ${words}
+		    	});
+		$(".wordButton").click(function(){
+			$("#setAction").attr("action","/search?type=word&q="+$(".words").val());
+		})
+		$(".tagButton").click(function(){
+			$("#setAction").attr("action","/search?type=tag&q="+$(".tags").val());
+		})
+	});
 		function Check() {
 			var flag = 0;
 			var str1 = $("#k").val();
@@ -29,9 +44,8 @@
 		};
 	</script>
 
-
 	<div id="tabss">
-		<form action="/search" method="post" onSubmit="return Check()">
+		<form action="" method="post" onSubmit="return Check()" id="setAction">
 			<ul id="tabHeader">
 				<li><a href="#tab11" id="kik"><span><fmt:message
 								key="keyword" /> </span> </a></li>
@@ -41,8 +55,8 @@
 
 			<div id="tab11" class="tabsStyle">
 				<div class="textBox">
-					<input type="text" name="word" id="k">
-					<button class="searchButton black">
+					<input type="text" name="word" id="k" class="input words"autocomplete="off">
+					<button class="searchButton black wordButton">
 						<fmt:message key="button.search" />
 					</button>
 				</div>
@@ -50,8 +64,8 @@
 			</div>
 			<div id="tab22" class="tabsStyle">
 				<div class="textBox">
-					<input type="text" name="tag" id="t">
-					<button class="searchButton black">
+					<input type="text" name="tag" id="t" class="input tags"autocomplete="off">
+					<button class="searchButton black tagButton">
 						<fmt:message key="button.search"></fmt:message>
 					</button>
 				</div>

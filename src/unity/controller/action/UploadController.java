@@ -16,10 +16,9 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
 public class UploadController extends Controller {
-    private UploadService service = new UploadService();
+    private UploadService us = new UploadService();
     private TagService ts = new TagService();
 
-    @SuppressWarnings("static-access")
     @Override
     public Navigation run() throws Exception {
 
@@ -57,15 +56,43 @@ public class UploadController extends Controller {
         if (twitter != null)
             twitterId = twitter.getId();
 
-//        // 画像拡張子チェック
-//        Magic parser = new Magic();
-//        // getMagicMatch accepts Files or byte[],
-//        // which is nice if you want to test streams
-//        MagicMatch match = parser.getMagicMatch((byte[])thumbNail.getData());
-//        System.out.println(""+match.getType());
+        String mimeType = "";
+        // 画像拡張子チェック
+        if (thumbNail != null) {
+            try {
+                Magic parser = new Magic();
+                @SuppressWarnings("static-access")
+                MagicMatch match =
+                    parser.getMagicMatch((byte[]) thumbNail.getData());
+
+                mimeType = match.getMimeType();
+
+                if (!mimeType.equals("image/png"))
+                    if (!mimeType.equals("image/gif"))
+                        if (!mimeType.equals("image/jpeg"))
+                            return forward(request.getHeader("REFERER"));
+
+            } catch (NoClassDefFoundError e) {
+                requestScope("GameName", gameName);
+                requestScope("Code", code);
+                requestScope("Contents", contents);
+                requestScope("Operations", operations);
+                requestScope("GameFile", gameFile);
+                return redirect(request.getHeader("REFERER"));
+            }
+        }
+        // ゲーム拡張子チェック
+        if (gameFile != null) {
+            String a = gameFile.getFileName();
+            int num = a.lastIndexOf(".");
+            String b = a.substring(num + 1);
+
+            if (!"unity3d".equals(b))
+                return redirect(request.getHeader("REFERER"));
+        }
 
         GameData g =
-            service.upload(
+            us.upload(
                 gameKey,
                 gameName,
                 gameURL,
@@ -84,7 +111,8 @@ public class UploadController extends Controller {
                 code,
                 twitterId,
                 gameScreenSize,
-                editCode);
+                editCode,
+                mimeType);
 
         // 二度手間してるけど力尽きたので放置・・・6/14
         ts.conflictTag(g.getKey());

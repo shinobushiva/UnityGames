@@ -4,13 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import jp.co.topgate.controller.JsonController;
-
-import org.slim3.datastore.Datastore;
-
-import unity.meta.UserMeta;
 import unity.model.User;
+import unity.service.UserService;
 
 public class MyselfLoadController extends JsonController {
+    private UserService us = new UserService();
 
     @Override
     protected Map<String, Object> handle() throws Exception {
@@ -19,13 +17,7 @@ public class MyselfLoadController extends JsonController {
 
         long id = asLong("id");
 
-        User user =
-            Datastore
-                .query(User.class)
-                .filter(UserMeta.get().userId.equal(id))
-                .asSingle();
-
-        // userモデルのweb情報とmyself情報を同時取得
+        User user = us.getUser(id);
 
         map.put("user", user);
         return map;

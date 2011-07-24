@@ -20,6 +20,7 @@
 <script
 	src="http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject.js"></script>
 <script type="text/javascript" src="/js/newJS/game.js"></script>
+<script src="http://platform.twitter.com/anywhere.js?id=4ixwuTarUfXOoq0OoP4tbg&v=1"></script>
 <script type="text/javascript">
 <%--　Analytics　--%>
 var _gaq = _gaq || [];
@@ -41,13 +42,102 @@ jQuery.extend(jQuery.validator.messages, {
 <%-- Initialization --%> 
 $(function () {
 	      gameInfo(${g.key.id}, ${jscode});
+	      post("https://api.twitter.com/","{a:'a'}","name","call");
+	      
 });
+
+function setCallback() {
+	var uid = "${user.key.id}";
+	var gid = "${g.key.id}";
+	var unity = GetUnity();
+	if(unity && unity != null){
+		try{
+		unity.SendMessage("DataManager","SetIds", uid+","+gid);
+		
+		}catch(e){
+			console.log(e);
+		}
+		
+		}else{
+		setTimeout(setCallback, 1000);
+	}
+}
+function ready(){
+	
+	setCallback();
+	
+}
+function replaceAll(expression, org, dest){  
+    return expression.split(org).join(dest);  
+} 
+function jsonp(url, name, callback) {
+    console.log(url);
+    if (url.indexOf("https://api.twitter.com/oauth") != -1) {
+        url = replaceAll(url, "&", "-unitygames-");
+        console.log(url);
+        $.ajax({
+            type: "post",
+            url: "/action/unityTwitter",
+            data: "url=" + url,
+            success: function (e) {
+                sendUnity(e, name, callback);
+            }
+        });
+    } else {
+
+       
+
+        $.getJSONP(url, function (e) {
+            sendUnity(e, name, callback);
+        });
+    }
+}
+
+function post(url,headers, name, callback) {
+	console.log(eval(headers));
+         $.ajax({
+             headers:eval(headers),
+             type: "post",
+             url: url,
+             success: function (e) {
+                 console.log(e);
+             }
+         });
+	
+	
+}
+
+	function sendUnity(e, name, callback) {
+	  console.log(e);
+	  console.log(name);
+	  console.log(callback);
+	  var unity = GetUnity();
+	  console.log(unity);
+	  if (unity && unity != null) {
+	    try {
+	         unity.SendMessage(name, callback, JSON.stringify(e));
+	    } catch (ee) {
+	      console.log(ee);
+	    }
+	  }
+	}
 </script>
 
 </head>
 <body>
+<div id="twitter-connect-placeholder"></div>
+<script type="text/javascript">
+  var anywhereApiKey = "4ixwuTarUfXOoq0OoP4tbg";
+  twttr.anywhere(onAnywhereLoad);
+  function onAnywhereLoad(twitter) {
+    twitter("#twitter-connect-placeholder").tweetBox();
+   
+  }
+ 
+</script>
 
-	<input type="hidden" id="gameKey" name="gameKey" value="${f:h(g.key)}">
+	<input type="hidden" id="gameKey" name="gameKey"
+		value="${f:h(g.key.id)}">
 
 	<%@ include file="/share/header.jsp"%>
 	<%@ include file="/share/search.jsp"%>
@@ -80,6 +170,12 @@ $(function () {
 						<img id="twitterImage" />
 					</div>
 					<div id="twitterName"></div> </a>
+				<c:if test="${isMe}">
+					<div>
+						<a href="/unitygames/upload/change/ug${g.key.id}"
+							style="margin-left: 30px;">編集する</a>
+					</div>
+				</c:if>
 			</div>
 		</c:if>
 		<%--	変更パスワード入力	--%>

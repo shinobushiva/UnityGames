@@ -42,7 +42,6 @@ public class RssController extends Controller {
         String createFeed = feed.createFeed();
 
         String replace = createFeed.replace("false", "true");
-        System.out.println(replace);
         response.setContentType("text/xml;charset=UTF-8");
         PrintWriter out = response.getWriter();
         out.println(replace);

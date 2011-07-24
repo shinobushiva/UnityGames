@@ -20,18 +20,14 @@ public class GameApiController extends JsonController {
 
         if (!id.equals("all")) {
             Game list = as.find(id);
-            // text = JSON.encode(list);
             data.put("gameData", list);
 
         } else {
 
             List<Game> list = as.findAll();
-            // text = JSON.encode(list);
             data.put("gameData", list);
 
         }
-        System.out.println(data.get("gameData"));
-        // String text = JSON.encode(list);
 
         return data;
     }

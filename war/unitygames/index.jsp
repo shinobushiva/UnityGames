@@ -11,7 +11,13 @@
 <%@ include file="/share/css.jsp"%>
 <link href="/css/common/view.css" rel="StyleSheet" type="text/css" />
 <link href="/css/views.css" rel="stylesheet" type="text/css"/>
+<link href="/css/layout.css" rel="stylesheet" type="text/css" />
+<link href="/css/style1.css" rel="stylesheet" type="text/css" />
 <%@ include file="/share/js.jsp"%>
+<script language="javascript" type="text/javascript"
+	src="/js/jquery.easing.min.js"></script>
+<script language="javascript" type="text/javascript"
+	src="/js/jSiderNews.js"></script>
 <title><fmt:message key="unitygames.top" /></title>
 <script type="text/javascript">
 	$(function() {
@@ -19,14 +25,24 @@
 		$("#View").load("/view?view=${viewType}");
 		$("#campaign").css("visibility", "hidden");
 		$("#campaign").load("/campaignList", null, function() {
-			var tid; //timeoutID
-			initMovingBoxes(function() {
-				$("#campaign").css("visibility", "visible");
-			}, function() {
-				clearTimeout(tid);
-				tid = setTimeout(function() {
-					forwardFunc();
-				}, 2500);
+			$("#campaign").css("visibility", "visible");
+			var buttons = {
+				previous : $('#lofslidecontent45 .lof-next'),
+				next : $('#lofslidecontent45 .lof-previous')
+			};
+
+			$obj = $('#lofslidecontent45').lofJSidernews({
+				interval : 4000,
+				direction : 'opacitys',
+				easing : 'easeInOutExpo',
+				duration : 1200,
+				auto : true,
+				maxItemDisplay : 4,
+				navPosition : 'horizontal', // horizontal
+				navigatorHeight : 50,
+				navigatorWidth : 50,
+				mainWidth : 980,
+				buttons : buttons
 			});
 		});
 		$("#selectView").change(function() {

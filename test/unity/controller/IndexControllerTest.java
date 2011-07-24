@@ -12,6 +12,12 @@ public class IndexControllerTest extends ControllerTestCase {
         tester.start("/");
         IndexController controller = tester.getController();
         assertThat(controller, is(notNullValue()));
+        assertThat(tester.requestScope("campaigns"), is(notNullValue()));
+        assertThat(tester.requestScope("rankingGameList"), is(notNullValue()));   
+        assertThat(tester.requestScope("newGameList"), is(notNullValue())); 
+        assertThat(tester.requestScope("words"), is(notNullValue()));
+        assertThat(tester.requestScope("tags"), is(notNullValue()));
+        assertThat(tester.requestScope("movie"), is(notNullValue()));
         assertThat(tester.isRedirect(), is(false));
         assertThat(tester.getDestinationPath(), is("/index.jsp"));
     }

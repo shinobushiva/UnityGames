@@ -8,9 +8,11 @@ import org.slim3.datastore.Datastore;
 
 import unity.meta.GameDataMeta;
 import unity.model.GameData;
+import unity.service.GameDataService;
 
 public class ViewController extends Controller {
     private GameDataMeta g = GameDataMeta.get();
+    private GameDataService gs = new GameDataService();
 
     @Override
     public Navigation run() throws Exception {
@@ -23,41 +25,10 @@ public class ViewController extends Controller {
             data = sessionScope("viewType");
         }
 
-        List<GameData> Game = null;
-        // 投稿日時が古い順
-        if (data.equals("OldEntry"))
-            Game = Datastore.query(g).sort(g.date.asc).asList();
-        // アクセス数が多い順
-        else if (data.equals("MostAccess"))
-            Game = Datastore.query(g).sort(g.access.desc).asList();
-        // アクセス数が少ない順
-        else if (data.equals("LeastAccess"))
-            Game = Datastore.query(g).sort(g.access.asc).asList();
-        // コメントが多い順
-        else if (data.equals("MostComment"))
-            Game = Datastore.query(g).sort(g.comment.desc).asList();
-        // コメントが少ない順
-        else if (data.equals("LeastComment"))
-            Game = Datastore.query(g).sort(g.comment.asc).asList();
-        // 投稿日時が新しい順&デフォルト
-        else if (data.equals("Default"))
-            Game = Datastore.query(g).sort(g.date.desc).asList();
+        List<GameData> games = gs.getViewPattern(data);
 
-        requestScope("GameList", Game);
-        for (GameData game : Game) {
-            long l = game.getDate().getTime() + 1000 * 60 * 60 * 9;
-            game.getDate().setTime(l);
-
-            if (game.getContents().length() >= 80) {
-                String s = game.getContents().substring(0, 80);
-                game.setContents(s + "...");
-            }
-            if (game.getOperations().length() >= 80) {
-                String o = game.getOperations().substring(0, 80);
-                game.setOperations(o + "...");
-            }
-
-        }
+        requestScope("GameList", games);
+        gs.contentCut(games);
         // ログイン
         requestScope("isLogin", (Boolean) sessionScope("isLogin"));
         requestScope("twitter", sessionScope("twitter"));

@@ -18,6 +18,34 @@ import unity.model.TagGame;
 import com.google.appengine.api.datastore.Key;
 
 public class TagService {
+    GameDataService gs = new GameDataService();
+
+    public void save(Tag t) {
+        GlobalTransaction tx = Datastore.beginGlobalTransaction();
+        tx.put(t);
+        tx.commit();
+
+    }
+
+    public void save(TagGame tg) {
+        GlobalTransaction tx = Datastore.beginGlobalTransaction();
+        tx.put(tg);
+        tx.commit();
+
+    }
+
+    public void save(RelationTag rg) {
+        GlobalTransaction tx = Datastore.beginGlobalTransaction();
+        tx.put(rg);
+        tx.commit();
+
+    }
+
+    public void delete(Key t) {
+        GlobalTransaction tx = Datastore.beginGlobalTransaction();
+        tx.delete(t);
+        tx.commit();
+    }
 
     public Tag getTag(String name) {
 
@@ -33,12 +61,23 @@ public class TagService {
             tag.setName(name);
             tag.setKey(Datastore.allocateId(Tag.class));
 
-            GlobalTransaction tx = Datastore.beginGlobalTransaction();
-            tx.put(tag);
-            tx.commit();
+            save(tag);
 
         }
         return tag;
+    }
+
+    public void deleteTagGame(Key gameDataKey, Key tagKey) {
+
+        TagGame tg =
+            Datastore
+                .query(TagGame.class)
+                .filter(TagGameMeta.get().gameRef.equal(gameDataKey))
+                .filter(TagGameMeta.get().tagRef.equal(tagKey))
+                .asSingle();
+
+        delete(tg.getKey());
+
     }
 
     public TagGame getTagGame(Key gameDataKey, Key tagKey) {
@@ -51,6 +90,7 @@ public class TagService {
                 .asSingle();
 
         return tg;
+
     }
 
     public void conflictTag(Key gameKey) {
@@ -70,9 +110,7 @@ public class TagService {
             }
 
         }
-        GlobalTransaction tx = Datastore.beginGlobalTransaction();
-        tx.put(g);
-        tx.commit();
+        gs.save(g);
 
     }
 
@@ -115,8 +153,6 @@ public class TagService {
                 String strTag1 = split[0];
                 String strTag2 = split[1];
 
-                // System.out.println("tag1:"+strTag1+"tag2:"+strTag2);
-
                 // TagのKey取得
                 Key tag1 =
                     Datastore
@@ -130,8 +166,6 @@ public class TagService {
                         .filter(TagMeta.get().name.equal(strTag2))
                         .asSingle()
                         .getKey();
-
-                // System.out.println("tag1:"+tag1+"tag2:"+tag2);
 
                 // RelationTagがあるか調べる
                 RelationTag rt =
@@ -152,9 +186,7 @@ public class TagService {
                     rt.setRelationCount(rt.getRelationCount() + 1);// 新規　更新
 
                 rt.getGames().add(gameDataKey); // 新規　更新
-                GlobalTransaction tx = Datastore.beginGlobalTransaction();
-                tx.put(rt);
-                tx.commit();
+                save(rt);
 
             }
         }
@@ -172,7 +204,7 @@ public class TagService {
         // まずtagを1つにする
         Set<Tag> fixTags = g.getFixTags();
         Set<Tag> tags = g.getTags();
-        
+
         fixTags.addAll(tags);
         Set<String> set = new TreeSet<String>();
         for (Tag tag : fixTags) {
@@ -186,7 +218,6 @@ public class TagService {
         for (RelationTag r : asList) {
             String tag1 = Datastore.get(Tag.class, r.getTag1()).getName();
             String tag2 = Datastore.get(Tag.class, r.getTag2()).getName();
-            // System.out.println("tag1:"+tag1+"tag2:"+tag2);
             if (tag1.hashCode() <= tag2.hashCode())
                 set2.add("" + tag1 + "," + tag2);
             else
@@ -219,9 +250,7 @@ public class TagService {
                         .filter(RelationTagMeta.get().tag2.equal(tag2))
                         .asSingle();
                 rt.getGames().remove(gameKey);
-                GlobalTransaction tx = Datastore.beginGlobalTransaction();
-                tx.put(rt);
-                tx.commit();
+                save(rt);
             }
         }
     }
@@ -238,12 +267,33 @@ public class TagService {
                     setStr.add("" + array[i] + "," + array[j]);
                 else
                     setStr.add("" + array[j] + "," + array[i]);
-
             }
-
         }
-
         return setStr;
+    }
 
+    public List<TagGame> getSearchGame(GameData g) {
+        return Datastore
+            .query(TagGame.class)
+            .filter(TagGameMeta.get().gameRef.equal(g.getKey()))
+            .asList();
+    }
+
+    public Tag getTag(Long id) {
+        return Datastore.get(Tag.class, Datastore.createKey(Tag.class, id));
+    }
+
+    public void createTagGame(GameData g, Tag t) {
+        TagGame tt = new TagGame();
+        tt.getGameRef().setKey(g.getKey());
+        tt.getTagRef().setModel(t);
+        save(tt);
+    }
+
+    public List<TagGame> getTagGames(Key tKey) {
+        return Datastore
+            .query(TagGame.class)
+            .filter(TagGameMeta.get().tagRef.equal(tKey))
+            .asList();
     }
 }

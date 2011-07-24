@@ -2,40 +2,25 @@ package unity.controller;
 
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
-import org.slim3.datastore.Datastore;
-import org.slim3.datastore.GlobalTransaction;
 
 import unity.model.GameData;
 import unity.model.Tag;
-import unity.model.TagGame;
+import unity.service.GameDataService;
 import unity.service.TagService;
-
-import com.google.appengine.api.datastore.KeyFactory;
 
 public class TagDeleteController extends Controller {
     // private GameDataMeta dd = GameDataMeta.get();
     private TagService ts = new TagService();
+    GameDataService gs = new GameDataService();
 
     @Override
     public Navigation run() throws Exception {
 
-        Long tagId = asLong("tagId");
-        Tag tag =
-            Datastore.get(Tag.class, Datastore.createKey(Tag.class, tagId));
+        Tag tag = ts.getTag(asLong("tagId"));
+        GameData g = gs.getGameData(asLong("gameKey"));
 
-        String gameKey = asString("gameKey");
-        GameData g =
-            Datastore.get(GameData.class, KeyFactory.stringToKey(gameKey));
-
-        TagGame tg = ts.getTagGame(g.getKey(), tag.getKey());
-        GlobalTransaction tx = Datastore.beginGlobalTransaction();
-        tx.delete(tg.getKey());
-        tx.commit();
-
-        g.getTags().remove(tag);
-        tx = Datastore.beginGlobalTransaction();
-        tx.put(g);
-        tx.commit();
+        ts.deleteTagGame(g.getKey(), tag.getKey());
+        gs.deleteTagGame(g, tag);
 
         return null;
     }
