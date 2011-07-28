@@ -13,7 +13,7 @@ span#loginTwitterName {
 
 
 div.headerPosition {
-	margin-top: -5px;
+	margin-top: 20px;
 }
 
 a.floatLeft {
@@ -32,9 +32,7 @@ ul#nav1 {
 .loginHeader {
 	text-align: right;
 	height: 25px;
-	margin-right: 90px;
-	margin-top: -10px;
-	margin-bottom: 10px;
+	display: inline-block;
 }
 
 .footer {

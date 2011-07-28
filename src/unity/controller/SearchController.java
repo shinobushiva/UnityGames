@@ -35,7 +35,6 @@ public class SearchController extends Controller {
         requestScope("GameList", gds);
         // 補完ワード
         requestScope("words", ss.suggestionWords());
-        requestScope("tags", ss.suggestionTags());
         // ログイン
         requestScope("isLogin", (Boolean) sessionScope("isLogin"));
         requestScope("twitter", sessionScope("twitter"));

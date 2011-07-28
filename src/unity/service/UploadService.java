@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
 
 import org.slim3.controller.upload.FileItem;
 import org.slim3.datastore.Datastore;
@@ -423,10 +422,8 @@ public class UploadService {
             g.setDate(new Date());
             Key gamekey = Datastore.allocateId(GameData.class);
             g.setKey(gamekey);
-
-            saveLoadId(gamekey);
             // つぶやき
-//            updateStatus(gameName, gamekey.getId(), hpURL);
+            updateStatus(gameName, gamekey.getId(), hpURL);
 
         } else {
             // updateGame
@@ -495,13 +492,12 @@ public class UploadService {
         return g;
     }
 
-    public void saveLoadId(Key gameKey) {
+    public void saveLoadId(Key gameKey,String saveId,String loadId) {
 
         SaveLoadId sl = new SaveLoadId();
         sl.setKey(Datastore.allocateId(gameKey, SaveLoadId.class));
-        sl.setSaveId(UUID.randomUUID().toString());
-        sl.setLoadId(UUID.randomUUID().toString());
-
+        sl.setSaveId(saveId);
+        sl.setLoadId(loadId);
         GlobalTransaction tx = Datastore.beginGlobalTransaction();
         Datastore.put(sl);
         tx.commit();

@@ -20,7 +20,8 @@
 <script
 	src="http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject.js"></script>
 <script type="text/javascript" src="/js/newJS/game.js"></script>
-<script src="http://platform.twitter.com/anywhere.js?id=4ixwuTarUfXOoq0OoP4tbg&v=1"></script>
+<script
+	src="http://platform.twitter.com/anywhere.js?id=4ixwuTarUfXOoq0OoP4tbg&v=1"></script>
 <script type="text/javascript">
 <%--　Analytics　--%>
 var _gaq = _gaq || [];
@@ -43,7 +44,7 @@ jQuery.extend(jQuery.validator.messages, {
 $(function () {
 	      gameInfo(${g.key.id}, ${jscode});
 	      post("https://api.twitter.com/","{a:'a'}","name","call");
-	      
+	      twttr.anywhere(onAnywhereLoad);
 });
 
 function setCallback() {
@@ -53,7 +54,6 @@ function setCallback() {
 	if(unity && unity != null){
 		try{
 		unity.SendMessage("DataManager","SetIds", uid+","+gid);
-		
 		}catch(e){
 			console.log(e);
 		}
@@ -84,9 +84,6 @@ function jsonp(url, name, callback) {
             }
         });
     } else {
-
-       
-
         $.getJSONP(url, function (e) {
             sendUnity(e, name, callback);
         });
@@ -121,26 +118,74 @@ function post(url,headers, name, callback) {
 	    }
 	  }
 	}
+	 
+	  function onAnywhereLoad(twitter) {
+		  twitter('#twitterTweetBox').tweetBox({
+			    counter: true,
+			    width: 500,
+			    height: 50,
+			    label: "コメント(Twitter)",
+			    defaultContent: "${g.gameName} " + location.href+"   #UnityGames",
+			    onTweet: function() {
+			        // Topsy APIを更新
+			        script = d.createElement('script');
+			        script.type = 'text/javascript';
+			        script.src  = 'http://otter.topsy.com/trackbacks.js?callback=topsyCallback&url='+encodeURIComponent(location.href);
+			        d.getElementsByTagName('head')[0].appendChild(script);
+			    }
+			});
+	  };
+	  function topsyCallback(json) {
+		    res = json.response;
+		    if ( !res.total ) {
+		        return false;
+		    }
+		    html = '（' + res.total + ' tweets）';
+		    if ( document.getElementById('topsy_counter') ) {
+		        document.getElementById('topsy_counter').innerHTML = html;
+		    }
+		    html = '<ul style="list-style:none;margin:0 0 5px 0;padding:0;">';
+		    for ( var i=0; i<res.list.length; i++ ) {
+		        tweet     = res.list[i];
+		        thumb     = tweet.author.photo_url.replace(/(normal)\.([a-z]{3,4})$/i,'mini.$2');
+		        author_id = tweet.author.url.replace('http://twitter.com/','');
+		        html
+		            += '<li style="margin:0;padding:1px;font:11px/16px sans-serif;color:#333;white-space:pre;overflow:hidden;">'
+		            +  '<a href="'+tweet.author.url+'" target="_blank">'
+		            +  '<img src="'+thumb+'" alt="'+tweet.author.name+'" style="border:0;vertical-align:middle;width:24px;height:24px;" />'
+		            +  '</a> '
+		            +  '<a href="'+tweet.author.url+'" target="_blank" style="color:#0084B4;">'
+		            +  author_id
+		            +  '</a> '
+		            +  tweet.content.replace(/(\r\n|\r|\n)/g,'')
+		            +  '</li>';
+		    }
+		    html += '</ul>';
+		    if ( res.total > 10 ) {
+		        html
+		            += '<div>'
+		            +  '<a href="'+res.topsy_trackback_url+'" target="_blank" style="display:inline-block;margin:0;padding:5px;font:14px/16px sans-serif;color:#0084B4;text-decoration:none;border:1px solid #CCC;background:#EEE;-moz-border-radius:5px;-webkit-border-radius:5px;">'
+		            +  'もっと読む'
+		            +  '</a>'
+		            +  '</div>';
+		    }
+		    if ( document.getElementById('topsy_trackbacks') ) {
+		        document.getElementById('topsy_trackbacks').innerHTML = html;
+		    }
+		}
+
+		script = document.createElement('script');
+		script.type = 'text/javascript';
+		script.src  = 'http://otter.topsy.com/trackbacks.js?callback=topsyCallback&url='+encodeURIComponent(url);
+		document.getElementsByTagName('head')[0].appendChild(script);
 </script>
 
 </head>
 <body>
-<div id="twitter-connect-placeholder"></div>
-<script type="text/javascript">
-  var anywhereApiKey = "4ixwuTarUfXOoq0OoP4tbg";
-  twttr.anywhere(onAnywhereLoad);
-  function onAnywhereLoad(twitter) {
-    twitter("#twitter-connect-placeholder").tweetBox();
-   
-  }
- 
-</script>
-
 	<input type="hidden" id="gameKey" name="gameKey"
 		value="${f:h(g.key.id)}">
 
 	<%@ include file="/share/header.jsp"%>
-	<%@ include file="/share/search.jsp"%>
 	<div>
 		<div class="marginTopTwenty">
 			<%--  Tags --%>
@@ -217,7 +262,8 @@ function post(url,headers, name, callback) {
 		<ul>
 			<li class="SocialInline"><script type="text/javascript"
 					src="http://apis.google.com/js/plusone.js"> {lang: 'ja'} </script>
-				<g:plusone size="medium"></g:plusone></li>
+				<g:plusone size="medium"></g:plusone>
+			</li>
 			<li class="SocialInlineFaceBook"><fb:like layout="button_count"></fb:like>
 				<a id="fb-root"></a> <script>
 			window.fbAsyncInit = function() {
@@ -236,8 +282,7 @@ function post(url,headers, name, callback) {
 				e.async = true;
 				document.getElementById('fb-root').appendChild(e);
 			}());
-		</script>
-			</li>
+		</script></li>
 			<%--<li class="SocialInline"><a href="http://mixi.jp/share.pl"
 				class="mixi-check-button"
 				data-key="42bc93a615261cdd8e17e115918eb36ebf60a729"
@@ -265,11 +310,14 @@ function post(url,headers, name, callback) {
 		<%-- Top Tabs --%>
 		<ul>
 			<li><a href="#tab1"><span><fmt:message
-							key="explanation" /> </span> </a></li>
+							key="explanation" /> </span> </a>
+			</li>
 			<li><a href="#tab2"><span><fmt:message
-							key="operation" /> </span> </a></li>
+							key="operation" /> </span> </a>
+			</li>
 			<li><a href="#tagg"><span><fmt:message
-							key="registTag" /> </span> </a></li>
+							key="registTag" /> </span> </a>
+			</li>
 			<%--
 			<span>
 				<button id="commentToggle"
@@ -349,7 +397,7 @@ function post(url,headers, name, callback) {
 		</div>
 
 		<div class="ui-widget-content ui-tabs-panel commentFrame marginTopTen">
-			<a href="#comment"><span><fmt:message key="comment" /> </span> </a>
+			<a href="#comment"><span> </span> </a>
 			<div id="comment">
 				<div>
 					<div>
@@ -364,8 +412,16 @@ function post(url,headers, name, callback) {
 				</div>
 				<div id="commentLoad"></div>
 			</div>
+		<!-- 	<div id="twitterTweetBox"></div>
+			<div
+				style="margin: 10px 0 10px 0; padding: 10px; border: 1px solid #BDDCAD; background: #EDFFDC; -moz-border-radius: 10px; -webkit-border-radius: 10px;">
+				<h4 style="margin: 0 0 5px 0; padding: 0;">
+					Twitterでのつぶやかれ<span id="topsy_counter"></span>
+				</h4>
+				<div id="topsy_trackbacks"></div>
+			</div>
 		</div>
-
+ -->
 
 	</div>
 	<%@ include file="/share/footer.jsp"%>

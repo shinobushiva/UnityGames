@@ -1,6 +1,5 @@
 package unity.controller.cron;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -36,16 +35,13 @@ public class InputSearchController extends Controller {
         for (Game g : words) {
             wordsSet.add("\"" + g.getGameName() + "\"");
         }
-
         List<Tag> tags = Datastore.query(Tag.class).asList();
-        List<String> tagsArray = new ArrayList<String>();
         for (Tag tag : tags) {
-            tagsArray.add("\"" + tag.getName() + "\"");
+            wordsSet.add("\"" + tag.getName() + "\"");
         }
 
         InputSearh in = new InputSearh();
         in.setSuggestionWords(wordsSet);
-        in.setSuggestionTags(tagsArray);
 
         GlobalTransaction tx = Datastore.beginGlobalTransaction();
         Datastore.put(in);

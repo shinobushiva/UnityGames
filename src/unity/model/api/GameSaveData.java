@@ -25,6 +25,13 @@ public class GameSaveData implements Serializable {
     @Attribute(lob = true)
     private String saveData;
 
+    private String saveType;
+
+    // @Attribute(persistent = false)
+    // private InverseModelListRef<User, GameSaveData> userListRef = new
+    // InverseModelListRef<User, GameSaveData>(User.class,
+    // UserMeta.get().userRef.getName(), this);
+
     private ModelRef<User> userRef = new ModelRef<User>(User.class);
 
     private ModelRef<GameData> gameRef = new ModelRef<GameData>(GameData.class);
@@ -105,12 +112,24 @@ public class GameSaveData implements Serializable {
         this.saveData = saveData;
     }
 
+    public ModelRef<GameData> getGameRef() {
+        return gameRef;
+    }
+
+    public String getSaveType() {
+        return saveType;
+    }
+
+    public void setSaveType(String saveType) {
+        this.saveType = saveType;
+    }
+
     public ModelRef<User> getUserRef() {
         return userRef;
     }
 
-    public ModelRef<GameData> getGameRef() {
-        return gameRef;
-    }
+    // public InverseModelListRef<User, GameSaveData> getUserListRef() {
+    // return userListRef;
+    // }
 
 }

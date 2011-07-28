@@ -15,7 +15,6 @@
 </head>
 <body>
 	<%@ include file="/share/header.jsp"%>
-	<%@ include file="/share/search.jsp"%>
 	<h1 align="center">ログインしてください</h1>
 	<table class="table">
 		<tr>

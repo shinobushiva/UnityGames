@@ -1,19 +1,18 @@
 package unity.controller.action;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
+
+import org.junit.Test;
 import org.slim3.controller.upload.FileItem;
 import org.slim3.datastore.Datastore;
 import org.slim3.tester.ControllerTestCase;
-import org.junit.Before;
-import org.junit.Test;
 
-import com.google.appengine.api.datastore.Key;
-
-import unity.controller.action.UploadController;
-import unity.model.GameData;
 import unity.model.UploadedDataFragment;
 import unity.service.UploadService;
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+
+import com.google.appengine.api.datastore.Key;
 
 public class UploadControllerTest extends ControllerTestCase {
 

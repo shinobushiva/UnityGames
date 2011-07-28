@@ -25,14 +25,6 @@ public class SearchService {
         return sw;
     }
 
-    public List<String> suggestionTags() {
-        List<String> st = new ArrayList<String>();
-        InputSearh is = Datastore.query(InputSearh.class).limit(1).asSingle();
-        if (is != null)
-            st = is.getSuggestionTags();
-        return st;
-    }
-
     public List<GameData> searchWord(String word) {
 
         List<GameData> gds = new ArrayList<GameData>();

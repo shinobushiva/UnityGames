@@ -1,14 +1,18 @@
 package unity.controller.action;
 
+import java.util.UUID;
+
 import net.sf.jmimemagic.Magic;
 import net.sf.jmimemagic.MagicMatch;
 
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.controller.upload.FileItem;
+import org.slim3.datastore.Datastore;
 
 import twitter4j.Twitter;
 import unity.model.GameData;
+import unity.model.api.SaveLoadId;
 import unity.service.TagService;
 import unity.service.UploadService;
 
@@ -113,6 +117,11 @@ public class UploadController extends Controller {
                 gameScreenSize,
                 editCode,
                 mimeType);
+
+
+        if (gameKey == null)
+            us.saveLoadId(g.getKey(), "" + requestScope("saveId"), ""
+                + requestScope("loadId"));
 
         // 二度手間してるけど力尽きたので放置・・・6/14
         ts.conflictTag(g.getKey());

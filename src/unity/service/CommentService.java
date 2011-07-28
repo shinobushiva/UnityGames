@@ -2,22 +2,14 @@ package unity.service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 import org.slim3.datastore.Datastore;
 import org.slim3.datastore.GlobalTransaction;
 
 import unity.meta.CommentMeta;
-import unity.meta.RelationTagMeta;
-import unity.meta.TagGameMeta;
-import unity.meta.TagMeta;
 import unity.meta.UserMeta;
 import unity.model.Comment;
 import unity.model.GameData;
-import unity.model.RelationTag;
-import unity.model.Tag;
-import unity.model.TagGame;
 import unity.model.User;
 
 import com.google.appengine.api.datastore.Key;

@@ -9,7 +9,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <%@ include file="/share/css.jsp"%>
-<link href="/css/common/view.css" rel="StyleSheet" type="text/css" />
 <link href="/css/views.css" rel="stylesheet" type="text/css"/>
 <link href="/css/layout.css" rel="stylesheet" type="text/css" />
 <link href="/css/style1.css" rel="stylesheet" type="text/css" />
@@ -22,8 +21,11 @@
 <script type="text/javascript">
 	$(function() {
 		$("#selectView").val("${viewType}");
-		$("#View").load("/view?view=${viewType}");
+		$("#View").load("/view?view=${viewType}",null,function(){
+			initPagination();
+		});
 		$("#campaign").css("visibility", "hidden");
+		
 		$("#campaign").load("/campaignList", null, function() {
 			$("#campaign").css("visibility", "visible");
 			var buttons = {
@@ -62,7 +64,6 @@
 <body>
 
 	<%@ include file="/share/header.jsp"%>
-	<%@ include file="/share/search.jsp"%>
 	<div id="campaign" style="margin-top: 20px; margin-bottom: 20px;"></div>
 
 	<div id="PageLoad">
@@ -88,6 +89,9 @@
 			</option>
 		</select>
 		<div id="View"></div>
+		<div class="Pagination" align="center"></div>
+<div id="Searchresult" align="center"></div>
+<div class="Pagination" align="center" style="margin: 10px;"></div>
 	</div>
 	<%@ include file="/share/footer.jsp"%>
 

@@ -23,8 +23,6 @@ public class MovieRankingController extends Controller {
    
     @Override
     protected Navigation run() throws Exception {
-        System.setProperty("http.proxyHost", "wwwproxy.cc.sojo-u.ac.jp");
-        System.setProperty("http.proxyPort", "3128");
         
         List<Key> asKeyList = Datastore.query(MovieRanking.class).asKeyList();
         if (asKeyList != null) {

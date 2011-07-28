@@ -278,14 +278,16 @@ function tagCheck(){
 
 				</tr>
 				<tr class="bottom">
-					<td colspan="2"><span class="warning"><fmt:message
-								key="url.explanation" />
+					<td colspan="2"><div style="margin: 10px;">
+							<div style="margin: 10px;">SaveID : ${saveId}</div>
+							<div style="margin: 10px;">LoadID : ${loadId}</div>
+						</div>
 					</td>
 				</tr>
 
 			</table>
 		</form>
-
+		<span class="warning"><fmt:message key="url.explanation" /> </span>
 
 
 	</div>

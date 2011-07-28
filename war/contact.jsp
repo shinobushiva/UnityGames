@@ -14,7 +14,6 @@
 </head>
 <body>
 <%@ include file="/share/header.jsp"%>
-<%@ include file="/share/search.jsp"%>
 <div align="center">
 <h1><fmt:message key="twitterAccount" /></h1>
 <a href="http://twitter.com/#!/UGames">@UGames</a>

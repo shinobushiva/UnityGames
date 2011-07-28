@@ -15,8 +15,7 @@ import com.google.appengine.api.datastore.Key;
 
 public class SaveDataService {
 
-    public List<GameSaveData> getSaveData(List<GameSaveData> saveData,
-            Key gkey, Long userId) {
+    public GameSaveData getSaveData(GameSaveData saveData, Key gkey, Long userId) {
 
         Key ukey = Datastore.createKey(User.class, userId);
         saveData =
@@ -24,46 +23,108 @@ public class SaveDataService {
                 .query(GameSaveData.class)
                 .filter(GameSaveDataMeta.get().gameRef.equal(gkey))
                 .filter(GameSaveDataMeta.get().userRef.equal(ukey))
-                .asList();
+                .asSingle();
 
         return saveData;
 
     }
 
-    public List<GameSaveData> getSaveData(List<GameSaveData> saveData, Key gkey) {
+    public GameSaveData getSaveData(GameSaveData saveData, Key gkey) {
 
         return Datastore
             .query(GameSaveData.class)
             .filter(GameSaveDataMeta.get().gameRef.equal(gkey))
-            .asList();
+            .filter(GameSaveDataMeta.get().saveType.equal("public"))
+            .asSingle();
     }
 
-    public void setSaveData(Long gameId, Long userId, String data) {
+    public void setSaveData(Long gameId, Long userId, String saveType,
+            String data) {
+        GameSaveDataMeta s = GameSaveDataMeta.get();
         Key gkey = Datastore.createKey(GameData.class, gameId);
+
+        List<GameSaveData> gsds =
+            Datastore
+                .query(GameSaveData.class)
+                .filter(s.gameRef.equal(gkey))
+                .asList();
+
         Key ukey = null;
         if (userId != null) {
             ukey = Datastore.createKey(User.class, userId);
         }
-        GameSaveDataMeta s = GameSaveDataMeta.get();
-        GameSaveData gsd =
-            Datastore
-                .query(GameSaveData.class)
-                .filter(s.gameRef.equal(gkey))
-                .filter(s.userRef.equal(ukey))
-                .asSingle();
-        if (gsd == null) {
-            gsd = new GameSaveData();
-            gsd.setKey(Datastore.allocateId(gkey, GameSaveData.class));
+        GameSaveData gsd = null;
+        if ("private".equals(saveType.toLowerCase())) {
+            // private処理 privateなのでuserId必須
             if (userId != null) {
-                gsd.getUserRef().setKey(ukey);
+                for (GameSaveData gs : gsds) {
+                    // privateTypeのセーブデータがあったら
+                    if ("private".equals(gs.getSaveType())
+                        && gs.getUserRef().getKey().equals(ukey)) {
+                        gsd = gs;
+                        System.out.println("privateTypeのセーブデータがあったら");
+                    }
+                }
+                // privateTypeのセーブデータなかったら
+                if (gsd == null) {
+                    gsd = new GameSaveData();
+                    gsd.setKey(Datastore.allocateId(gkey, GameSaveData.class));
+                    gsd.setSaveType(saveType);
+                    // gsd.getUserListRef().getModelList().add(Datastore.get(User.class,
+                    // ukey));
+                    gsd.getUserRef().setKey(ukey);
+                    gsd.getGameRef().setKey(gkey);
+                    System.out.println("privateTypeのセーブデータなかったら");
+                }
+                gsd.setSaveData(data);
             }
-            gsd.getGameRef().setKey(gkey);
         }
-        gsd.setSaveData(data);
 
+        if ("public".equals(saveType.toLowerCase())) {
+            // public処理
+            for (GameSaveData gs : gsds) {
+                if ("public".equals(gs.getSaveType())) {
+                    gsd = gs;
+                    System.out.println("publicあったら");
+                }
+            }
+            if (gsd == null) {
+                gsd = new GameSaveData();
+                gsd.setKey(Datastore.allocateId(gkey, GameSaveData.class));
+                gsd.setSaveType(saveType);
+                gsd.getGameRef().setKey(gkey);
+                System.out.println("publicなかったら");
+            }
+            gsd.setSaveData(data);
+        }
+
+        System.out.println(gsd.getKey());
+        System.out.println(gsd.getSaveData());
+        System.out.println(gsd.getUserRef().getKey());
+        System.out.println("-------------------------------");
         GlobalTransaction tx = Datastore.beginGlobalTransaction();
         Datastore.put(gsd);
         tx.commit();
+    }
+
+    public GameSaveData getSaveData(Long gameId, Long userId, String loadType) {
+
+        GameSaveData saveData = null;
+
+        Key gkey = Datastore.createKey(GameData.class, gameId);
+
+        if ("private".toLowerCase().equals(loadType))
+            saveData = getSaveData(saveData, gkey, userId);
+        if ("public".toLowerCase().equals(loadType))
+            saveData = getSaveData(saveData, gkey);
+
+        // List<GameSaveDataVo> list = new ArrayList<GameSaveDataVo>();
+        // for (GameSaveData d : saveData) {
+        // GameSaveDataVo dv = new GameSaveDataVo();
+        // dv.setSaveData(d.getSaveData());
+        // list.add(dv);
+        // }
+        return saveData;
     }
 
     public SaveLoadId getId(Long gameId) {

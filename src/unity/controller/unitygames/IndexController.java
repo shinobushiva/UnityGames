@@ -34,7 +34,6 @@ private SearchService ss = new SearchService();
         
         // 補完ワード
         requestScope("words", ss.suggestionWords());
-        requestScope("tags", ss.suggestionTags());
         // ログイン
         requestScope("isLogin", (Boolean) sessionScope("isLogin"));
         requestScope("twitter", sessionScope("twitter"));

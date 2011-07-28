@@ -1,9 +1,7 @@
 package unity.controller;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
@@ -12,12 +10,13 @@ import unity.model.GameData;
 import unity.model.Tag;
 import unity.model.TagGame;
 import unity.service.GameDataService;
+import unity.service.SearchService;
 import unity.service.TagService;
 
 public class TutorialController extends Controller {
     private TagService ts = new TagService();
     private GameDataService gs = new GameDataService();
-
+    private SearchService ss = new SearchService();
     @Override
     public Navigation run() throws Exception {
 
@@ -31,6 +30,8 @@ public class TutorialController extends Controller {
         requestScope("GameList", gds);
         gs.contentCut(gds);
 
+        // 補完ワード
+        requestScope("words", ss.suggestionWords());
         // ログイン
         requestScope("isLogin", (Boolean) sessionScope("isLogin"));
         requestScope("twitter", sessionScope("twitter"));

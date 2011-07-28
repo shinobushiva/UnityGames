@@ -79,7 +79,7 @@
 
 	<div class="center">
 		<div>
-			<div id="search"><%@ include file="/share/search.jsp"%></div>
+			<div id="search"></div>
 			<div class="inline">
 				<div class="newGameLine">
 					<a href="/unitygames/" class="decorationNon"> <fmt:message
@@ -96,21 +96,24 @@
 				</c:forEach>
 
 				<div class="newGameLine">
-					<fmt:message key="ranking" />
+					<a href="/ranking"> デイリー<fmt:message key="ranking" /><img
+						src="/images/click.png" class="imagePosition" /> </a>
 				</div>
 				<div>
-					<c:forEach var="g" items="${rankingGameList}" varStatus="loop">
+					<c:forEach var="rg" items="${rankingGameList}" varStatus="loop">
 						<div class="game">
+							<c:set var="g" value="${rg.gameRef.model}" />
 							<span class="gameFont"><fmt:message key="best1" />${loop.count}<fmt:message
-									key="best2" /> </span><br>
+									key="best2" /> </span> <br>
 							<%@ include file="/share/patternDistinction.jsp"%>
 							<a href="${url}"> <img src="${thUrl}" width="150"
 								height="150" /><br>
 								<div class="bounded">${g.gameName}</div> </a>
+							<div>ポイント:${rg.deltaPoint}</div>
 						</div>
 					</c:forEach>
 				</div>
-				<div class="newGameLine">動画ランキング</div>
+				<div class="newGameLine">動画紹介</div>
 				<div>
 					<c:forEach var="g" items="${movie}" end="4" varStatus="loop">
 						<div class="game">

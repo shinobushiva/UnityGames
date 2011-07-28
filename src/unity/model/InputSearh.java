@@ -1,9 +1,7 @@
 package unity.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.slim3.datastore.Attribute;
@@ -25,9 +23,6 @@ public class InputSearh implements Serializable {
    
     
     private Set<String> suggestionWords = new HashSet<String>();
-    
-    private List<String> suggestionTags = new ArrayList<String>();
-    
     
     /**
      * Returns the key.
@@ -105,14 +100,5 @@ public class InputSearh implements Serializable {
         this.suggestionWords = suggestionWords;
     }
 
-    public List<String> getSuggestionTags() {
-        return suggestionTags;
-    }
-
-    public void setSuggestionTags(List<String> suggestionTags) {
-        this.suggestionTags = suggestionTags;
-    }
-
-   
 
 }

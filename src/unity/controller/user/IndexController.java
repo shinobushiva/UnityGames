@@ -1,16 +1,11 @@
 package unity.controller.user;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
-import org.slim3.datastore.Datastore;
 
-import unity.meta.GameDataMeta;
 import unity.model.GameData;
 import unity.model.Tweet;
 import unity.model.User;

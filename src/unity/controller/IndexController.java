@@ -25,19 +25,18 @@ public class IndexController extends Controller {
             List<GameData> contentCut = gs.contentCut(campaignVo.getGames());
             campaignVo.setGames(contentCut);
         }
-
         // キャンペーン
         requestScope("campaigns", loadCampaigns);
 
         // ランキング
-        requestScope("rankingGameList", gs.rankingGame());
+        requestScope("rankingGameList", gs.rankingGame(5));
 
         // 新着ゲーム
         requestScope("newGameList", gs.newGame());
 
         // 補完ワード
+        
         requestScope("words", ss.suggestionWords());
-        requestScope("tags", ss.suggestionTags());
 
         // 動画ランキング
         requestScope("movie", rs.movieRanking());

@@ -38,9 +38,9 @@ public class GameController extends Controller {
         if (g.getTwitterUserKey() != null) {
             User uk = us.getUser(g.getTwitterUserKey());
             requestScope("twitterId", uk.getUserId());
-            if(twitter!=null){
-            if (uk.getUserId() == twitter.getId())
-                isMe = true;
+            if (twitter != null) {
+                if (uk.getUserId() == twitter.getId())
+                    isMe = true;
             }
         }
 
@@ -58,14 +58,20 @@ public class GameController extends Controller {
         requestScope("c", cms.getCommentsAsc(g.getKey()));
 
         // ログイン
-        requestScope("isLogin", (Boolean) sessionScope("isLogin"));
-        requestScope("twitter", twitter);
-        if (twitter != null) {
-            requestScope("user", us.getUser(twitter.getId()));
+        try {
+            requestScope("isLogin", (Boolean) sessionScope("isLogin"));
+            requestScope("twitter", twitter);
+            if (twitter != null) {
+                requestScope("user", us.getUser(twitter.getId()));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         // 補完ワード
         requestScope("words", ss.suggestionWords());
-        requestScope("tags", ss.suggestionTags());
+        // ログイン
+        requestScope("isLogin", (Boolean) sessionScope("isLogin"));
+        requestScope("twitter", sessionScope("twitter"));
 
         // 編集ボタン
         requestScope("isMe", isMe);

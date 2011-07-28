@@ -4,23 +4,21 @@ import java.util.List;
 
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
-import org.slim3.datastore.Datastore;
 
-import unity.meta.GameDataMeta;
 import unity.model.GameData;
 import unity.service.GameDataService;
 
 public class ViewController extends Controller {
-    private GameDataMeta g = GameDataMeta.get();
     private GameDataService gs = new GameDataService();
 
     @Override
     public Navigation run() throws Exception {
-
-        if (!asString("view").isEmpty())
-            sessionScope("viewType", asString("view"));
-
         String data = "Default";
+        if (!asString("view").isEmpty() || asString("view") != null)
+            sessionScope("viewType", asString("view"));
+        else
+            sessionScope("viewType", data);
+        
         if (sessionScope("viewType") != null) {
             data = sessionScope("viewType");
         }

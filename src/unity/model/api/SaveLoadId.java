@@ -15,6 +15,8 @@ public class SaveLoadId implements Serializable {
     @Attribute(primaryKey = true)
     private Key key;
 
+    private Key parentKey;
+    
     @Attribute(version = true)
     private Long version;
 
@@ -104,6 +106,14 @@ public class SaveLoadId implements Serializable {
 
     public void setLoadId(String loadId) {
         this.loadId = loadId;
+    }
+
+    public Key getParentKey() {
+        return parentKey;
+    }
+
+    public void setParentKey(Key parentKey) {
+        this.parentKey = parentKey;
     }
 
 }

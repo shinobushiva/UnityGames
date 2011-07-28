@@ -1,15 +1,18 @@
 package unity.controller.unitygames.upload;
 
+import java.util.UUID;
+
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
 
 import twitter4j.Twitter;
 import unity.model.GameData;
-import unity.model.User;
 import unity.model.api.SaveLoadId;
 import unity.service.GameDataService;
 import unity.service.SaveDataService;
+import unity.service.SearchService;
+import unity.service.UploadService;
 import unity.service.UserService;
 
 import com.google.appengine.api.datastore.Key;
@@ -19,10 +22,15 @@ public class IndexController extends Controller {
     private GameDataService gs = new GameDataService();
     private SaveDataService sd = new SaveDataService();
     private UserService us = new UserService();
-
+    private UploadService up = new UploadService();
+    private SearchService ss = new SearchService();
     @Override
     public Navigation run() throws Exception {
         String loginType = "guest";
+
+        // 補完ワード
+        requestScope("words", ss.suggestionWords());
+
         if (sessionScope("loginType") != null)
             loginType = (String) sessionScope("loginType");
         removeSessionScope("loginType");
@@ -77,8 +85,25 @@ public class IndexController extends Controller {
             // save,laod id
             requestScope("sl", sd.getSaveLoadId(g.getKey()));
 
+            try {
+                SaveLoadId saveLoadId =
+                    Datastore.get(SaveLoadId.class, g.getKey());
+                if (saveLoadId == null
+                    || saveLoadId.getLoadId() == null
+                    || saveLoadId.getSaveId() == null)
+                    up.saveLoadId(
+                        g.getKey(),
+                        UUID.randomUUID().toString(),
+                        UUID.randomUUID().toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             return forward("change.jsp");
         } else {
+            // create save,load id
+            requestScope("saveId", UUID.randomUUID().toString());
+            requestScope("loadId", UUID.randomUUID().toString());
             return forward("index.jsp");
         }
 

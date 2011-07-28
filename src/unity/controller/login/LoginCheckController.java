@@ -7,12 +7,15 @@ import unity.service.SearchService;
 
 public class LoginCheckController extends Controller {
     private SearchService ss = new SearchService();
+
     @Override
     public Navigation run() throws Exception {
 
-     // 補完ワード
+        // 補完ワード
         requestScope("words", ss.suggestionWords());
-        requestScope("tags", ss.suggestionTags());
+        // ログイン
+        requestScope("isLogin", (Boolean) sessionScope("isLogin"));
+        requestScope("twitter", sessionScope("twitter"));
         return forward("loginCheck.jsp");
     }
 }

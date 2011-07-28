@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.Model;
+import org.slim3.datastore.ModelRef;
 
 import com.google.appengine.api.datastore.Key;
 
@@ -31,6 +32,9 @@ public class User implements Serializable {
     @Attribute(lob = true)
     private Set<Tweet> tweets = new HashSet<Tweet>();
 
+    private ModelRef<User> userRef =
+            new ModelRef<User>(User.class);
+    
     /**
      * Returns the key.
      * 
@@ -138,4 +142,9 @@ public class User implements Serializable {
     public String getMyself() {
         return myself;
     }
+
+    public ModelRef<User> getUserRef() {
+        return userRef;
+    }
+
 }

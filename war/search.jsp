@@ -16,7 +16,6 @@
 </head>
 <body>
 	<%@ include file="/share/header.jsp"%>
-	<%@ include file="/share/search.jsp"%>
 
 	<div align="center" class="viewCenter">
 		<c:forEach var="g" items="${GameList}" varStatus="loop">

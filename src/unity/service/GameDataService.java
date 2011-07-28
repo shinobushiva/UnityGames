@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,6 +20,7 @@ import unity.model.Tag;
 import unity.model.TagGame;
 import unity.model.User;
 import unity.model.api.Game;
+import unity.model.vo.EveryDayGameRankingVo;
 import unity.utils.CodeBlockUtils;
 
 import com.google.appengine.api.datastore.Key;
@@ -94,20 +96,56 @@ public class GameDataService {
             .asList();
     }
 
-    public List<GameData> rankingGame() {
+    public List<EveryDayGameRankingVo> rankingGame(int maxNum) {
 
-        List<Key> asKeyList =
+        List<EveryDayGameRanking> asList =
             Datastore
                 .query(EveryDayGameRanking.class)
                 .sort(EveryDayGameRankingMeta.get().deltaPoint.desc)
-                .limit(5)
-                .asKeyList();
-        List<GameData> g = new ArrayList<GameData>();
-        for (Key key : asKeyList) {
-            GameData gameData = Datastore.get(GameData.class, key.getParent());
-            g.add(gameData);
+                .asList();
+        System.out.println(asList.size());
+        int size = asList.size();
+        if (size < maxNum)
+            maxNum = size;
+        List<EveryDayGameRankingVo> g = new ArrayList<EveryDayGameRankingVo>();
+        for (EveryDayGameRanking edg : asList) {
+            GameData gameData =
+                Datastore.get(GameData.class, edg.getKey().getParent());
+            contentCut(gameData);
+            if (g.size() < maxNum) {
+                EveryDayGameRankingVo setEdgvo = null;
+                Set<Tag> fixTags = gameData.getFixTags();
+                int deltaPoit = edg.getDeltaPoint();
+                Boolean check = false;
+                if (fixTags.size() != 0) {
+                    for (Tag tag : fixTags) {
+                        if (tag.getName().equals("チュートリアル")) {
+                            check = true;
+                        }
+                    }
+                    if (!check) {
+                        setEdgvo = setEdgvo(gameData, deltaPoit);
+                        g.add(setEdgvo);
+                    }
+                } else {
+                    setEdgvo = setEdgvo(gameData, deltaPoit);
+                    g.add(setEdgvo);
+                }
+            } else
+                break;
         }
+        
         return g;
+    }
+
+    public EveryDayGameRankingVo setEdgvo(GameData gamedata, int deltaPoint) {
+
+        EveryDayGameRankingVo edgvo = new EveryDayGameRankingVo();
+        edgvo.setDeltaPoint(deltaPoint);
+        edgvo.getGameRef().setModel(gamedata);
+
+        return edgvo;
+
     }
 
     public List<GameData> contentCut(List<GameData> gameList) {
@@ -124,6 +162,19 @@ public class GameDataService {
         return gameList;
     }
 
+    public GameData contentCut(GameData game) {
+        
+            if (game.getContents().length() >= 80) {
+                String s = game.getContents().substring(0, 80);
+                game.setContents(s + "...");
+            }
+            if (game.getOperations().length() >= 80) {
+                String o = game.getOperations().substring(0, 80);
+                game.setOperations(o + "...");
+        }
+        return game;
+    }
+    
     public void deleteTagGame(GameData g, Tag t) {
         g.getTags().remove(t);
         save(g);
@@ -158,41 +209,47 @@ public class GameDataService {
                 Datastore
                     .query(GameData.class)
                     .sort(GameDataMeta.get().date.asc)
+                    .limit(50)
                     .asList();
         // アクセス数が多い順
-        else if (data.equals("MostAccess"))
+         if (data.equals("MostAccess"))
             game =
                 Datastore
                     .query(GameData.class)
                     .sort(GameDataMeta.get().access.desc)
+                    .limit(50)
                     .asList();
         // アクセス数が少ない順
-        else if (data.equals("LeastAccess"))
+         if (data.equals("LeastAccess"))
             game =
                 Datastore
                     .query(GameData.class)
                     .sort(GameDataMeta.get().access.asc)
+                    .limit(50)
                     .asList();
         // コメントが多い順
-        else if (data.equals("MostComment"))
+         if (data.equals("MostComment"))
             game =
                 Datastore
                     .query(GameData.class)
                     .sort(GameDataMeta.get().comment.desc)
+                    .limit(50)
                     .asList();
         // コメントが少ない順
-        else if (data.equals("LeastComment"))
+         if (data.equals("LeastComment"))
             game =
                 Datastore
                     .query(GameData.class)
                     .sort(GameDataMeta.get().comment.asc)
+                    .limit(50)
                     .asList();
         // 投稿日時が新しい順&デフォルト
-        else if (data.equals("Default"))
+         if (data.equals("Default"))
             game =
                 Datastore
                     .query(GameData.class)
                     .sort(GameDataMeta.get().date.desc)
+                    .limit(50)
                     .asList();
         return game;
     }
