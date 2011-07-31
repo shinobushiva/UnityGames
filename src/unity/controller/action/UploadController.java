@@ -1,18 +1,14 @@
 package unity.controller.action;
 
-import java.util.UUID;
-
 import net.sf.jmimemagic.Magic;
 import net.sf.jmimemagic.MagicMatch;
 
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.controller.upload.FileItem;
-import org.slim3.datastore.Datastore;
 
 import twitter4j.Twitter;
 import unity.model.GameData;
-import unity.model.api.SaveLoadId;
 import unity.service.TagService;
 import unity.service.UploadService;
 
@@ -48,6 +44,9 @@ public class UploadController extends Controller {
         String code = requestScope("Code");
         boolean editCode =
             Boolean.parseBoolean((String) requestScope("editCode"));
+
+        int accessLevel =
+            Integer.parseInt((String) requestScope("accessLevel"));
 
         String gameScreenSize =
             requestScope("gameScreenWidth")
@@ -95,6 +94,8 @@ public class UploadController extends Controller {
                 return redirect(request.getHeader("REFERER"));
         }
 
+        us.accessLevel = accessLevel;
+
         GameData g =
             us.upload(
                 gameKey,
@@ -118,6 +119,7 @@ public class UploadController extends Controller {
                 editCode,
                 mimeType);
 
+        us.setPublic(g);
 
         if (gameKey == null)
             us.saveLoadId(g.getKey(), "" + requestScope("saveId"), ""

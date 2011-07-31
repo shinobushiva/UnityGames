@@ -9,14 +9,14 @@ import unity.model.GameData;
 import unity.model.vo.CampaignVo;
 import unity.service.CampaignService;
 import unity.service.GameDataService;
-import unity.service.RankingService;
+import unity.service.CronService;
 import unity.service.SearchService;
 
 public class IndexController extends Controller {
     private CampaignService cs = new CampaignService();
     private SearchService ss = new SearchService();
     private GameDataService gs = new GameDataService();
-    private RankingService rs = new RankingService();
+    private CronService rs = new CronService();
 
     @Override
     public Navigation run() throws Exception {
@@ -35,7 +35,6 @@ public class IndexController extends Controller {
         requestScope("newGameList", gs.newGame());
 
         // 補完ワード
-        
         requestScope("words", ss.suggestionWords());
 
         // 動画ランキング

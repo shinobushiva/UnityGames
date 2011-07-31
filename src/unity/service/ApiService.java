@@ -32,7 +32,6 @@ public class ApiService {
         return Datastore
             .query(Game.class)
             .sort(GameMeta.get().entry.asc)
-            .limit(100)
             .asList();
 
     }

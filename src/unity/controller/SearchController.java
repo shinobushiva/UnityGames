@@ -19,6 +19,7 @@ public class SearchController extends Controller {
         List<GameData> gds = null;
         if ("word".equals(asString("type"))) {
             gds = ss.searchWord(asString("q"));
+            gds.addAll(ss.searchTag(asString("q")));
             keyWord = asString("word");
             type = "word";
         }

@@ -36,83 +36,78 @@
 <body>
 	<%@ include file="/share/header.jsp"%>
 	<div align="center" class="viewCenter">
-		<div id="hiddenresult" style="display: none;">
-			<div class="result">
-				<c:forEach var="rg" items="${rankingGameList}" varStatus="loop">
-				<div style="text-align: left;">
-					<div style="font-size: 25px;display: inline-block;">第${loop.count}位</div>
-					<div style="display: inline-block;margin-left: 30px;">${rg.deltaPoint} Point</div></div>
-					<c:set var="g" value="${rg.gameRef.model}" />
-					<div class="gameBox">
-						<div align="right">
-							<script type="text/javascript">
-								$(function() {
 
-								});
-							</script>
-							<c:if test="${not empty g.hpURL}">
-								<a class="outside"><fmt:message key="outside" /> </a>
-							</c:if>
-							<fmt:message key="entryDay" />
-							：
-							<fmt:formatDate value="${g.date}" pattern="MM/dd HH:mm" />
-							<br>
+		<c:forEach var="rg" items="${rankingGameList}" varStatus="loop">
+			<div style="text-align: left;">
+				<div style="font-size: 25px; display: inline-block;">第${loop.count}位</div>
+				<div style="display: inline-block; margin-left: 30px;">${rg.deltaPoint}
+					Point</div>
+			</div>
+			<c:set var="g" value="${rg.gameRef.model}" />
+			<div class="gameBox">
+				<div align="right">
+					<script type="text/javascript">
+						$(function() {
+
+						});
+					</script>
+					<c:if test="${not empty g.hpURL}">
+						<a class="outside"><fmt:message key="outside" /> </a>
+					</c:if>
+					<fmt:message key="entryDay" />
+					：
+					<fmt:formatDate value="${g.date}" pattern="MM/dd HH:mm" />
+					<br>
+				</div>
+
+				<div class="gameView">
+					<div class="gameViewHead">
+						<div class="bounded gameName">
+							<%@ include file="/share/patternDistinction.jsp"%>
+							<a href="${url}" class="title"> ${g.gameName} </a>
 						</div>
-
-						<div class="gameView">
-							<div class="gameViewHead">
-								<div class="bounded gameName">
-									<%@ include file="/share/patternDistinction.jsp"%>
-									<a href="${url}" class="title"> ${g.gameName} </a>
-								</div>
-								<div class="floatRight">
-									<ul>
-										<li class="noListPoint"><fmt:message key="access" />：${g.access}</li>
-										<li class="noListPoint"><fmt:message key="comment" />：${g.comment}</li>
-									</ul>
-								</div>
-								<div class="clear"></div>
-							</div>
-							<div class="bounded tags"></div>
-							<div class="gameURL">
-								<a href="${url}"><img src="${thUrl}" width="85px"
-									height="85px" class="image" /> </a>
-
-							</div>
-
-
-							<div class="detail">
-								<div class="tabs" class="tabsHeight">
-									<ul>
-										<li><a href="#tab-${g.key.id}"><fmt:message
-													key="explanation" /> </a></li>
-										<div style="text-align: left;" class="bounded">
-											<span class="fontRed"><fmt:message key="registerTag" />
-											</span>
-											<c:forEach var="ft" items="${g.fixTags}">
-												<a href="/search?tag=${ft.name}" class="tagsName">${ft.name}</a>
-
-											</c:forEach>
-										</div>
-									</ul>
-
-									<div id="tab-${g.key.id}">
-										<div class="contents" style="text-align: left;">${g.contents}</div>
-
-									</div>
-								</div>
-							</div>
-							<div class="clear"></div>
+						<div class="floatRight">
+							<ul>
+								<li class="noListPoint"><fmt:message key="access" />：${g.access}</li>
+								<li class="noListPoint"><fmt:message key="comment" />：${g.comment}</li>
+							</ul>
 						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="bounded tags"></div>
+					<div class="gameURL">
+						<a href="${url}"><img src="${thUrl}" width="85px"
+							height="85px" class="image" /> </a>
+
 					</div>
 
-				</c:forEach>
+
+					<div class="detail">
+						<div class="tabs" class="tabsHeight">
+							<ul>
+								<li><a href="#tab-${g.key.id}"><fmt:message
+											key="explanation" /> </a>
+								</li>
+							</ul>
+							<div
+								style="text-align: left; position: absolute; left: 105px; top: 10px;"
+								class="bounded">
+								<span class="fontRed"><fmt:message key="registerTag" />
+								</span>
+								<c:forEach var="ft" items="${g.fixTags}">
+									<a href="/search?tag=${ft.name}" class="tagsName">${ft.name}</a>
+
+								</c:forEach>
+							</div>
+							<div id="tab-${g.key.id}">
+								<div class="contents" style="text-align: left;">"${g.contents}"</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-		</div>
+		</c:forEach>
 	</div>
-	<div class="Pagination" align="center"></div>
-	<div id="Searchresult" align="center"></div>
-	<div class="Pagination" align="center" style="margin: 10px;"></div>
 	<%@ include file="/share/footer.jsp"%>
 </body>
 </html>

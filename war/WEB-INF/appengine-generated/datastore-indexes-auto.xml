@@ -1,16 +1,10 @@
-<!-- Indices written at Wed, 27 Jul 2011 15:06:17 UTC -->
+<!-- Indices written at Sun, 31 Jul 2011 04:25:13 UTC -->
 
 <datastore-indexes>
 
     <!-- Used 1 time in query history -->
-    <datastore-index kind="Comment" ancestor="false" source="auto">
-        <property name="gameKey" direction="asc"/>
-        <property name="date" direction="asc"/>
-    </datastore-index>
-
-    <!-- Used 1 time in query history -->
-    <datastore-index kind="Comment" ancestor="false" source="auto">
-        <property name="gameKey" direction="asc"/>
+    <datastore-index kind="GameData" ancestor="false" source="auto">
+        <property name="accessLevel" direction="asc"/>
         <property name="date" direction="desc"/>
     </datastore-index>
 

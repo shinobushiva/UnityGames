@@ -83,6 +83,7 @@ $( "div#tu" ).hide();
   		$( "#ThumbNail" ).val("");
 		$( "#ThumbNailURL" ).val("");
       });
+	$("#accessLevel").val(${g.accessLevel});
 });
 function tagCheck(){
 var flag = 0;var str = $("#tag").val();var tag = str.split(",");
@@ -165,6 +166,15 @@ else{return true; // 送信を実行
 											<h2 class="inlineBlock">
 												<fmt:message key="dont.edit" />
 											</h2> </label>
+									</div>
+									<div>
+										<label> <label><h2 class="inlineBlock">公開設定</h2>
+												<select name="accessLevel" class="inlineBlock" id="accessLevel">
+													<option value="0">全体公開</option>
+													<option value="1">一部公開（新着やランキングに載せない）</option>
+													<option value="2">自分のみアクセス</option>
+											</select> </label>
+										</label>
 									</div>
 
 								</div>
@@ -398,7 +408,8 @@ ${g.thumbNailURL}<br>
 					</td>
 				</tr>
 				<tr class="bottom" class="heightThirty">
-					<td colspan="2"><div style="margin: 10px;">
+					<td colspan="2">
+						<div style="margin: 10px;">
 							<div style="margin: 10px;">SaveID : ${sl.saveId}</div>
 							<div style="margin: 10px;">LoadID : ${sl.loadId}</div>
 						</div>

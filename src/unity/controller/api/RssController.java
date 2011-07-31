@@ -33,7 +33,7 @@ public class RssController extends Controller {
                     g.getExplanation()
                         + "<br><img src=\""
                         + g.getThumbNail()
-                        + "\">",
+                        + "\"width=\"100px\"height=\"100px\">",
                     g.getEntry());
             
 

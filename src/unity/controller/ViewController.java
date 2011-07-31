@@ -13,14 +13,17 @@ public class ViewController extends Controller {
 
     @Override
     public Navigation run() throws Exception {
-        String data = "Default";
+        
+        removeSessionScope("viewType");
+        int data = 0;
         if (!asString("view").isEmpty() || asString("view") != null)
             sessionScope("viewType", asString("view"));
         else
             sessionScope("viewType", data);
-        
+
+
         if (sessionScope("viewType") != null) {
-            data = sessionScope("viewType");
+            data = Integer.parseInt((String) sessionScope("viewType"));
         }
 
         List<GameData> games = gs.getViewPattern(data);

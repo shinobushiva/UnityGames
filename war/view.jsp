@@ -36,30 +36,30 @@
 }
 </style>
 <script type="text/javascript">
-					$(function() {
-						$(".tabs").tabs();
-					});
-					function pageselectCallback(page_index, jq) {
-						var new_content = jQuery(
-								'#hiddenresult div.result:eq(' + page_index
-										+ ')').clone();
-						$('#Searchresult').empty().append(new_content);
-						return false;
-					}
+	$(function() {
+		$(".tabs").tabs();
+		initPagination()
+	});
+	function pageselectCallback(page_index, jq) {
+		var new_content = jQuery(
+				'#hiddenresult div.result:eq(' + page_index + ')').clone();
+		$('#Searchresult').empty().append(new_content);
+		return false;
+	}
 
-					function initPagination() {
-						var num_entries = jQuery('#hiddenresult div.result').length;
-						$(".Pagination").pagination(num_entries, {
-							callback : pageselectCallback,
-							items_per_page : 1
-						});
-					}
-				</script>
+	function initPagination() {
+		var num_entries = jQuery('#hiddenresult div.result').length;
+		$(".Pagination").pagination(num_entries, {
+			callback : pageselectCallback,
+			items_per_page : 1
+		});
+	}
+</script>
 <div align="center" class="viewCenter">
 	<div id="hiddenresult" style="display: none;">
 		<div class="result">
 			<c:forEach var="g" items="${GameList}" varStatus="loop">
-				<span class="gameBox">
+				<div class="gameBox">
 					<div align="right">
 						<c:if test="${not empty g.hpURL}">
 							<a class="outside"><fmt:message key="outside" /> </a>
@@ -108,18 +108,22 @@
 								</ul>
 
 								<div id="tab1-${g.key.id}">
-									<div class="contents"style="text-align: left;">${g.contents}</div>
+									<div class="contents" style="text-align: left;">${g.contents}</div>
 
 								</div>
 							</div>
 						</div>
 						<div class="clear"></div>
-					</div> </span>
+					</div>
+				</div>
 				<c:if test="${loop.count mod 10 == 0 }">
 		</div>
 		<div class="result">
-		</c:if>
-		</c:forEach>
+			</c:if>
+			</c:forEach>
+		</div>
 	</div>
 </div>
-</div>
+<div class="Pagination" align="center"></div>
+<div id="Searchresult" align="center"></div>
+<div class="Pagination" align="center" style="margin: 10px;"></div>

@@ -11,7 +11,8 @@
 <%@ include file="/share/css.jsp"%>
 <link href="/css/registGame.css" rel="stylesheet" type="text/css" />
 <%@ include file="/share/js.jsp"%>
-<title><fmt:message key="upload.title" /></title>
+<title><fmt:message key="upload.title" />
+</title>
 
 </head>
 <body>
@@ -96,7 +97,8 @@ function tagCheck(){
 				<tr>
 					<td><h1>
 							<fmt:message key="upload.title" />
-						</h1></td>
+						</h1>
+					</td>
 
 					<td rowspan="6">
 
@@ -151,20 +153,29 @@ function tagCheck(){
 											<fmt:message key="dont.edit" />
 										</h2> </label>
 								</div>
+								<div>
+									<label><h2 class="inlineBlock">公開設定</h2> <select
+										name="accessLevel" class="inlineBlock">
+											<option value="0">全体公開</option>
+											<option value="1">一部公開（新着やランキングに載せない）</option>
+											<option value="2">自分のみアクセス</option>
+									</select> </label>
+								</div>
+
 							</div>
 							<div id="wrapper" class="floatRight inlineBlock">
 								<button id="regist" class="button registButton">
 									<fmt:message key="button.regist" />
 								</button>
 							</div>
-						</div>
-					</td>
+						</div></td>
 				</tr>
 				<tr>
 					<td><h2>
 							<label for="GameName"><fmt:message key="gameName" /> </label><input
 								type="text" name="GameName" id="GameName" class="required" />
-						</h2></td>
+						</h2>
+					</td>
 				</tr>
 				<tr>
 					<td><label for="ThumbNail"><h2>
@@ -174,7 +185,8 @@ function tagCheck(){
 							checked="checked"> <fmt:message
 								key="thumbNail.pictureDataUp" /> </label><br> <label><input
 							type="radio" name="ThumbNailType" value="url" id="turl">
-							<fmt:message key="thumbNail.urlUp" /><br> </label></td>
+							<fmt:message key="thumbNail.urlUp" /><br> </label>
+					</td>
 
 				</tr>
 				<tr>
@@ -187,8 +199,7 @@ function tagCheck(){
 									key="thumbNail.url" /> </label><input type="text" name="ThumbNailURL"
 								id="ThumbNailURL"
 								title="<fmt:message key="thumbNail.url.title" />"><br>
-						</div>
-					</td>
+						</div></td>
 				</tr>
 				<tr>
 					<td><label for="d"><h2>
@@ -200,7 +211,8 @@ function tagCheck(){
 							value="url" id="url"> <fmt:message key="game.select.url" /><br>
 					</label> <label><input type="radio" name="GameType" value="hpurl"
 							id="hp"> <fmt:message key="game.select.url.outside" /><br>
-					</label></td>
+					</label>
+					</td>
 				</tr>
 				<tr>
 					<td>
@@ -273,16 +285,14 @@ function tagCheck(){
 									<input type="password" name="pass" id="adminPass">
 								</h2>
 							</div>
-						</c:if>
-					</td>
+						</c:if></td>
 
 				</tr>
 				<tr class="bottom">
 					<td colspan="2"><div style="margin: 10px;">
 							<div style="margin: 10px;">SaveID : ${saveId}</div>
 							<div style="margin: 10px;">LoadID : ${loadId}</div>
-						</div>
-					</td>
+						</div></td>
 				</tr>
 
 			</table>

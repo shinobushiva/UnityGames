@@ -14,24 +14,32 @@ import unity.service.SearchService;
 public class IndexController extends Controller {
 
     private GameDataMeta g = GameDataMeta.get();
-private GameDataService gs = new GameDataService();
-private SearchService ss = new SearchService();
+    private GameDataService gs = new GameDataService();
+    private SearchService ss = new SearchService();
+
     // private NoteMeta n = NoteMeta.get();
 
     @Override
     public Navigation run() throws Exception {
         // ゲーム新着順
-        List<GameData> games = Datastore.query(g).sort(g.access.desc).asList();
+        List<GameData> games =
+            Datastore
+                .query(g)
+                .filter(g.accessLevel.equal(0))
+                .limit(50)
+                .sort(g.access.desc)
+                .asList();
 
         gs.contentCut(games);
-        
+
         requestScope("GameList", games);
-     
-        String data = "Default";
+
+        int data = 0;
         if (sessionScope("viewType") != null)
-            data = (String) sessionScope("viewType");
+            data = Integer.parseInt((String) sessionScope("viewType"));
+
         requestScope("viewType", data);
-        
+
         // 補完ワード
         requestScope("words", ss.suggestionWords());
         // ログイン

@@ -12,7 +12,7 @@
 	</cron>
 	<cron>
 		<url>/cron/everyDayRanking</url>
-		<description>MovieRanking every 1 day</description>
+		<description>EveryDayRanking every 1 day</description>
 		<schedule>every 24 hours</schedule>
 	</cron>
 	<cron>

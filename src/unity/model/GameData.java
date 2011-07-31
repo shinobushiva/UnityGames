@@ -14,7 +14,7 @@ import com.google.appengine.api.datastore.Key;
 
 @Model(schemaVersion = 1)
 public class GameData implements Serializable {
-
+   
     private static final long serialVersionUID = 1L;
 
     @Attribute(primaryKey = true)
@@ -63,6 +63,8 @@ public class GameData implements Serializable {
     
     private boolean editable;
 
+    private int accessLevel;
+    
     @Attribute(lob = true)
     private Set<Tag> fixTags = new HashSet<Tag>();
 
@@ -323,6 +325,14 @@ public class GameData implements Serializable {
 
     public boolean isEditable() {
         return editable;
+    }
+
+    public int getAccessLevel() {
+        return accessLevel;
+    }
+
+    public void setAccessLevel(int accessLevel) {
+        this.accessLevel = accessLevel;
     }
 
 }

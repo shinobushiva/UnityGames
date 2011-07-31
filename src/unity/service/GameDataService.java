@@ -26,6 +26,9 @@ import unity.utils.CodeBlockUtils;
 import com.google.appengine.api.datastore.Key;
 
 public class GameDataService {
+    public static final int PRIVATE_BEST = 2;
+    public static final int PRIVATE_BETTER = 1;
+    public static final int PUBLIC_GAME = 0;
 
     public void save(GameData c) {
         GlobalTransaction tx = Datastore.beginGlobalTransaction();
@@ -91,6 +94,7 @@ public class GameDataService {
     public List<GameData> newGame() {
         return Datastore
             .query(GameData.class)
+            .filter(GameDataMeta.get().accessLevel.equal(PUBLIC_GAME))
             .sort(GameDataMeta.get().date.desc)
             .limit(5)
             .asList();
@@ -103,7 +107,6 @@ public class GameDataService {
                 .query(EveryDayGameRanking.class)
                 .sort(EveryDayGameRankingMeta.get().deltaPoint.desc)
                 .asList();
-        System.out.println(asList.size());
         int size = asList.size();
         if (size < maxNum)
             maxNum = size;
@@ -113,6 +116,7 @@ public class GameDataService {
                 Datastore.get(GameData.class, edg.getKey().getParent());
             contentCut(gameData);
             if (g.size() < maxNum) {
+
                 EveryDayGameRankingVo setEdgvo = null;
                 Set<Tag> fixTags = gameData.getFixTags();
                 int deltaPoit = edg.getDeltaPoint();
@@ -134,7 +138,6 @@ public class GameDataService {
             } else
                 break;
         }
-        
         return g;
     }
 
@@ -163,18 +166,18 @@ public class GameDataService {
     }
 
     public GameData contentCut(GameData game) {
-        
-            if (game.getContents().length() >= 80) {
-                String s = game.getContents().substring(0, 80);
-                game.setContents(s + "...");
-            }
-            if (game.getOperations().length() >= 80) {
-                String o = game.getOperations().substring(0, 80);
-                game.setOperations(o + "...");
+
+        if (game.getContents().length() >= 80) {
+            String s = game.getContents().substring(0, 80);
+            game.setContents(s + "...");
+        }
+        if (game.getOperations().length() >= 80) {
+            String o = game.getOperations().substring(0, 80);
+            game.setOperations(o + "...");
         }
         return game;
     }
-    
+
     public void deleteTagGame(GameData g, Tag t) {
         g.getTags().remove(t);
         save(g);
@@ -201,56 +204,67 @@ public class GameDataService {
 
     }
 
-    public List<GameData> getViewPattern(String data) {
+    public List<GameData> getViewPattern(int data) {
         List<GameData> game = null;
-        // 投稿日時が古い順
-        if (data.equals("OldEntry"))
+        GameDataMeta g = GameDataMeta.get();
+        switch (data) {
+
+        case 1:
             game =
                 Datastore
                     .query(GameData.class)
-                    .sort(GameDataMeta.get().date.asc)
+                    .filter(g.accessLevel.equal(PUBLIC_GAME))
+                    .sort(g.date.asc)
                     .limit(50)
                     .asList();
-        // アクセス数が多い順
-         if (data.equals("MostAccess"))
+            break;
+        case 2:
             game =
                 Datastore
                     .query(GameData.class)
+                    .filter(g.accessLevel.equal(PUBLIC_GAME))
                     .sort(GameDataMeta.get().access.desc)
                     .limit(50)
                     .asList();
-        // アクセス数が少ない順
-         if (data.equals("LeastAccess"))
+            break;
+        case 3:
             game =
                 Datastore
                     .query(GameData.class)
+                    .filter(g.accessLevel.equal(PUBLIC_GAME))
                     .sort(GameDataMeta.get().access.asc)
                     .limit(50)
                     .asList();
-        // コメントが多い順
-         if (data.equals("MostComment"))
+            break;
+        case 4:
             game =
                 Datastore
                     .query(GameData.class)
+                    .filter(g.accessLevel.equal(PUBLIC_GAME))
                     .sort(GameDataMeta.get().comment.desc)
                     .limit(50)
                     .asList();
-        // コメントが少ない順
-         if (data.equals("LeastComment"))
+            break;
+        case 5:
             game =
                 Datastore
                     .query(GameData.class)
+                    .filter(g.accessLevel.equal(PUBLIC_GAME))
                     .sort(GameDataMeta.get().comment.asc)
                     .limit(50)
                     .asList();
-        // 投稿日時が新しい順&デフォルト
-         if (data.equals("Default"))
+            break;
+        default:
             game =
                 Datastore
                     .query(GameData.class)
+                    .filter(g.accessLevel.equal(PUBLIC_GAME))
                     .sort(GameDataMeta.get().date.desc)
                     .limit(50)
                     .asList();
+            break;
+        }
+
         return game;
     }
 

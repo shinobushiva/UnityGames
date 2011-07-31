@@ -24,6 +24,7 @@ public class IndexController extends Controller {
     private UserService us = new UserService();
     private UploadService up = new UploadService();
     private SearchService ss = new SearchService();
+
     @Override
     public Navigation run() throws Exception {
         String loginType = "guest";
@@ -85,9 +86,11 @@ public class IndexController extends Controller {
             // save,laod id
             requestScope("sl", sd.getSaveLoadId(g.getKey()));
 
+           
+            
             try {
                 SaveLoadId saveLoadId =
-                    Datastore.get(SaveLoadId.class, g.getKey());
+                    Datastore.query(SaveLoadId.class, g.getKey()).asSingle();
                 if (saveLoadId == null
                     || saveLoadId.getLoadId() == null
                     || saveLoadId.getSaveId() == null)

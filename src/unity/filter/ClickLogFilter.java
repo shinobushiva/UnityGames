@@ -32,7 +32,8 @@ public class ClickLogFilter implements Filter {
 
         HttpServletRequest hsr = (HttpServletRequest) req;
 
-        if (hsr.getServletPath().startsWith("/admin/")) {
+        if (hsr.getServletPath().startsWith("/admin/")
+            || hsr.getServletPath().startsWith("/cron/")) {
             fc.doFilter(req, res);
             return;
         }

@@ -69,7 +69,7 @@
 					<div class="bounded tags">
 						<span class="fontRed"><fmt:message key="registerTag" /> </span>
 						<c:forEach var="ft" items="${g.fixTags}">
-							<a href="/search?tag=${ft.name}" class="tagsName">${ft.name}</a>
+							<a href="/search?type=tag&q=${ft.name}" class="tagsName">${ft.name}</a>
 
 						</c:forEach>
 					</div>

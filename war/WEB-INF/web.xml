@@ -17,20 +17,6 @@
 		<param-value>UTF-8</param-value>
 	</context-param>
 
-	<error-page>
-		<error-code>404</error-code>
-		<location>/error/error404</location>
-	</error-page>
-	<error-page>
-		<error-code>org.slim3.datastore.EntityNotFoundRuntimeException</error-code>
-		<location>/error/error404</location>
-	</error-page>
-	
-	<error-page>
-		<error-code>500</error-code>
-		<location>/error/error500</location>
-	</error-page>
-
 	<filter>
 		<filter-name>HotReloadingFilter</filter-name>
 		<filter-class>org.slim3.controller.HotReloadingFilter</filter-class>
@@ -159,5 +145,18 @@
 		</auth-constraint>
 	</security-constraint>
 
+<error-page>
+		<error-code>404</error-code>
+		<location>/error/error404</location>
+	</error-page>
+	<error-page>
+		<error-code>org.slim3.datastore.EntityNotFoundRuntimeException</error-code>
+		<location>/error/error404</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error/error500</location>
+	</error-page>
 
 </web-app>

@@ -1,5 +1,6 @@
 package unity.service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -11,9 +12,11 @@ import unity.meta.RelationTagMeta;
 import unity.meta.TagGameMeta;
 import unity.meta.TagMeta;
 import unity.model.GameData;
+import unity.model.InputSearh;
 import unity.model.RelationTag;
 import unity.model.Tag;
 import unity.model.TagGame;
+import unity.model.api.Game;
 
 import com.google.appengine.api.datastore.Key;
 
@@ -295,5 +298,51 @@ public class TagService {
             .query(TagGame.class)
             .filter(TagGameMeta.get().tagRef.equal(tKey))
             .asList();
+    }
+
+    public void inputSearch() {
+        List<Key> asKeyList = Datastore.query(InputSearh.class).asKeyList();
+        if (asKeyList != null) {
+            for (Key key : asKeyList) {
+                GlobalTransaction tx = Datastore.beginGlobalTransaction();
+                Datastore.delete(key);
+                tx.commit();
+            }
+
+        }
+        List<Game> words = Datastore.query(Game.class).asList();
+        Set<String> wordsSet = new HashSet<String>();
+        for (Game g : words) {
+            wordsSet.add("\"" + g.getGameName() + "\"");
+        }
+        List<Tag> tags = Datastore.query(Tag.class).asList();
+        for (Tag tag : tags) {
+            wordsSet.add("\"" + tag.getName() + "\"");
+        }
+
+        InputSearh in = new InputSearh();
+        in.setSuggestionWords(wordsSet);
+
+        GlobalTransaction tx = Datastore.beginGlobalTransaction();
+        Datastore.put(in);
+        tx.commit();
+    }
+
+    public void tagCleaner() {
+        List<Tag> asList = Datastore.query(Tag.class).asList();
+        for (Tag tag : asList) {
+            List<TagGame> asList2 =
+                Datastore
+                    .query(TagGame.class)
+                    .filter(TagGameMeta.get().tagRef.equal(tag.getKey()))
+                    .asList();
+            System.out.println(asList2.size());
+            if (asList2.size() == 0) {
+                GlobalTransaction tx = Datastore.beginGlobalTransaction();
+                tx.delete(tag.getKey());
+                tx.commit();
+            }
+
+        }
     }
 }

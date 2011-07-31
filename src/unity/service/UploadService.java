@@ -35,9 +35,13 @@ import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.Transform;
 
 public class UploadService {
+    public static final int PRIVATE_BEST = 2;
+    public static final int PRIVATE_BETTER = 1;
+    public static final int PUBLIC_GAME = 0;
     private static final int FRAGMENT_SIZE = 900000;
     private TagService ts = new TagService();
     private GameDataService gs = new GameDataService();
+    public int accessLevel = 0;
 
     public GameData upload(Key key, String gameName, String gameURL,
             FileItem gameFile, FileItem thumbNail, String thumbNailURL,
@@ -127,19 +131,21 @@ public class UploadService {
         TwitterFactory tf = new TwitterFactory(cb.build());
         Twitter twitter = tf.getInstance();
         try {
-            if (hpURL.isEmpty()) {
-                twitter.updateStatus(""
-                    + gameName
-                    + "が投稿されました。"
-                    + "http://unity-games.appspot.com/unitygames/game/ug"
-                    + id
-                    + "　#UnityGames");
-            } else {
-                twitter.updateStatus(""
-                    + gameName
-                    + "が投稿されました。"
-                    + hpURL
-                    + "　#UnityGames");
+            if (accessLevel == PUBLIC_GAME) {
+                if (hpURL.isEmpty()) {
+                    twitter.updateStatus(""
+                        + gameName
+                        + "が投稿されました。"
+                        + "http://unity-games.appspot.com/unitygames/game/ug"
+                        + id
+                        + "　#UnityGames");
+                } else {
+                    twitter.updateStatus(""
+                        + gameName
+                        + "が投稿されました。"
+                        + hpURL
+                        + "　#UnityGames");
+                }
             }
         } catch (TwitterException e) {
 
@@ -492,15 +498,27 @@ public class UploadService {
         return g;
     }
 
-    public void saveLoadId(Key gameKey,String saveId,String loadId) {
+    public void saveLoadId(Key gameKey, String saveId, String loadId) {
 
         SaveLoadId sl = new SaveLoadId();
         sl.setKey(Datastore.allocateId(gameKey, SaveLoadId.class));
+        sl.setParentKey(gameKey);
         sl.setSaveId(saveId);
         sl.setLoadId(loadId);
         GlobalTransaction tx = Datastore.beginGlobalTransaction();
         Datastore.put(sl);
         tx.commit();
 
+    }
+
+    public void setPublic(GameData g) {
+        g.setAccessLevel(accessLevel);
+        save(g);
+    }
+
+    public void save(GameData g) {
+        GlobalTransaction tx = Datastore.beginGlobalTransaction();
+        tx.put(g);
+        tx.commit();
     }
 }

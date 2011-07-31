@@ -124,14 +124,14 @@ function post(url,headers, name, callback) {
 			    counter: true,
 			    width: 500,
 			    height: 50,
-			    label: "コメント(Twitter)",
+			    label: "コメント(Twitter) URLは外さないようお願いします",
 			    defaultContent: "${g.gameName} " + location.href+"   #UnityGames",
 			    onTweet: function() {
 			        // Topsy APIを更新
-			        script = d.createElement('script');
+			        script = document.createElement('script');
 			        script.type = 'text/javascript';
-			        script.src  = 'http://otter.topsy.com/trackbacks.js?callback=topsyCallback&url='+encodeURIComponent(location.href);
-			        d.getElementsByTagName('head')[0].appendChild(script);
+			        script.src  = 'http://otter.topsy.com/trackbacks.js?callback=topsyCallback&url='+encodeURIComponent(location.href)+'&perpage=50';
+			        document.getElementsByTagName('head')[0].appendChild(script);
 			    }
 			});
 	  };
@@ -157,11 +157,11 @@ function post(url,headers, name, callback) {
 		            +  '<a href="'+tweet.author.url+'" target="_blank" style="color:#0084B4;">'
 		            +  author_id
 		            +  '</a> '
-		            +  tweet.content.replace(/(\r\n|\r|\n)/g,'')
+		            +  tweet.content.replace(/(\r\n|\r|\n)/g,'').replace(/http:\/\/[-_.!~*'()a-zA-Z0-9;\/?:\@&=+\$,%#]+/, '').replace("via",'').replace("#UnityGames",'');
 		            +  '</li>';
 		    }
 		    html += '</ul>';
-		    if ( res.total > 10 ) {
+		    if ( res.total > 50 ) {
 		        html
 		            += '<div>'
 		            +  '<a href="'+res.topsy_trackback_url+'" target="_blank" style="display:inline-block;margin:0;padding:5px;font:14px/16px sans-serif;color:#0084B4;text-decoration:none;border:1px solid #CCC;background:#EEE;-moz-border-radius:5px;-webkit-border-radius:5px;">'
@@ -176,7 +176,7 @@ function post(url,headers, name, callback) {
 
 		script = document.createElement('script');
 		script.type = 'text/javascript';
-		script.src  = 'http://otter.topsy.com/trackbacks.js?callback=topsyCallback&url='+encodeURIComponent(url);
+		script.src  = 'http://otter.topsy.com/trackbacks.js?callback=topsyCallback&url='+encodeURIComponent(location.href)+'&perpage=50';
 		document.getElementsByTagName('head')[0].appendChild(script);
 </script>
 
@@ -395,7 +395,7 @@ function post(url,headers, name, callback) {
 				</button>
 			</div>
 		</div>
-
+		<!-- 
 		<div class="ui-widget-content ui-tabs-panel commentFrame marginTopTen">
 			<a href="#comment"><span> </span> </a>
 			<div id="comment">
@@ -407,21 +407,22 @@ function post(url,headers, name, callback) {
 							<fmt:message key="button.comment" />
 						</button>
 					</div>
-
 					<span class="success"><fmt:message key="commented" /> </span>
 				</div>
 				<div id="commentLoad"></div>
 			</div>
-		<!-- 	<div id="twitterTweetBox"></div>
-			<div
-				style="margin: 10px 0 10px 0; padding: 10px; border: 1px solid #BDDCAD; background: #EDFFDC; -moz-border-radius: 10px; -webkit-border-radius: 10px;">
-				<h4 style="margin: 0 0 5px 0; padding: 0;">
-					Twitterでのつぶやかれ<span id="topsy_counter"></span>
-				</h4>
-				<div id="topsy_trackbacks"></div>
-			</div>
+		-->
+
+		<div id="twitterTweetBox"></div>
+		<div
+			style="margin: 10px 0 10px 0; padding: 10px; border: 1px solid #BDDCAD; background: #EDFFDC; -moz-border-radius: 10px; -webkit-border-radius: 10px;">
+			<h4 style="margin: 0 0 5px 0; padding: 0;">
+				Twitterでのつぶやき<span id="topsy_counter"></span>
+			</h4>
+			<div id="topsy_trackbacks"></div>
 		</div>
- -->
+	</div>
+
 
 	</div>
 	<%@ include file="/share/footer.jsp"%>

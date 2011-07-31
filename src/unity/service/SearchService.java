@@ -14,14 +14,20 @@ import unity.model.TagGame;
 public class SearchService {
     private GameDataService gs = new GameDataService();
     private TagService ts = new TagService();
+    public static final int PRIVATE_BEST = 2;
+    public static final int PRIVATE_BETTER = 1;
+    public static final int PUBLIC_GAME = 0;
 
     public Set<String> suggestionWords() {
 
         Set<String> sw = new HashSet<String>();
-
-        InputSearh is = Datastore.query(InputSearh.class).limit(1).asSingle();
-        if (is != null)
-            sw = is.getSuggestionWords();
+        try {
+            InputSearh is = Datastore.query(InputSearh.class).asSingle();
+            if (is != null)
+                sw = is.getSuggestionWords();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return sw;
     }
 
@@ -32,7 +38,8 @@ public class SearchService {
             if (g
                 .getGameName()
                 .toLowerCase()
-                .contains(word.trim().toLowerCase())) {
+                .contains(word.trim().toLowerCase())
+                && g.getAccessLevel() == PUBLIC_GAME) {
                 gds.add(g);
             }
         }
@@ -57,7 +64,8 @@ public class SearchService {
                     .getModel()
                     .getName()
                     .toLowerCase()
-                    .contains(tag.trim().toLowerCase()))
+                    .contains(tag.trim().toLowerCase())
+                    && g.getAccessLevel() == PUBLIC_GAME)
                     check = true;
             }
             if (check) {
