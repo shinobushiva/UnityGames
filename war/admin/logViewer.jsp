@@ -29,18 +29,13 @@
 	<!-- End demo -->
 	<div class="demo-description" style="display: none;"></div>
 	<!-- End demo-description -->
-	<!-- 
-	<c:forEach var="g" items="${logs}">
-		<div style="margin-top: 10px;">
+	<div>
+		<c:forEach var="l" items="${logText}">
 			<div>
-				<span>${g.date}</span><span>${g.userId}</span>
+				<a href="logDL?fileName=${l.fileName}">${l.fileName}</a>
 			</div>
-			<div>
-				<span>${g.headerMap}</span>
-			</div>
-		</div>
-	</c:forEach>
- -->
+		</c:forEach>
+	</div>
 
 
 </body>

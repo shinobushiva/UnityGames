@@ -358,7 +358,6 @@ public class UploadService {
                 fragment2.setKey(keys2.next());
                 fragment2.setBytes(fragmentData2);
                 fragment2.setType("ThumbNail");
-
                 fragment2.setIndex(i);
                 fragment2.getUploadDataRef2().setModel(child);
             }

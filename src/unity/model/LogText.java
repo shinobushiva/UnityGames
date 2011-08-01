@@ -1,10 +1,10 @@
 package unity.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.Model;
+import org.slim3.datastore.Sort;
 
 import com.google.appengine.api.datastore.Key;
 
@@ -19,12 +19,17 @@ public class LogText implements Serializable {
     @Attribute(version = true)
     private Long version;
 
-    @Attribute(lob = true)
-    private byte[] log;
-
-    private Date date;
+    private String fileName;
 
     private long length;
+
+    @Attribute(persistent = false)
+    private org.slim3.datastore.InverseModelListRef<UploadedDataFragment, LogText> fragmentListRef =
+        new org.slim3.datastore.InverseModelListRef<UploadedDataFragment, LogText>(
+            unity.model.UploadedDataFragment.class,
+            "uploadDataRef3",
+            this,
+            new Sort("index"));
 
     /**
      * Returns the key.
@@ -94,27 +99,23 @@ public class LogText implements Serializable {
         return true;
     }
 
-    public byte[] getLog() {
-        return log;
-    }
-
-    public void setLog(byte[] log) {
-        this.log = log;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public long getLength() {
         return length;
     }
 
     public void setLength(long length) {
         this.length = length;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public org.slim3.datastore.InverseModelListRef<UploadedDataFragment, LogText> getFragmentListRef() {
+        return fragmentListRef;
     }
 }

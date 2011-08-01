@@ -17,7 +17,7 @@ public class UploadedDataFragment implements Serializable {
     @Attribute(primaryKey = true)
     private Key key;
     private String type;
-
+    private int length;
     @Attribute(lob = true)
     private byte[] bytes;
 
@@ -45,6 +45,9 @@ public class UploadedDataFragment implements Serializable {
     private org.slim3.datastore.ModelRef<unity.model.ThumbNailData> uploadDataRef2 =
         new org.slim3.datastore.ModelRef<unity.model.ThumbNailData>(
             unity.model.ThumbNailData.class);
+
+    private ModelRef<LogText> uploadDataRef3 = new ModelRef<LogText>(
+        LogText.class);
 
     private int index;
 
@@ -112,4 +115,15 @@ public class UploadedDataFragment implements Serializable {
         return type;
     }
 
+    public ModelRef<LogText> getUploadDataRef3() {
+        return uploadDataRef3;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
 }

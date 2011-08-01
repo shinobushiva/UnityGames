@@ -40,7 +40,10 @@
 		<filter-name>LoginCheckFilter</filter-name>
 		<filter-class>unity.filter.LoginCheckFilter</filter-class>
 	</filter>
-
+	<filter>
+		<filter-name>CheckBrowserFilter</filter-name>
+		<filter-class>unity.filter.CheckBrowserFilter</filter-class>
+	</filter>
 	<filter-mapping>
 		<filter-name>ClickLogFilter</filter-name>
 		<url-pattern>/*</url-pattern>
@@ -70,10 +73,17 @@
 		<dispatcher>INCLUDE</dispatcher>
 		<dispatcher>ERROR</dispatcher>
 	</filter-mapping>
-
 	<filter-mapping>
-		<filter-name>LoginCheckFilter</filter-name>
-		<url-pattern>/unitygames/upload/*</url-pattern>
+		<filter-name>FrontController</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>CheckBrowserFilter</filter-name>
+		<url-pattern>/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
@@ -145,15 +155,16 @@
 		</auth-constraint>
 	</security-constraint>
 
-<error-page>
+	<error-page>
 		<error-code>404</error-code>
 		<location>/error/error404</location>
 	</error-page>
 	<error-page>
-		<error-code>org.slim3.datastore.EntityNotFoundRuntimeException</error-code>
+		<error-code>org.slim3.datastore.EntityNotFoundRuntimeException
+		</error-code>
 		<location>/error/error404</location>
 	</error-page>
-	
+
 	<error-page>
 		<error-code>500</error-code>
 		<location>/error/error500</location>

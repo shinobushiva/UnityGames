@@ -1,8 +1,8 @@
-<!-- Indices written at Sun, 31 Jul 2011 05:33:48 UTC -->
+<!-- Indices written at Mon, 1 Aug 2011 18:07:14 UTC -->
 
 <datastore-indexes>
 
-    <!-- Used 3 times in query history -->
+    <!-- Used 1 time in query history -->
     <datastore-index kind="GameData" ancestor="false" source="auto">
         <property name="accessLevel" direction="asc"/>
         <property name="date" direction="desc"/>
