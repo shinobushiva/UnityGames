@@ -27,13 +27,13 @@ public class ApiService {
 
     }
 
-    public List<Game> rss() {
-
-        return Datastore
-            .query(Game.class)
-            .sort(GameMeta.get().entry.asc)
-            .asList();
-
-    }
+    // public List<Game> rss() {
+    //
+    // return Datastore
+    // .query(Game.class)
+    // .sort(GameMeta.get().entry.asc)
+    // .asList();
+    //
+    // }
 
 }

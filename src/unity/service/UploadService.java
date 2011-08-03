@@ -41,6 +41,7 @@ public class UploadService {
     private static final int FRAGMENT_SIZE = 900000;
     private TagService ts = new TagService();
     private GameDataService gs = new GameDataService();
+    private RSSService rssService = new RSSService();
     public int accessLevel = 0;
 
     public GameData upload(Key key, String gameName, String gameURL,
@@ -95,6 +96,8 @@ public class UploadService {
         setTags(fixTag, g, gg);
 
         g = save(g, gg);
+
+        rssService.updateRSSString();
 
         return g;
     }
